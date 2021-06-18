@@ -23,7 +23,7 @@ end
 #credit: https://stackoverflow.com/questions/18247126/how-to-flip-a-bit-at-a-specific-position-in-an-integer-in-any-language/18247246
 function flipBits(i, j, n)
     temp::Int=n⊻(1<<i);
-    temp::Int=temp⊻(1<<j);
+    temp=temp⊻(1<<j);
     return temp;
 end
 
@@ -46,12 +46,13 @@ end
 
 #assumes list is sorted and contains integers. finds the target a
 function binarySearch(a,list, start, fin)
-    if(start==fin)
-        return nothing
-    mid::Int=(fin÷2-start÷2);
+    if(start>=fin)
+        return -1;
+    end
+    mid::Int=start+(fin÷2-start÷2);
     newstart::Int=start;
     newfin::Int=fin;
-    cur::Intr=list[mid];
+    curr::Int=list[mid];
     if(curr==a)
         return mid
     else
@@ -101,6 +102,8 @@ return tempcount;
 end
 
 function bondList(N)
+    println("timing bondlist");
+    @time begin
     bonds::Array{bond}=bond[];
     if(N<=1)
         return bonds;
@@ -144,17 +147,19 @@ function bondList(N)
         end
     end
     println(length(bonds));
-    return bonds;
 end
-
-function generateHamiltonian()
-
+    return bonds;
 end
 
 #implementation of kernighan's algorithm (counting number of 1s)
 function singleOutNUpSpins(N, range)
-    println(N);
+    #temp2 stores the map and the list
+    temp2::Array{Any}=Any[];
+    #temp stores the states
     temp::Array{Int}=Int[];
+    #stores the states and their corresponding number
+    temp1::Dict{Int,Int}=Dict{Int, Int}();
+    in::Int=0;
     for i=0:range-1
         count::Int=0;
         n::Int=i;
@@ -166,53 +171,85 @@ function singleOutNUpSpins(N, range)
             n=n & (n-1);
         end
         if(count==N)
+            in+=1;
+            temp1[i]=in;
             push!(temp, i)
-        end
+
     end
-    return temp;
+end
+println("THE STATES",length(temp));
+push!(temp2, temp);
+push!(temp2, temp1);
+    return temp2;
+
 end
 
 function calculateEigensystem(N)
+    @time begin
     eigenvalues::Array{Any}=Any[];
     bonds::Array{bond}=bondList(N);
     for i=0:N*N
-        if i==0
+        spinUps::Array{Any}=singleOutNUpSpins(i, 2^(N*N));
+        Htemp::SparseMatrixCSC{Int}=constructHamiltonian(spinUps, bonds, N);
+        #println(Htemp);
+        if i==0||i==N*N
+            append!(eigenvalues, Htemp[1, 1]);
             continue;
         end
-        spinUps::Array{Int}=singleOutNUpSpins(i, 2^(N*N));
-        Htemp::SparseArrayCSC{Int}=constructHamiltonian(spinUps, bonds, N);
-        #println(Htemp);
         eigtemp=eigs(Htemp, nev=length(spinUps));
         append!(eigenvalues, eigtemp[1]);
     end
+end
     return eigenvalues;
 end
 
+function binarySearchIt(a, list)
+    #println("starting time for binary search");
+    i=1;
+    j=length(list);
+    mid=i+(j÷2-i÷2);
+    while(j>i)
+        if(list[mid]==a)
+            return mid;
+        else
+            if(a>list[mid])
+                i=mid+1;
+                mid=i+(j÷2-i÷2);
+            else
+                j=mid-1;
+                mid=i+(j÷2-i÷2);
+        end
+
+    end
+end
+    return -1;
+end
+
 function constructHamiltonian(states, bonds, N)
-    #ok loop through ALL the possible states...
-    println(length(states));
-    H::SparseArrayCSC{Int}=spzeros(Int, length(states),length(states));
-    for i=1:length(states)
+    #loop through ALL the possible states...
+    list=states[1];
+    map=states[2];
+    #println(states);
+    H::SparseMatrixCSC{Int}=spzeros(Int, length(list),length(list));
+    for i=1:length(list)
         #NOW loop through all the possible SITES
         for j=1:N*N
             #for this particular site, find ALL of its bonds
-            for j=1:length(bonds)
-                #ok, we hit a bond, what do we do with it?
+            for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
-                if containsSite(i,bonds[j])
-                    bond1::Int=bonds[j].site1.num;
-                    bond2::Int=bonds[j].site2.num;
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
                     #now, are the spins in those two places the same? if so, the
                     #diagonal entry at i,i is 1
-                    if(getTi(bond1,i)==getTi(bond2, i))
+                    if(getTi(bond1-1,list[i])==getTi(bond2-1, list[i]))
                         H[i, i]+=1;
                     else
                         H[i, i]-=1;
                         #flip the bits at those relevant places
-
-                        b::Int=flipBits(bond1, bond2,i);
-                        t::Int=binarySearch(b, states, 1, length(states));
-                        if t!=nothing
+                        b::Int=flipBits(bond1-1, bond2-1,list[i]);
+                        t::Int=map[b];
+                        if t!=-1
                             H[i,t]=2;
                         end
                     end
@@ -220,11 +257,13 @@ function constructHamiltonian(states, bonds, N)
                 end
             end
         end
+    end
             return H;
 end
 
 
 function runL()
+    println("starting");
     eigenvalues=calculateEigensystem(4);
     println(eigenvalues);
 end
