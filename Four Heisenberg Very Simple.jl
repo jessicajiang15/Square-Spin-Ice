@@ -4,6 +4,8 @@ using SparseArrays
 using Arpack
 using LinearAlgebra
 
+include("calculations and plotting.jl")
+
 struct site
     num::Int
     x::Int
@@ -101,30 +103,6 @@ return tempcount;
 
 end
 
-function upperRight(i, j, N, bonds, site0)
-    if(j!=N-1)
-        addBond(i-1, j+1, "ij", N, bonds, site0);
-    end
-end
-
-function bottomRight(i, j, N, bonds, site0)
-    if(j!=N-1)
-        addBond(i+1, j+1, "ij", N, bonds, site0);
-    end
-end
-
-function bottomLeft(i, j, N, bonds, site0)
-    if(j==0)
-        addBond(i+1, j-1, "ij", N, bonds, site0);
-    end
-end
-
-function upperLeft(i, j, N, bonds, site0)
-    if(j==0)
-        addBond(i-1, j-1, "ij", N, bonds, site0);
-    end
-end
-
 function bondList(N)
     println("timing bondlist");
     @time begin
@@ -138,7 +116,6 @@ function bondList(N)
             count+=1;
             #bug: ened to recaluate count given current count and relative position
             site0::site=site(count, i, j);
-
             if(i!=N-1)
                 addBond(i+1, j, "i", N, bonds, site0);
             end
@@ -153,26 +130,6 @@ function bondList(N)
             if(j==0)
                 addBond(i, j-1, "j", N, bonds, site0);
             end
-
-            if(i%2==0)
-                #odd no \ and even no /
-                if(count%2==0)
-                    upperRight(i, j, N, bonds, site0);
-                    bottomLeft(i, j, N, bonds, site0);
-                else
-                    upperLeft(i, j, N, bonds, site0);
-                    bottomRight(i, j, N, bonds, site0);
-                end
-            else
-                if(count%2!=0)
-                    upperRight(i, j, N, bonds, site0);
-                    bottomLeft(i, j, N, bonds, site0);
-                else
-                    upperLeft(i, j, N, bonds, site0);
-                    bottomRight(i, j, N, bonds, site0);
-                end
-            end
-
         end
     end
     println(length(bonds));
@@ -225,7 +182,7 @@ function calculateEigensystem(N, J)
             append!(eigenvalues, Htemp[1, 1]);
             continue;
         end
-        eigtemp=eigs(Htemp, which=:SM);
+        eigtemp=eigs(Htemp, nev=16, which="LM");
         append!(eigenvalues, eigtemp[1]);
     end
 end
@@ -259,7 +216,6 @@ function constructHamiltonian(states, bonds, N, J)
     list=states[1];
     map=states[2];
     #println(states);
-    println("num bonds,", length(bonds));
     H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
     for i=1:length(list)
         #NOW loop through all the possible SITES
@@ -270,14 +226,13 @@ function constructHamiltonian(states, bonds, N, J)
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
+                    #now, are the spins in those two places the same? if so, the
+                    #diagonal entry at i,i is 1
                     if(bond1!=j)
                         temp::Int=bond1;
                         bond1=bond2;
                         bond2=temp;
                     end
-                    #THE 1/2 IS THERE TO AVOID DOUBLE COUNTING.
-                    #are the spins in those two places the same? if so, the
-                    #diagonal entry at i,i is 1
                     if(getTi(bond1-1,list[i])==getTi(bond2-1, list[i]))
                         H[i, i]+=(1/2)*J/4;
                     else
@@ -300,6 +255,9 @@ function runL()
     println("starting");
     J=-1;
     eigenvalues=calculateEigensystem(4, J);
+
+    all=getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues);
+
     println(eigenvalues);
 end
 

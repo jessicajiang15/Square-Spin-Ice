@@ -3,6 +3,7 @@
 using SparseArrays
 using Arpack
 using LinearAlgebra
+using KrylovKit
 
 struct site
     num::Int
@@ -196,7 +197,7 @@ function calculateEigensystem(N)
             append!(eigenvalues, Htemp[1, 1]);
             continue;
         end
-        eigtemp=eigs(Htemp, nev=length(spinUps));
+        eigtemp=eigsolve(Htemp, ishermitian=true);
         append!(eigenvalues, eigtemp[1]);
     end
 end

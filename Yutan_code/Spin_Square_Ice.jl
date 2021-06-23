@@ -99,6 +99,7 @@ function Hamiltonian(;L::Int64=2, J=1, h=1, neib_list, state_list, state_num, st
 end
 
 function H_driver(;L::Int64=L, J::Float64=J, h::Float64=h)
+    theeigen=Any[];
     neib_list = neib_list_gen(L=L)
     state_gen = parity_states_list(L=L)
     even_state = state_gen[:even_state]
@@ -110,17 +111,25 @@ function H_driver(;L::Int64=L, J::Float64=J, h::Float64=h)
     #now constructine Hamiltonian of the two sectors
     Hamiltonian_even = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=even_state, state_num=even_state_num, state_tot=even_state_tot)
     Hamiltonian_odd = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=odd_state, state_num=odd_state_num, state_tot=odd_state_tot)
-    return Dict(:even => Hamiltonian_even, :odd => Hamiltonian_odd)
+    println(Hamiltonian_even);
+    println(Hamiltonian_odd);
+    println(Hamiltonian_even[1,1]);
+    println(Hamiltonian_odd[1,1]);
+    push!(theeigen,eigs(Hamiltonian_even)[1]);
+    push!(theeigen,eigs(Hamiltonian_odd)[1]);
+    #return Dict(:even => Hamiltonian_even, :odd => Hamiltonian_odd)
+    return theeigen;
 end
 
 L=4;J=1.0;h=1.0
 @time H_blocks = H_driver(L=L, J=J, h=h)
 
 my_time = Dates.now()
+println(H_blocks);
 
 time_finished = "Date_$(Dates.format(my_time, "e_dd_u_yyyy_HH_MM_SS"))"
-content = "Hamiltonian_even_odd"
-save_path = "/nfs/home/zyt329/Research/Square_spin_ice/result/"
-save_name = save_path*content*"_L=$(L)__J=$(J)__h=$(h)_"*time_finished*".jld"
+#content = "Hamiltonian_even_odd"
+#save_path = "/nfs/home/zyt329/Research/Square_spin_ice/result/"
+#save_name = save_path*content*"_L=$(L)__J=$(J)__h=$(h)_"*time_finished*".jld"
 
-save(save_name, "sim", [H_blocks[:even],H_blocks[:odd]])
+#save(save_name, "sim", [H_blocks[:even],H_blocks[:odd]])
