@@ -3,6 +3,7 @@
 using SparseArrays
 using Arpack
 using LinearAlgebra
+using Plots
 
 include("calculations and plotting.jl")
 
@@ -182,7 +183,7 @@ function calculateEigensystem(N, J)
             append!(eigenvalues, Htemp[1, 1]);
             continue;
         end
-        eigtemp=eigs(Htemp, nev=16, which="LM");
+        eigtemp=eigs(Htemp, nev=16, which=:LM);
         append!(eigenvalues, eigtemp[1]);
     end
 end
@@ -255,8 +256,17 @@ function runL()
     println("starting");
     J=-1;
     eigenvalues=calculateEigensystem(4, J);
+    bmin=0.001;
+    bmax=5;
+    bstep=0.001;
 
     all=getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues);
+    plot(
+    all[1],
+    all[7],
+    title = string("the thing", "vs. 1/kbT"),
+    label = ["the thing"]
+    )
 
     println(eigenvalues);
 end

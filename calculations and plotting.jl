@@ -1,4 +1,4 @@
-
+using Plots
 function partition(beta, E)
     sum=0;
     for i=1:length(E)
@@ -35,12 +35,21 @@ function calcualteExpE(beta, E, partition)
 end
 
 
-function calcualteExpESq(beta, E)
+function calculateExpESq(beta, E)
     sum=0;
     for i=1:length(E)
         sum+=(E[i]^2)*exp(E[i]*beta);
     end
     sum/=partition(beta, E);
+    return sum;
+end
+
+function calculateExpESq(beta, E, partition)
+    sum=0;
+    for i=1:length(E)
+        sum+=(E[i]^2)*exp(E[i]*beta);
+    end
+    sum/=partition;
     return sum;
 end
 
@@ -52,8 +61,8 @@ function calculateG(beta, partition)
     return (-1/beta)*log(partition);
 end
 
-function calculateEntropy(beta, G, E2)
-    return beta*(G-H)
+function calculateEntropy(beta, G, E)
+    return beta*(G-E);
 end
 
 function sumDigits(num, N)
@@ -68,7 +77,7 @@ end
 
 function getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues)
     all=Any[];
-    heatCapcities=Float64[];
+    heatCapacities=Float64[];
     gs=Float64[];
     expESqs=Float64[];
     expEs=Float64[];
@@ -78,17 +87,17 @@ function getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues)
     b=bmin;
 
     while b<=bmax
-        partition=partition(b, eigenvalues, partition);
-        push!(partitions, partition);
-        expE=calculateExpE(b, eigenvalues, partition);
+        part=partition(b, eigenvalues);
+        push!(partitions, part);
+        expE=calculateExpE(b, eigenvalues, part);
         push!(expEs, expE);
-        expESq=calculateExpESq(b, eigenvalues, partition);
+        expESq=calculateExpESq(b, eigenvalues, part);
         push!(expESqs, expESq);
         heatCap=calculateHeatCapacity(b, expE, expESq);
         push!(heatCapacities, heatCap);
-        g=calculateG(b, partition);
+        g=calculateG(b, part);
         push!(heatCapacities, heatCap);
-        entropy=calculateEntropy(beta, g, expESq);
+        entropy=calculateEntropy(b, g, expE);
         push!(entropies, entropy);
         b+=bstep;
     end
@@ -96,7 +105,7 @@ function getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues)
     push!(all, partitions);
     push!(all, expEs);
     push!(all, expESqs);
-    push!(all, heatCapcities);
+    push!(all, heatCapacities);
     push!(all, gs);
     push!(all, entropies);
     return all;
@@ -122,13 +131,19 @@ heat cap=5
 g=6
 entropy=7
 =#
-function theplot(list, i)
-    plot(list[1], list[i]);
+function theplot(list, i, str)
+    println("IM PLOTTING")
+    plot(
+    list[1],
+    list[i],
+    title = string(str, "vs. 1/kbT"),
+    label = [str]
+    )
 end
 
 function plotQuantity(bmin, bmax, bstep, eigenvalues, i)
     all=getAllRelevantQuantities(bmin, bmax, bstep, eigenvalues);
-    str::String;
+    str::String="";
     if(i==5)
         str="Heat Capacity";
     elseif(i==6)
@@ -136,12 +151,12 @@ function plotQuantity(bmin, bmax, bstep, eigenvalues, i)
     else
         str="Entropy";
     end
-    theplot(all, i, title = string(str, "vs. 1/kbT"), label = [str]);
+    theplot(all, i, str);
 end
 
 
 function plotQuantity(all, i)
-    str::String;
+    str::String="";
     if(i==5)
         str="Heat Capacity";
     elseif(i==6)
@@ -149,5 +164,5 @@ function plotQuantity(all, i)
     else
         str="Entropy";
     end
-    theplot(all, i, title = string(str, "vs. 1/kbT"), label = [str]);
+    theplot(all, i, str);
 end
