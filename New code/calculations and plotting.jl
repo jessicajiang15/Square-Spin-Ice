@@ -1,4 +1,5 @@
 using Plots
+
 function partition(beta, E)
     sum=0;
     for i=1:length(E)
@@ -139,6 +140,7 @@ function theplot(list, i, str)
     title = string(str, "vs. 1/kbT"),
     label = [str]
     )
+    savefig("Users/Jessica/git/Square Spin Ice/plot.png")
 end
 
 function plotQuantity(bmin, bmax, bstep, eigenvalues, i)

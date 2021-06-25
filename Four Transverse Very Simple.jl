@@ -221,12 +221,12 @@ function constructHamiltonian(states, bonds, N, J, h)
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
-                    theThing= getTi(bond1-1,list[i]) == 1 ? (1/2)*h/4 : -(1/2)*h/4;
+                    theThing= getTi(bond1-1,list[i]) == 1 ? (1/2)*J/4 : -(1/2)*J/4;
                     H[i,i]+= theThing;
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
-                        H[i,t]=(1/2)*J/2;
+                        H[i,t]=(1/2)*h/2;
                         end
                     end
 

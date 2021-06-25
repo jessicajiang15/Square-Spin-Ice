@@ -1,0 +1,72 @@
+
+function binarySearchIt(a, list)
+    #println("starting time for binary search");
+    i=1;
+    j=length(list);
+    mid=i+(j÷2-i÷2);
+    while(j>i)
+        if(list[mid]==a)
+            return mid;
+        else
+            if(a>list[mid])
+                i=mid+1;
+                mid=i+(j÷2-i÷2);
+            else
+                j=mid-1;
+                mid=i+(j÷2-i÷2);
+        end
+
+    end
+end
+    return -1;
+end
+
+
+
+function singleOutEvenOddSpins(isEven,range, N)
+    #temp2 stores the map and the list
+    temp2::Array{Any}=Any[];
+    #temp stores the states
+    temp::Array{Int}=Int[];
+    #stores the states and their corresponding number
+    temp1::Dict{Int,Int}=Dict{Int, Int}();
+    in::Int=0;
+    for i=0:range-1
+        count::Int=0;
+        n::Int=i;
+        while n>0
+            count+=1;
+            n=n & (n-1);
+        end
+        if(isEven&&count%2==0)
+            in+=1;
+            temp1[i]=in;
+            push!(temp, i)
+        elseif(!isEven&&count%2!=0)
+            in+=1;
+            temp1[i]=in;
+            push!(temp, i)
+    end
+end
+push!(temp2, temp);
+push!(temp2, temp1);
+    return temp2;
+
+end
+
+function getTi(i, I)
+    return mod(I÷(2^(i)), 2);
+end
+
+#flips the bits at the digits i and j
+#credit: https://stackoverflow.com/questions/18247126/how-to-flip-a-bit-at-a-specific-position-in-an-integer-in-any-language/18247246
+function flipBits(i, j, n)
+    temp::Int=n⊻(1<<i);
+    temp=temp⊻(1<<j);
+    return temp;
+end
+
+#credit: semibran at https://github.com/semibran/wrap-around/blob/master/index.js
+function wrap(n, m)
+      return n >= 0 ? n % m : (n % m + m) % m;
+end
