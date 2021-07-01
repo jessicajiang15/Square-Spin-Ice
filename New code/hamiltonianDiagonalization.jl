@@ -36,7 +36,6 @@ push!(temp2, temp1);
 end
 
 function calculateEigensystemHeisenberg(N, J, bonds)
-    @time begin
         eigensystem::Array{Any}=Any[];
 
     eigenvalues::Array{Any}=Any[];
@@ -44,24 +43,33 @@ function calculateEigensystemHeisenberg(N, J, bonds)
     for i=0:N*N
         spinUps::Array{Any}=singleOutNUpSpins(i, 2^(N*N));
         #Htemp::SparseMatrixCSC{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
-        Htemp::Matrix{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
-
+            Htemp::Matrix{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
         #println(Htemp);
+        #TODO:check this, how do you incorporate eigenvectors
         if i==0||i==N*N
             append!(eigenvalues, Htemp[1, 1]);
+            local eigenvector::Array{Vector{Float64}}=Array{Vector{Float64}}(undef, 1);
+            eigenvector[1,1]=Float64[];
+            push!(eigenvector[1,1],1);
+            append!(eigenvectors, eigenvector)
             continue;
         end
-        println(length(spinUps[1]));
-        #eigtemp=eigs(Htemp, nev=length(spinUps[1]));
-        eigtemp=eigen(Htemp);
-        append!(eigenvalues, eigtemp.values);
-        append!(eigenvectors, eigtemp.vectors);
+        eigtemp=eigs(Htemp, nev=16);
+        #eigtemp=eigen(Htemp);
+        #println(eigtemp);
+
+        append!(eigenvalues, eigtemp[1]);
+        append!(eigenvectors, eigtemp[2]);
+
+        #append!(eigenvalues, eigtemp.values);
+        #append!(eigenvectors, eigtemp.vectors);
     end
-end
+
 push!(eigensystem, eigenvalues);
 push!(eigensystem, eigenvectors);
 
 return eigensystem;
+
 end
 
 

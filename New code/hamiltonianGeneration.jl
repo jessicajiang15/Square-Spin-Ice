@@ -68,6 +68,8 @@ function constructHeisenbergHamiltonian(states, bonds, N, J)
             end
         end
     end
+    states=0;
+    GC.gc();
             return H;
 end
 

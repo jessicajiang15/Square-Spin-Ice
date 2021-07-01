@@ -7,6 +7,7 @@ end
 
 function main()
     @time begin
+
     println("hello")
     latticeType = "four"
     hamiltonianType = "heisenberg"
@@ -39,12 +40,28 @@ function main()
     elseif (hamiltonianType == "transverse")
         temp = calculateEigensystemTransverse(N, J, h, bonds)
     end
+
     eigenvalues = temp[1]
     eigenvectors = temp[2]
-    println((eigenvalues))
+    #println((temp));
     #println((eigenvectors));
+    io=open("eigenvalues"*latticeType*hamiltonianType*method*".txt", "w") do io
+        for i=1:length(eigenvalues)
+            write(io, "$(eigenvalues[i]) \n")
+        end
+    end
+
+    io=open("eigenvectors.txt", "w") do io
+        for i=1:length(eigenvectors)
+            write(io, "$(eigenvectors[i]) \n")
+        end
+    end
+
     println("bye")
     println("TOTAL TIME");
+
+
+
 end
 end
 
