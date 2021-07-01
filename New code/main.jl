@@ -10,7 +10,7 @@ function main()
 
     println("hello")
     latticeType = "four"
-    hamiltonianType = "heisenberg"
+    hamiltonianType = "transverse"
     method = "symmetry"
 
     bonds::Array{bond} = bond[]
@@ -51,7 +51,7 @@ function main()
         end
     end
 
-    io=open("eigenvectors.txt", "w") do io
+    io=open("eigenvectors"*latticeType*hamiltonianType*method*".txt", "w") do io
         for i=1:length(eigenvectors)
             write(io, "$(eigenvectors[i]) \n")
         end

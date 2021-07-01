@@ -1,6 +1,6 @@
 include("hamiltonianGeneration.jl")
 using LinearAlgebra
-using KrylovKit
+#using KrylovKit
 using Arpack
 
 function singleOutNUpSpins(N, range)
@@ -82,18 +82,18 @@ function calculateEigensystemTransverse(N, J, h, bonds)
     evenSpins::Array{Any}=singleOutEvenOddSpins(true, 2^(N*N), N);
         oddSpins::Array{Any}=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
-        HtempEven::SparseMatrixCSC{Float64}=constructHamiltonianTransverse(evenSpins, bonds, N, J,h);
+        HtempEven::Matrix{Float64}=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
         #HtempEven::Matrix{Float64}=constructHamiltonianTransverse(evenSpins, bonds, N, J,h);
 
         println("STARTING ODD");
-        HtempOdd::SparseMatrixCSC{Float64}=constructHamiltonianTransverse(oddSpins, bonds, N, J, h);
+        HtempOdd::Matrix{Float64}=constructTransverseHamiltonian(oddSpins, bonds, N, J, h);
         #HtempOdd::Matrix{Float64}=constructHamiltonianTransverse(oddSpins, bonds, N, J, h);
 
-        println(HtempEven);
-        println(HtempOdd);
+        #println(HtempEven);
+        #println(HtempOdd);
 
-        eigtemp=eigs(HtempEven, nev=length(evenSpins[1]));
-        eigtemp2=eigs(HtempOdd, nev=length(oddSpins[1]));
+        eigtemp=eigen(HtempEven);
+        eigtemp2=eigen(HtempOdd);
         append!(eigenvalues, eigtemp[1]);
         append!(eigenvalues, eigtemp2[1]);
         append!(eigenvectors, eigtemp[2]);

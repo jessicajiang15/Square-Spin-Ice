@@ -79,7 +79,7 @@ function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, re
     ref::Array{refState}=refStates[1];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
-    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
+    H::Matrix{Complex{Float64}}=zeros(Complex{Float64}, length(ref), length(ref));
     println(size(H));
     for i=1:length(ref)
         #loop over all sites
