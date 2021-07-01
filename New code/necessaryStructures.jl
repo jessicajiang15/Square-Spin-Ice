@@ -22,6 +22,25 @@ struct state
     shiftsNeeded::Int64;
 end
 
+struct refState2d
+    state::Int64;
+    periodX::Int64;
+    periodY::Int64;
+    numUniqueSt::Int64;
+end
+
+struct state2d
+    st::Int64;
+    ref::refState2d;
+    shiftsXNeeded::Int64;
+    shiftsYNeeded::Int64;
+end
+
+struct momentum
+    px::Int;
+    py::Int;
+end
+
 function containsSite(i, bond)
     return bond.site1.num==i||bond.site2.num==i;
 end

@@ -6,10 +6,11 @@ function plot()
 end
 
 function main()
+    @time begin
     println("hello")
-    latticeType = "frustrated"
+    latticeType = "four"
     hamiltonianType = "heisenberg"
-    method = "momentum"
+    method = "symmetry"
 
     bonds::Array{bond} = bond[]
     local eigenvalues
@@ -30,8 +31,10 @@ function main()
     if (hamiltonianType == "heisenberg")
         if (method == "symmetry")
             temp = calculateEigensystemHeisenberg(N, J, bonds)
-        else
+        elseif(method=="momentum")
             temp = calculateEigensystemHeisenbergMomentum(N, J, bonds)
+        else
+            temp = calculateEigensystemHeisenbergMomentum2d(N, J, bonds)
         end
     elseif (hamiltonianType == "transverse")
         temp = calculateEigensystemTransverse(N, J, h, bonds)
@@ -40,17 +43,17 @@ function main()
     eigenvectors = temp[2]
     println((eigenvalues))
     #println((eigenvectors));
-
     println("bye")
-
-
+    println("TOTAL TIME");
+end
 end
 
 function test()
     println("NEW");
     N = 4
     temp = 6574;
-    println(rotateAllBits(1, temp, N));
+    #println(rotateAllBits(1, temp, N));
+    #referenceStates(N);
 end
 main();
 #test();

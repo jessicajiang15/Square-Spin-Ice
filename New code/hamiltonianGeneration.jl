@@ -36,7 +36,8 @@ function constructHeisenbergHamiltonian(states, bonds, N, J)
     list=states[1];
     map=states[2];
     #println(states);
-    H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
+    #H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
+    H::Matrix{Float64}=zeros(Int, length(list),length(list));
     for i=1:length(list)
         #NOW loop through all the possible SITES
         for j=1:N*N
@@ -76,11 +77,14 @@ function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, re
     ref::Array{refState}=refStates[1];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
-    H::SparseMatrixCSC{Float64}=spzeros(Float64, length(ref), length(ref));
+    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
     println(size(H));
     for i=1:length(ref)
+        #loop over all sites
             for j=1:N*N
+                #check which bonds contain that site
                 for z=1:length(bonds)
+                    #if it does we proceed
                     if(containsSite(j, bonds[z]))
                         bond1::Int=bonds[z].site1.num;
                         bond2::Int=bonds[z].site2.num;
@@ -90,19 +94,69 @@ function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, re
                             bond2=temp;
                         end
                         if(getTi(bond1-1, ref[i].state)==getTi(bond2-1, ref[i].state))
-                            H[i,i]+=1/4;
+                            H[i,i]+=(1/2)*1/4;
                         else
-                            H[i,i]-=1/4;
+                            H[i,i]-=(1/2)*1/4;
+                            b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
+                            #c::Int=-1;
+                            #p, N, ref
+                            if(isViable(psector, N, refStatesMap[b].ref))
+                                c=map[refStatesMap[b].ref.state];
+                                norm::Float64=sqrt(ref[i].periodicity/refStatesMap[b].ref.periodicity);
+                                #norm::Float64=sqrt((N^2)/ref[i].periodicity))/(((((N^2)/refStatesMap[b].ref.periodicity))));
+                                H[i, c]+=(1/2)*exp(-1im*calculateMomentum(psector, N)*refStatesMap[b].shiftsNeeded)*(1/2)*norm;
+                            end
                         end
-                        b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
-                        c::Int=-1;
-                        try
-                        c=map[refStatesMap[b].state];
-                        catch
-                        continue;
                     end
-                        norm::Float64=sqrt(ref[i].periodicity/ref[c].periodicity);
-                        H[i, c]+=exp(1im*2*pi*calculateMomentum(psector, N)*refStatesMap[b].shiftsNeeded/(N*N))+(1/2)*norm;
+                end
+            end
+    end
+    return H;
+
+end
+
+
+
+#refstates map tells u which refstate is the same
+function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds, refStatesMap)
+#array of viable ref states
+    ref::Array{refState}=refStates[1];
+    phaseFactorSum::Dict{Int, Complex{Int}}=refStates[3];
+    #map that maps xstates to their numbering within hamiltonian
+    map::Dict{Int, Int}=refStates[2];
+    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
+    println(size(H));
+    for i=1:length(ref)
+        #loop over all sites
+            for j=1:N*N
+                #check which bonds contain that site
+                for z=1:length(bonds)
+                    #if it does we proceed
+                    if(containsSite(j, bonds[z]))
+                        bond1::Int=bonds[z].site1.num;
+                        bond2::Int=bonds[z].site2.num;
+                        if(bond1!=j)
+                            temp::Int=bond1;
+                            bond1=bond2;
+                            bond2=temp;
+                        end
+                        if(getTi(bond1-1, ref[i].state)==getTi(bond2-1, ref[i].state))
+                            H[i,i]+=(1/2)*1/4;
+                        else
+                            H[i,i]-=(1/2)*1/4;
+                            b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
+                            #c::Int=-1;
+                            #p, N, ref
+                            try
+                                c=map[refStatesMap[b].ref.state];
+                            catch
+                                continue;
+                            end
+                                c=map[refStatesMap[b].ref.state];
+                                norm::Float64=sqrt(ref[i].numUniqueSt*abs2(phaseFactorSums[i])/(refStatesMap[b].ref.numUniqueSt*abs2(phaseFactorSums[refStatesMap[b].ref.state])));
+                                #work on this
+                                H[i, c]+=(1/2)*exp(-1im*(calculateMomentum(momentum.px, N)*refStatesMap[b].shiftsXNeeded+calculateMomentum(momentum.py, N)*refStatesMap[b].shiftsYNeeded))*(1/2)*norm;
+                        end
                     end
                 end
             end
