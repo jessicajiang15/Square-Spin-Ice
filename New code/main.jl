@@ -10,7 +10,7 @@ function main()
 
     println("hello")
     latticeType = "four"
-    hamiltonianType = "heisenberg"
+    hamiltonianType = "transverse"
     method = "symmetry"
 
     bonds::Array{bond} = bond[]

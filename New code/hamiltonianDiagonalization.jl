@@ -77,30 +77,37 @@ end
 
 
 function calculateEigensystemTransverse(N, J, h, bonds)
+    println("timing matrix generation");
     @time begin
         eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
-    evenSpins::Array{Any}=singleOutEvenOddSpins(true, 2^(N*N), N);
-        oddSpins::Array{Any}=singleOutEvenOddSpins(false, 2^(N*N), N);
+    evenSpins=singleOutEvenOddSpins(true, 2^(N*N), N);
+        oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
-        HtempEven::SparseMatrixCSC{Float64}=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
+        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
         #HtempEven::Matrix{Float64}=constructHamiltonianTransverse(evenSpins, bonds, N, J,h);
-
-        println("STARTING ODD");
-        HtempOdd::Matrix{Float64}=constructTransverseHamiltonian(oddSpins, bonds, N, J, h);
-        #HtempOdd::Matrix{Float64}=constructHamiltonianTransverse(oddSpins, bonds, N, J, h);
-
         #println(HtempEven);
         #println(HtempOdd);
 
         eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
+        HtempEven=nothing;
+        evenSpins=nothing;
+        GC.gc();
+        println("STARTING ODD");
+        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, h);
+                #HtempOdd::Matrix{Float64}=constructHamiltonianTransverse(oddSpins, bonds, N, J, h);
         eigtemp2=eigs(Symmetric(HtempOdd), nev=2^(N*N-1));
+        HtempOdd=nothing;
+        oddSpins=nothing;
+        GC.gc();
         append!(eigenvalues, eigtemp[1]);
         append!(eigenvalues, eigtemp2[1]);
         append!(eigenvectors, eigtemp[2]);
         append!(eigenvectors, eigtemp2[2]);
+
     end
+
     append!(eigensystem, eigenvalues);
     append!(eigensystem, eigenvectors);
 

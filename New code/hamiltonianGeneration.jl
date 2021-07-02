@@ -8,6 +8,8 @@ function constructTransverseHamiltonian(states, bonds, N, J, h)
     map=states[2];
     #println(states);
     H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+
     for i=1:length(list)
         #NOW loop through all the possible SITES
         for j=1:N*N
