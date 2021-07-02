@@ -1,6 +1,6 @@
 include("hamiltonianGeneration.jl")
 using LinearAlgebra
-#using KrylovKit
+using KrylovKit
 using Arpack
 
 function singleOutNUpSpins(N, range)
@@ -41,9 +41,10 @@ function calculateEigensystemHeisenberg(N, J, bonds)
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     for i=0:N*N
+        println("next:");
         spinUps::Array{Any}=singleOutNUpSpins(i, 2^(N*N));
-        #Htemp::SparseMatrixCSC{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
-            Htemp::Matrix{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
+        Htemp::SparseMatrixCSC{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
+        #    Htemp::Matrix{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
         #println(Htemp);
         #TODO:check this, how do you incorporate eigenvectors
         if i==0||i==N*N
@@ -54,9 +55,10 @@ function calculateEigensystemHeisenberg(N, J, bonds)
             append!(eigenvectors, eigenvector)
             continue;
         end
-        eigtemp=eigs(Htemp, nev=16);
+        eigtemp=eigs(Symmetric(Htemp), nev=length(spinUps[1]));
         #eigtemp=eigen(Htemp);
         #println(eigtemp);
+        println(length(eigtemp[1]));
 
         append!(eigenvalues, eigtemp[1]);
         append!(eigenvectors, eigtemp[2]);
@@ -82,7 +84,7 @@ function calculateEigensystemTransverse(N, J, h, bonds)
     evenSpins::Array{Any}=singleOutEvenOddSpins(true, 2^(N*N), N);
         oddSpins::Array{Any}=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
-        HtempEven::Matrix{Float64}=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
+        HtempEven::SparseMatrixCSC{Float64}=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
         #HtempEven::Matrix{Float64}=constructHamiltonianTransverse(evenSpins, bonds, N, J,h);
 
         println("STARTING ODD");
@@ -92,8 +94,8 @@ function calculateEigensystemTransverse(N, J, h, bonds)
         #println(HtempEven);
         #println(HtempOdd);
 
-        eigtemp=eigen(HtempEven);
-        eigtemp2=eigen(HtempOdd);
+        eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
+        eigtemp2=eigs(Symmetric(HtempOdd), nev=2^(N*N-1));
         append!(eigenvalues, eigtemp[1]);
         append!(eigenvalues, eigtemp2[1]);
         append!(eigenvectors, eigtemp[2]);

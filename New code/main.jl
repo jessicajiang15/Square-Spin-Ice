@@ -10,7 +10,7 @@ function main()
 
     println("hello")
     latticeType = "four"
-    hamiltonianType = "transverse"
+    hamiltonianType = "heisenberg"
     method = "symmetry"
 
     bonds::Array{bond} = bond[]
@@ -67,8 +67,9 @@ end
 
 function test()
     println("NEW");
-    N = 4
-    temp = 6574;
+    #println(swapBits(0,2,5));
+    println(rotateYBits(1,32896,1,4));
+
     #println(rotateAllBits(1, temp, N));
     #referenceStates(N);
 end

@@ -36,7 +36,7 @@ function rotateAllBitsX(n, k, N)
     return result;
 end
 
-function rotateAllBitsY(n, k, startD,N)
+function rotateYBits(n, k, startD,N)
     theNum::Int=0;
     endD::Int=N;
     mask::Int=0;
@@ -49,8 +49,9 @@ function rotateAllBitsY(n, k, startD,N)
         local tMask::Int=((1<<(i-1))&k)>>(i-1);
         #then shift it back down and or
         theNum=tMask|theNum;
-        i+=N-1;
+        i+=N+1;
     end
+    println("the num",theNum);
     circ::Int=circularBitShift(n, theNum, N);
     i=0;
     z=startD;
@@ -75,7 +76,7 @@ function rotateAllBitsY(n, k, N)
     for i=0:N-1
         #i is the column
         #start from i, end at i*N+i?
-        push!(test, rotateAllBitsY(n, k, i, N));
+        push!(test, rotateYBits(n, k, i, N));
     end
     result=0;
     for i=1:N

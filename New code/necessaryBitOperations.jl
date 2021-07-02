@@ -21,10 +21,7 @@ end
     return -1;
 end
 
-function rotateBits(x, y, state, N)
-    temp=rotateAllBitsX(x, state, N);
-    return rotateAllBitsY(y, state, N);
-end
+
 
 
 
