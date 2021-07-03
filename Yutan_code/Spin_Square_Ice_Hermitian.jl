@@ -77,7 +77,7 @@ function parity_states_list(;L::Int64=L)
 end
 
 function Hamiltonian(;L::Int64=2, J=1, h=1, neib_list, state_list, state_num, state_tot)
-    H = spzeros(state_tot,state_tot)
+    H = zeros(state_tot,state_tot)
     for state in state_list #loop over all states
         state_binary = digits!(zeros(Int64, 64), state, base = 2)
         for i in 1:L^2 #loop over all sites i in a given state
@@ -98,7 +98,7 @@ function Hamiltonian(;L::Int64=2, J=1, h=1, neib_list, state_list, state_num, st
     return H
 end
 
-function H_driver(;L::Int64=L, J::Float64=J, h::Float64=h)
+function H_gen(;L::Int64=L, J::Float64=J, h::Float64=h, odev::Symbol)
     neib_list = neib_list_gen(L=L)
     state_gen = parity_states_list(L=L)
     even_state = state_gen[:even_state]
@@ -108,19 +108,34 @@ function H_driver(;L::Int64=L, J::Float64=J, h::Float64=h)
     even_state_tot = state_gen[:even_state_tot]
     odd_state_tot = state_gen[:odd_state_tot]
     #now constructine Hamiltonian of the two sectors
-    Hamiltonian_even = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=even_state, state_num=even_state_num, state_tot=even_state_tot)
-    Hamiltonian_odd = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=odd_state, state_num=odd_state_num, state_tot=odd_state_tot)
-    return Dict(:even => Hamiltonian_even, :odd => Hamiltonian_odd)
+    if odev == :even
+        Hamiltonian_even = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=even_state, state_num=even_state_num, state_tot=even_state_tot)
+        Hamiltonian_even = Hermitian(Hamiltonian_even, :L)
+        return Hamiltonian_even
+    elseif odev == :odd
+        Hamiltonian_odd = Hamiltonian(;L=L, J=J, h=h, neib_list=neib_list, state_list=odd_state, state_num=odd_state_num, state_tot=odd_state_tot)
+        Hamiltonian_odd = Hermitian(Hamiltonian_odd, :L)
+        return Hamiltonian_odd
+    end
+    #return Dict(:even => Hamiltonian_even, :odd => Hamiltonian_odd)
 end
 
 L=4;J=1.0;h=1.0
-@time H_blocks = H_driver(L=L, J=J, h=h)
+H_blocks = Dict()
+H_blocks[:even] = H_gen(L=L, J=J, h=h, odev=:even)
+eigs = Dict()
+@time eigs[:even] = eigen(H_blocks[:even])
+
+H_blocks[:odd] = H_gen(L=L, J=J, h=h, odev=:odd)
+@time eigs[:odd] = eigen(H_blocks[:odd])
 
 my_time = Dates.now()
 
 time_finished = "Date_$(Dates.format(my_time, "e_dd_u_yyyy_HH_MM_SS"))"
-content = "Hamiltonian_even_odd"
+content = "Hamiltonian_even_odd_eigs"
 save_path = "/nfs/home/zyt329/Research/Square_spin_ice/result/"
+#"D:/UC Davis/Research/Square Spin Ice/Square-Spin-Ice/Yutan_code/Results/"
 save_name = save_path*content*"_L=$(L)__J=$(J)__h=$(h)_"*time_finished*".jld"
 
-save(save_name, "sim", [H_blocks[:even],H_blocks[:odd]])
+save(save_name, "eigs", [eigs[:even],eigs[:odd]])
+println("finished")
