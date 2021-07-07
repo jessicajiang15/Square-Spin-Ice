@@ -41,6 +41,26 @@ struct momentum
     py::Int;
 end
 
+struct reflectionRefState
+    state::Int64;
+    xC::Int64;
+    yC::Int64;
+    xyC::Int64;
+    uniqueReflections::Int64;
+end
+
+struct reflectionState
+    state::Int64;
+    refState::reflectionRefState;
+    refXNeeded::Int64;
+    refYNeeded::Int64;
+end
+
+struct lambda
+    lx::Int64;
+    ly::Int64;
+end
+
 function containsSite(i, bond)
     return bond.site1.num==i||bond.site2.num==i;
 end

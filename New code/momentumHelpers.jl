@@ -91,19 +91,36 @@ function calculateMomentum(psector, N)
     return 2*pi*psector/(N);
 end
 
+function has(n, list)
+    for i=1:length(list)
+        if(list[i]==n)
+            return true;
+        end
+    end
+    return false;
+end
+
 
 function getStateInfo(state, N, refMap)
     all::Array{Any}=Any[];
-    isRefState::Bool=false;
+    isRefState::Bool=true;
     local ref::refState2d;
     yes::Bool=false;
     check::Int64=state;
     yShift::Int=0;
     xShift::Int=0;
     temp::Int=state;
-    countUnique::Int=0;
+    countUnique::Int=1;
+    list=Int64[];
+    push!(list, state);
+
     lol::Bool=false;
+    #println("state: ", state);
+
     for x=0:N-1
+        if(yes)
+            break;
+        end
         xShift = x;
         for y=0:N-1
             if(x==0&&y==0)
@@ -111,28 +128,49 @@ function getStateInfo(state, N, refMap)
             end
             yShift = y;
 
+            if(state==12)
+                println("x",x);
+                println("y",y);
+            end
             temp=rotateBits(x, y, state, N);
+            #println("temp, ", temp);
             #only count a state if youre a reference state– gives how many
             #unique states there are corresponding to particular ref state
             #once you get back to the ref state, and youre not one, all we need
             #is the translations that bring you to the ref state!
-            if(temp==check&&yes)
+            if(temp==check&&!isRefState)
+                yes=true;
                 break;
-            else
-                countUnique+=1;
             end
-                if(temp<state&&!yes)
+            if(isRefState&&(!has(temp, list)))
+                countUnique+=1;
+                push!(list, temp);
+            end
+                if(temp<state&&isRefState)
                     ref=refMap[temp].ref;
                     isRefState=false;
+                    if(state==12)
+                        println("wtf", temp);
+                        println(ref.state);
+                    end
+                    if(ref.state==temp)
+                        yes=true;
+                        break;
+                    end
                     check=ref.state;
-                    yes=true;
-                    lol=true;
                 end
         end
     end
-    if(!yes)
+    if(isRefState)
+        xShift=0;
+        yShift=0;
         ref=refState2d(state, xShift, yShift, countUnique);
         lol=true;
+    end
+
+    if(state==12)
+        println("x", xShift);
+        println("y", yShift);
     end
     push!(all, isRefState);
     #shifts to get to ref state
@@ -140,14 +178,14 @@ function getStateInfo(state, N, refMap)
     push!(all, yShift);
     #corresponding ref state
     push!(all, ref);
-    push!(all, countUnique);
+    #push!(all, countUnique);
 
 end
 
 
 function referenceStatesXY(N)
     println("yes");
-    mask=calculateMask(N);
+    count::Int=0;
     all::Array{Any}=Any[];
     #list of all reference states
     refStates::Array{refState2d}=refState[];
@@ -158,11 +196,15 @@ function referenceStatesXY(N)
     ct=0;
     for i=0:2^(N*N)-1
         local arr=getStateInfo(i, N, refMap);
+        #red x y
         refMap[i]=state2d(i, arr[4], arr[2], arr[3]);
         if(arr[1])
+            #println("unqieu statds", arr[4].numUniqueSt);
             push!(refStates, arr[4]);
         end
     end
+    println("total !!!! ", count);
+    println("how many ref states: ", length(refStates));
         push!(all, refStates);
         push!(all, refMap);
         return all;
@@ -170,15 +212,12 @@ end
 
 
 function isViable2d(px, py, N, ref)
-    theFactor::Complex{Int}=0;
+    theFactor::Complex{Float64}=0;
     for i=0:N-1
         for j=0:N-1
             shifted=rotateBits(i, j, ref.state, N);
-            if(shifted==ref)
-                tf=exp(-1im*(i*calculateMomentum(px, N)+j*calculateMomentum(px, N)));
-                if(tf<0)
-                    return 0;
-                end
+            if(shifted==ref.state)
+                tf=exp(-1im*(i*calculateMomentum(px, N)+j*calculateMomentum(py, N)));
                 theFactor+=tf;
             end
         end
@@ -190,23 +229,27 @@ function isViable2d(px, py, N, ref)
 
 function getViableStates2d(px, py, N, ref)
     all::Array{Any}=Any[];
+    ct=0;
     viables::Array{refState2d}=refState2d[];
     dict::Dict{Int, Int}=Dict{Int, Int}();
     #state to its "sum"
-    sumsOfPhaseFactors::Dict{Int, Complex{Int}}=Dict{Int, Complex{Int}}();
+    sumsOfPhaseFactors::Dict{Int, Complex{Float64}}=Dict{Int, Complex{Float64}}();
     count::Int=0;
+    println("LENGTH OF REF", length(ref));
     for i=1:length(ref)
-        temp::Int=isViable2d(px, py, N, ref[i]);
-        sumsOfPhaseFactors[i]=temp;
-        if(temp!=0)
+        temp::Complex{Float64}=isViable2d(px, py, N, ref[i]);
+        #println("phase sum", abs(real(temp)));
+        if(abs(real(temp))>0.001)
             count+=1;
             dict[ref[i].state]=count;
+            sumsOfPhaseFactors[ref[i].state]=real(temp);
             push!(viables, ref[i]);
         end
     end
     push!(all, viables);
     push!(all, dict);
     push!(all, sumsOfPhaseFactors);
+    println("ct:",ct);
     return all;
 end
 
@@ -215,13 +258,14 @@ function generateAllMomenta(N)
     momenta::Array{momentum}=momentum[];
     i=0;
     j=0;
-    while(i<=N/2)
-        while(j<=N/2)
-            local p::momentum=momentum(i, j);
-            push!(momenta, p);
+    while(i<=N-1)
+        j=0;
+        while(j<=N-1)
+            push!(momenta, momentum(i, j));
             j+=1;
         end
         i+=1;
     end
+    println("length momentum", length(momenta));
     return momenta;
 end

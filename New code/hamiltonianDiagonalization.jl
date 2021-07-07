@@ -145,6 +145,9 @@ end
 
 #refStates, N, psector, bonds, refStatesMap
 function calculateEigensystemHeisenbergMomentum2d(N, J, bonds)
+    eigensystem=Any[];
+    eigenvectors=Any[];
+    count=0;
     println("TIMING GENERATION REF STATES");
     @time begin
     refStatesData=referenceStatesXY(N);
@@ -157,13 +160,38 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds)
     momenta::Array{momentum}=generateAllMomenta(N);
     eigenvalues=Any[];
     for i=1:length(momenta)
+        println("curr momentum: ", momenta[i]);
         local pt::momentum=momenta[i];
         viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
+        count+=length(viableSt[1]);
         #viable st contains info about the numbering of each viable state
         Htemp::SparseMatrixCSC{Complex{Float64}}=constructHamiltonianHeisenbergMomentum2d(viableSt, N, momenta[i], bonds, refStatesMap);
         println(Htemp);
         eigtemp=eigs(Htemp);
-        append!(eigenvalues,eigtemp);
+        append!(eigenvalues,eigtemp[1]);
+        append!(eigenvectors, eigtemp[2])
     end
-    return eigenvalues;
+    push!(eigensystem, eigenvalues);
+    push!(eigensystem, eigenvectors);
+    println("TOTALTAOTA", count);
+    return eigensystem;
+end
+
+
+
+#refStates, N, psector, bonds, refStatesMap
+function calculateEigensystemHeisenbergReflection(N, J, bonds)
+    eigensystem=Any[];
+    eigenvectors=Any[];
+    reflections=generateAllReflections();
+    refStates=getReferenceStatesReflection(N);
+    refStatesMap=refStates[2];
+    viableStatesPos=findViableRefStatesReflection(refStates[1], 1, N);
+    viableStatesNeg=findViableRefStatesReflection(refStates[1], -1, N);
+#refStates, N, momentum, bonds, refStatesMap
+    HPos=constructHamiltonianHeisenbergReflection(viableStatesPos,N, reflections,bonds, refStatesMap);
+    HNeg=constructHamiltonianHeisenbergReflection(viableStatesNeg,N, reflections,bonds, refStatesMap);
+    push!(eigensystem, eigenvalues);
+    push!(eigensystem, eigenvectors);
+    return eigensystem;
 end

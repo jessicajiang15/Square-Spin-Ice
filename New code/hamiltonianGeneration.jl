@@ -125,8 +125,8 @@ end
 #refstates map tells u which refstate is the same
 function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds, refStatesMap)
 #array of viable ref states
-    ref::Array{refState}=refStates[1];
-    phaseFactorSum::Dict{Int, Complex{Int}}=refStates[3];
+    ref::Array{refState2d}=refStates[1];
+    phaseFactorSums::Dict{Int, Complex{Float64}}=refStates[3];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
     H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
@@ -152,15 +152,63 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
                             b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
                             #c::Int=-1;
                             #p, N, ref
-                            try
-                                c=map[refStatesMap[b].ref.state];
-                            catch
-                                continue;
-                            end
-                                c=map[refStatesMap[b].ref.state];
-                                norm::Float64=sqrt(ref[i].numUniqueSt*abs2(phaseFactorSums[i])/(refStatesMap[b].ref.numUniqueSt*abs2(phaseFactorSums[refStatesMap[b].ref.state])));
+                            if(refStatesMap[b].ref.state in keys(map))
+                                local c=map[refStatesMap[b].ref.state];
+                                one=ref[i].numUniqueSt;
+                                two=phaseFactorSums[ref[i].state];
+                                three=refStatesMap[b].ref.numUniqueSt;
+                                four=phaseFactorSums[refStatesMap[b].ref.state];
+                                norm::Float64=sqrt(three*abs2(four)/(one*abs2(two)));
                                 #work on this
                                 H[i, c]+=(1/2)*exp(-1im*(calculateMomentum(momentum.px, N)*refStatesMap[b].shiftsXNeeded+calculateMomentum(momentum.py, N)*refStatesMap[b].shiftsYNeeded))*(1/2)*norm;
+                            end
+                        end
+                    end
+                end
+            end
+    end
+    println("h 0 0 ", H[1,1]);
+    return H;
+
+end
+
+
+
+
+#refstates map tells u which refstate is the same
+function constructHamiltonianHeisenbergReflection(refStates, N, momentum, bonds, refStatesMap)
+#array of viable ref states
+    ref::Array{refState2d}=refStates[1];
+    #map that maps xstates to their numbering within hamiltonian
+    map::Dict{Int, Int}=refStates[2];
+    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
+    println(size(H));
+    for i=1:length(ref)
+        #loop over all sites
+            for j=1:N*N
+                #check which bonds contain that site
+                for z=1:length(bonds)
+                    #if it does we proceed
+                    if(containsSite(j, bonds[z]))
+                        bond1::Int=bonds[z].site1.num;
+                        bond2::Int=bonds[z].site2.num;
+                        if(bond1!=j)
+                            temp::Int=bond1;
+                            bond1=bond2;
+                            bond2=temp;
+                        end
+                        if(getTi(bond1-1, ref[i].state)==getTi(bond2-1, ref[i].state))
+                            H[i,i]+=(1/2)*1/4;
+                        else
+                            H[i,i]-=(1/2)*1/4;
+                            b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
+                            #c::Int=-1;
+                            #p, N, ref
+                            if(refStatesMap[b].ref.state in keys(map))
+                                local c=map[refStatesMap[b].ref.state];
+                                norm::Float64=sqrt(refStatesMap[b].ref.uniqueReflections/ref[i].unqiueReflections);
+                                H[i, c]+=(1/2)*(refStatesMap[b].refXNeeded == 1 ? refStatesMap[b].ref.xC : 1)*(refStatesMap[b].refYNeeded == 1 ? refStatesMap[b].ref.yC : 1)*norm*(1/2);
+                            end
                         end
                     end
                 end

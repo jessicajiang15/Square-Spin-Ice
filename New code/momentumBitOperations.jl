@@ -38,32 +38,32 @@ end
 
 function rotateYBits(n, k, startD,N)
     theNum::Int=0;
-    endD::Int=N;
+    endD::Int=N*(N-1)+startD;
     mask::Int=0;
     i::Int=startD;
     final::Int=0;
+    count::Int=0;
     while(i<=endD)
         #picks out nth digit and puts in right place
-
         #tmask is the ith digit
-        local tMask::Int=((1<<(i-1))&k)>>(i-1);
+        local tMask::Int=((1<<(i-1))&k)>>(i-1-count);
         #then shift it back down and or
         theNum=tMask|theNum;
-        i+=N+1;
+        i+=N;
+        count+=1;
     end
-    println("the num",theNum);
     circ::Int=circularBitShift(n, theNum, N);
-    i=0;
-    z=startD;
-    while(i<N)
-        #picks out nth digit and puts in right place
 
+    j=0;
+    z=startD;
+    while(j<N)
+        #picks out nth digit and puts in right place
         #tmask is the ith digit
-        local tMask::Int=((1<<i)&theNum>>i)<<(startD-1);
+        local tMask::Int=((1)&(circ>>(j)))<<(z-1);
         #then shift it back down and or
         final=tMask|final;
-        i+=1;
-        z+=N-1;
+        j+=1;
+        z+=N;
     end
 
     return final;
@@ -73,11 +73,12 @@ end
 
 function rotateAllBitsY(n, k, N)
     test=Int[];
-    for i=0:N-1
+    for i=1:N
         #i is the column
         #start from i, end at i*N+i?
         push!(test, rotateYBits(n, k, i, N));
     end
+
     result=0;
     for i=1:N
         result=result|test[i];

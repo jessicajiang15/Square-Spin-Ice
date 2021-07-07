@@ -1,5 +1,29 @@
 function reflectX(n, N)
+    i=0;
+    reset=0;
+    currRow=1;
+    curr=n;
+    while(currRow<=N)
+        for i=0:N÷2-1
+             curr=swapBits(i+(currRow-1)*N, currRow*N-i-1, curr);
+        end
+        currRow+=1;
+    end
+    return curr;
+end
 
+function reflectY(n, N)
+    i=0;
+    reset=0;
+    currCol=1;
+    curr=n;
+    while(currCol<=N)
+        for i=0:N÷2-1
+             curr=swapBits(currCol+i*N, currCol+N*(N-1)-i*N, curr);
+        end
+        currCol+=1;
+    end
+    return curr;
 end
 
 

@@ -143,7 +143,6 @@ function bondList(N)
             if(j!=N-1)
                 addBond(i-1, j+1, "ij", N, bonds, site0);
             end
-
         end
     end
     println(length(bonds));
