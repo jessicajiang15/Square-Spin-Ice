@@ -2,12 +2,17 @@ include("bondGeneration.jl");
 include("momentumHelpers.jl")
 include("reflectionHelper.jl")
 using SparseArrays
-function constructTransverseHamiltonian(states, bonds, N, J, h)
+function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
     list=states[1];
     map=states[2];
     #println(states);
-    H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Float64, length(list),length(list));
+    else
+        H=spzeros(Float64, length(list),length(list));
+    end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
 
     for i=1:length(list)
@@ -19,7 +24,7 @@ function constructTransverseHamiltonian(states, bonds, N, J, h)
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
-                    theThing= getTi(bond1-1,list[i]) == 1 ? h/2 : -h/2;
+                    theThing= getTi(bond1-1,list[i]) == 1 ? randList[z]/2 : -randList[z]/2;
                     H[i,i]+= theThing;
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
@@ -34,13 +39,18 @@ function constructTransverseHamiltonian(states, bonds, N, J, h)
 end
 
 
-function constructHeisenbergHamiltonian(states, bonds, N, J)
+function constructHeisenbergHamiltonian(states, bonds, N, J, eigmethod)
     #loop through ALL the possible states...
     list=states[1];
     map=states[2];
     #println(states);
-    H::SparseMatrixCSC{Float64}=spzeros(Int, length(list),length(list));
-    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Float64, length(list),length(list));
+    else
+        H=spzeros(Float64, length(list),length(list));
+        println(typeof(H));
+    end    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
     for i=1:length(list)
         #NOW loop through all the possible SITES
         for j=1:N*N
@@ -77,12 +87,17 @@ function constructHeisenbergHamiltonian(states, bonds, N, J)
 end
 
 #refstates map tells u which refstate is the same
-function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, refStatesMap)
+function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, refStatesMap, eigmethod)
 #array of viable ref states
     ref::Array{refState}=refStates[1];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
-    H::Matrix{Complex{Float64}}=zeros(Complex{Float64}, length(ref), length(ref));
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Complex{Float64}, length(ref),length(ref));
+    else
+        H=spzeros(Complex{Float64}, length(ref),length(ref));
+    end
     println(size(H));
     for i=1:length(ref)
         #loop over all sites
@@ -123,14 +138,19 @@ end
 
 
 #refstates map tells u which refstate is the same
-function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds, refStatesMap)
+function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds, refStatesMap, eigmethod)
 #array of viable ref states
     ref::Array{refState2d}=refStates[1];
     phaseFactorSums::Dict{Int, Complex{Float64}}=refStates[3];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
-    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
-    println(size(H));
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Complex{Float64}, length(ref),length(ref));
+    else
+        H=spzeros(Complex{Float64}, length(ref),length(ref));
+    end
+        println(size(H));
     for i=1:length(ref)
         #loop over all sites
             for j=1:N*N
@@ -176,13 +196,18 @@ end
 
 
 #refstates map tells u which refstate is the same
-function constructHamiltonianHeisenbergReflection(refStates, N, momentum, bonds, refStatesMap)
+function constructHamiltonianHeisenbergReflection(refStates, N, reflection, bonds, refStatesMap, eigmethod)
 #array of viable ref states
-    ref::Array{refState2d}=refStates[1];
+    ref::Array{reflectionRefState}=refStates[1];
     #map that maps xstates to their numbering within hamiltonian
     map::Dict{Int, Int}=refStates[2];
-    H::SparseMatrixCSC{Complex{Float64}}=spzeros(Complex{Float64}, length(ref), length(ref));
-    println(size(H));
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Float64, length(ref),length(ref));
+    else
+        H=spzeros(Float64, length(ref),length(ref));
+    end
+        println(size(H));
     for i=1:length(ref)
         #loop over all sites
             for j=1:N*N
@@ -204,10 +229,10 @@ function constructHamiltonianHeisenbergReflection(refStates, N, momentum, bonds,
                             b::Int=flipBits(bond1-1, bond2-1, ref[i].state);
                             #c::Int=-1;
                             #p, N, ref
-                            if(refStatesMap[b].ref.state in keys(map))
-                                local c=map[refStatesMap[b].ref.state];
-                                norm::Float64=sqrt(refStatesMap[b].ref.uniqueReflections/ref[i].unqiueReflections);
-                                H[i, c]+=(1/2)*(refStatesMap[b].refXNeeded == 1 ? refStatesMap[b].ref.xC : 1)*(refStatesMap[b].refYNeeded == 1 ? refStatesMap[b].ref.yC : 1)*norm*(1/2);
+                            if(refStatesMap[b].refState.state in keys(map))
+                                local c=map[refStatesMap[b].refState.state];
+                                norm::Float64=sqrt(refStatesMap[b].refState.uniqueReflections/ref[i].uniqueReflections);
+                                H[i, c]+=(1/2)*(refStatesMap[b].refXNeeded == 1 ? refStatesMap[b].refState.xC : 1)*(refStatesMap[b].refYNeeded == 1 ? refStatesMap[b].refState.yC : 1)*norm*(1/2);
                             end
                         end
                     end

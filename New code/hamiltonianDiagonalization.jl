@@ -3,48 +3,18 @@ using LinearAlgebra
 using KrylovKit
 using Arpack
 
-function singleOutNUpSpins(N, range)
-    #temp2 stores the map and the list
-    temp2::Array{Any}=Any[];
-    #temp stores the statess
-    temp::Array{Int}=Int[];
-    #stores the states and their corresponding number
-    temp1::Dict{Int,Int}=Dict{Int, Int}();
-    in::Int=0;
-    for i=0:range-1
-        count::Int=0;
-        n::Int=i;
-        while n>0
-            count+=1;
-            if count>N
-                break;
-            end
-            n=n & (n-1);
-        end
-        if(count==N)
-            in+=1;
-            temp1[i]=in;
-            push!(temp, i)
 
-    end
-end
-println("THE STATES",length(temp));
-push!(temp2, temp);
-push!(temp2, temp1);
-    return temp2;
-
-end
-
-function calculateEigensystemHeisenberg(N, J, bonds)
+function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
         eigensystem::Array{Any}=Any[];
 
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     for i=0:N*N
-        println("next:");
         spinUps::Array{Any}=singleOutNUpSpins(i, 2^(N*N));
-        Htemp::SparseMatrixCSC{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
-        #    Htemp::Matrix{Float64}=constructHeisenbergHamiltonian(spinUps, bonds, N, J);
+        @time begin
+        println("next:", i);
+        Htemp=constructHeisenbergHamiltonian(spinUps, bonds, N, J, eigmethod);
+    end
         #println(Htemp);
         #TODO:check this, how do you incorporate eigenvectors
         if i==0||i==N*N
@@ -55,56 +25,119 @@ function calculateEigensystemHeisenberg(N, J, bonds)
             append!(eigenvectors, eigenvector)
             continue;
         end
-        eigtemp=eigs(Symmetric(Htemp), nev=length(spinUps[1]));
-        #eigtemp=eigen(Htemp);
-        #println(eigtemp);
-        println(length(eigtemp[1]));
+        n::Int=0;
+        if(num=="all")
+            n=length(spinUps[1]);
+        elseif(num=="one")
+            n=1;
+        else
+            n=16;
+        end
+        if(eigmethod=="full")
+            println("yes", typeof(Htemp));
+            eigtemp=eigen(Htemp);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
+            append!(eigenvectors, vecs);
+        else
+            println(typeof(Htemp));
+            println(n);
+            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
 
-        append!(eigenvalues, eigtemp[1]);
-        append!(eigenvectors, eigtemp[2]);
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
 
-        #append!(eigenvalues, eigtemp.values);
-        #append!(eigenvectors, eigtemp.vectors);
-    end
 
-push!(eigensystem, eigenvalues);
-push!(eigensystem, eigenvectors);
+        end
 
-return eigensystem;
+        push!(eigensystem, eigenvalues);
+        push!(eigensystem, eigenvectors);
+        return eigensystem;
 
 end
 
 
 
-function calculateEigensystemTransverse(N, J, h, bonds)
+function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, width)
     println("timing matrix generation");
     @time begin
-        eigensystem::Array{Any}=Any[];
+    randomList=generateRandomh(hbar, width, bonds);
+    eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     evenSpins=singleOutEvenOddSpins(true, 2^(N*N), N);
         oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
-        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J,h);
-        #HtempEven::Matrix{Float64}=constructHamiltonianTransverse(evenSpins, bonds, N, J,h);
-        #println(HtempEven);
-        #println(HtempOdd);
+        @time begin
+        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
+    end
+    n::Int=0;
+    if(num=="all")
+        n=length(spinUps[1]);
+    elseif(num=="one")
+        n=1;
+    else
+        n=16;
+    end
+        if(eigmethod=="full")
+            eigtemp=eigen(HtempEven);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            values, vecs, info=eigsolve(HtempEven, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
+            append!(eigenvectors, vecs);
+        else
+            eigtemp=eigs(Symmetric(HtempEven), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
 
-        eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
+        #eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
         HtempEven=nothing;
         evenSpins=nothing;
         GC.gc();
         println("STARTING ODD");
-        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, h);
-                #HtempOdd::Matrix{Float64}=constructHamiltonianTransverse(oddSpins, bonds, N, J, h);
-        eigtemp2=eigs(Symmetric(HtempOdd), nev=2^(N*N-1));
+        @time begin
+        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, eigmethod, randomList);
+    end
+
+        if(eigmethod=="full")
+            eigtemp=eigen(HtempOdd);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
+            append!(eigenvectors, vecs);
+        else
+            eigtemp=eigs(Symmetric(HtempOdd), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
+
         HtempOdd=nothing;
         oddSpins=nothing;
-        GC.gc();
-        append!(eigenvalues, eigtemp[1]);
-        append!(eigenvalues, eigtemp2[1]);
-        append!(eigenvectors, eigtemp[2]);
-        append!(eigenvectors, eigtemp2[2]);
 
     end
 
@@ -116,7 +149,7 @@ function calculateEigensystemTransverse(N, J, h, bonds)
 end
 
 #refStates, N, psector, bonds, refStatesMap
-function calculateEigensystemHeisenbergMomentum(N, J, bonds)
+function calculateEigensystemHeisenbergMomentum(N, J, bonds, eigmethod, num)
     println("TIMING GENERATION REF STATES");
     @time begin
     refStatesData=referenceStates(N);
@@ -131,11 +164,36 @@ end
         println("CURR MOMENTUM ", i);
         viableSt=findViableRefStates(i, N, refStates);
         #viable st contains info about the numbering of each viable state
-        Htemp::SparseMatrixCSC{Complex{Float64}}=constructHamiltonianHeisenbergMomentum(viableSt, N, i, bonds, refStatesMap);
+        Htemp=constructHamiltonianHeisenbergMomentum(viableSt, N, i, bonds, refStatesMap, eigmethod);
         println(Htemp);
         println(Htemp[1,1]);
-        eigtemp=eigs(Htemp, nev=100);
-        append!(eigenvalues,eigtemp);
+        n::Int=0;
+        if(num=="all")
+            n=length(spinUps[1]);
+        elseif(num=="one")
+            n=1;
+        else
+            n=16;
+        end
+        if(eigmethod=="full")
+            eigtemp=eigen(Htemp);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
+            append!(eigenvectors, vecs);
+        else
+            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
     end
     return eigenvalues;
 end
@@ -144,7 +202,7 @@ end
 
 
 #refStates, N, psector, bonds, refStatesMap
-function calculateEigensystemHeisenbergMomentum2d(N, J, bonds)
+function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
     eigensystem=Any[];
     eigenvectors=Any[];
     count=0;
@@ -165,12 +223,37 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds)
         viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
         count+=length(viableSt[1]);
         #viable st contains info about the numbering of each viable state
-        Htemp::SparseMatrixCSC{Complex{Float64}}=constructHamiltonianHeisenbergMomentum2d(viableSt, N, momenta[i], bonds, refStatesMap);
+        Htemp=constructHamiltonianHeisenbergMomentum2d(viableSt, N, momenta[i], bonds, refStatesMap, eigmethod);
         println(Htemp);
-        eigtemp=eigs(Htemp);
-        append!(eigenvalues,eigtemp[1]);
-        append!(eigenvectors, eigtemp[2])
+        n::Int=0;
+        if(num=="all")
+            n=length(spinUps[1]);
+        elseif(num=="one")
+            n=1;
+        else
+            n=16;
+        end
+        if(eigmethod=="full")
+            eigtemp=eigen(Htemp);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
+            append!(eigenvectors, vecs);
+        else
+            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
     end
+    length(eigenvalues);
     push!(eigensystem, eigenvalues);
     push!(eigensystem, eigenvectors);
     println("TOTALTAOTA", count);
@@ -180,17 +263,51 @@ end
 
 
 #refStates, N, psector, bonds, refStatesMap
-function calculateEigensystemHeisenbergReflection(N, J, bonds)
+function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
     eigensystem=Any[];
     eigenvectors=Any[];
+    eigenvalues=Any[];
     reflections=generateAllReflections();
-    refStates=getReferenceStatesReflection(N);
-    refStatesMap=refStates[2];
-    viableStatesPos=findViableRefStatesReflection(refStates[1], 1, N);
-    viableStatesNeg=findViableRefStatesReflection(refStates[1], -1, N);
-#refStates, N, momentum, bonds, refStatesMap
-    HPos=constructHamiltonianHeisenbergReflection(viableStatesPos,N, reflections,bonds, refStatesMap);
-    HNeg=constructHamiltonianHeisenbergReflection(viableStatesNeg,N, reflections,bonds, refStatesMap);
+    refs=getReferenceStatesReflection(N);
+    lambdas=generateAllReflections();
+    println("how many refs", length(refs[1]));
+    total=0;
+    refStatesMap=refs[2];
+    for i=1:length(reflections)
+        viableStates=findViableRefStatesReflection(refs[1], reflections[i], N);
+        println("THE LENGTH",length(viableStates[1]));
+        total+=length(viableStates[1]);
+        n::Int=0;
+        if(num=="all")
+            n=length(spinUps[1]);
+        elseif(num=="one")
+            n=1;
+        else
+            n=16;
+        end
+        Htemp=constructHamiltonianHeisenbergReflection(viableStates,N, reflections[i],bonds, refStatesMap, eigmethod);
+        if(eigmethod=="full")
+            eigtemp=eigen(Htemp);
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        elseif(eigmethod=="lanczos")
+            eigs, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, eigs);
+            append!(eigenvectors, vecs);
+        else
+            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
+
+    end
+    println("TOTAOKL", total);
     push!(eigensystem, eigenvalues);
     push!(eigensystem, eigenvectors);
     return eigensystem;

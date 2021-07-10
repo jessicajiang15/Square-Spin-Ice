@@ -1,4 +1,5 @@
-
+using Distributions
+using Random
 function binarySearchIt(a, list)
     #println("starting time for binary search");
     i=1;
@@ -71,4 +72,42 @@ end
 #credit: semibran at https://github.com/semibran/wrap-around/blob/master/index.js
 function wrap(n, m)
       return n >= 0 ? n % m : (n % m + m) % m;
+end
+
+
+function singleOutNUpSpins(N, range)
+    #temp2 stores the map and the list
+    temp2::Array{Any}=Any[];
+    #temp stores the statess
+    temp::Array{Int}=Int[];
+    #stores the states and their corresponding number
+    temp1::Dict{Int,Int}=Dict{Int, Int}();
+    in::Int=0;
+    for i=0:range-1
+        count::Int=0;
+        n::Int=i;
+        while n>0
+            count+=1;
+            if count>N
+                break;
+            end
+            n=n & (n-1);
+        end
+        if(count==N)
+            in+=1;
+            temp1[i]=in;
+            push!(temp, i)
+
+    end
+end
+println("THE STATES",length(temp));
+push!(temp2, temp);
+push!(temp2, temp1);
+    return temp2;
+
+end
+
+function generateRandomh(hbar, width, bonds)
+    temp=Normal(hbar, width);
+    return rand(temp, length(bonds));
 end
