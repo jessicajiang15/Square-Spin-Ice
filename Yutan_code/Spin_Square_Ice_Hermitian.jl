@@ -124,10 +124,10 @@ L=4;J=1.0;h=1.0
 H_blocks = Dict()
 H_blocks[:even] = H_gen(L=L, J=J, h=h, odev=:even)
 eigs = Dict()
-@time eigs[:even] = eigen(H_blocks[:even])
+@time eigs[:even] = eigen(SparseMatrixCSC(H_blocks[:even]))
 
 H_blocks[:odd] = H_gen(L=L, J=J, h=h, odev=:odd)
-@time eigs[:odd] = eigen(H_blocks[:odd])
+@time eigs[:odd] = eigen(SparseMatrixCSC(H_blocks[:odd]))
 
 my_time = Dates.now()
 
