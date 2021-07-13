@@ -82,12 +82,13 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     end
     n::Int=0;
     if(num=="all")
-        n=length(spinUps[1]);
+        n=length(evenSpins[1]);
     elseif(num=="one")
         n=1;
     else
         n=16;
     end
+
         if(eigmethod=="full")
             eigtemp=eigen(HtempEven);
             append!(eigenvalues, eigtemp.values);
@@ -111,6 +112,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
         HtempEven=nothing;
         evenSpins=nothing;
         GC.gc();
+
         println("STARTING ODD");
         @time begin
         HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, eigmethod, randomList);

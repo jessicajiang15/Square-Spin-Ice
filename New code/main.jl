@@ -9,14 +9,14 @@ function main()
     @time begin
         Random.seed!(123);
     println("hello")
-    latticeType = "eight"
-    hamiltonianType = "heisenberg"
-    method = "momentum2d"
+    latticeType = "four"
+    hamiltonianType = "transverse"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
-    eigmethod="sparse"
+    eigmethod="full"
     #test=16, all=all, one=1, ignore if eigmethod=full
-    num="test"
-    file=false;
+    num="all"
+    file=true;
 
     bonds::Array{bond} = bond[]
     local eigenvalues
