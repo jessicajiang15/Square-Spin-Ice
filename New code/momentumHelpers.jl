@@ -128,10 +128,6 @@ function getStateInfo(state, N, refMap)
             end
             yShift = y;
 
-            if(state==12)
-                println("x",x);
-                println("y",y);
-            end
             temp=rotateBits(x, y, state, N);
             #println("temp, ", temp);
             #only count a state if youre a reference state– gives how many
@@ -149,10 +145,6 @@ function getStateInfo(state, N, refMap)
                 if(temp<state&&isRefState)
                     ref=refMap[temp].ref;
                     isRefState=false;
-                    if(state==12)
-                        println("wtf", temp);
-                        println(ref.state);
-                    end
                     if(ref.state==temp)
                         yes=true;
                         break;

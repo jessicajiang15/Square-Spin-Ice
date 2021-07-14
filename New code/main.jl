@@ -10,7 +10,9 @@ function main()
         Random.seed!(123);
     println("hello")
     latticeType = "four"
+    #heisenberg or transverse
     hamiltonianType = "transverse"
+    #symmetry or momentum2d or reflection
     method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="full"
@@ -26,6 +28,7 @@ function main()
     N = 4;
     h = 1;
     width = 0;
+
 
 
     if (latticeType == "frustrated")

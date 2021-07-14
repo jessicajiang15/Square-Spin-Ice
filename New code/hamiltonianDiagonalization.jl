@@ -93,6 +93,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             eigtemp=eigen(HtempEven);
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
+            println("finished even eigenvalues");
         elseif(eigmethod=="lanczos")
             values, vecs, info=eigsolve(HtempEven, n, :SR; krylovdim=100, ishermitian=true);
             append!(eigenvalues, values);
@@ -122,6 +123,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             eigtemp=eigen(HtempOdd);
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
+            println("finished odd eigenvalues");
         elseif(eigmethod=="lanczos")
             values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
             append!(eigenvalues, values);
@@ -156,12 +158,14 @@ function calculateEigensystemHeisenbergMomentum(N, J, bonds, eigmethod, num)
     @time begin
     refStatesData=referenceStates(N);
 end
+    eigensystem=Any[];
     println("TE SIZEH", length(refStatesData[1]));
     #list of all viable reference states
     refStates=refStatesData[1];
     #THIS maps a number to its state object, which contains info about ref state and shit
     refStatesMap=refStatesData[2];
     eigenvalues=Any[];
+    eigenvectors=Any[];
     for i=0:N-1
         println("CURR MOMENTUM ", i);
         viableSt=findViableRefStates(i, N, refStates);
@@ -190,6 +194,7 @@ end
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
+            println(eigtemp[1]);
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
 
@@ -197,7 +202,9 @@ end
             #append!(eigenvectors, eigtemp.vectors);
         end
     end
-    return eigenvalues;
+    push!(eigensystem, eigenvalues);
+    push!(eigensystem, eigenvectors);
+    return eigensystem;
 end
 
 
@@ -248,6 +255,8 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
+            #println("eigenvalues of ", momenta[i].px, ", ", momenta[1].py);
+            #println(eigtemp[1]);
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
 

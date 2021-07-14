@@ -178,7 +178,7 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
                                 two=phaseFactorSums[ref[i].state];
                                 three=refStatesMap[b].ref.numUniqueSt;
                                 four=phaseFactorSums[refStatesMap[b].ref.state];
-                                norm::Float64=sqrt(three*abs2(four)/(one*abs2(two)));
+                                norm::Float64=sqrt((three*abs2(four))/(one*abs2(two)));
                                 #work on this
                                 H[i, c]+=(1/2)*exp(-1im*(calculateMomentum(momentum.px, N)*refStatesMap[b].shiftsXNeeded+calculateMomentum(momentum.py, N)*refStatesMap[b].shiftsYNeeded))*(1/2)*norm;
                             end
