@@ -13,7 +13,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "heisenberg"
     #symmetry or momentum2d or reflection
-    method = "symmetry"
+    method = "momentum2d"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="full"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -58,18 +58,18 @@ function main()
     end
 
     eigenvalues = temp[1]
-    #eigenvectors = temp[2]
+    eigenvectors = temp[2]
 
     println((eigenvalues));
     #println((eigenvectors));
     if(file)
-        io=open("eigenvalues"*latticeType*hamiltonianType*method*".txt", "w") do io
+        io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
             for i=1:length(eigenvalues)
                 write(io, "$(eigenvalues[i]) \n")
             end
         end
 
-        io=open("eigenvectors"*latticeType*hamiltonianType*method*".txt", "w") do io
+        io=open("eigenvectors"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
             for i=1:length(eigenvectors)
                 write(io, "$(eigenvectors[i]) \n")
             end
