@@ -241,6 +241,7 @@ function constructHamiltonian(states, bonds, N, J, h)
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
                         H[i,t]=J/4;
+                        # - sigma z i  + J sigmax j sigmax i
                         end
                     end
 

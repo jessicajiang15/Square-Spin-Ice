@@ -176,3 +176,27 @@ function bondListEightNeighbors(N)
 end
     return bonds;
 end
+
+function bondListTwo()
+    list=bond[];
+    site1=site(1, 0, 0);
+    site2=site(2, 1, 0);
+    site3=site(3, 0, 1);
+    site4=site(4, 1, 1);
+
+    bond1=bond(site1, site2);
+    bond2=bond(site1, site3);
+    bond3=bond(site2, site4);
+    bond4=bond(site3, site4);
+    bond5=bond(site1, site4);
+    bond6=bond(site2, site3);
+    push!(list, bond1);
+    push!(list, bond2);
+    push!(list, bond3);
+    push!(list, bond4);
+    push!(list, bond5);
+    push!(list, bond6);
+
+    return list;
+
+end

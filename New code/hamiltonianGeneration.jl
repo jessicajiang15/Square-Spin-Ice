@@ -24,8 +24,9 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
-                    theThing= getTi(bond1-1,list[i]) == 1 ? randList[z]/2 : -randList[z]/2;
-                    H[i,i]+= theThing;
+                    theThing= getTi(bond1-1,list[i]) == 1 ? randList[z] : -randList[z];
+                    #1/2 for double counting
+                    H[i,i]+= (1/2)*theThing;
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
@@ -62,11 +63,6 @@ function constructHeisenbergHamiltonian(states, bonds, N, J, eigmethod)
                     bond2::Int=bonds[z].site2.num;
                     #now, are the spins in those two places the same? if so, the
                     #diagonal entry at i,i is 1
-                    if(bond1!=j)
-                        temp::Int=bond1;
-                        bond1=bond2;
-                        bond2=temp;
-                    end
                     if(getTi(bond1-1,list[i])==getTi(bond2-1, list[i]))
                         H[i, i]+=(1/2)*J/4;
                     else
@@ -74,7 +70,7 @@ function constructHeisenbergHamiltonian(states, bonds, N, J, eigmethod)
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
-                            H[i,t]=(1/2)*J/2;
+                            H[i,t]=J/2;
                     end
 
                 end
@@ -160,11 +156,6 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
                     if(containsSite(j, bonds[z]))
                         bond1::Int=bonds[z].site1.num;
                         bond2::Int=bonds[z].site2.num;
-                        if(bond1!=j)
-                            temp::Int=bond1;
-                            bond1=bond2;
-                            bond2=temp;
-                        end
                         if(getTi(bond1-1, ref[i].state)==getTi(bond2-1, ref[i].state))
                             H[i,i]+=(1/2)*1/4;
                         else
@@ -178,7 +169,10 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
                                 two=phaseFactorSums[ref[i].state];
                                 three=refStatesMap[b].ref.numUniqueSt;
                                 four=phaseFactorSums[refStatesMap[b].ref.state];
-                                norm::Float64=sqrt((three*abs2(four))/(one*abs2(two)));
+                                Na=one*abs2(two);
+                                Nb=three*abs2(four);
+                                #println("Na, ", Na, ", Nb: ", Nb);
+                                norm::Float64=sqrt(Nb/Na);
                                 #work on this
                                 H[i, c]+=(1/2)*exp(-1im*(calculateMomentum(momentum.px, N)*refStatesMap[b].shiftsXNeeded+calculateMomentum(momentum.py, N)*refStatesMap[b].shiftsYNeeded))*(1/2)*norm;
                             end
@@ -187,7 +181,7 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
                 end
             end
     end
-    println("h 0 0 ", H[1,1]);
+    println("h00 ", H[1,1]);
     return H;
 
 end

@@ -11,7 +11,7 @@ function main()
     println("hello")
     latticeType = "four"
     #heisenberg or transverse
-    hamiltonianType = "transverse"
+    hamiltonianType = "heisenberg"
     #symmetry or momentum2d or reflection
     method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
@@ -37,6 +37,8 @@ function main()
         bonds = bondListFourNeighbors(N)
     elseif (latticeType == "eight")
         bonds = bondListEightNeighbors(N)
+    elseif( latticeType == "two")
+        bonds=bondListTwo();
     end
 
     if (hamiltonianType == "heisenberg")
@@ -80,10 +82,24 @@ function main()
 end
 end
 
+
+
 function test()
+    N=2;
+    bonds = bondListTwo();
+    println(bonds);
+    refStatesData=referenceStatesXY(N);
+
+    println("TE SIZEH", length(refStatesData[1]));
+    #list of all viable reference states
+    refStates=refStatesData[1];
+    #THIS maps a number to its state object, which contains info about ref state and shit
+    refStatesMap=refStatesData[2];
+    pt=momentum(0,0);
+    viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
     println("NEW");
-    d=Normal(1, 0);
-    println(rand(d, 10));
+    temp = calculateEigensystemHeisenbergMomentum2d(N, 1, bonds, "full", "all")
+    println(temp[1]);
 end
 
 main();

@@ -2,6 +2,21 @@ include("momentumBitOperations.jl")
 include("necessaryBitOperations.jl")
 include("necessaryStructures.jl")
 
+function isHermitian(M)
+    count=0;
+    println("rows", size(M)[1]);
+    for i=1:size(M)[1]
+        for j=1+count:size(M)[2]
+            thing=M[i, j]-conj(M[j, i]);
+            #println(thing);
+            if(abs(real(thing))>10^-10||abs(imag(thing))>10^-10)
+                return false;
+            end
+        end
+         count+=1;
+    end
+    return true;
+end
 
 function referenceStates(N)
     println("yes");
@@ -160,10 +175,6 @@ function getStateInfo(state, N, refMap)
         lol=true;
     end
 
-    if(state==12)
-        println("x", xShift);
-        println("y", yShift);
-    end
     push!(all, isRefState);
     #shifts to get to ref state
     push!(all, xShift);
@@ -184,7 +195,6 @@ function referenceStatesXY(N)
     #maps an integer to its corresponding state
     refMap::Dict{Int, state2d}=Dict{Int, state2d}();
     #for each reference state there are a set of compatible momenta
-    #youll also need to know each state's periodicity
     ct=0;
     for i=0:2^(N*N)-1
         local arr=getStateInfo(i, N, refMap);
@@ -210,6 +220,10 @@ function isViable2d(px, py, N, ref)
             shifted=rotateBits(i, j, ref.state, N);
             if(shifted==ref.state)
                 tf=exp(-1im*(i*calculateMomentum(px, N)+j*calculateMomentum(py, N)));
+                if(ref.state==6)
+                    println(i," ", j);
+                    println(tf);
+                end
                 theFactor+=tf;
             end
         end
@@ -231,7 +245,7 @@ function getViableStates2d(px, py, N, ref)
     for i=1:length(ref)
         temp::Complex{Float64}=isViable2d(px, py, N, ref[i]);
         #println("phase sum", abs(real(temp)));
-        if(abs(real(temp))>0.001)
+        if(abs(real(temp))>10^-10)
             count+=1;
             dict[ref[i].state]=count;
             sumsOfPhaseFactors[ref[i].state]=real(temp);

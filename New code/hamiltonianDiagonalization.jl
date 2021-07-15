@@ -190,7 +190,7 @@ end
             append!(eigenvalues, values);
             append!(eigenvectors, vecs);
         else
-            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            eigtemp=eigs((Htemp), nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
@@ -234,9 +234,10 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
         #viable st contains info about the numbering of each viable state
         Htemp=constructHamiltonianHeisenbergMomentum2d(viableSt, N, momenta[i], bonds, refStatesMap, eigmethod);
         println(Htemp);
+        println("IS HERMITIAN: ", isHermitian(Htemp));
         n::Int=0;
         if(num=="all")
-            n=length(spinUps[1]);
+            n=length(viableSt[1]);
         elseif(num=="one")
             n=1;
         else
@@ -244,14 +245,17 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
         end
         if(eigmethod=="full")
             eigtemp=eigen(Htemp);
+
             append!(eigenvalues, eigtemp.values);
+            println("THE MOMENTA", momenta[i].px, ", ", momenta[i].py)
+            println(eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
         elseif(eigmethod=="lanczos")
             values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
             append!(eigenvalues, values);
             append!(eigenvectors, vecs);
         else
-            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            eigtemp=eigs((Htemp), nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
@@ -290,11 +294,11 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
         total+=length(viableStates[1]);
         n::Int=0;
         if(num=="all")
-            n=length(spinUps[1]);
+            n=length(viableStates[1]);
         elseif(num=="one")
             n=1;
         else
-            n=16;
+            n=1000;
         end
         Htemp=constructHamiltonianHeisenbergReflection(viableStates,N, reflections[i],bonds, refStatesMap, eigmethod);
         if(eigmethod=="full")
@@ -302,11 +306,11 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
         elseif(eigmethod=="lanczos")
-            eigs, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
-            append!(eigenvalues, eigs);
+            values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
+            append!(eigenvalues, values);
             append!(eigenvectors, vecs);
         else
-            eigtemp=eigs(Symmetric(Htemp), nev=n);
+            eigtemp=eigs((Htemp), nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
