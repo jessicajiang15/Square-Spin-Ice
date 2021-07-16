@@ -60,7 +60,7 @@ function main()
     eigenvalues = temp[1]
     eigenvectors = temp[2]
 
-    println((eigenvalues));
+    #println((eigenvalues));
     #println((eigenvectors));
     if(file)
         io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
