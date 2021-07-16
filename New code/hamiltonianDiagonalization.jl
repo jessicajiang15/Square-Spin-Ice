@@ -35,7 +35,7 @@ function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
         end
         if(eigmethod=="full")
             println("yes", typeof(Htemp));
-            eigtemp=eigen(Htemp);
+            eigtemp=eigen(Hermitian(Htemp));
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
         elseif(eigmethod=="lanczos")
@@ -90,7 +90,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     end
 
         if(eigmethod=="full")
-            eigtemp=eigen(HtempEven);
+            eigtemp=eigen(Hermitian(HtempEven));
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
             println("finished even eigenvalues");
@@ -99,7 +99,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             append!(eigenvalues, values);
             append!(eigenvectors, vecs);
         else
-            eigtemp=eigs(Symmetric(HtempEven), nev=n);
+            eigtemp=eigs(HtempEven, nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
@@ -120,7 +120,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     end
 
         if(eigmethod=="full")
-            eigtemp=eigen(HtempOdd);
+            eigtemp=eigen(Hermitian(HtempOdd));
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
             println("finished odd eigenvalues");
@@ -182,7 +182,7 @@ end
             n=16;
         end
         if(eigmethod=="full")
-            eigtemp=eigen(Htemp);
+            eigtemp=eigen(Hermitian(Htemp));
             append!(eigenvalues, eigtemp.values);
             append!(eigenvectors, eigtemp.vectors);
         elseif(eigmethod=="lanczos")
@@ -244,7 +244,7 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
             n=16;
         end
         if(eigmethod=="full")
-            eigtemp=eigen(Htemp);
+            eigtemp=eigen(Hermitian(Htemp));
 
             append!(eigenvalues, eigtemp.values);
             println("THE MOMENTA", momenta[i].px, ", ", momenta[i].py)
@@ -298,9 +298,10 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
         elseif(num=="one")
             n=1;
         else
-            n=1000;
+            n=100;
         end
         Htemp=constructHamiltonianHeisenbergReflection(viableStates,N, reflections[i],bonds, refStatesMap, eigmethod);
+        println("is hermitian: ", isHermitian(Htemp));
         if(eigmethod=="full")
             eigtemp=eigen(Htemp);
             append!(eigenvalues, eigtemp.values);
@@ -316,11 +317,9 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
             println(length(eigtemp[1]));
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
-
             #append!(eigenvalues, eigtemp.values);
             #append!(eigenvectors, eigtemp.vectors);
         end
-
     end
     println("TOTAOKL", total);
     push!(eigensystem, eigenvalues);

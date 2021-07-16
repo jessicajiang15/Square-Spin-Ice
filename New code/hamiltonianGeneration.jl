@@ -227,6 +227,7 @@ function constructHamiltonianHeisenbergReflection(refStates, N, reflection, bond
                                 local c=map[refStatesMap[b].refState.state];
                                 norm::Float64=sqrt(refStatesMap[b].refState.uniqueReflections/ref[i].uniqueReflections);
                                 H[i, c]+=(1/2)*(refStatesMap[b].refXNeeded == 1 ? refStatesMap[b].refState.xC : 1)*(refStatesMap[b].refYNeeded == 1 ? refStatesMap[b].refState.yC : 1)*norm*(1/2);
+                                #H[i, c]+=(1/2)*(refStatesMap[b].refState.xC)*(refStatesMap[b].refState.yC)*norm*(1/2);
                             end
                         end
                     end

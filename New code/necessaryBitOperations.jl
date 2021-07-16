@@ -58,6 +58,7 @@ push!(temp2, temp1);
 end
 
 function getTi(i, I)
+    #println(2^i);
     return mod(I÷(2^(i)), 2);
 end
 
@@ -69,9 +70,24 @@ function flipBits(i, j, n)
     return temp;
 end
 
+function flipBit(i, n)
+    temp::Int=n⊻(1<<i);
+    return temp;
+end
+
 #credit: semibran at https://github.com/semibran/wrap-around/blob/master/index.js
 function wrap(n, m)
       return n >= 0 ? n % m : (n % m + m) % m;
+end
+
+function countBits(n)
+    count::Int=0;
+    temp::Int=n;
+    while(temp>0)
+        temp&=temp-1;
+        count+=1;
+    end
+    return count;
 end
 
 

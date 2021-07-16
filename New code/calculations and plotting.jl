@@ -168,3 +168,144 @@ function plotQuantity(all, i)
     end
     theplot(all, i, str);
 end
+
+
+function calculateSz(eigenvector, N)
+    sum=0;
+    for i=0:2^(N*N)-1
+        temp=countBits(i);
+        sum+=(temp-(N*N-temp))*abs2(eigenvector[i+1]);
+    end
+    return (1/2)*sum;
+end
+
+function calculateSz(eigenvector, states, N)
+    sum=0;
+    for i=1:length(states)
+        temp=countBits(states[i]);
+        sum+=(temp-(N*N-temp))*abs2(eigenvector[i]);
+    end
+    return (1/2)*sum;
+end
+
+function calculateSx(eigenvector, N)
+    sum=0;
+    for i=0:2^(N*N)-1
+        for i=1:N*N
+            b=flipBit(i-1, i);
+            sum+=eigenvector[i+1]*conj(eigenvector[b+1]);
+        end
+    end
+    return (1/2)*sum;
+end
+
+#let state be map from state -> position in array
+function calculateSx(eigenvector, states, map, N)
+    sum=0;
+    for i=1:length(states)
+        for j=1:N*N
+            b=flipBit(j-1, states[i]);
+            if(b in keys(map))
+                c=map[b];
+                sum+=eigenvector[i]*conj(eigenvector[c]);
+            end
+        end
+    end
+    return (1/2)*sum;
+end
+
+
+function isNeel(state, starting, N)
+    one=getTi(state, starting);
+    two=getTi(state, starting+1);
+    three=getTi(state, starting+N);
+    four=getTi(state, starting+1+N);
+    return one!=two&&three!=one&&four!=three&&four!=two;
+end
+
+
+function indiciesAllSquares(N)
+    ind=Int[];
+    for i=1:N*(N-1)
+        if(i%4!=0)
+            push!(ind, i);
+        end
+    end
+    return ind;
+end
+
+
+#let state be map from state -> position in array
+function calculateFlippabilityExp(eigenvector, states, N)
+    sum=0;
+    for i=1:length(states)
+        temp=0;
+        for j=1:N*(N-1)
+            if(j%4!=0&&isNeel(states[i], j, N))
+                temp+=1;
+            end
+        end
+        sum+=temp*abs2(eigenvector[i]);
+    end
+    return sum;
+end
+
+function calculateFlippabilityExp(eigenvector, states, sector, N)
+    sum=0;
+    for i=1:length(states)
+        temp=0;
+            if(isNeel(states[i], sector, N))
+                sum+=temp*abs2(eigenvector[i]);
+            end
+    end
+    return sum;
+end
+
+function neg(i::Int, j::Int)
+    return (-1)^(i%2==0 ? 1 : -1 + j%2==0 ? 1 : -1);
+end
+
+function calculateStaggeredFlippability(eigenvector, states, squareIndicies, N)
+    sum=0;
+    for i=1:length(states)
+        for j=1:length(squareIndicies)
+            for z=j+1:length(squareIndicies)
+                product=calculateFlippabilityExp(eigenvector, states, squareIndicies[j])*calculateFlippabilityExp(eigenvector, states, squareIndicies[z]);
+                sum+=product*neg(j, z);
+            end
+        end
+    end
+    return sum*(N/2)^(-4);
+end
+
+function calculateSxMomentum(ref::refState2d, momentum::momentum, phases::Dict{Int, Complex{Float64}}, N)
+    eigenvector::Vector{Complex{Float64}}=[];
+    list::Array{Int}=Int[];
+    Na=1/sqrt(ref.numUniqueSt*abs2(phases[ref.state]));
+    push!(list, ref.state);
+    for x=0:N-1
+        for y=0:N-1
+            if(x==0&&y==0)
+                continue;
+            end
+            temp=rotateBits(x, y, state, N);
+                push!(list, temp);
+                push!(eigenvector, (Na)*exp(-im*2pi(momentum.px*x+momentum.py*y)/N));
+        end
+    end
+    return calculateSx(eigenstate, list, N);
+
+end
+
+
+
+function calculateSxMomentumFull(eigenstate, refStates, momentum::momentum, phases::Dict{Int, Complex{Float64}}, N)
+    sum=0;
+    for i=1:length(eigenstate)
+        for j=1:length(refStates)
+            calculateSzMomentum(refStates[j], momentum, phases, N);
+            sum+=abs2(eigenstate[i])*calculateSzMomentum(refStates[j], momentum, phases, N);
+        end
+    end
+    return calculateSx(eigenstate, list, N);
+end

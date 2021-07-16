@@ -11,9 +11,9 @@ function main()
     println("hello")
     latticeType = "four"
     #heisenberg or transverse
-    hamiltonianType = "heisenberg"
+    hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "momentum2d"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="full"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -102,6 +102,24 @@ function test()
     println(temp[1]);
 end
 
+function testMeasures()
+    N=4;
+    println("hello");
+    states::Vector{Int}=[1, 2, 3];
+    map::Dict{Int, Int}=Dict([(1, 1), (2, 2), (3, 3)]);
+    testState::Vector{Float64}=[1/sqrt(2), 1/sqrt(4), 1/sqrt(4)];
+    sz=calculateSz(testState, states, N);
+    sx=calculateSx(testState, states, map, N);
+    ind=indiciesAllSquares(N);
+    stflippability=calculateStaggeredFlippability(testState, states, ind, N);
+    println("sz, ", sz);
+    println("sx, ", sx);
+    println("flip, ", stflippability);
+
+end
+
 main();
 
 #test();
+
+#testMeasures();
