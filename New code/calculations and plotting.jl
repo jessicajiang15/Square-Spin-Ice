@@ -1,5 +1,15 @@
 using Plots
 
+function readFromFile(filename)
+    list::Array{Complex{Float64}}=Complex{Float64}[];
+    f=open(filename*".txt", "r");
+    while !eof(f)
+        s=readLine(f);
+        push!(list, s);
+    end
+    return list;
+end
+
 function partition(beta, E)
     sum=0;
     for i=1:length(E)
@@ -132,14 +142,16 @@ heat cap=5
 g=6
 entropy=7
 =#
-function theplot(list, i, str)
+function theplot(list, i::Int, str)
     println("IM PLOTTING")
-    plot(
-    list[1],
-    list[i],
-    title = string(str, "vs. 1/kbT"),
-    label = [str]
-    )
+    plot(list[1],list[i])
+    #
+    png("Users/Jessica/git/Square Spin Ice/plot.png")
+end
+
+function plotH(list, list2, str)
+    println("IM PLOTTING")
+    plot(list,list2, title = string(str, " vs. h"))
     savefig("Users/Jessica/git/Square Spin Ice/plot.png")
 end
 
@@ -308,4 +320,21 @@ function calculateSxMomentumFull(eigenstate, refStates, momentum::momentum, phas
         end
     end
     return calculateSx(eigenstate, list, N);
+end
+
+
+
+function getLowestLyingStates(eigenvalues, eigenvectors)
+    eigensystem=Any[];
+    min=eigenvalues[1];
+    index=1;
+    for i=1:length(eigenvalues)
+        if(eigenvalues[i]<min)
+            min=eigenvalues[i];
+            index=i;
+        end
+    end
+    push!(eigensystem, min);
+    push!(eigensystem, eigenvectors[index]);
+    return eigensystem;
 end

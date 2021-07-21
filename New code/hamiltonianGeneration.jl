@@ -17,16 +17,24 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
 
     for i=1:length(list)
         #NOW loop through all the possible SITES
+        count=0;
         for j=1:N*N
             #for this particular site, find ALL of its bonds
+            #println("bonds length", length(bonds));
+            theThing= getTi(j,list[i]) == 1 ? randList[j]/2 : -randList[j]/2;
+            #1/2 for double counting
+            #println((1/2)*theThing);
+            H[i,i]+= theThing;
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
-                    theThing= getTi(bond1-1,list[i]) == 1 ? randList[z] : -randList[z];
-                    #1/2 for double counting
-                    H[i,i]+= (1/2)*theThing;
+                    if(bond1!=j)
+                        temp::Int=bond1;
+                        bond1=bond2;
+                        bond2=temp;
+                    end
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
@@ -34,6 +42,48 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
                         end
                     end
 
+                end
+                #println("i count ", i, count);
+            end
+        return H;
+end
+
+#TODO: update this and update the other one
+function constructTransverseHamiltonianSzBasis(states, bonds, N, J, eigmethod, randList)
+    #loop through ALL the possible states...
+    list=states[1];
+    map=states[2];
+    #println(states);
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Float64, length(list),length(list));
+    else
+        H=spzeros(Float64, length(list),length(list));
+    end
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+    for i=1:length(list)
+        #NOW loop through all the possible SITES
+        for j=1:N*N
+            #for this particular site, find ALL of its bonds
+            for z=1:length(bonds)
+                #get the number of the thing it is bonding with!
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
+                    local theThing;
+                    if(getTi(bond1-1,list[i])==getTi(bond2-1,list[i]))
+                        theThing=randList[z]/4;
+                    else
+                        theThing=-randList[z]/4;
+                    end
+                    H[i,i]+= (1/2)*theThing;
+                    #1/2 for double counting
+                        #flip the bits at those relevant places
+                        b::Int=flipBit(bond1-1, list[i]);
+                        t::Int=map[b];
+                        H[i,t]=J/4;
+                        end
+                    end
                 end
             end
         return H;

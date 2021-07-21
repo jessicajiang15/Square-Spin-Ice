@@ -71,14 +71,21 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     println("timing matrix generation");
     @time begin
     randomList=generateRandomh(hbar, width, bonds);
+    println(randomList);
+    #the info contains the states
+    theInfo::Array{Any}=Any[];
     eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     evenSpins=singleOutEvenOddSpins(true, 2^(N*N), N);
+    println("length", length(evenSpins[1]));
+
+    push!(theInfo, evenSpins[1]);
         oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
         @time begin
         HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
+        println("H[1,1]", HtempEven[1, 1]);
     end
     n::Int=0;
     if(num=="all")
@@ -105,14 +112,12 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             println(length(eigtemp[1]));
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
-
             #append!(eigenvalues, eigtemp.values);
             #append!(eigenvectors, eigtemp.vectors);
         end
         #eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
-        HtempEven=nothing;
-        evenSpins=nothing;
-        GC.gc();
+
+        push!(theInfo, oddSpins[1]);
 
         println("STARTING ODD");
         @time begin
@@ -129,24 +134,21 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             append!(eigenvalues, values);
             append!(eigenvectors, vecs);
         else
-            eigtemp=eigs(Symmetric(HtempOdd), nev=n);
+            eigtemp=eigs((HtempOdd), nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
             println(length(eigtemp[1]));
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
-
             #append!(eigenvalues, eigtemp.values);
             #append!(eigenvectors, eigtemp.vectors);
         end
 
-        HtempOdd=nothing;
-        oddSpins=nothing;
-
     end
 
-    append!(eigensystem, eigenvalues);
-    append!(eigensystem, eigenvectors);
+    push!(eigensystem, eigenvalues);
+    push!(eigensystem, eigenvectors);
+    push!(eigensystem, theInfo);
 
     return eigensystem;
 

@@ -200,3 +200,17 @@ function bondListTwo()
     return list;
 
 end
+
+function generateCheckerboardPlaquettes(N)
+    plaquetteList=Int[];
+    for i=1:2^(N*N)
+        if((i-1)%2!=0&&(i-1)÷N%2==0||(i-1)%2==0&&(i-1)÷N%2!=0)
+            push!(plaquetteList, i);
+        end
+    end
+    return plaquetteList;
+end
+
+function plaquetteIndicies(plaquetteIndex, N)
+    return Int[plaquetteIndex, plaquetteIndex+1, plaquetteIndex+N, plaquetteIndex+N+1]
+end

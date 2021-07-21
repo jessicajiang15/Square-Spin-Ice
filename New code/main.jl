@@ -1,24 +1,22 @@
-include("hamiltonianDiagonalization.jl")
-include("calculations and plotting.jl")
 
-function plot()
+include("unitTests.jl")
+using Plots
 
-end
 
 function main()
     @time begin
         Random.seed!(123);
     println("hello")
-    latticeType = "four"
+    latticeType = "frustrated"
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
     method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
-    eigmethod="full"
+    eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
-    num="all"
-    file=true;
+    num="one"
+    file=false;
 
     bonds::Array{bond} = bond[]
     local eigenvalues
@@ -59,9 +57,11 @@ function main()
 
     eigenvalues = temp[1]
     eigenvectors = temp[2]
+    listA=[0, 1, 4, 5];
 
-    #println((eigenvalues));
-    #println((eigenvectors));
+    println((eigenvalues));
+    println((eigenvectors));
+
     if(file)
         io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
             for i=1:length(eigenvalues)
@@ -83,43 +83,24 @@ end
 end
 
 
+#main();
+#thetest();
+#println("starting");
+#lol()
+#entanglementtest();
+#testbond();
 
-function test()
-    N=2;
-    bonds = bondListTwo();
-    println(bonds);
-    refStatesData=referenceStatesXY(N);
-
-    println("TE SIZEH", length(refStatesData[1]));
-    #list of all viable reference states
-    refStates=refStatesData[1];
-    #THIS maps a number to its state object, which contains info about ref state and shit
-    refStatesMap=refStatesData[2];
-    pt=momentum(0,0);
-    viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
-    println("NEW");
-    temp = calculateEigensystemHeisenbergMomentum2d(N, 1, bonds, "full", "all")
-    println(temp[1]);
-end
-
-function testMeasures()
-    N=4;
-    println("hello");
-    states::Vector{Int}=[1, 2, 3];
-    map::Dict{Int, Int}=Dict([(1, 1), (2, 2), (3, 3)]);
-    testState::Vector{Float64}=[1/sqrt(2), 1/sqrt(4), 1/sqrt(4)];
-    sz=calculateSz(testState, states, N);
-    sx=calculateSx(testState, states, map, N);
-    ind=indiciesAllSquares(N);
-    stflippability=calculateStaggeredFlippability(testState, states, ind, N);
-    println("sz, ", sz);
-    println("sx, ", sx);
-    println("flip, ", stflippability);
-
-end
-
-main();
 
 #test();
 
 #testMeasures();
+
+#testPlot();
+
+#testExtractDigits()
+
+calculategsentanglement()
+
+
+#graphTest();
+#calculatesz()
