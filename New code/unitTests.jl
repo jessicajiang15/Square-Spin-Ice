@@ -125,7 +125,7 @@ function calculategsentanglement()
     J=1
     entropies=Any[];
 
-        hs=generateHListLog(J, 20);
+        hs=generateHListUniform(J, 20);
         listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
         bonds = bondListFrustrated(N)
         for i=1:length(hs)
@@ -159,9 +159,10 @@ function calculatesz()
     @time begin
     N=4;
     J=1
-    hs=generateHListLog(J, 20);
+    hs=generateHListUniform(J, 20);
     ms=Any[];
     bonds = bondListFrustrated(N)
+    println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
         temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
@@ -175,6 +176,14 @@ function calculatesz()
 
     end
     #TODO: plot it
-    plot(hs, sz)
+    plot(hs, ms)
     savefig("./szplot.png")
+end
+
+
+function plottest()
+    x=[0.1, 0.10069555500567187, 0.10139594797900289, 0.10210121257071929, 0.1028113826656066, 0.10352649238413769, 0.10424657608411206, 0.10497166836230663, 0.10570180405613792, 0.10643701824533586, 0.10717734625362917, 0.10792282365044256, 0.10867348625260563, 0.10942937012607376, 0.11019051158766086, 0.11095694720678427, 0.11172871380722174, 0.11250584846888068, 0.11328838852957958, 0.11407637158684206]
+ y=[-0.8134175639031954, -0.8200063867643509, -0.8266616508941389, -0.8333842846052618, -0.8401752333849276, -0.8470354602567177, -0.8539659461491816, -0.8609676902725738, -0.8680417105021505, -0.8751890437692833, -0.8824107464601441, -0.8897078948215356, -0.8970815853746135, -0.9045329353360714, -0.9120630830466337, -0.9196731884078895, -0.9273644333256733, -0.9351380221620913, -0.9429951821939834, -0.9509371640799641]
+    display(plot(x, y, seriestype=:scatter));
+    savefig("./szplot.png");
 end
