@@ -99,10 +99,10 @@ end
 
 #testExtractDigits()
 
-#calculategsentanglement()
+calculategsentanglement()
 
 
 #graphTest();
-calculatesz()
+#calculatesz()
 
 #plottest()
