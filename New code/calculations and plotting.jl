@@ -336,5 +336,46 @@ function getLowestLyingStates(eigenvalues, eigenvectors)
     end
     push!(eigensystem, min);
     push!(eigensystem, eigenvectors[index]);
+    push!(eigensystem, index);
     return eigensystem;
+end
+
+function isIn(n, list)
+     for i=1:length(list)
+         if(n==list[i])
+             return i;
+         end
+     end
+     return -1;
+end
+
+#inner product <eigenvector|eigenvector2>, assumes states are separate
+function innerProduct(eigenvector, states, eigenvector2, states2)
+    sum=0;
+    for i=1:length(states)
+        index=binarySearchIt(states[i], states2);
+        if(index!=-1)
+            sum+=conj(eigenvector[i])*eigenvector2[index];
+        end
+    end
+    return sum;
+end
+
+#assumes the two states are the same
+function innerProduct(eigenvector, states, eigenvector2)
+    sum=0;
+    for i=1:length(states)
+           sum+=conj(eigenvector[i])*eigenvector2[i];
+    end
+    return sum;
+end
+
+#please just assume that the list of states will be the same for the new eigenvector and stuff...
+function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
+    temp=calculateEigensystemTransverse(N, J, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
+    eigensystem=getLowestLyingStates(temp[1], temp[2]);
+    eigenvector2=eigensystem[2];
+    states2=temp[3][eigensystem[3]];
+
+
 end

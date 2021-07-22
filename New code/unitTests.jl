@@ -132,7 +132,8 @@ function calculategsentanglement()
             temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
             eigenvalues = temp[1]
             eigenvectors = temp[2]
-            entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+            entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N);
             push!(entropies, entropy);
         end
     #println(entropy);
@@ -168,7 +169,8 @@ function calculatesz()
         temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
         eigenvalues = temp[1]
         eigenvectors = temp[2]
-        sz=calculateSz(eigenvectors[1], temp[3][1], N);
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+        sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
     end

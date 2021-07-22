@@ -34,9 +34,9 @@ end
 
 function generateHListUniform(J, num)
     list::Array{Float64}=Float64[];
-    interval=J*10/num;
+    interval=J/num;
     i=(1/10)*J;
-    while(i<J*10)
+    while(i<=J)
         push!(list, i);
         i+=interval;
     end
