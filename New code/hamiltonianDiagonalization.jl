@@ -154,6 +154,42 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
 
 end
 
+function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, hbar, width)
+    randomList=generateRandomh(hbar, width, bonds);
+    #println(randomList);
+    #the info contains the states
+    theInfo::Array{Any}=Any[];
+    eigensystem::Array{Any}=Any[];
+    eigenvalues::Array{Any}=Any[];
+    eigenvectors::Array{Any}=Any[];
+    Htemp=constructTransverseHamiltonianNoSymmetry(bonds, N, J, eigmethod, randomList);
+    if(eigmethod=="full")
+        eigtemp=eigen(Hermitian(HtempOdd));
+        append!(eigenvalues, eigtemp.values);
+        append!(eigenvectors, eigtemp.vectors);
+        println("finished odd eigenvalues");
+    elseif(eigmethod=="lanczos")
+        values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
+        append!(eigenvalues, values);
+        append!(eigenvectors, vecs);
+    else
+        eigtemp=eigs((HtempOdd), nev=n);
+        #eigtemp=eigen(Htemp);
+        #println(eigtemp);
+        println(length(eigtemp[1]));
+        append!(eigenvalues, eigtemp[1]);
+        append!(eigenvectors, eigtemp[2]);
+        #append!(eigenvalues, eigtemp.values);
+        #append!(eigenvectors, eigtemp.vectors);
+    end
+
+push!(eigensystem, eigenvalues);
+push!(eigensystem, eigenvectors);
+push!(eigensystem, theInfo);
+return eigensystem;
+
+end
+
 #refStates, N, psector, bonds, refStatesMap
 function calculateEigensystemHeisenbergMomentum(N, J, bonds, eigmethod, num)
     println("TIMING GENERATION REF STATES");

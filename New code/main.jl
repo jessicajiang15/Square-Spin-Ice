@@ -90,7 +90,7 @@ end
 #entanglementtest();
 #testbond();
 
-calculatesz()
+thesztest()
 #test();
 
 #testMeasures();
@@ -106,3 +106,7 @@ calculatesz()
 #calculatesz()
 
 #plottest()
+
+#fidTest()
+
+#innerproducttest()

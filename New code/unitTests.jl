@@ -153,7 +153,7 @@ savefig("./plot.png")
 end
 
 
-function calculatesz()
+function thesztest()
     println("Starting sz!!");
     @time begin
     N=4;
@@ -168,6 +168,11 @@ function calculatesz()
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        println("length of temp[3] ", length(temp[3]))
+        println("length of temp ", length(temp))
+        println("length of eigensystem ", length(eigensystem))
+        println("eigensystem[3] ", eigensystem[3]);
         sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
@@ -215,4 +220,41 @@ function plottest()
  y=[-0.8134175639031954, -0.8200063867643509, -0.8266616508941389, -0.8333842846052618, -0.8401752333849276, -0.8470354602567177, -0.8539659461491816, -0.8609676902725738, -0.8680417105021505, -0.8751890437692833, -0.8824107464601441, -0.8897078948215356, -0.8970815853746135, -0.9045329353360714, -0.9120630830466337, -0.9196731884078895, -0.9273644333256733, -0.9351380221620913, -0.9429951821939834, -0.9509371640799641]
     display(plot(x, y, seriestype=:scatter));
     savefig("./szplot.png");
+end
+
+
+function fidTest()
+    println("FID TEST STARTING");
+    println("FID TEST STARTING");
+    N=4;
+    J=1
+    deltah=0.01;
+    h=0.1;
+    fids=Any[];
+    bonds = bondListFrustrated(N)
+
+    @time begin
+        temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        println("length of temp[3] ", length(temp[3]))
+        println("length of temp ", length(temp))
+
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+        println("length of eigensystem ", length(eigensystem))
+        println("eigensystem[3] ", eigensystem[3]);
+        fid=calculateFidelity(eigensystem[2], temp[3][eigensystem[3]], h, N, deltah, bonds, J)
+    end
+    println("fid: ", fid);
+end
+
+
+function innerproducttest()
+    println("Starting inner");
+    eigenvector=[1/sqrt(2), 1/sqrt(2), 0, 0];
+    eigenvector2=[1/sqrt(2), 1/sqrt(2), 0, 0];
+
+    states=[1, 2, 3, 4];
+    states2=[1, 3, 5, 6];
+    println(innerProduct(eigenvector, states, eigenvector2, states2));
 end

@@ -48,6 +48,82 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
         return H;
 end
 
+function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randomList)
+    if(eigmethod=="full")
+        H=zeros(Float64, 2^(N*N), 2^(N*N));
+    else
+        H=spzeros(Float64, 2^(N*N), 2^(N*N));
+    end
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+    for i=0:2^(N*N)-1
+        #NOW loop through all the possible SITES
+        for j=1:N*N
+            b::Int=flipBit(j, i);
+            H[i+1,b+1]=randList[j]/2;
+            #for this particular site, find ALL of its bonds
+            for z=1:length(bonds)
+                #get the number of the thing it is bonding with!
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
+                    local theThing;
+                    if(getTi(bond1-1,i)==getTi(bond2-1,i))
+                        theThing=J/4;
+                    else
+                        theThing=-J/4;
+                    end
+                    H[i+1,i+1]+= (1/2)*theThing;
+                        end
+                    end
+                end
+            end
+        return H;
+end
+
+
+function constructTransverseHamiltonianNoSymmetrySz(states, bonds, N, J, eigmethod, randList)
+    #loop through ALL the possible states...
+    #println(states);
+    local H;
+    if(eigmethod=="full")
+        H=zeros(Float64, 2^(N*N), 2^(N*N));
+    else
+        H=spzeros(Float64,  2^(N*N), 2^(N*N));
+    end
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+
+    for i=0:2^(N*N)-1
+        #NOW loop through all the possible SITES
+        count=0;
+        for j=1:N*N
+            #for this particular site, find ALL of its bonds
+            #println("bonds length", length(bonds));
+            theThing= getTi(j,i) == 1 ? randList[j]/2 : -randList[j]/2;
+            #1/2 for double counting
+            #println((1/2)*theThing);
+            H[i+1,i+1]+= theThing;
+            for z=1:length(bonds)
+                #get the number of the thing it is bonding with!
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
+                    if(bond1!=j)
+                        temp::Int=bond1;
+                        bond1=bond2;
+                        bond2=temp;
+                    end
+                        #flip the bits at those relevant places
+                        b::Int=flipBits(bond1-1, bond2-1,i);
+                        H[i+1,b+1]=J/4;
+                        end
+                    end
+
+                end
+                #println("i count ", i, count);
+            end
+        return H;
+end
+
 #TODO: update this and update the other one
 function constructTransverseHamiltonianSzBasis(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...

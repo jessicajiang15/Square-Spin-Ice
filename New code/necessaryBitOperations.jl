@@ -1,24 +1,22 @@
 using Distributions
 using Random
 function binarySearchIt(a, list)
-    #println("starting time for binary search");
-    i=1;
-    j=length(list);
+    i=0;
+    j=length(list)-1;
     mid=i+(j÷2-i÷2);
-    while(j>i)
-        if(list[mid]==a)
-            return mid;
+    while(j>=i)
+        if(list[mid+1]==a)
+            return mid+1;
         else
-            if(a>list[mid])
+            if(a>list[mid+1])
                 i=mid+1;
                 mid=i+(j÷2-i÷2);
             else
                 j=mid-1;
                 mid=i+(j÷2-i÷2);
+            end
         end
-
     end
-end
     return -1;
 end
 

@@ -195,9 +195,9 @@ function calculateSz(eigenvector, states, N)
     sum=0;
     for i=1:length(states)
         temp=countBits(states[i]);
-        sum+=(temp-(N*N-temp))*abs2(eigenvector[i]);
+        sum+=(1/2)*(temp-(N*N-temp))*conj(eigenvector[i])*eigenvector[i];
     end
-    return (1/(N*N))*(1/2)*sum;
+    return -(1/(N*N))*sum;
 end
 
 function calculateSx(eigenvector, N)
@@ -326,6 +326,7 @@ function getLowestLyingStates(eigenvalues, eigenvectors)
     eigensystem=Any[];
     min=eigenvalues[1];
     index=1;
+    println("length eigenvalues, ", length(eigenvalues));
     for i=1:length(eigenvalues)
         if(eigenvalues[i]<min)
             min=eigenvalues[i];
@@ -352,6 +353,8 @@ function innerProduct(eigenvector, states, eigenvector2, states2)
     sum=0;
     for i=1:length(states)
         index=binarySearchIt(states[i], states2);
+        println("states[i]", states[i]);
+        println("index", index);
         if(index!=-1)
             sum+=conj(eigenvector[i])*eigenvector2[index];
         end
@@ -374,5 +377,13 @@ function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
     eigenvector2=eigensystem[2];
     states2=temp[3][eigensystem[3]];
-    return 2*(1-abs(innerProduct(eigenvector, states, eigenvector2, states2)))/deltah^2;
+    #=
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    temp[3][eigensystem[3]]
+    =#
+    inner=abs(innerProduct(eigenvector, states, eigenvector2, states2));
+    println("inner product: ", abs(innerProduct(eigenvector, states, eigenvector2, states2)));
+    return 2*(1-inner)/(deltah^2);
 end
