@@ -104,5 +104,5 @@ end
 
 #graphTest();
 calculatesz()
-#calculatefidelity()
+
 #plottest()

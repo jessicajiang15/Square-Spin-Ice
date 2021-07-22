@@ -179,7 +179,7 @@ function calculatesz()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplot.png")
+    savefig("./szplotnew.png")
 end
 
 function calculatefidelity()
