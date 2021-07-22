@@ -182,6 +182,35 @@ function calculatesz()
     savefig("./szplot.png")
 end
 
+function calculatefidelity()
+
+    println("Starting sz!!");
+    @time begin
+    N=4;
+    J=1
+    deltah=0.001;
+    hs=generateHListUniform(J, 20);
+    fids=Any[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+        fid=calculateFidelity(eigensystem[2], temp[3][eigensystem[3]], hs[i], N, deltah, bonds, J)
+        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+        push!(fids, fid);
+    end
+    println("fids: ", fids);
+    end
+    #TODO: plot it
+    plot(hs, fids)
+    savefig("./fidelityplot.png")
+
+end
+
 
 function plottest()
     x=[0.1, 0.10069555500567187, 0.10139594797900289, 0.10210121257071929, 0.1028113826656066, 0.10352649238413769, 0.10424657608411206, 0.10497166836230663, 0.10570180405613792, 0.10643701824533586, 0.10717734625362917, 0.10792282365044256, 0.10867348625260563, 0.10942937012607376, 0.11019051158766086, 0.11095694720678427, 0.11172871380722174, 0.11250584846888068, 0.11328838852957958, 0.11407637158684206]

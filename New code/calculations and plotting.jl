@@ -322,8 +322,6 @@ function calculateSxMomentumFull(eigenstate, refStates, momentum::momentum, phas
     return calculateSx(eigenstate, list, N);
 end
 
-
-
 function getLowestLyingStates(eigenvalues, eigenvectors)
     eigensystem=Any[];
     min=eigenvalues[1];
@@ -376,6 +374,5 @@ function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
     eigenvector2=eigensystem[2];
     states2=temp[3][eigensystem[3]];
-
-
+    return 2*(1-abs(innerProduct(eigenvector, states, eigenvector2, states2)))/deltah^2;
 end
