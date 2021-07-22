@@ -184,7 +184,7 @@ end
 
 function calculatefidelity()
 
-    println("Starting sz!!");
+    println("Starting fid!!");
     @time begin
     N=4;
     J=1

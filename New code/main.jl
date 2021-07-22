@@ -103,6 +103,6 @@ end
 
 
 #graphTest();
-calculatesz()
-
+#calculatesz()
+calculatefidelity()
 #plottest()
