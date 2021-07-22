@@ -90,7 +90,7 @@ end
 #entanglementtest();
 #testbond();
 
-
+calculatesz()
 #test();
 
 #testMeasures();
@@ -103,6 +103,6 @@ end
 
 
 #graphTest();
-calculatesz()
+#calculatesz()
 
 #plottest()

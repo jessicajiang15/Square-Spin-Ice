@@ -71,14 +71,14 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     println("timing matrix generation");
     @time begin
     randomList=generateRandomh(hbar, width, bonds);
-    println(randomList);
+    #println(randomList);
     #the info contains the states
     theInfo::Array{Any}=Any[];
     eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     evenSpins=singleOutEvenOddSpins(true, 2^(N*N), N);
-    println("length", length(evenSpins[1]));
+    #println("length", length(evenSpins[1]));
 
     push!(theInfo, evenSpins[1]);
         oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);

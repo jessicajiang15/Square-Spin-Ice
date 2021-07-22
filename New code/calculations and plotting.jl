@@ -188,7 +188,7 @@ function calculateSz(eigenvector, N)
         temp=countBits(i);
         sum+=(temp-(N*N-temp))*abs2(eigenvector[i+1]);
     end
-    return (1/2)*sum;
+    return (1/(N*N))*(1/2)*sum;
 end
 
 function calculateSz(eigenvector, states, N)

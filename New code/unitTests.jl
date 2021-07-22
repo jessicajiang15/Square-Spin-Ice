@@ -2,21 +2,19 @@ include("entanglement helper.jl")
 
 
 function test()
-    N=2;
-    bonds = bondListTwo();
-    println(bonds);
-    refStatesData=referenceStatesXY(N);
-
-    println("TE SIZEH", length(refStatesData[1]));
-    #list of all viable reference states
-    refStates=refStatesData[1];
-    #THIS maps a number to its state object, which contains info about ref state and shit
-    refStatesMap=refStatesData[2];
-    pt=momentum(0,0);
-    viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
-    println("NEW");
-    temp = calculateEigensystemHeisenbergMomentum2d(N, 1, bonds, "full", "all")
-    println(temp[1]);
+    println("lmaoas");
+    N=4;
+    J=1
+    h=1;
+    hs=generateHListUniform(J, 20);
+    ms=Any[];
+    bonds = bondListFrustrated(N)
+    temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
+    println("sz: ", sz);
 end
 
 function testMeasures()
