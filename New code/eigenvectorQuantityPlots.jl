@@ -55,3 +55,20 @@ function generateHListLog(J, num)
     end
     return list;
 end
+
+
+function generateHListUniform(hmin, hmax, num)
+    inc=hmax/num-hmin/num;
+    i=hmin;
+    hlist=Float64[];
+    while(i<=hmax)
+        push!(hlist, i);
+        i+=inc;
+        if(inc==0)
+            break;
+        end
+        println("inc", inc);
+    end
+    return hlist;
+
+end

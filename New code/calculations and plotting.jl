@@ -413,3 +413,50 @@ function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
     println("inner product: ", abs(innerProduct(eigenvector, states, eigenvector2, states2)));
     return 2*(1-inner)/(deltah^2);
 end
+
+#list is a list of all states
+
+function generateFidelityList(hmin, hmax, num, N, J, bonds)
+    hstep=hmax/num-hmin/num;
+    i=hmin;
+    eigenvectors=Any[];
+    states=Any[];
+    all=Any[];
+    println(J);
+
+    while(i<=hmax+hstep)
+        println("on i: ", i);
+        temp=calculateEigensystemTransverse(N, J, i, bonds,"lanczos", "one", i, 0);
+        eigensystem=getLowestLyingStates(temp[1], temp[2]);
+        eigenvector=eigensystem[2];
+        state=temp[3][eigensystem[3]];
+        push!(eigenvectors, eigenvector);
+        push!(states, state);
+        if(hstep<=0)
+            break;
+        end
+        i+=hstep;
+    end
+    push!(all, eigenvectors);
+    push!(all, states);
+    return all;
+end
+
+function calculateFidelity(hmin, hmax, num, N, J, bonds)
+    println("begin");
+    println(J);
+    fidelities=Any[];
+    hstep=hmax/num-hmin/num;
+    all=Any[];
+    println("hlist begin");
+    hlist=generateHListUniform(hmin, hmax, num);
+    println("fidelity list begin");
+    list=generateFidelityList(hmin, hmax, num, N, J, bonds);
+    eigenvectors=list[1];
+    states=list[2];
+    for i=1:length(eigenvectors)-1
+        inner=abs(innerProduct(eigenvectors[i], states[i], eigenvectors[i+1], states[i+1]));
+        push!(fidelities,2*(1-inner)/(hstep^2));
+    end
+    return fidelities;
+end

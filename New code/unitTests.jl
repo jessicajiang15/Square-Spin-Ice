@@ -287,3 +287,18 @@ function thesztest2()
     println("ms matrix: ", szm);
 end
 end
+
+function fidTest2()
+    println("starting fid");
+    println("starting fid");
+
+    hmin=0.15;
+    hmax=0.15;
+    num=1;
+    N=4;
+    J=1;
+    bonds = bondListFrustrated(N)
+
+    fids=calculateFidelity(hmin, hmax, num, N, J, bonds);
+    println("fids: ", fids);
+end
