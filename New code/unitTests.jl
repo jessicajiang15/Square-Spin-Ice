@@ -123,7 +123,7 @@ function calculategsentanglement()
     J=1
     entropies=Any[];
 
-        hs=generateHListUniform(J, 20);
+        hs=generateHListUniform(J, 30);
         listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
         bonds = bondListFrustrated(N)
         for i=1:length(hs)
