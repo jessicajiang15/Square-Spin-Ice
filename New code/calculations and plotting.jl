@@ -362,8 +362,8 @@ function innerProduct(eigenvector, states, eigenvector2, states2)
     sum=0;
     for i=1:length(states)
         index=binarySearchIt(states[i], states2);
-        println("states[i]", states[i]);
-        println("index", index);
+        #println("states[i]", states[i]);
+        #println("index", index);
         if(index!=-1)
             sum+=conj(eigenvector[i])*eigenvector2[index];
         end
@@ -452,6 +452,7 @@ function calculateFidelity(hmin, hmax, num, N, J, bonds)
     hlist=generateHListUniform(hmin, hmax, num);
     println("fidelity list begin");
     list=generateFidelityList(hmin, hmax, num, N, J, bonds);
+    println("fidelity list length", length(list));
     eigenvectors=list[1];
     states=list[2];
     for i=1:length(eigenvectors)-1

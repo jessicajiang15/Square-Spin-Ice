@@ -158,7 +158,7 @@ function thesztest()
     @time begin
     N=4;
     J=1
-    hs=generateHListUniform(J, 20);
+    hs=generateHListUniform(J, 50);
     ms=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -182,7 +182,7 @@ function thesztest()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotnew.png")
+    savefig("./szplotnewnew.png")
 end
 
 function calculatefidelity()
@@ -292,13 +292,17 @@ function fidTest2()
     println("starting fid");
     println("starting fid");
 
-    hmin=0.15;
-    hmax=0.15;
-    num=1;
+
+    num=20;
     N=4;
     J=1;
+    hmin=0.1*J;
+    hmax=J;
     bonds = bondListFrustrated(N)
+    hs=generateHListUniform(J, 20);
 
     fids=calculateFidelity(hmin, hmax, num, N, J, bonds);
     println("fids: ", fids);
+    plot(hs, fids);
+    savefig("./fidelityplot.png");
 end
