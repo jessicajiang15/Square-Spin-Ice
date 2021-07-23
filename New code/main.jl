@@ -91,6 +91,8 @@ end
 #testbond();
 
 thesztest()
+#thesztest2()
+
 #test();
 
 #testMeasures();

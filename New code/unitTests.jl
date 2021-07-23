@@ -258,3 +258,37 @@ function innerproducttest()
     states2=[1, 3, 5, 6];
     println(innerProduct(eigenvector, states, eigenvector2, states2));
 end
+
+
+
+function thesztest2()
+    println("Starting sz!!");
+    @time begin
+    N=4;
+    J=1
+    h=1.5
+    ms=Any[];
+    bonds = bondListFrustrated(N)
+
+        temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        println("length of temp[3] ", length(temp[3]))
+        println("length of temp ", length(temp))
+        println("length of eigensystem ", length(eigensystem))
+        println("eigensystem[3] ", eigensystem[3]);
+        sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
+        szm=szMatrix(eigensystem[2], temp[3][eigensystem[3]], N);
+        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+
+    println("ms: ", sz);
+    println("ms matrix: ", szm);
+
+
+    end
+    #TODO: plot it
+    plot(hs, ms)
+    savefig("./szplotnew.png")
+end

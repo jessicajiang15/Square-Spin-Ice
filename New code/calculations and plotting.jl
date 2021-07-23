@@ -200,6 +200,15 @@ function calculateSz(eigenvector, states, N)
     return -(1/(N*N))*sum;
 end
 
+function szMatrix(eigenvector, states, N)
+    m::Matrix{Float64}=zeros(length(eigenvector), length(eigenvector));
+    for i=length(states)
+        temp=countBits(states[i]);
+        m[i, i]+=(1/2)*(temp-(N*N-temp));
+    end
+    return conj.(eigenvector')*m*eigenvector*(1/(N*N));
+end
+
 function calculateSx(eigenvector, N)
     sum=0;
     for i=0:2^(N*N)-1
