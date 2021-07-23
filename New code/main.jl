@@ -90,9 +90,10 @@ end
 #entanglementtest();
 #testbond();
 
-
+calculategsentanglement()
 #thesztest()
-thesztest2()
+#thesztest2()
+#fidTest2()
 
 #test();
 #fidTest()
@@ -115,3 +116,5 @@ thesztest2()
 #fidTest()
 
 #innerproducttest()
+#graphTest()
+thesztest2()
