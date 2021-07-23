@@ -103,6 +103,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             println("finished even eigenvalues");
         elseif(eigmethod=="lanczos")
             values, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+            println(values[1]);
             append!(eigenvalues, values[1]);
             append!(eigenvectors, vecs[1]);
         else
@@ -131,8 +132,8 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             println("finished odd eigenvalues");
         elseif(eigmethod=="lanczos")
             values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
-            append!(eigenvalues, values);
-            append!(eigenvectors, vecs);
+            append!(eigenvalues, values[1]);
+            append!(eigenvectors, vecs[1]);
         else
             eigtemp=eigs((HtempOdd), nev=n);
             #eigtemp=eigen(Htemp);

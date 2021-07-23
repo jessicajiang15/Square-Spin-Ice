@@ -285,10 +285,5 @@ function thesztest2()
 
     println("ms: ", sz);
     println("ms matrix: ", szm);
-
-
-    end
-    #TODO: plot it
-    plot(hs, ms)
-    savefig("./szplotnew.png")
+end
 end
