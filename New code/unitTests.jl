@@ -158,7 +158,7 @@ function thesztest()
     @time begin
     N=4;
     J=1
-    hs=generateHListUniform(J, 50);
+    hs=generateHListUniform(J, 20);
     ms=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
