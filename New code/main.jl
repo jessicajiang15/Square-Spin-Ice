@@ -24,7 +24,7 @@ function main()
     local temp
     J = 1;
     N = 4;
-    h = 1;
+    h = 0.4;
     width = 0;
 
 
@@ -83,14 +83,14 @@ end
 end
 
 
-#main();
+main();
 #thetest();
 #println("starting");
 #lol()
 #entanglementtest();
 #testbond();
 
-calculategsentanglement()
+#calculategsentanglement()
 #thesztest()
 #thesztest2()
 #fidTest2()
