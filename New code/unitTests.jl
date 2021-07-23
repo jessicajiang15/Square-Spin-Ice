@@ -182,7 +182,7 @@ function thesztest()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotnewnew.png")
+    savefig("./szplotnewnewnew.png")
 end
 
 function calculatefidelity()
