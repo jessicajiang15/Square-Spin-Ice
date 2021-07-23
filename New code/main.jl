@@ -60,7 +60,7 @@ function main()
     listA=[0, 1, 4, 5];
 
     println((eigenvalues));
-    println((eigenvectors));
+    #println((eigenvectors));
 
     if(file)
         io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
