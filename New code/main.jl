@@ -91,8 +91,8 @@ end
 #testbond();
 
 
-thesztest()
-#thesztest2()
+#thesztest()
+thesztest2()
 
 #test();
 #fidTest()

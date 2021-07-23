@@ -266,7 +266,7 @@ function thesztest2()
     @time begin
     N=4;
     J=1
-    h=1.5
+    h=0.4
     ms=Any[];
     bonds = bondListFrustrated(N)
 
