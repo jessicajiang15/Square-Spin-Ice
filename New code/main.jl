@@ -24,7 +24,7 @@ function main()
     local temp
     J = 1;
     N = 4;
-    h = 0.4;
+    h = 0;
     width = 0;
 
 
@@ -59,7 +59,7 @@ function main()
     eigenvectors = temp[2]
     listA=[0, 1, 4, 5];
 
-    println((eigenvalues));
+    println("eigenvalues: ", (eigenvalues));
     #println((eigenvectors));
 
     if(file)
@@ -83,7 +83,7 @@ end
 end
 
 
-main();
+#main();
 #thetest();
 #println("starting");
 #lol()
@@ -105,7 +105,7 @@ main();
 
 #testExtractDigits()
 
-#calculategsentanglement()
+calculategsentanglement()
 
 
 #graphTest();
@@ -117,4 +117,4 @@ main();
 
 #innerproducttest()
 #graphTest()
-thesztest2()
+#thesztest2()
