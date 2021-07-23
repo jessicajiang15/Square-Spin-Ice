@@ -91,11 +91,11 @@ end
 #testbond();
 
 
-thesztest()
+#thesztest()
 #thesztest2()
 
 #test();
-
+fidTest()
 #testMeasures();
 
 #testPlot();

@@ -396,3 +396,20 @@ function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
     println("inner product: ", abs(innerProduct(eigenvector, states, eigenvector2, states2)));
     return 2*(1-inner)/(deltah^2);
 end
+
+
+function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
+    temp=calculateEigensystemTransverse(N, J, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
+    eigensystem=getLowestLyingStates(temp[1], temp[2]);
+    eigenvector2=eigensystem[2];
+    states2=temp[3][eigensystem[3]];
+    #=
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    temp[3][eigensystem[3]]
+    =#
+    inner=abs(innerProduct(eigenvector, states, eigenvector2, states2));
+    println("inner product: ", abs(innerProduct(eigenvector, states, eigenvector2, states2)));
+    return 2*(1-inner)/(deltah^2);
+end

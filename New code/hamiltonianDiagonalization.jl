@@ -102,15 +102,15 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             append!(eigenvectors, eigtemp.vectors);
             println("finished even eigenvalues");
         elseif(eigmethod=="lanczos")
-            values, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
-            println(values[1]);
-            append!(eigenvalues, values[1]);
-            append!(eigenvectors, vecs[1]);
+            vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+#println(vals[1]);
+            push!(eigenvalues, vals[1]);
+            push!(eigenvectors, vecs[1]);
         else
             eigtemp=eigs(HtempEven, nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
-            println(length(eigtemp[1]));
+            #println(length(eigtemp[1]));
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
             #append!(eigenvalues, eigtemp.values);
@@ -131,14 +131,16 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             append!(eigenvectors, eigtemp.vectors);
             println("finished odd eigenvalues");
         elseif(eigmethod=="lanczos")
-            values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
-            append!(eigenvalues, values[1]);
-            append!(eigenvectors, vecs[1]);
+            vals, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
+            push!(eigenvalues, vals[1]);
+            push!(eigenvectors, vecs[1]);
+            #println("vecs", vecs[1]);
+            #println("length vecs, ", length(vecs[1]));
         else
             eigtemp=eigs((HtempOdd), nev=n);
             #eigtemp=eigen(Htemp);
             #println(eigtemp);
-            println(length(eigtemp[1]));
+            #println(length(eigtemp[1]));
             append!(eigenvalues, eigtemp[1]);
             append!(eigenvectors, eigtemp[2]);
             #append!(eigenvalues, eigtemp.values);
