@@ -165,6 +165,7 @@ function thesztest()
     for i=1:length(hs)
         println("starting h: ", hs[i])
         temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        continue;
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -182,7 +183,7 @@ function thesztest()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotnewnewnew.png")
+    savefig("./szplotnewnewnewlol.png")
 end
 
 function calculatefidelity()

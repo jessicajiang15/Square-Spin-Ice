@@ -81,7 +81,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     #println("length", length(evenSpins[1]));
 
     push!(theInfo, evenSpins[1]);
-        oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
+    oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
         @time begin
         HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
@@ -104,6 +104,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
         elseif(eigmethod=="lanczos")
             vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
 #println(vals[1]);
+println("even eigenvalues: ", vals);
             push!(eigenvalues, vals[1]);
             push!(eigenvectors, vecs[1]);
         else
@@ -132,6 +133,8 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
             println("finished odd eigenvalues");
         elseif(eigmethod=="lanczos")
             vals, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
+            println("odd eigenvalues: ", vals);
+
             push!(eigenvalues, vals[1]);
             push!(eigenvectors, vecs[1]);
             #println("vecs", vecs[1]);

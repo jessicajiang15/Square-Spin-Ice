@@ -21,10 +21,9 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
         for j=1:N*N
             #for this particular site, find ALL of its bonds
             #println("bonds length", length(bonds));
-            theThing= getTi(j,list[i]) == 1 ? randList[j]/2 : -randList[j]/2;
-            #1/2 for double counting
+            theThing= getTi(j-1,list[i]) == 1 ? randList[j]/2 : -randList[j]/2;
             #println((1/2)*theThing);
-            H[i,i]+= theThing;
+            H[i,i]+=theThing;
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
                 if containsSite(j,bonds[z])

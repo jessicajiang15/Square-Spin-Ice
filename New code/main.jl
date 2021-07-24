@@ -24,7 +24,7 @@ function main()
     local temp
     J = 1;
     N = 4;
-    h = 0;
+    h = 1;
     width = 0;
 
 
@@ -83,7 +83,7 @@ end
 end
 
 
-#main();
+main();
 #thetest();
 #println("starting");
 #lol()
@@ -91,6 +91,7 @@ end
 #testbond();
 
 #calculategsentanglement()
+#println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
 thesztest()
 #thesztest2()
 #fidTest2()
