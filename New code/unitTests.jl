@@ -155,17 +155,18 @@ end
 
 function thesztest()
     println("Starting sz!!");
+    println("Starting sz!!");
+
     @time begin
     N=4;
     J=1
-    hs=generateHListUniform(J, 20);
+    hs=generateHListUniformHalf(J, 50)
     ms=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
         temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
-        continue;
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -177,6 +178,9 @@ function thesztest()
         sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
+        println("mz:", ms);
+        println("sz:", sz);
+
     end
     println("ms: ", ms);
 

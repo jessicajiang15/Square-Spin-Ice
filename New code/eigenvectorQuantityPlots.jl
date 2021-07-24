@@ -31,11 +31,23 @@ function plotSzVersusHTransverse(hList, J, bonds, N)
     return szlist;
 end
 
-
 function generateHListUniform(J, num)
     list::Array{Float64}=Float64[];
-    interval=J/num;
     i=(1/10)*J;
+    interval=(J-i)/num;
+
+    while(i<=J)
+        push!(list, i);
+        i+=interval;
+    end
+    return list;
+end
+
+function generateHListUniformHalf(J, num)
+    list::Array{Float64}=Float64[];
+    i=(1/10)*J;
+    interval=(0.5*J-i)/num;
+
     while(i<=0.5*J)
         push!(list, i);
         i+=interval;
