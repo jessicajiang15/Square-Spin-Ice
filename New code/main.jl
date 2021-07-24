@@ -83,7 +83,7 @@ end
 end
 
 
-main();
+#main();
 #thetest();
 #println("starting");
 #lol()
@@ -92,7 +92,7 @@ main();
 
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
-thesztest()
+#thesztest()
 #thesztest2()
 #fidTest2()
 
@@ -106,7 +106,7 @@ thesztest()
 
 #testExtractDigits()
 
-#calculategsentanglement()
+calculategsentanglement()
 
 
 #graphTest();
