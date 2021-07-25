@@ -461,3 +461,44 @@ function calculateFidelity(hmin, hmax, num, N, J, bonds)
     end
     return fidelities;
 end
+
+function getSzPlaquette(state, plaquetteIndicies)
+    sum=0;
+    for i=1:length(plaquetteIndicies)
+        sum+=getTi(plaquetteIndicies(i), state)
+    end
+    return sum;
+end
+
+function calculateSxIndicies(eigenvector, states, map, N, indicies)
+    sum=0;
+    for i=1:length(states)
+        for j=1:length(indicies)
+            b=flipBit(indicies[j]-1, states[i]);
+            if(b in keys(map))
+                c=map[b];
+                sum+=eigenvector[i]*conj(eigenvector[c]);
+            end
+        end
+    end
+    return (1/2)*sum;
+end
+
+
+
+#calculation: sum (ij) sxisxj -1^(i+j)
+function calculateSPi(eigenvector, states, N, map)
+    plaquettes=generateListsofPlaquetteIndicies(N);
+    totalsum=0;
+    for i=1:length(states)
+        for j=1:length(plaquettes)
+            for z=j+1:length(plaquettes)
+                jSx=calculateSxIndicies(eigenvector, states, map, N, plaquettes[j]);
+                zSx=calculateSxIndicies(eigenvector, states, map, N, plaquettes[z]);
+                totalsum+=jSx*zSx*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(plaquettes[j], N)+getPlaquetteNumber(plaquettes[z], N));
+            end
+        end
+    end
+    return totalsum;
+end
+#sum(sx sx)

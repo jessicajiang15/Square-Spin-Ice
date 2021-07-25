@@ -222,7 +222,11 @@ end
 
 function plottest()
     x=[0.1, 0.10069555500567187, 0.10139594797900289, 0.10210121257071929, 0.1028113826656066, 0.10352649238413769, 0.10424657608411206, 0.10497166836230663, 0.10570180405613792, 0.10643701824533586, 0.10717734625362917, 0.10792282365044256, 0.10867348625260563, 0.10942937012607376, 0.11019051158766086, 0.11095694720678427, 0.11172871380722174, 0.11250584846888068, 0.11328838852957958, 0.11407637158684206]
- y=[-0.8134175639031954, -0.8200063867643509, -0.8266616508941389, -0.8333842846052618, -0.8401752333849276, -0.8470354602567177, -0.8539659461491816, -0.8609676902725738, -0.8680417105021505, -0.8751890437692833, -0.8824107464601441, -0.8897078948215356, -0.8970815853746135, -0.9045329353360714, -0.9120630830466337, -0.9196731884078895, -0.9273644333256733, -0.9351380221620913, -0.9429951821939834, -0.9509371640799641]
+
+
+ y=[6.739980572365193, 7.908802091581995, 9.3482730178918, 11.039936762469443, 12.89465316346356, 14.72099147833389, 16.22635839736444, 17.08560667795857, 17.071859626950054, 16.172737502414584, 14.598062125143258, 12.671841414404305, 10.696958715571288, 8.876861035898184, 7.307936113547052, 6.009702345012287, 4.960041302269914, 4.1206974452076714, 3.451528254105747, 2.9168214844671394, 2.4871901079529612, 2.1394126568707184, 1.8555177293119485, 1.6217265647538384, 1.4274997861270966, 1.2647595864617651, 1.1272854653317008, 1.0102565317336325, 0.9099091333490904, 0.823282004444078, 0.7480266077108942, 0.6822655574725798, 0.6244864624867144]
+ y1=[0.5734618301059907, 0.5281882387390504, 0.48783980805195054, 0.4517323616624759, 0.41929559306832886, 0.3900513352347353, 0.363596435143867, 0.33958919888113465, 0.3177385651302, 0.297795439837723, 0.2795456621438757, 0.26280433244342927, 0.2474111556306625, 0.23322661654963156, 0.2201288525555328, 0.20801103193410936, 0.19677917871569392];
+ append!(y, y1);
     display(plot(x, y, seriestype=:scatter));
     savefig("./szplot.png");
 end
@@ -304,11 +308,74 @@ function fidTest2()
     hmin=0.1*J;
     hmax=J;
     bonds = bondListFrustrated(N)
-    hs=generateHListUniform(hmin, hmax, 20);
+    hs=generateHListUniform(hmin, hmax, num);
     println("hs", hs);
 
     fids=calculateFidelity(hmin, hmax, num, N, J, bonds);
     println("fids: ", fids);
     plot(hs, fids);
     savefig("./fidelityplot2.png");
+end
+
+
+
+function sPi()
+    println("Starting sz!!");
+    @time begin
+    N=4;
+    J=1
+    h=0.35
+    ms=Any[];
+    bonds = bondListFrustrated(N)
+    spis=Any[];
+
+        temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        println("length of temp[3] ", length(temp[3]))
+        println("length of temp ", length(temp))
+        println("length of eigensystem ", length(eigensystem))
+        println("eigensystem[3] ", eigensystem[3]);
+        spi=calculateSPi(eigensystem[2], temp[3][eigensystem[3]], N, temp[4][eigensystem[3]]);
+        push!(spis, spi);
+        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+
+    println("ms: ", sz);
+    println("ms matrix: ", szm);
+end
+end
+
+
+function calculateSpi()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    hs=generateHListUniformHalf(J, 50)
+    ms=Any[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        println("length of temp[3] ", length(temp[3]))
+        println("length of temp ", length(temp))
+        println("length of eigensystem ", length(eigensystem))
+        println("eigensystem[3] ", eigensystem[3]);
+        spi=calculateSPi(eigensystem[2], temp[3][eigensystem[3]], N, temp[4][eigensystem[3]]);
+        push!(spis, spi);
+    end
+    println("spis: ", spis);
+    end
+    #TODO: plot it
+    plot(hs, spis)
+    savefig("./spiplot.png")
 end

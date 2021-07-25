@@ -74,6 +74,8 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     println(randomList);
     #the info contains the states
     theInfo::Array{Any}=Any[];
+    #contains a map of the states
+    theInfo2::Array{Any}=Any[];
     eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
@@ -81,6 +83,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     #println("length", length(evenSpins[1]));
 
     push!(theInfo, evenSpins[1]);
+    push!(theInfo2, evenSpins[2]);
     oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
         println("STARTING EVEN");
         @time begin
@@ -120,6 +123,7 @@ println("even eigenvalues: ", vals);
         #eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
 
         push!(theInfo, oddSpins[1]);
+        push!(theInfo2, oddSpins[2]);
 
         println("STARTING ODD");
         @time begin
@@ -149,15 +153,13 @@ println("even eigenvalues: ", vals);
             #append!(eigenvalues, eigtemp.values);
             #append!(eigenvectors, eigtemp.vectors);
         end
-
     end
 
     push!(eigensystem, eigenvalues);
     push!(eigensystem, eigenvectors);
     push!(eigensystem, theInfo);
-
+    push!(eigensystem, theInfo2);
     return eigensystem;
-
 end
 
 function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, hbar, width)

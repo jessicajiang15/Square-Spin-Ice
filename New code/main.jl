@@ -95,10 +95,11 @@ end
 #thesztest()
 #thesztest2()
 #fidTest2()
-
+#plottest()
+calculateSpi()
 #test();
 #fidTest()
-fidTest2()
+#fidTest2()
 #plottest()
 #testMeasures();
 

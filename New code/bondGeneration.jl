@@ -214,3 +214,21 @@ end
 function plaquetteIndicies(plaquetteIndex, N)
     return Int[plaquetteIndex, plaquetteIndex+1, plaquetteIndex+N, plaquetteIndex+N+1]
 end
+
+function getPlaquetteNumber(index, N)
+    return getRow(index, N)%2==0 ? 1 : 0;
+end
+
+
+function getRow(index, N)
+    return ((index-1)/N)+1;
+end
+
+
+function generateListsofPlaquetteIndicies(N)
+    plaquette=generateCheckerboardPlaquettes(N);
+    plaquetteLists=Vector{Int}[];
+    for i=1:length(plaquette)
+        push!(plaquetteLists, plaquetteIndicies(plaquette[i]));
+    end
+end
