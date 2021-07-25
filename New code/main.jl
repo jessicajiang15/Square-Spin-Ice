@@ -98,7 +98,7 @@ end
 
 #test();
 #fidTest()
-#fidTest2()
+fidTest2()
 
 #testMeasures();
 
@@ -106,7 +106,7 @@ end
 
 #testExtractDigits()
 
-calculategsentanglement()
+#calculategsentanglement()
 
 
 #graphTest();
