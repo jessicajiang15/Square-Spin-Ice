@@ -310,5 +310,5 @@ function fidTest2()
     fids=calculateFidelity(hmin, hmax, num, N, J, bonds);
     println("fids: ", fids);
     plot(hs, fids);
-    savefig("./fidelityplot.png");
+    savefig("./fidelityplot2.png");
 end
