@@ -298,7 +298,7 @@ function fidTest2()
     println("starting fid");
 
 
-    num=20;
+    num=50;
     N=4;
     J=1;
     hmin=0.1*J;
