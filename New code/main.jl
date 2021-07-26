@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "symmetry"
+    method = "none"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -52,7 +52,11 @@ function main()
             println("error");
         end
     elseif (hamiltonianType == "transverse")
-        temp = calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, h, width);
+        if(method=="none")
+            temp=calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, h, width, "H1");
+        else
+            temp = calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, h, width);
+        end
     end
 
     eigenvalues = temp[1]
@@ -71,7 +75,7 @@ function main()
 
         io=open("eigenvectors"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
             for i=1:length(eigenvectors)
-                write(io, "$(eigenvectors[i]) \n")
+                write(io, "``$(eigenvectors[i]) \n")
             end
         end
     end
@@ -96,9 +100,9 @@ println()
 #thesztest()
 #thesztest2()
 
-fidTest2()
+#fidTest2()
 #plottest()
-#calculateSpiTest()
+calculateSpiTest()
 #test();
 #fidTest()
 #fidTest2()

@@ -466,10 +466,11 @@ end
 
 function getSzPlaquette(state, plaquetteIndicies)
     sum=0;
+    println("plq",plaquetteIndicies);
     for i=1:length(plaquetteIndicies)
-        sum+=getTi(plaquetteIndicies(i), state)
+        sum+=getTi(plaquetteIndicies[i], state) == 1 ? 1 : -1;
     end
-    return sum;
+    return (1/2)*sum;
 end
 
 function calculateSxIndicies(eigenvector, states, map, N, indicies)
@@ -478,6 +479,7 @@ function calculateSxIndicies(eigenvector, states, map, N, indicies)
         for j=1:length(indicies)
             b=flipBit(indicies[j]-1, states[i]);
             if(b in keys(map))
+                println("yayayayayayaya");
                 c=map[b];
                 sum+=eigenvector[i]*conj(eigenvector[c]);
             end
@@ -522,8 +524,8 @@ function calculateSPiSz(eigenvector, states, N)
         for j=1:length(plaquettes)
             for z=j+1:length(plaquettes)
                 #println("im done 1");
-                jSz=getSzPlaquette(state, plaquettes[j]);
-                zSz=getSzPlaquette(state, plaquettes[z]);
+                jSz=getSzPlaquette(states[i], plaquettes[j]);
+                zSz=getSzPlaquette(states[i], plaquettes[z]);
                 #println("im done 2");
                 no1=getPlaquetteNumber(plaquettes[j][1], N)
                 no2=getPlaquetteNumber(plaquettes[z][1], N)

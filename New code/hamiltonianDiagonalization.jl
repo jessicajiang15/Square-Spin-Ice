@@ -130,6 +130,7 @@ println("even eigenvalues: ", vals);
         HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, eigmethod, randomList);
     end
 
+
         if(eigmethod=="full")
             eigtemp=eigen(Hermitian(HtempOdd));
             append!(eigenvalues, eigtemp.values);
@@ -162,7 +163,7 @@ println("even eigenvalues: ", vals);
     return eigensystem;
 end
 
-function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, hbar, width)
+function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, hbar, width, h1orh2)
     randomList=generateRandomh(hbar, width, bonds);
     #println(randomList);
     #the info contains the states
@@ -170,18 +171,35 @@ function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num,
     eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
-    Htemp=constructTransverseHamiltonianNoSymmetry(bonds, N, J, eigmethod, randomList);
+    local Htemp;
+    push!(theInfo, 0:2^(N*N)-1);
+    println("timing h");
+    @time begin
+        if(h1orh2=="H1")
+            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randomList);
+        else
+            Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, randomList);
+        end
+    end
+    n::Int=0;
+    if(num=="all")
+        n=length(evenSpins[1]);
+    elseif(num=="one")
+        n=1;
+    else
+        n=16;
+    end
     if(eigmethod=="full")
-        eigtemp=eigen(Hermitian(HtempOdd));
+        eigtemp=eigen(Hermitian(Htemp));
         append!(eigenvalues, eigtemp.values);
         append!(eigenvectors, eigtemp.vectors);
         println("finished odd eigenvalues");
     elseif(eigmethod=="lanczos")
-        values, vecs, info=eigsolve(HtempOdd, n, :SR; krylovdim=100, ishermitian=true);
+        values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=100, ishermitian=true);
         append!(eigenvalues, values);
         append!(eigenvectors, vecs);
     else
-        eigtemp=eigs((HtempOdd), nev=n);
+        eigtemp=eigs((Htemp), nev=n);
         #eigtemp=eigen(Htemp);
         #println(eigtemp);
         println(length(eigtemp[1]));

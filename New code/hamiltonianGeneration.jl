@@ -47,7 +47,8 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
         return H;
 end
 
-function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randomList)
+#H1
+function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randList)
     if(eigmethod=="full")
         H=zeros(Float64, 2^(N*N), 2^(N*N));
     else
@@ -57,7 +58,7 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
     for i=0:2^(N*N)-1
         #NOW loop through all the possible SITES
         for j=1:N*N
-            b::Int=flipBit(j, i);
+            b::Int=flipBit(j-1, i);
             H[i+1,b+1]=randList[j]/2;
             #for this particular site, find ALL of its bonds
             for z=1:length(bonds)
@@ -79,8 +80,8 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
         return H;
 end
 
-
-function constructTransverseHamiltonianNoSymmetrySz(states, bonds, N, J, eigmethod, randList)
+#H2
+function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
     #println(states);
     local H;
@@ -97,7 +98,7 @@ function constructTransverseHamiltonianNoSymmetrySz(states, bonds, N, J, eigmeth
         for j=1:N*N
             #for this particular site, find ALL of its bonds
             #println("bonds length", length(bonds));
-            theThing= getTi(j,i) == 1 ? randList[j]/2 : -randList[j]/2;
+            theThing= getTi(j-1,i) == 1 ? randList[j]/2 : -randList[j]/2;
             #1/2 for double counting
             #println((1/2)*theThing);
             H[i+1,i+1]+= theThing;
