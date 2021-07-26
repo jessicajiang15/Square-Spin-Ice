@@ -1,4 +1,5 @@
 using Plots
+include("necessaryStructures.jl")
 
 function readFromFile(filename)
     list::Array{Complex{Float64}}=Complex{Float64}[];
@@ -236,7 +237,7 @@ function calculateSx(eigenvector, states, map, N)
 end
 
 
-function isNeel(state, starting, N)
+function isNeel(state, sector, N)
     one=getTi(state, starting);
     two=getTi(state, starting+1);
     three=getTi(state, starting+N);
@@ -288,11 +289,12 @@ end
 
 function calculateStaggeredFlippability(eigenvector, states, squareIndicies, N)
     sum=0;
+    #square indicies= list of list of indicies of the plaquettes, the first element in each list is the leading index
     for i=1:length(states)
         for j=1:length(squareIndicies)
             for z=j+1:length(squareIndicies)
-                product=calculateFlippabilityExp(eigenvector, states, squareIndicies[j])*calculateFlippabilityExp(eigenvector, states, squareIndicies[z]);
-                sum+=product*neg(j, z);
+                product=calculateFlippabilityExp(eigenvector, states, squareIndicies[j][1])*calculateFlippabilityExp(eigenvector, states, squareIndicies[z][1]);
+                sum+=product*(-1)^(getPlaquetteNumber(squareIndicies[j][1], N)*getPlaquetteNumber(squareIndicies[z][1], N));
             end
         end
     end
@@ -491,14 +493,46 @@ function calculateSPi(eigenvector, states, N, map)
     plaquettes=generateListsofPlaquetteIndicies(N);
     totalsum=0;
     for i=1:length(states)
+        println("state: ", i);
         for j=1:length(plaquettes)
             for z=j+1:length(plaquettes)
+                #println("im done 1");
                 jSx=calculateSxIndicies(eigenvector, states, map, N, plaquettes[j]);
                 zSx=calculateSxIndicies(eigenvector, states, map, N, plaquettes[z]);
-                totalsum+=jSx*zSx*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(plaquettes[j], N)+getPlaquetteNumber(plaquettes[z], N));
+                #println("im done 2");
+                no1=getPlaquetteNumber(plaquettes[j][1], N)
+                no2=getPlaquetteNumber(plaquettes[z][1], N)
+                #println("im done 3");
+                #plauettes[j][1] gives the leading index of the plaquette
+                totalsum+=jSx*zSx*abs2(eigenvector[i])*(-1)^(no1+no2);
+                #println("im done 4");
             end
         end
     end
     return totalsum;
 end
 #sum(sx sx)
+
+
+function calculateSPiSz(eigenvector, states, N)
+    plaquettes=generateListsofPlaquetteIndicies(N);
+    totalsum=0;
+    for i=1:length(states)
+        println("state: ", i);
+        for j=1:length(plaquettes)
+            for z=j+1:length(plaquettes)
+                #println("im done 1");
+                jSz=getSzPlaquette(state, plaquettes[j]);
+                zSz=getSzPlaquette(state, plaquettes[z]);
+                #println("im done 2");
+                no1=getPlaquetteNumber(plaquettes[j][1], N)
+                no2=getPlaquetteNumber(plaquettes[z][1], N)
+                #println("im done 3");
+                #plauettes[j][1] gives the leading index of the plaquette
+                totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(no1+no2);
+                #println("im done 4");
+            end
+        end
+    end
+    return totalsum;
+end

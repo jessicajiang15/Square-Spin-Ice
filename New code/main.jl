@@ -82,6 +82,7 @@ function main()
 end
 end
 
+println()
 
 #main();
 #thetest();
@@ -89,14 +90,15 @@ end
 #lol()
 #entanglementtest();
 #testbond();
-
+#test();
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
 #thesztest()
 #thesztest2()
-#fidTest2()
+
+fidTest2()
 #plottest()
-calculateSpi()
+#calculateSpiTest()
 #test();
 #fidTest()
 #fidTest2()

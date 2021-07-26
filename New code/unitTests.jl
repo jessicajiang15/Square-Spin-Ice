@@ -2,19 +2,10 @@ include("entanglement helper.jl")
 
 
 function test()
-    println("lmaoas");
-    N=4;
-    J=1
-    h=1;
-    hs=generateHListUniform(J, 20);
-    ms=Any[];
-    bonds = bondListFrustrated(N)
-    temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
-    println("sz: ", sz);
+    plaquettes=generateCheckerboardNoCrossPlaquettes(4);
+    println(length(plaquettes));
+    println(plaquettes);
+
 end
 
 function testMeasures()
@@ -180,6 +171,7 @@ function thesztest()
         push!(ms, sz);
         println("mz:", ms);
         println("sz:", sz);
+
 
     end
     println("ms: ", ms);
@@ -348,7 +340,7 @@ end
 end
 
 
-function calculateSpi()
+function calculateSpiTest()
     println("Starting sz!!");
     println("Starting sz!!");
 
@@ -356,7 +348,7 @@ function calculateSpi()
     N=4;
     J=1
     hs=generateHListUniformHalf(J, 50)
-    ms=Any[];
+    spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
     for i=1:length(hs)
@@ -370,10 +362,48 @@ function calculateSpi()
         println("length of temp ", length(temp))
         println("length of eigensystem ", length(eigensystem))
         println("eigensystem[3] ", eigensystem[3]);
+        println("starting time");
+        @time begin
         spi=calculateSPi(eigensystem[2], temp[3][eigensystem[3]], N, temp[4][eigensystem[3]]);
+    end
+        println("h: ", hs[i], " , spi: ", spi);
+
         push!(spis, spi);
+        #println("WARNING REMOVE");
+        break;
     end
     println("spis: ", spis);
+    end
+    #TODO: plot it
+    plot(hs, spis)
+    savefig("./spiplot.png")
+end
+
+
+function calculateStaggeredFlippabilityTest()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    hs=generateHListUniformHalf(J, 50)
+    flips=Any[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    squareIndicies=generateCheckerboardPlaquettes(N);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+        flip=calculateStaggeredFlippability(igensystem[2], temp[3][eigensystem[3]], squareIndicies, N);
+        println("h: ", hs[i], " , flip: ", flip);
+
+        push!(flips, flip);
+    end
+    println("flips: ", flips);
     end
     #TODO: plot it
     plot(hs, spis)

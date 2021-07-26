@@ -203,8 +203,22 @@ end
 
 function generateCheckerboardPlaquettes(N)
     plaquetteList=Int[];
-    for i=1:2^(N*N)
-        if((i-1)%2!=0&&(i-1)÷N%2==0||(i-1)%2==0&&(i-1)÷N%2!=0)
+    for i=1:N*N-N
+        if(((i-1)%2!=0&&(i-1)÷N%2==0||(i-1)%2==0&&(i-1)÷N%2!=0)&&!isLast(i, N))
+            push!(plaquetteList, i);
+        end
+    end
+    return plaquetteList;
+end
+
+function isLast(i, N)
+    return (i%N==0);
+end
+
+function generateCheckerboardNoCrossPlaquettes(N)
+    plaquetteList=Int[];
+    for i=1:(N*N)-N
+        if((((i-1)%2==0&&(i-1)÷N%2==0)||((i-1)%2!=0&&(i-1)÷N%2!=0))&&!isLast(i, N))
             push!(plaquetteList, i);
         end
     end
@@ -221,14 +235,15 @@ end
 
 
 function getRow(index, N)
-    return ((index-1)/N)+1;
+    return ((index-1)÷N)+1;
 end
 
 
 function generateListsofPlaquetteIndicies(N)
-    plaquette=generateCheckerboardPlaquettes(N);
+    plaquette=generateCheckerboardNoCrossPlaquettes(N);
     plaquetteLists=Vector{Int}[];
     for i=1:length(plaquette)
-        push!(plaquetteLists, plaquetteIndicies(plaquette[i]));
+        push!(plaquetteLists, plaquetteIndicies(plaquette[i], N));
     end
+    return plaquetteLists;
 end
