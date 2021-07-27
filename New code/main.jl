@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "none"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full

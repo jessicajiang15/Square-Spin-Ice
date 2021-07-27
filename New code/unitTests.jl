@@ -347,7 +347,7 @@ function calculateSpiTest()
     @time begin
     N=4;
     J=1
-    hs=generateHListUniformHalf(J, 50)
+    hs=generateHListUniform(0.001, 10, 100);
     spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -365,7 +365,7 @@ function calculateSpiTest()
         #println("eigensystem[3] ", eigensystem[3]);
         println("starting time");
         @time begin
-        spi=calculateSPiSz(eigenvectors[1], temp[3][1], N);
+        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N);
     end
         println("h: ", hs[i], " , spi: ", spi);
 
@@ -376,7 +376,7 @@ function calculateSpiTest()
     end
     #TODO: plot it
     plot(hs, spis)
-    savefig("./spiplot.png")
+    savefig("./spiplot2.png")
 end
 
 

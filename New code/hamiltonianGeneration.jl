@@ -4,14 +4,20 @@ include("reflectionHelper.jl")
 using SparseArrays
 function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
     list=states[1];
     map=states[2];
     #println(states);
     local H;
     if(eigmethod=="full")
         H=zeros(Float64, length(list),length(list));
+        #=
     else
         H=spzeros(Float64, length(list),length(list));
+        =#
     end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
 
@@ -23,7 +29,13 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
             #println("bonds length", length(bonds));
             theThing= getTi(j-1,list[i]) == 1 ? randList[j]/2 : -randList[j]/2;
             #println((1/2)*theThing);
-            H[i,i]+=theThing;
+            push!(rows, i);
+            push!(cols, i);
+            push!(values, theThing);
+            if(eigmethod=="full")
+                H[i,i]+=theThing;
+            end
+            #
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
                 if containsSite(j,bonds[z])
@@ -37,29 +49,44 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
-                        H[i,t]=J/4;
+                        if(eigmethod=="full")
+                            H[i,t]=J/4;
+                        end
+                        push!(rows, i);
+                        push!(cols, t);
+                        push!(values, (1/2)*J/4);
                         end
                     end
 
                 end
                 #println("i count ", i, count);
             end
+            if(eigmethod!="full")
+                H=sparse(rows, cols, values);
+            end
         return H;
 end
 
 #H1
 function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randList)
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
     if(eigmethod=="full")
         H=zeros(Float64, 2^(N*N), 2^(N*N));
-    else
-        H=spzeros(Float64, 2^(N*N), 2^(N*N));
     end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
     for i=0:2^(N*N)-1
         #NOW loop through all the possible SITES
         for j=1:N*N
             b::Int=flipBit(j-1, i);
-            H[i+1,b+1]=randList[j]/2;
+            push!(rows, i+1);
+            push!(cols, b+1);
+            push!(values, randList[j]/2);
+            if(eigmethod=="full")
+                H[i+1,b+1]=randList[j]/2;
+            end
             #for this particular site, find ALL of its bonds
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
@@ -72,10 +99,18 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
                     else
                         theThing=-J/4;
                     end
-                    H[i+1,i+1]+= (1/2)*theThing;
+                    push!(rows, i+1);
+                    push!(cols, i+1);
+                    push!(values, (1/2)*theThing);
+                    if(eigmethod=="full")
+                        H[i+1,i+1]+= (1/2)*theThing;
+                    end
                         end
                     end
                 end
+            end
+            if(eigmethod!="full")
+                H=sparse(rows, cols, values);
             end
         return H;
 end
