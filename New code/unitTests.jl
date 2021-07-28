@@ -347,7 +347,7 @@ function calculateSpiTest()
     @time begin
     N=4;
     J=1
-    hs=generateHListUniform(0.1, 10, 100);
+    hs=generateHListUniform(0.1, 1, 100);
     spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -376,7 +376,7 @@ function calculateSpiTest()
     end
     #TODO: plot it
     plot(hs, spis)
-    savefig("./spiplotlargeh.png")
+    savefig("./spiplotsmallh.png")
 end
 
 
