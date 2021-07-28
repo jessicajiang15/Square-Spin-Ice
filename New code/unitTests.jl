@@ -395,7 +395,7 @@ function calculateStaggeredFlippabilityTest()
     println("square", squareIndicies);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        temp = calculateEigensystemTransverseNoSymmetry(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -409,7 +409,7 @@ function calculateStaggeredFlippabilityTest()
     end
     #TODO: plot it
     plot(hs, flips)
-    savefig("./flippabilitytest.png")
+    savefig("./flippabilitytest1.png")
 end
 
 
