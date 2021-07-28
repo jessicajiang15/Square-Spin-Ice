@@ -347,7 +347,7 @@ function calculateSpiTest()
     @time begin
     N=4;
     J=1
-    hs=generateHListUniform(0.001, 0.1, 100);
+    hs=generateHListUniform(0.1, 10, 100);
     spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -376,7 +376,7 @@ function calculateSpiTest()
     end
     #TODO: plot it
     plot(hs, spis)
-    savefig("./spiplot3.png")
+    savefig("./spiplotlargeh.png")
 end
 
 
@@ -391,14 +391,16 @@ function calculateStaggeredFlippabilityTest()
     flips=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
-    squareIndicies=generateCheckerboardPlaquettes(N);
+    squareIndicies=generateListsofPlaquetteIndiciesFlip(N);
+    println("square", squareIndicies);
     for i=1:length(hs)
         println("starting h: ", hs[i])
         temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-        flip=calculateStaggeredFlippability(igensystem[2], temp[3][eigensystem[3]], squareIndicies, N);
+
+        flip=calculateFlippabilityNew(eigenvectors[1], temp[3][1], N, squareIndicies)
         println("h: ", hs[i], " , flip: ", flip);
 
         push!(flips, flip);
@@ -406,6 +408,59 @@ function calculateStaggeredFlippabilityTest()
     println("flips: ", flips);
     end
     #TODO: plot it
+    plot(hs, flips)
+    savefig("./flippabilitytest.png")
+end
+
+
+
+function calculateSpiTestAbs()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    hs=generateHListUniform(0.1, 1, 50);
+    spis=Any[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        temp =calculateEigensystemTransverseNoSymmetry(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        #eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        #println("length of temp[3] ", length(temp[3]))
+        #println("length of temp ", length(temp))
+        #println("length of eigensystem ", length(eigensystem))
+
+        #println("eigensystem[3] ", eigensystem[3]);
+        println("starting time");
+        @time begin
+        spi=calculateSPiSzNewAbs(eigenvectors[1], temp[3][1], N);
+    end
+        println("h: ", hs[i], " , spi: ", spi);
+
+        push!(spis, spi);
+
+    end
+    println("spis: ", spis);
+    end
+    #TODO: plot it
     plot(hs, spis)
-    savefig("./spiplot.png")
+    savefig("./spiAbsplot.png")
+end
+
+
+function plaquetteTests()
+    N=4
+    squareIndicies=generateListsofPlaquetteIndiciesFlip(N);
+    println("Square indicies: ", squareIndicies);
+    state=9508;
+    for i=1:length(squareIndicies)
+        println("plaquette: ", squareIndicies[i], " , number: ", getPlaquetteNumber(squareIndicies[i][1], N))
+        println("is neel: ", isNeel(state, squareIndicies[i], N));
+    end
 end

@@ -238,10 +238,11 @@ end
 
 
 function isNeel(state, sector, N)
-    one=getTi(state, starting);
-    two=getTi(state, starting+1);
-    three=getTi(state, starting+N);
-    four=getTi(state, starting+1+N);
+    #println("sector", sector);
+    one=getTi(sector[1]-1, state);
+    two=getTi(sector[2]-1, state);
+    three=getTi(sector[3]-1, state);
+    four=getTi(sector[4]-1, state);
     return one!=two&&three!=one&&four!=three&&four!=two;
 end
 
@@ -293,6 +294,7 @@ function calculateStaggeredFlippability(eigenvector, states, squareIndicies, N)
     for i=1:length(states)
         for j=1:length(squareIndicies)
             for z=j+1:length(squareIndicies)
+
                 product=calculateFlippabilityExp(eigenvector, states, squareIndicies[j][1])*calculateFlippabilityExp(eigenvector, states, squareIndicies[z][1]);
                 sum+=product*(-1)^(getPlaquetteNumber(squareIndicies[j][1], N)*getPlaquetteNumber(squareIndicies[z][1], N));
             end
@@ -560,4 +562,46 @@ function calculateSPiSzNew(eigenvector, states, N)
         end
     end
     return totalsum/(N*N);
+end
+
+
+
+function calculateSPiSzNewAbs(eigenvector, states, N)
+    totalsum=0;
+        #println("state: ", i);
+        for j=1:N*N
+            for z=1:N*N
+                tempsum=0;
+                for i=1:length(states)
+                #println("im done 1");
+                    jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
+                    zSz=getTi(z-1, states[i])==1 ? 1/2 : -1/2;
+                    #println("im done 2");
+                    #println("im done 3");
+                    #plauettes[j][1] gives the leading index of the plaquette
+                    tempsum+=(jSz*zSz)*(abs2(eigenvector[i]));
+                    #*(-1)^(i+j)
+                    #println("im done 4");
+                end
+                totalsum+=abs(tempsum);
+            end
+        end
+    return totalsum/(N*N);
+end
+
+
+function calculateFlippabilityNew(eigenvector, states, N, plaquettes)
+    #println("plaquettes", plaquettes);
+    total=0;
+    for i=1:length(states)
+        for j=1:length(plaquettes)
+            for z=1:length(plaquettes)
+                #println(plaquettes[j]);
+                if(isNeel(states[i], plaquettes[j], N)&&isNeel(states[i], plaquettes[z], N))
+                    total+=abs2(eigenvector[i])*(-1^(j+z));
+                end
+            end
+        end
+    end
+    return -total/(length(plaquettes));
 end

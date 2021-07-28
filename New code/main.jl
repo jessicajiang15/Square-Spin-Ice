@@ -99,9 +99,12 @@ println()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
 #thesztest()
 #thesztest2()
+#plaquetteTests()
+#calculateStaggeredFlippabilityTest()
 
 #fidTest2()
 #plottest()
+#calculateSpiTestAbs()
 calculateSpiTest()
 #test();
 #fidTest()
