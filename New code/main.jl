@@ -100,7 +100,7 @@ println()
 #thesztest()
 #thesztest2()
 #plaquetteTests()
-calculateStaggeredFlippabilityTest()
+#calculateStaggeredFlippabilityTest()
 
 #fidTest2()
 #plottest()
@@ -113,7 +113,7 @@ calculateStaggeredFlippabilityTest()
 #testMeasures();
 
 #testPlot();
-
+calculatefidelity()
 #testExtractDigits()
 
 #calculategsentanglement()

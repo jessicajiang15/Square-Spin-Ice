@@ -65,8 +65,7 @@ function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
 
 end
 
-
-
+#let N b e how many sites??
 function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, width)
     println("timing matrix generation");
     @time begin

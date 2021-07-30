@@ -1,5 +1,6 @@
 using Plots
 include("necessaryStructures.jl")
+using JLD
 
 function readFromFile(filename)
     list::Array{Complex{Float64}}=Complex{Float64}[];
@@ -384,24 +385,6 @@ function innerProduct(eigenvector, states, eigenvector2)
     return sum;
 end
 
-#please just assume that the list of states will be the same for the new eigenvector and stuff...
-function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
-    temp=calculateEigensystemTransverse(N, J, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
-    eigensystem=getLowestLyingStates(temp[1], temp[2]);
-    eigenvector2=eigensystem[2];
-    states2=temp[3][eigensystem[3]];
-    #=
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    temp[3][eigensystem[3]]
-    =#
-    inner=abs(innerProduct(eigenvector, states, eigenvector2, states2));
-    println("inner product: ", abs(innerProduct(eigenvector, states, eigenvector2, states2)));
-    return 2*(1-inner)/(deltah^2);
-end
-
-
 function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
     temp=calculateEigensystemTransverse(N, J, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
@@ -604,4 +587,64 @@ function calculateFlippabilityNew(eigenvector, states, N, plaquettes)
         end
     end
     return -total/(length(plaquettes));
+end
+
+
+function generateHListUniform(J, num)
+    list::Array{Float64}=Float64[];
+    i=(1/10)*J;
+    interval=(J-i)/num;
+
+    while(i<=J)
+        push!(list, i);
+        i+=interval;
+    end
+    return list;
+end
+
+function generateHListUniformHalf(J, num)
+    list::Array{Float64}=Float64[];
+    i=(1/10)*J;
+    interval=(0.5*J-i)/num;
+
+    while(i<=0.5*J)
+        push!(list, i);
+        i+=interval;
+    end
+    return list;
+end
+
+function generateHListLog(J, num)
+    list::Array{Float64}=Float64[];
+    i=0.1*J;
+    start=log(2, i);
+    count=0;
+    while(count<num)
+        push!(list,2^start);
+        start+=0.01;
+        count+=1;
+    end
+    return list;
+end
+
+
+function generateHListUniform(hmin, hmax, num)
+    inc=hmax/num-hmin/num;
+    i=hmin;
+    hlist=Float64[];
+    while(i<=hmax)
+        push!(hlist, i);
+        i+=inc;
+        if(inc==0)
+            break;
+        end
+        println("inc", inc);
+    end
+    return hlist;
+end
+
+
+function storeInformation(bonds, N)
+    plaquettes=generateListsofPlaquetteIndiciesFlip(N);
+
 end

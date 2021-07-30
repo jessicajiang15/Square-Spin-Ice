@@ -61,6 +61,22 @@ struct lambda
     ly::Int64;
 end
 
+struct graph
+    nodes::Dict{Int, node};
+    edges::Vector{edge};
+end
+
+struct node
+    num::Int
+    neighbors::Vector{node};
+    visited::Bool;
+end
+
+struct edge
+    node1::node;
+    node2::node;
+end
+
 function containsSite(i, bond)
     return bond.site1.num==i||bond.site2.num==i;
 end
