@@ -1,4 +1,5 @@
 include("entanglement helper.jl")
+include("nlchelpers.jl")
 
 
 function test()
@@ -302,4 +303,47 @@ function plaquetteTests()
         println("plaquette: ", squareIndicies[i], " , number: ", getPlaquetteNumber(squareIndicies[i][1], N))
         println("is neel: ", isNeel(state, squareIndicies[i], N));
     end
+end
+
+function fileiotest()
+r=readdlm("graphs.txt"; skipblanks=false);
+println(r[10, 1]);
+#println(r);
+#println((r));
+#println((r));
+#=
+count=1;
+num=r[1, count];
+while(num!="")
+    if(count==1)
+        graphNum=num;
+    elseif(count==2)
+        numSites=num;
+    elseif(count==3)
+        numNearestNeighborBonds=num;
+    elseif(count==4)
+        numFarNeighborBonds=num;
+    elseif(count==5)
+        numSquares=num;
+    elseif(count==6)
+        numPlaquettes=num;
+    elseif(count==7)
+        numSubgraphs=num;
+    elseif(count==8)
+        latticeConstant=num/2;
+    end
+    num=r[1, count];
+    println(num);
+    count+=1;
+end
+        #close(file);
+        =#
+end
+
+
+function filetest()
+    d=readdlm("graphs.txt"; skipblanks=false);
+    r=readFromGraphFile();
+    println(r);
+    #println(r);
 end

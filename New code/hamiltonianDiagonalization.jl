@@ -13,7 +13,7 @@ function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
         spinUps::Array{Any}=singleOutNUpSpins(i, 2^(N*N));
         @time begin
         println("next:", i);
-        Htemp=constructHeisenbergHamiltonian(spinUps, bonds, N, J, eigmethod);
+        Htemp=constructHeisenbergHamiltonian(spinUps, bonds, N*N, J, eigmethod);
     end
         #println(Htemp);
         #TODO:check this, how do you incorporate eigenvectors
@@ -78,12 +78,12 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     eigensystem::Array{Any}=Any[];
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
-    evenSpins=singleOutEvenOddSpins(true, 2^(N*N), N);
+    evenSpins=singleOutEvenOddSpins(true, 2^(N));
     #println("length", length(evenSpins[1]));
 
     push!(theInfo, evenSpins[1]);
     push!(theInfo2, evenSpins[2]);
-    oddSpins=singleOutEvenOddSpins(false, 2^(N*N), N);
+    oddSpins=singleOutEvenOddSpins(false, 2^(N));
         println("STARTING EVEN");
         @time begin
         HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
@@ -171,7 +171,7 @@ function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num,
     eigenvalues::Array{Any}=Any[];
     eigenvectors::Array{Any}=Any[];
     local Htemp;
-    push!(theInfo, 0:2^(N*N)-1);
+    push!(theInfo, 0:2^(N)-1);
     println("timing h");
     @time begin
         if(h1orh2=="H1")
@@ -233,7 +233,7 @@ end
         println("CURR MOMENTUM ", i);
         viableSt=findViableRefStates(i, N, refStates);
         #viable st contains info about the numbering of each viable state
-        Htemp=constructHamiltonianHeisenbergMomentum(viableSt, N, i, bonds, refStatesMap, eigmethod);
+        Htemp=constructHamiltonianHeisenbergMomentum(viableSt, N*N, i, bonds, refStatesMap, eigmethod);
         println(Htemp);
         println(Htemp[1,1]);
         n::Int=0;
@@ -295,7 +295,7 @@ function calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
         viableSt=getViableStates2d(pt.px, pt.py, N, refStates);
         count+=length(viableSt[1]);
         #viable st contains info about the numbering of each viable state
-        Htemp=constructHamiltonianHeisenbergMomentum2d(viableSt, N, momenta[i], bonds, refStatesMap, eigmethod);
+        Htemp=constructHamiltonianHeisenbergMomentum2d(viableSt, N*N, momenta[i], bonds, refStatesMap, eigmethod);
         println(Htemp);
         println("IS HERMITIAN: ", isHermitian(Htemp));
         n::Int=0;
@@ -363,7 +363,7 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
         else
             n=100;
         end
-        Htemp=constructHamiltonianHeisenbergReflection(viableStates,N, reflections[i],bonds, refStatesMap, eigmethod);
+        Htemp=constructHamiltonianHeisenbergReflection(viableStates,N*N, reflections[i],bonds, refStatesMap, eigmethod);
         println("is hermitian: ", isHermitian(Htemp));
         if(eigmethod=="full")
             eigtemp=eigen(Htemp);

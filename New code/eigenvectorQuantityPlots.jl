@@ -21,7 +21,7 @@ end
 function plotSzVersusHTransverse(hList, J, bonds, N)
     szlist=Float64[];
     for h=1:length(hList)
-        temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
+        temp = calculateEigensystemTransverse(N*N, J, h, bonds,"lanczos", "one", h, 0);
         minInd=findLowest(temp[1]);
         eigenvector = temp[2][minInd];
         #temp[3] is a map mapping index to the list of states
@@ -46,7 +46,7 @@ function calculatefidelity()
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        temp = calculateEigensystemTransverse(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -77,7 +77,7 @@ function thesztest()
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+        temp = calculateEigensystemTransverse(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -117,7 +117,7 @@ function calculateSpiTest()
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        temp =calculateEigensystemTransverseNoSymmetry(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+        temp =calculateEigensystemTransverseNoSymmetry(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         #eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -158,7 +158,7 @@ function calculateStaggeredFlippabilityTest()
     println("square", squareIndicies);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        temp = calculateEigensystemTransverseNoSymmetry(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+        temp = calculateEigensystemTransverseNoSymmetry(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);

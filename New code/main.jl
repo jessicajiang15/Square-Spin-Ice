@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "symmetry"
+    method = "none"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -25,6 +25,7 @@ function main()
     J = 1;
     N = 4;
     h = 1;
+    numSites=16;
     width = 0;
 
 
@@ -53,9 +54,9 @@ function main()
         end
     elseif (hamiltonianType == "transverse")
         if(method=="none")
-            temp=calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, h, width, "H1");
+            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, h, bonds,eigmethod, num, h, width, "H2");
         else
-            temp = calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, h, width);
+            temp = calculateEigensystemTransverse(numSites, J, h, bonds,eigmethod, num, h, width);
         end
     end
 
@@ -89,6 +90,7 @@ end
 println()
 
 #main();
+#fileiotest()
 #thetest();
 #println("starting");
 #lol()
@@ -113,7 +115,7 @@ println()
 #testMeasures();
 
 #testPlot();
-calculatefidelity()
+#calculatefidelity()
 #testExtractDigits()
 
 #calculategsentanglement()
@@ -129,3 +131,6 @@ calculatefidelity()
 #innerproducttest()
 #graphTest()
 #thesztest2()
+#fileiotest()
+
+filetest()

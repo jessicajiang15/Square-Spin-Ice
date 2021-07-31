@@ -61,10 +61,7 @@ struct lambda
     ly::Int64;
 end
 
-struct graph
-    nodes::Dict{Int, node};
-    edges::Vector{edge};
-end
+
 
 struct node
     num::Int
@@ -76,6 +73,37 @@ struct edge
     node1::node;
     node2::node;
 end
+
+struct square
+    num1::site;
+    num2::site;
+    num3::site;
+    num4::site;
+end
+
+struct graph
+    #(graphNum, numSites, numNearestNeighborBonds, numFarNeighborBonds, numSquares, numPlaquettes, numSubgraphs, latticeConstant, nearBonds, farBonds, squares, plaquettes, siteNumbering)
+    num::Int;
+    numSites::Int;
+    numNearBonds::Int;
+    numFarBonds::Int;
+    numSquares::Int;
+    numPlaquettes::Int;
+    numSubgraphs::Int;
+    latticeConstant::Float64;
+    nearBonds::Vector{bond};
+    farBonds::Vector{bond};
+    squares::Vector{square};
+    plaquettes::Vector{square};
+    #1s and 0s labels
+    indicies::Vector{Int};
+    subgraphList::Vector{Int};
+
+end
+
+
+
+
 
 function containsSite(i, bond)
     return bond.site1.num==i||bond.site2.num==i;

@@ -24,7 +24,8 @@ end
 
 
 
-function singleOutEvenOddSpins(isEven,range, N)
+function singleOutEvenOddSpins(isEven,range)
+    println(range);
     #temp2 stores the map and the list
     temp2::Array{Any}=Any[];
     #temp stores the states

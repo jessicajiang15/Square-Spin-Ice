@@ -2,6 +2,7 @@ include("bondGeneration.jl");
 include("momentumHelpers.jl")
 include("reflectionHelper.jl")
 using SparseArrays
+#IMPORTANT: N IS THE TOTAL NUMBER OF SITES!!!!!!!!!!!!
 function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
     cols::Vector{Int}=Int[];
@@ -24,7 +25,7 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
     for i=1:length(list)
         #NOW loop through all the possible SITES
         count=0;
-        for j=1:N*N
+        for j=1:N
             #for this particular site, find ALL of its bonds
             #println("bonds length", length(bonds));
             theThing= getTi(j-1,list[i]) == 1 ? randList[j]/2 : -randList[j]/2;
@@ -74,12 +75,12 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
     values::Vector{Float64}=Float64[];
 
     if(eigmethod=="full")
-        H=zeros(Float64, 2^(N*N), 2^(N*N));
+        H=zeros(Float64, 2^(N), 2^(N));
     end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
-    for i=0:2^(N*N)-1
+    for i=0:2^(N)-1
         #NOW loop through all the possible SITES
-        for j=1:N*N
+        for j=1:N
             b::Int=flipBit(j-1, i);
             push!(rows, i+1);
             push!(cols, b+1);
@@ -121,16 +122,16 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, rand
     #println(states);
     local H;
     if(eigmethod=="full")
-        H=zeros(Float64, 2^(N*N), 2^(N*N));
+        H=zeros(Float64, 2^(N), 2^(N));
     else
-        H=spzeros(Float64,  2^(N*N), 2^(N*N));
+        H=spzeros(Float64,  2^(N), 2^(N));
     end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
 
-    for i=0:2^(N*N)-1
+    for i=0:2^(N)-1
         #NOW loop through all the possible SITES
         count=0;
-        for j=1:N*N
+        for j=1:N
             #for this particular site, find ALL of its bonds
             #println("bonds length", length(bonds));
             theThing= getTi(j-1,i) == 1 ? randList[j]/2 : -randList[j]/2;
@@ -174,7 +175,7 @@ function constructTransverseHamiltonianSzBasis(states, bonds, N, J, eigmethod, r
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
     for i=1:length(list)
         #NOW loop through all the possible SITES
-        for j=1:N*N
+        for j=1:N
             #for this particular site, find ALL of its bonds
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
