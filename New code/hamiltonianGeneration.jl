@@ -216,7 +216,7 @@ function constructHeisenbergHamiltonian(states, bonds, N, J, eigmethod)
     end    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
     for i=1:length(list)
         #NOW loop through all the possible SITES
-        for j=1:N*N
+        for j=1:N
             #for this particular site, find ALL of its bonds
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
@@ -259,7 +259,7 @@ function constructHamiltonianHeisenbergMomentum(refStates, N, psector, bonds, re
     println(size(H));
     for i=1:length(ref)
         #loop over all sites
-            for j=1:N*N
+            for j=1:N
                 #check which bonds contain that site
                 for z=1:length(bonds)
                     #if it does we proceed
@@ -311,7 +311,7 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
         println(size(H));
     for i=1:length(ref)
         #loop over all sites
-            for j=1:N*N
+            for j=1:N
                 #check which bonds contain that site
                 for z=1:length(bonds)
                     #if it does we proceed
@@ -366,7 +366,7 @@ function constructHamiltonianHeisenbergReflection(refStates, N, reflection, bond
         println(size(H));
     for i=1:length(ref)
         #loop over all sites
-            for j=1:N*N
+            for j=1:N
                 #check which bonds contain that site
                 for z=1:length(bonds)
                     #if it does we proceed

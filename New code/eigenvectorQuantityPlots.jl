@@ -174,3 +174,32 @@ function calculateStaggeredFlippabilityTest()
     plot(hs, flips)
     savefig("./flippabilitytest1.png")
 end
+
+
+
+function thesztestinfinitelattice()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    order=56;
+    hs=generateHListUniformHalf(J, 50)
+    ms=Any[];
+    graphs=readFromGraphFile();
+    println("hs: ", hs);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        sz=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 0)
+        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+        push!(ms, sz);
+        println("sz:", sz);
+    end
+    println("ms: ", ms);
+
+    end
+    #TODO: plot it
+    plot(hs, ms)
+    savefig("./szplotinfinitelattice.png")
+end

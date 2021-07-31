@@ -183,25 +183,25 @@ function plotQuantity(all, i)
     theplot(all, i, str);
 end
 
-
+#N IS TOTAL NUMBER OF STATES
 function calculateSz(eigenvector, N)
     sum=0;
-    for i=0:2^(N*N)-1
+    for i=0:2^(N)-1
         temp=countBits(i);
-        sum+=(temp-(N*N-temp))*abs2(eigenvector[i+1]);
+        sum+=(temp-(N-temp))*abs2(eigenvector[i+1]);
     end
-    return (1/(N*N))*(1/2)*sum;
+    return (1/(N))*(1/2)*sum;
 end
-
+#N IS TOTAL NUMBER OF STATES
 function calculateSz(eigenvector, states, N)
     sum=0;
     for i=1:length(states)
         temp=countBits(states[i]);
-        sum+=(1/2)*(temp-(N*N-temp))*conj(eigenvector[i])*eigenvector[i];
+        sum+=(1/2)*(temp-(N-temp))*conj(eigenvector[i])*eigenvector[i];
     end
-    return -(1/(N*N))*sum;
+    return -(1/(N))*sum;
 end
-
+#unused
 function szMatrix(eigenvector, states, N)
     m::Matrix{Float64}=zeros(length(eigenvector), length(eigenvector));
     for i=length(states)
@@ -210,11 +210,11 @@ function szMatrix(eigenvector, states, N)
     end
     return conj.(eigenvector')*m*eigenvector*(1/(N*N));
 end
-
+#N IS TOTAL NUMBER OF STATES
 function calculateSx(eigenvector, N)
     sum=0;
-    for i=0:2^(N*N)-1
-        for i=1:N*N
+    for i=0:2^(N)-1
+        for i=1:N
             b=flipBit(i-1, i);
             sum+=eigenvector[i+1]*conj(eigenvector[b+1]);
         end
@@ -223,10 +223,11 @@ function calculateSx(eigenvector, N)
 end
 
 #let state be map from state -> position in array
+#N IS TOTAL NUMBER OF STATES
 function calculateSx(eigenvector, states, map, N)
     sum=0;
     for i=1:length(states)
-        for j=1:N*N
+        for j=1:N
             b=flipBit(j-1, states[i]);
             if(b in keys(map))
                 c=map[b];
@@ -530,8 +531,8 @@ function calculateSPiSzNew(eigenvector, states, N)
     totalsum=0;
     for i=1:length(states)
         #println("state: ", i);
-        for j=1:N*N
-            for z=1:N*N
+        for j=1:N
+            for z=1:N
                 #println("im done 1");
                 jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
                 zSz=getTi(z-1, states[i])==1 ? 1/2 : -1/2;
@@ -544,7 +545,7 @@ function calculateSPiSzNew(eigenvector, states, N)
             end
         end
     end
-    return totalsum/(N*N);
+    return totalsum/(N);
 end
 
 
@@ -552,8 +553,8 @@ end
 function calculateSPiSzNewAbs(eigenvector, states, N)
     totalsum=0;
         #println("state: ", i);
-        for j=1:N*N
-            for z=1:N*N
+        for j=1:N
+            for z=1:N
                 tempsum=0;
                 for i=1:length(states)
                 #println("im done 1");
@@ -569,7 +570,7 @@ function calculateSPiSzNewAbs(eigenvector, states, N)
                 totalsum+=abs(tempsum);
             end
         end
-    return totalsum/(N*N);
+    return totalsum/(N);
 end
 
 

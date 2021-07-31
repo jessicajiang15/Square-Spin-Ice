@@ -124,5 +124,5 @@ end
 
 function generateRandomh(hbar, width, bonds)
     temp=Normal(hbar, width);
-    return rand(temp, length(bonds));
+    return length(bonds)==0 ? rand(temp, 1) : rand(temp, length(bonds));
 end

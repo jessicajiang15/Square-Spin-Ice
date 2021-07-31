@@ -7,7 +7,7 @@ function main()
     @time begin
         Random.seed!(123);
     println("hello")
-    latticeType = "frustrated"
+    latticeType = "none"
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
@@ -25,7 +25,7 @@ function main()
     J = 1;
     N = 4;
     h = 1;
-    numSites=16;
+    numSites=1;
     width = 0;
 
 
@@ -65,7 +65,7 @@ function main()
     listA=[0, 1, 4, 5];
 
     println("eigenvalues: ", (eigenvalues));
-    #println((eigenvectors));
+    println((eigenvectors));
 
     if(file)
         io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
@@ -133,4 +133,6 @@ println()
 #thesztest2()
 #fileiotest()
 
-filetest()
+#filetest()
+
+thesztestinfinitelattice()
