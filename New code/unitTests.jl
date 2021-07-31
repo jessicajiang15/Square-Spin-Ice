@@ -350,7 +350,7 @@ end
 
 function testlol()
     @time begin
-    order=20;
+    order=56;
     graphs=readFromGraphFile();
     sz=calculateInfiniteLatticeSz(order, 1, 10, graphs, 0)
     println("sz ", sz);
