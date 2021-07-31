@@ -287,7 +287,7 @@ function calculateInfiniteLatticeSz(order, J, h, graphs, width)
     println("weights done!!! ");
     for i=1:order
         println("order: ", order);
-        sum+=getAllWeights[i]*graphs[i].latticeConstant;
+        sum+=weights[i]*graphs[i].latticeConstant;
     end
 end
     return sum;

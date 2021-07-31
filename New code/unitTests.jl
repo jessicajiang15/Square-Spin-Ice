@@ -175,11 +175,11 @@ end
 function thesztest2()
     println("Starting sz!!");
     @time begin
-    N=4;
+    N=16;
     J=1
-    h=0.35
+    h=0.25
     ms=Any[];
-    bonds = bondListFrustrated(N)
+    bonds = bondListFrustrated(4)
 
         temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
         eigenvalues = temp[1]
@@ -346,4 +346,10 @@ function filetest()
     r=readFromGraphFile();
     println(r);
     #println(r);
+end
+
+function testlol()
+    graphs=readFromGraphFile();
+    sz=calculateInfiniteLatticeSz(2, 1, 1, graphs, 0)
+    println("sz ", sz);
 end

@@ -184,14 +184,14 @@ function thesztestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=56;
-    hs=generateHListUniformHalf(J, 50)
+    order=20;
+    hs=generateHListUniformHalf(J, 1)
     ms=Any[];
     graphs=readFromGraphFile();
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        sz=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 0)
+        sz=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 20)
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
         println("sz:", sz);
