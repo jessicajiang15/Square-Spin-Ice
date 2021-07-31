@@ -134,5 +134,5 @@ println()
 #fileiotest()
 
 #filetest()
-#testlol();
-thesztestinfinitelattice()
+testlol();
+#thesztestinfinitelattice()
