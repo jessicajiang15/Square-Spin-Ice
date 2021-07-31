@@ -61,19 +61,6 @@ struct lambda
     ly::Int64;
 end
 
-
-
-struct node
-    num::Int
-    neighbors::Vector{node};
-    visited::Bool;
-end
-
-struct edge
-    node1::node;
-    node2::node;
-end
-
 struct square
     num1::site;
     num2::site;
