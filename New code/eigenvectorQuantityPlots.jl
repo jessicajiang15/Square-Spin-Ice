@@ -203,3 +203,30 @@ function thesztestinfinitelattice()
     plot(hs, ms)
     savefig("./szplotinfinitelattice.png")
 end
+
+
+
+
+
+
+function weightsszgraphs()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    h=10;
+    order=56;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+    order=2;
+        weights=getAllWeightsSz(order, graphs, J, h, width);
+        println(weights);
+
+    end
+    #TODO: plot it
+    plot(1:length(weights), weights)
+    savefig("./szinfiniteweights.png")
+end
