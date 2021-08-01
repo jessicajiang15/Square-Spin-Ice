@@ -221,7 +221,6 @@ function weightsszgraphs()
     width=0;
     ms=Any[];
     graphs=readFromGraphFile();
-    order=2;
         weights=getAllWeightsSz(order, graphs, J, h, width);
         println(weights);
 
