@@ -184,7 +184,7 @@ function thesztestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=56;
+    order=20;
     hs=generateHListUniform(1, 10, 50)
     ms=Any[];
     graphs=readFromGraphFile();
