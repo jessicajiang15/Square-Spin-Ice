@@ -201,7 +201,7 @@ function thesztestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotinfinitelattice.png")
+    savefig("./szplotinfinitelattice2.png")
 end
 
 
@@ -227,5 +227,5 @@ function weightsszgraphs()
     end
     #TODO: plot it
     plot(1:length(weights), weights)
-    savefig("./szinfiniteweights.png")
+    savefig("./szinfiniteweights2.png")
 end

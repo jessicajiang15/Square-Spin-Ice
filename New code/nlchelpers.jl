@@ -260,15 +260,13 @@ function calculateBaseWeightSz(J, h, width)
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
     sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], 1);
-end
-
-function calculateBasePropertySz()
-
+    return sz;
 end
 
 function getAllWeightsSz(num, graphs, J, h, width)
     weights::Vector{Float64}=Float64[];
-    push!(weights, calculateBaseWeightSz(J, h, width))
+    base=calculateBaseWeightSz(J, h, width);
+    push!(weights, base)
     for i=1:num
         println("order: ", i);
         push!(weights, calculateWeightSz(i, graphs, weights, J, h, width));
@@ -282,12 +280,12 @@ function calculateInfiniteLatticeSz(order, J, h, graphs, width)
     @time begin
         weights=getAllWeightsSz(order, graphs, J, h, width);
     end
-    sum=0;
+    sum=weights[1];
 
     println("weights done!!! ");
     for i=1:order
         println("order: ", order);
-        sum+=weights[i]*graphs[i].latticeConstant;
+        sum+=weights[i+1]*graphs[i].latticeConstant;
     end
 end
     return sum;
@@ -295,6 +293,7 @@ end
 
 function calculateWeightSz(num, graphs::Vector{graph}, weights, J, h, width)
     sum=0;
+    #the graph to calculate weight of
     theGraph=graphs[num];
     list=theGraph.subgraphList;
     bonds=append!(theGraph.nearBonds, theGraph.farBonds);
@@ -304,8 +303,9 @@ function calculateWeightSz(num, graphs::Vector{graph}, weights, J, h, width)
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
     sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
     for i=1:length(list)
-        sum+=weights[list[i]];
+        sum+=weights[list[i+1]];
     end
+    sum+=theGraph.numSites*weights[1];
     return sz-sum;
 
 end
