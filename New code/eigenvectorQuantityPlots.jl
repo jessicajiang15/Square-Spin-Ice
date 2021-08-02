@@ -184,7 +184,7 @@ function thesztestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=20;
+    order=56;
     hs=generateHListUniform(1, 10, 50)
     ms=Any[];
     graphs=readFromGraphFile();
@@ -201,7 +201,7 @@ function thesztestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotinfinitelattice3.png")
+    savefig("./szplotinfinitelattice4.png")
 end
 
 
