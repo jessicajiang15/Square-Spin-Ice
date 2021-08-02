@@ -342,14 +342,13 @@ end
 
 
 
-module entanglementEntropy
-
 function calculateBaseWeightEntanglement(J, h, width)
     bonds::Vector{bond}=bond[];
     temp=calculateEigensystemTransverse(1, J, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
     sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], 1);
     return sz;
 end
@@ -429,6 +428,4 @@ function getAllWeightsNoSubEntanglement(num, graphs, J, h, width)
         push!(weights, calculateWeightNoSubSz(i, graphs, J, h, width));
     end
     return weights;
-end
-
 end

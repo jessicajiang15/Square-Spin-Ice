@@ -78,7 +78,7 @@ function lol()
         println("starting");
     println("lmao");
     N=4;
-    listA=Int[0, 1];
+    listA=Int[1, 2];
     #=
     N=2;
     listA=Int[0, 1];
@@ -117,6 +117,7 @@ function calculategsentanglement()
 
         hs=generateHListUniform(J, 50);
         listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
+        println(listA);
         bonds = bondListFrustrated(N)
         for i=1:length(hs)
             temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
@@ -355,4 +356,11 @@ function testlol()
     sz=calculateInfiniteLatticeSz(order, 1, 10, graphs, 0)
     println("sz ", sz);
 end
+end
+
+
+function huh()
+    N=4;
+    listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
+    println(listA);
 end

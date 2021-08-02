@@ -6,14 +6,14 @@ function getANum(state, listA)
         digit=getTi(listA[i], state);
         num=num|(digit<<(i-1));
     end
-    println(num);
+    #println(num);
     return num;
 end
 
 #e.g. 4, 1 gives 00...0011110
 function createMask(digits, pos)
     if(digits<=0)
-        println("wtf");
+        #println("wtf");
         return 0;
     end
     num=(2^(digits))-1;
@@ -31,17 +31,17 @@ function getBNum(state, listA, N)
     for i=1:length(listA)
         temp=0;
         numDigits=listA[i]-lastNum-1;
-        println("numdigits",numDigits, "i, ", listA[i]);
+        #println("numdigits",numDigits, "i, ", listA[i]);
         if(numDigits>0)
             mask=createMask(numDigits, lastNum+1);
-            println("mask",mask);
-            println("lastNum",lastNum);
+            #println("mask",mask);
+            #println("lastNum",lastNum);
             temp=(mask&state)>>(lastNum+1);
-            println("temp",temp);
+            #println("temp",temp);
             num|=temp<<digitsdone;
-            println("num",temp);
+            #println("num",temp);
             digitsdone+=numDigits;
-            println("digits done ",digitsdone);
+            #println("digits done ",digitsdone);
         end
         lastNum=listA[i];
         println("");
@@ -54,13 +54,57 @@ function getBNum(state, listA, N)
         end
         mask=createMask(numDigits, lastNum+1);
         temp=(mask&state)>>(lastNum+1);
-        println("mask&state",mask&state);
-        println("lastNum+1",lastNum+1);
+        #println("mask&state",mask&state);
+        #println("lastNum+1",lastNum+1);
         num|=temp<<digitsdone;
     end
-    println("final:", num);
+    #println("final:", num);
     return num;
 end
+
+
+#create a number by taking out the bits at positions in listA
+function getBNumStateNum(state, listA, N)
+    #idea: have a mask for each and keep track of last digit that youve finished.
+#shift to that digit
+#println("state", state);
+    num=0;
+    lastNum=-1;
+    digitsdone=0;
+    for i=1:length(listA)
+        temp=0;
+        numDigits=listA[i]-lastNum-1;
+        #println("numdigits",numDigits, "i, ", listA[i]);
+        if(numDigits>0)
+            mask=createMask(numDigits, lastNum+1);
+            #println("mask",mask);
+            #println("lastNum",lastNum);
+            temp=(mask&state)>>(lastNum+1);
+            #println("temp",temp);
+            num|=temp<<digitsdone;
+            #println("num",temp);
+            digitsdone+=numDigits;
+            #println("digits done ",digitsdone);
+        end
+        lastNum=listA[i];
+        println("");
+    end
+    if(N-1!=listA[length(listA)-1])
+        numDigits=N-lastNum-1;
+        println("numDigits",numDigits);
+        if(numDigits==0)
+            return num;
+        end
+        mask=createMask(numDigits, lastNum+1);
+        temp=(mask&state)>>(lastNum+1);
+        #println("mask&state",mask&state);
+        #println("lastNum+1",lastNum+1);
+        num|=temp<<digitsdone;
+    end
+    #println("final:", num);
+    return num;
+end
+
 
 
 

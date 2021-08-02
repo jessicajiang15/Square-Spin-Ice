@@ -88,7 +88,7 @@ end
 end
 
 println()
-
+#huh()
 #main();
 #fileiotest()
 #thetest();
@@ -117,7 +117,7 @@ println()
 #testPlot();
 #calculatefidelity()
 #testExtractDigits()
-
+#lol()
 #calculategsentanglement()
 
 
