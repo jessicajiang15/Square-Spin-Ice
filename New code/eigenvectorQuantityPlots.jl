@@ -217,7 +217,7 @@ function weightsszgraphs()
     N=4;
     J=1
     h=10;
-    order=56;
+    order=2;
     width=0;
     ms=Any[];
     graphs=readFromGraphFile();
@@ -227,5 +227,5 @@ function weightsszgraphs()
     end
     #TODO: plot it
     plot(1:length(weights), weights)
-    savefig("./szinfiniteweights2.png")
+    savefig("./szinfiniteweightsloworder.png")
 end
