@@ -134,6 +134,7 @@ println()
 #fileiotest()
 
 #filetest()
-weightsszgraphs()
+#weightsszgraphs()
 #testlol();
-#thesztestinfinitelattice()
+thesztestinfinitelattice()
+#weightsszgraphs2()

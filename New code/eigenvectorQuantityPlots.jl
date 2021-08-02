@@ -184,14 +184,14 @@ function thesztestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=20;
-    hs=generateHListUniformHalf(J, 1)
+    order=56;
+    hs=generateHListUniformHalf(J, 50)
     ms=Any[];
     graphs=readFromGraphFile();
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        sz=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 20)
+        sz=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 0)
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
         println("sz:", sz);
@@ -228,4 +228,28 @@ function weightsszgraphs()
     #TODO: plot it
     plot(1:length(weights), weights)
     savefig("./szinfiniteweightsloworder.png")
+end
+
+
+
+function weightsszgraphs2()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    h=10;
+    order=2;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+
+        weights=getAllWeightsNoSubSz(order, graphs, J, h, width);
+        println(weights);
+
+    end
+    #TODO: plot it
+    plot(1:length(weights), weights)
+    savefig("./szinfiniteweightsloworder2.png")
 end
