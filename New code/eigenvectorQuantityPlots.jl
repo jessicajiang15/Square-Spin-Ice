@@ -185,7 +185,7 @@ function thesztestinfinitelattice()
     N=4;
     J=1
     order=56;
-    hs=generateHListUniformHalf(J, 50)
+    hs=generateHListUniform(1, 10, 50)
     ms=Any[];
     graphs=readFromGraphFile();
     println("hs: ", hs);
@@ -201,7 +201,7 @@ function thesztestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotinfinitelattice2.png")
+    savefig("./szplotinfinitelattice3.png")
 end
 
 
@@ -239,17 +239,108 @@ function weightsszgraphs2()
     @time begin
     N=4;
     J=1
-    h=10;
+    h=9.100000000000001;
     order=2;
     width=0;
     ms=Any[];
     graphs=readFromGraphFile();
+    hs=generateHListUniform(1, 10, 10)
+    println(hs);
+    println("order, ", order)
+    println("J, ", J)
+    println("h, ", h)
+    println("width, ", width)
+        weights=getAllWeightsSz(order, graphs, J, hs[10], width);
+        println("weights ", weights);
+    end
+    #TODO: plot it
+    println(weights);
+    plot(1:length(weights), weights)
+    savefig("./graph0weights1.png")
 
-        weights=getAllWeightsNoSubSz(order, graphs, J, h, width);
-        println(weights);
+
+end
+
+
+
+function weightsszgraphs3()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    J=1
+    order=2;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+    hs=generateHListUniform(1, 10, 10)
+    list1=Float64[];
+    list2=Float64[];
+    list3=Float64[];
+    for i=1:length(hs)
+        println("order, ", order)
+        println("J, ", J)
+        println("h, ", hs[i])
+        println("width, ", width)
+        weights=getAllWeightsSz(order, graphs, J, hs[i], width);
+        println("weights", weights);
+        push!(list1, weights[1])
+        push!(list2, weights[2])
+        push!(list3, weights[3])
+    end
+
+    println("list2", list2)
+    println("list3", list3);
 
     end
     #TODO: plot it
-    plot(1:length(weights), weights)
-    savefig("./szinfiniteweightsloworder2.png")
+    plot(hs, list1)
+    savefig("./graph0weights1.png")
+    plot(hs, list2)
+    savefig("./graph1weights1.png")
+
+    plot(hs, list3)
+    savefig("./graph2weights1.png")
+
+end
+
+
+
+
+
+
+
+
+function weightsszgraphs4()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    N=4;
+    J=1
+    order=2;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+    hs=generateHListUniform(1, 10, 10)
+    println(hs);
+    j=length(hs)
+
+        println("order, ", order)
+        println("J, ", J)
+        println("width, ", width)
+        println("h, ", hs[j])
+        #println(graphs);
+#=
+        weights=getAllWeightsSz(order, graphs, J, hs[j-2], width);
+        println("weights ", weights);
+=#
+        weights1=getAllWeightsSz(order, graphs, J, 2, width);
+        #println("the fuck ", weights1);
+        #println(graphs);
+        #graphs=readFromGraphFile();
+
+        weights=getAllWeightsSz(order, graphs, J, hs[j], width);
+        println("weights ", weights);
+
+
 end

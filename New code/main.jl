@@ -138,3 +138,6 @@ println()
 #testlol();
 thesztestinfinitelattice()
 #weightsszgraphs2()
+#weightsszgraphs3()
+
+#weightsszgraphs4()
