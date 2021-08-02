@@ -339,3 +339,96 @@ function getAllWeightsNoSubSz(num, graphs, J, h, width)
     end
     return weights;
 end
+
+
+
+module entanglementEntropy
+
+function calculateBaseWeightEntanglement(J, h, width)
+    bonds::Vector{bond}=bond[];
+    temp=calculateEigensystemTransverse(1, J, h, bonds,"lanczos", "one", h, width);
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], 1);
+    return sz;
+end
+
+function getAllWeightsEntanglement(num, graphs, J, h, width)
+    local weights::Vector{Float64}=Float64[];
+    base=calculateBaseWeightSz(J, h, width);
+    push!(weights, base)
+    for i=1:num
+        println("order: ", i);
+        push!(weights, calculateWeightSz(i, graphs, weights, J, h, width));
+    end
+    return weights;
+end
+#max order 56
+function calculateInfiniteLatticeEntanglement(order, J, h, graphs, width)
+    @time begin
+    println("weights starting!!");
+    @time begin
+        weights=getAllWeightsSz(order, graphs, J, h, width);
+    end
+    sum=weights[1];
+
+    println("weights done!!! ");
+    for i=1:order
+        println("order: ", order);
+        sum+=weights[i+1]*graphs[i].latticeConstant;
+    end
+end
+    return sum;
+end
+
+function calculateWeightEntanglement(num, graphs::Vector{graph}, weights, J, h, width)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    temp=copy(theGraph.nearBonds);
+    bonds=append!(temp, theGraph.farBonds);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    for i=1:length(list)
+        sum+=weights[list[i]+1];
+    end
+    sum+=theGraph.numSites*weights[1];
+    return sz-sum;
+
+end
+
+
+
+
+function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, h, width)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    bonds=append!(theGraph.nearBonds, theGraph.farBonds);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    return sz;
+
+end
+
+function getAllWeightsNoSubEntanglement(num, graphs, J, h, width)
+    weights::Vector{Float64}=Float64[];
+    base=calculateBaseWeightSz(J, h, width);
+    push!(weights, base)
+    for i=1:num
+        println("order: ", i);
+        push!(weights, calculateWeightNoSubSz(i, graphs, J, h, width));
+    end
+    return weights;
+end
+
+end
