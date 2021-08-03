@@ -94,7 +94,10 @@ println()
 #thetest();
 #println("starting");
 #lol()
-#entanglementtest();
+thesztestinfinitelattice()
+#theentanglementtestinfinitelattice()
+
+#entanglemenvttest();
 #testbond();
 #test();
 #calculategsentanglement()
@@ -132,11 +135,11 @@ println()
 #graphTest()
 #thesztest2()
 #fileiotest()
-
+#lol();
 #filetest()
 #weightsszgraphs()
 #testlol();
-thesztestinfinitelattice()
+#thesztestinfinitelattice()
 #weightsszgraphs2()
 #weightsszgraphs3()
 

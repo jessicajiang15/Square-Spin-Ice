@@ -184,7 +184,7 @@ function thesztestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=56;
+    order=20;
     hs=generateHListUniform(0.1, 1, 50)
     ms=Any[];
     graphs=readFromGraphFile();
@@ -201,7 +201,7 @@ function thesztestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotinfinitelatticeSmallH50.png")
+    savefig("./szplotinfinitelatticesmallh.png")
 end
 
 
@@ -343,4 +343,78 @@ function weightsszgraphs4()
         println("weights ", weights);
 
 
+end
+
+
+
+
+function weightsentanglementgraphs()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    h=10;
+    order=5;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+        weights=getAllWeightsEntanglement(order, graphs, J, h, width);
+        println("weights", weights);
+
+    end
+    #TODO: plot it
+    plot(1:length(weights), weights)
+    savefig("./entanglementinfiniteweightsloworder.png")
+end
+
+
+function weightsentanglementgraphsnosub()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    h=10;
+    order=5;
+    width=0;
+    ms=Any[];
+    graphs=readFromGraphFile();
+        weights=getAllWeightsNoSubEntanglement(order, graphs, J, h, width);
+        println("weights", weights);
+    end
+    #TODO: plot it
+    plot(1:length(weights), weights)
+    savefig("./entanglementinfiniteweightsnosub.png")
+end
+
+
+
+
+function theentanglementtestinfinitelattice()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    order=5;
+    hs=generateHListUniform(0.1, 10, 50)
+    ents=Any[];
+    graphs=readFromGraphFile();
+    println("hs: ", hs);
+    for i=1:length(hs)
+        println("starting h: ", hs[i])
+        entanglement=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 0)
+        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+        push!(ents, entanglement);
+    end
+    println("ents: ", ents);
+
+    end
+    #TODO: plot it
+    plot(hs, ents)
+    savefig("./entanglementplotinfinitelattice.png")
 end

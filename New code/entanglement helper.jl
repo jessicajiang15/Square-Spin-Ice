@@ -3,7 +3,7 @@ include("eigenvectorQuantityPlots.jl")
 function getANum(state, listA)
     num=0;
     for i=1:length(listA)
-        digit=getTi(listA[i], state);
+        digit=getTi(listA[i]-1, state);
         num=num|(digit<<(i-1));
     end
     #println(num);
@@ -30,7 +30,7 @@ function getBNum(state, listA, N)
     digitsdone=0;
     for i=1:length(listA)
         temp=0;
-        numDigits=listA[i]-lastNum-1;
+        numDigits=listA[i]-lastNum-2;
         #println("numdigits",numDigits, "i, ", listA[i]);
         if(numDigits>0)
             mask=createMask(numDigits, lastNum+1);
@@ -43,12 +43,12 @@ function getBNum(state, listA, N)
             digitsdone+=numDigits;
             #println("digits done ",digitsdone);
         end
-        lastNum=listA[i];
-        println("");
+        lastNum=listA[i]-1;
+        #println("");
     end
     if(N*N-1!=listA[length(listA)-1])
         numDigits=N*N-lastNum-1;
-        println("numDigits",numDigits);
+        #println("numDigits",numDigits);
         if(numDigits==0)
             return num;
         end
@@ -110,15 +110,22 @@ end
 
 function constructCoefficientMatrix(eigenvector,states,listA, N)
     #listA is a list of the positions of interest
-    H::Matrix{Float64}=zeros(Float64, 2^length(listA), 2^(N*N-length(listA)));
+    println("N", N)
+    H::Matrix{Float64}=zeros(Float64, 2^length(listA), 2^(N-length(listA)));
     #zeros(Float64, length(list),length(list));
     for i=1:length(states)
-        println("i, ",states[i]);
+
+        #println("i, ",states[i]);
+        #println("listA", listA)
+        #1001
         getA=getANum(states[i], listA);
         getB=getBNum(states[i], listA, N);
+        #println("A", getA)
+        #println("B", getB)
+
         H[getA+1,getB+1]=eigenvector[i];
     end
-    println(H);
+    #println(H);
     return H;
 end
 

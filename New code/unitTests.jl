@@ -61,12 +61,12 @@ function entanglementtest()
 
     #00,01,10,11
     #0000, 0001, 0000.... 1111
-    N=2
+    N=4
     eigenvector=Float64[1/sqrt(2), 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1/sqrt(2)];
     println(length(eigenvector));
-    listA=Int[0, 1];
+    listA=Int[1, 2];
     states::Array{Int}=Int[];
-    for i=0:2^(N*N)-1
+    for i=0:2^(N)-1
         push!(states, i);
     end
     println("calculating entropy");
@@ -77,8 +77,9 @@ end
 function lol()
         println("starting");
     println("lmao");
-    N=4;
-    listA=Int[1, 2];
+    N=7;
+    listA=Int[5, 6, 7, 2];
+    state=9
     #=
     N=2;
     listA=Int[0, 1];
@@ -86,18 +87,11 @@ function lol()
         println(getBNum(i, listA, 2))
     end
 =#
-    states::Array{Int}=Int[];
-    for i=0:2^(N*N)-1
-        push!(states, i);
-    end
 
-    for i=1:length(states)
-        println("i, ",states[i]);
-        getA=getANum(states[i], listA);
-        getB=getBNum(states[i], listA, 2);
-    end
-
-
+        getA=getANum(state, listA);
+        getB=getBNum(state, listA, 4);
+        println("a", getA);
+        println("b", getB);
 end
 
 function testExtractDigits()

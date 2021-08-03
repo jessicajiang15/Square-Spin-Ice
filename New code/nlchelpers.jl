@@ -343,23 +343,17 @@ end
 
 
 function calculateBaseWeightEntanglement(J, h, width)
-    bonds::Vector{bond}=bond[];
-    temp=calculateEigensystemTransverse(1, J, h, bonds,"lanczos", "one", h, width);
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-
-    sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], 1);
-    return sz;
+    return 0;
 end
 
 function getAllWeightsEntanglement(num, graphs, J, h, width)
     local weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSz(J, h, width);
-    push!(weights, base)
-    for i=1:num
+    push!(weights, 0)
+    #1st order
+    push!(weights, 0);
+    for i=2:num
         println("order: ", i);
-        push!(weights, calculateWeightSz(i, graphs, weights, J, h, width));
+        push!(weights, calculateWeightEntanglement(i, graphs, weights, J, h, width));
     end
     return weights;
 end
@@ -368,7 +362,7 @@ function calculateInfiniteLatticeEntanglement(order, J, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
-        weights=getAllWeightsSz(order, graphs, J, h, width);
+        weights=getAllWeightsEntanglement(order, graphs, J, h, width);
     end
     sum=weights[1];
 
@@ -381,24 +375,45 @@ end
     return sum;
 end
 
+function convertToList(squares)
+    list=Vector{Int}[];
+    for i=1:length(squares)
+        temp=Int[];
+        push!(temp, squares[i].num1.num);
+        push!(temp, squares[i].num2.num);
+        push!(temp, squares[i].num3.num);
+        push!(temp, squares[i].num4.num);
+        push!(list, sort(temp));
+    end
+    return list;
+end
+
 function calculateWeightEntanglement(num, graphs::Vector{graph}, weights, J, h, width)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
     list=theGraph.subgraphList;
+
+    squareList=convertToList(theGraph.squares);
+
     temp=copy(theGraph.nearBonds);
+
     bonds=append!(temp, theGraph.farBonds);
     temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    entanglement=0;
+
+    for i=1:length(squareList)
+        listA=squareList[i];
+        entanglement+=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, theGraph.numSites);
+    end
+
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
-    sum+=theGraph.numSites*weights[1];
-    return sz-sum;
-
+    return entanglement-sum;
 end
 
 
@@ -409,23 +424,33 @@ function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, h, widt
     #the graph to calculate weight of
     theGraph=graphs[num];
     list=theGraph.subgraphList;
-    bonds=append!(theGraph.nearBonds, theGraph.farBonds);
+
+    squareList=convertToList(theGraph.squares);
+
+    temp=copy(theGraph.nearBonds);
+
+    bonds=append!(temp, theGraph.farBonds);
     temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
-    return sz;
+    entanglement=0;
+
+    for i=1:length(squareList)
+        listA=(squareList[i]);
+        entanglement+=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, theGraph.numSites);
+    end
+    return entanglement;
 
 end
 
 function getAllWeightsNoSubEntanglement(num, graphs, J, h, width)
     weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSz(J, h, width);
-    push!(weights, base)
-    for i=1:num
+    push!(weights, 0)
+    push!(weights, 0);
+    for i=2:num
         println("order: ", i);
-        push!(weights, calculateWeightNoSubSz(i, graphs, J, h, width));
+        push!(weights, calculateWeightNoSubEntanglement(i, graphs, J, h, width));
     end
     return weights;
 end

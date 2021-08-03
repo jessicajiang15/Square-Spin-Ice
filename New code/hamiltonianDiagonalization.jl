@@ -89,6 +89,8 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
         HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
         println("H[1,1]", HtempEven[1, 1]);
     end
+    println("size even", size(HtempEven));
+
     n::Int=0;
     if(num=="all")
         n=length(evenSpins[1]);
@@ -128,6 +130,8 @@ println("even eigenvalues: ", vals);
         @time begin
         HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, eigmethod, randomList);
     end
+
+    println("size odd", size(HtempOdd));
 
 
         if(eigmethod=="full")
