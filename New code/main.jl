@@ -94,8 +94,8 @@ println()
 #thetest();
 #println("starting");
 #lol()
-thesztestinfinitelattice()
-#theentanglementtestinfinitelattice()
+#thesztestinfinitelattice()
+theentanglementtestinfinitelattice()
 
 #entanglemenvttest();
 #testbond();

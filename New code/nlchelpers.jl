@@ -352,7 +352,7 @@ function getAllWeightsEntanglement(num, graphs, J, h, width)
     #1st order
     push!(weights, 0);
     for i=2:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightEntanglement(i, graphs, weights, J, h, width));
     end
     return weights;

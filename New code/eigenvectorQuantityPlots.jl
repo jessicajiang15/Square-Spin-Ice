@@ -400,8 +400,8 @@ function theentanglementtestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=5;
-    hs=generateHListUniform(0.1, 10, 50)
+    order=40;
+    hs=generateHListUniform(0.1, 1, 100)
     ents=Any[];
     graphs=readFromGraphFile();
     println("hs: ", hs);
@@ -416,5 +416,5 @@ function theentanglementtestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ents)
-    savefig("./entanglementplotinfinitelattice.png")
+    savefig("./entanglement NLC order: " * string(order) *", "*".png")
 end
