@@ -407,7 +407,7 @@ function theentanglementtestinfinitelattice()
     println("hs: ", hs);
     for i=1:length(hs)
         println("starting h: ", hs[i])
-        entanglement=calculateInfiniteLatticeSz(order, J, hs[i], graphs, 0)
+        entanglement=calculateInfiniteLatticeEntanglement(order, J, hs[i], graphs, 0)
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ents, entanglement);
     end
