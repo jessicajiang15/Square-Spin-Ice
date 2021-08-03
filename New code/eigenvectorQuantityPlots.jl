@@ -400,7 +400,7 @@ function theentanglementtestinfinitelattice()
     @time begin
     N=4;
     J=1
-    order=40;
+    order=30;
     hs=generateHListUniform(0.1, 1, 100)
     ents=Any[];
     graphs=readFromGraphFile();
