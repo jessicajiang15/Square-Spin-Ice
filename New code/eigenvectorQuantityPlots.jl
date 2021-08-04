@@ -193,8 +193,8 @@ function thesztestinfinitelattice()
     J=1
     J2=1;
 
-    order=30;
-    hs=generateHListUniform(0.1, 0.5, 50)
+    order=20;
+    hs=generateHListUniform(0.1, 0.5, 20)
     ms=Any[];
     graphs=readFromGraphFile();
     println("hs: ", hs);
@@ -375,7 +375,7 @@ function weightsentanglementgraphs()
     J2=1;
 
     h=10;
-    order=5;
+    order=20;
     width=0;
     ms=Any[];
     graphs=readFromGraphFile();
@@ -423,7 +423,7 @@ function theentanglementtestinfinitelattice()
     J=1
     J2=1;
 
-    order=56;
+    order=20;
     hs=generateHListUniform(0.1, 1, 50)
     ents=Any[];
     graphs=readFromGraphFile();

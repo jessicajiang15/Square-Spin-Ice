@@ -84,7 +84,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
     push!(theInfo, evenSpins[1]);
     push!(theInfo2, evenSpins[2]);
     oddSpins=singleOutEvenOddSpins(false, 2^(N));
-        println("STARTING EVEN");
+        #println("STARTING EVEN");
         @time begin
         HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, J2, eigmethod, randomList);
         #println("H[1,1]", HtempEven[1, 1]);
@@ -126,7 +126,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
         push!(theInfo, oddSpins[1]);
         push!(theInfo2, oddSpins[2]);
 
-        println("STARTING ODD");
+        #println("STARTING ODD");
         @time begin
         HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, J2, eigmethod, randomList);
     end
