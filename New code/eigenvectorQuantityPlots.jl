@@ -210,7 +210,7 @@ function thesztestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotinfinitelattice, order: "*order*".png")
+    savefig("./szplotinfinitelattice, order: "*string(order)*".png")
 end
 
 
@@ -439,7 +439,7 @@ function theentanglementtestinfinitelattice()
     end
     #TODO: plot it
     plot(hs, ents)
-    savefig("./entanglement NLC order: " * string(order) *", "*".png")
+    savefig("./entanglement NLC order: " * string(order)*".png")
 end
 
 
