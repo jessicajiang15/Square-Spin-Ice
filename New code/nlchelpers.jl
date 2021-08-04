@@ -98,7 +98,7 @@ function readNumGraphs(r, startingIndex)
                             num1=num;
                         else
                             num2=num;
-                            push!(nearBonds, bond(site(num1, 0, 0), site(num2, 0, 0)));
+                            push!(nearBonds, bond(site(num1, 0, 0), site(num2, 0, 0), true));
                         end
                         which= which == 2 ? 1 : 2;
                         count+=1;
@@ -116,7 +116,7 @@ function readNumGraphs(r, startingIndex)
                         num1=num;
                     else
                         num2=num;
-                        push!(farBonds, bond(site(num1, 0, 0), site(num2, 0, 0)));
+                        push!(farBonds, bond(site(num1, 0, 0), site(num2, 0, 0), false));
                     end
                     which= which == 2 ? 1 : 2;
                     count+=1;
@@ -253,9 +253,9 @@ end
 
 =#
 
-function calculateBaseWeightSz(J, h, width)
+function calculateBaseWeightSz(J, J2, h, width)
     bonds::Vector{bond}=bond[];
-    temp=calculateEigensystemTransverse(1, J, h, bonds,"lanczos", "one", h, width);
+    temp=calculateEigensystemTransverse(1, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -263,22 +263,22 @@ function calculateBaseWeightSz(J, h, width)
     return sz;
 end
 
-function getAllWeightsSz(num, graphs, J, h, width)
+function getAllWeightsSz(num, graphs, J, J2, h, width)
     local weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSz(J, h, width);
+    base=calculateBaseWeightSz(J, J2, h, width);
     push!(weights, base)
     for i=1:num
         println("order: ", i);
-        push!(weights, calculateWeightSz(i, graphs, weights, J, h, width));
+        push!(weights, calculateWeightSz(i, graphs, weights, J, J2, h, width));
     end
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeSz(order, J, h, graphs, width)
+function calculateInfiniteLatticeSz(order, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
-        weights=getAllWeightsSz(order, graphs, J, h, width);
+        weights=getAllWeightsSz(order, graphs, J, J2, h, width);
     end
     sum=weights[1];
 
@@ -291,14 +291,14 @@ end
     return sum;
 end
 
-function calculateWeightSz(num, graphs::Vector{graph}, weights, J, h, width)
+function calculateWeightSz(num, graphs::Vector{graph}, weights, J, J2, h, width)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
     list=theGraph.subgraphList;
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
-    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -314,13 +314,13 @@ end
 
 
 
-function calculateWeightNoSubSz(num, graphs::Vector{graph}, J, h, width)
+function calculateWeightNoSubSz(num, graphs::Vector{graph}, J, J2, h, width)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
     list=theGraph.subgraphList;
     bonds=append!(theGraph.nearBonds, theGraph.farBonds);
-    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -329,40 +329,40 @@ function calculateWeightNoSubSz(num, graphs::Vector{graph}, J, h, width)
 
 end
 
-function getAllWeightsNoSubSz(num, graphs, J, h, width)
+function getAllWeightsNoSubSz(num, graphs, J, J2, h, width)
     weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSz(J, h, width);
+    base=calculateBaseWeightSz(J, J2, h, width);
     push!(weights, base)
     for i=1:num
         println("order: ", i);
-        push!(weights, calculateWeightNoSubSz(i, graphs, J, h, width));
+        push!(weights, calculateWeightNoSubSz(i, graphs, J, J2, h, width));
     end
     return weights;
 end
 
 
 
-function calculateBaseWeightEntanglement(J, h, width)
+function calculateBaseWeightEntanglement(J, J2, h, width)
     return 0;
 end
 
-function getAllWeightsEntanglement(num, graphs, J, h, width)
+function getAllWeightsEntanglement(num, graphs, J, J2, h, width)
     local weights::Vector{Float64}=Float64[];
     push!(weights, 0)
     #1st order
     push!(weights, 0);
     for i=2:num
         #println("order: ", i);
-        push!(weights, calculateWeightEntanglement(i, graphs, weights, J, h, width));
+        push!(weights, calculateWeightEntanglement(i, graphs, weights, J, J2, h, width));
     end
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeEntanglement(order, J, h, graphs, width)
+function calculateInfiniteLatticeEntanglement(order, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
-        weights=getAllWeightsEntanglement(order, graphs, J, h, width);
+        weights=getAllWeightsEntanglement(order, graphs, J, J2, h, width);
     end
     sum=weights[1];
 
@@ -388,7 +388,7 @@ function convertToList(squares)
     return list;
 end
 
-function calculateWeightEntanglement(num, graphs::Vector{graph}, weights, J, h, width)
+function calculateWeightEntanglement(num, graphs::Vector{graph}, weights, J, J2, h, width)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
@@ -399,7 +399,7 @@ function calculateWeightEntanglement(num, graphs::Vector{graph}, weights, J, h, 
     temp=copy(theGraph.nearBonds);
 
     bonds=append!(temp, theGraph.farBonds);
-    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -419,7 +419,7 @@ end
 
 
 
-function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, h, width)
+function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, J2, h, width)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
@@ -430,7 +430,7 @@ function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, h, widt
     temp=copy(theGraph.nearBonds);
 
     bonds=append!(temp, theGraph.farBonds);
-    temp=calculateEigensystemTransverse(theGraph.numSites, J, h, bonds,"lanczos", "one", h, width);
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -444,13 +444,104 @@ function calculateWeightNoSubEntanglement(num, graphs::Vector{graph}, J, h, widt
 
 end
 
-function getAllWeightsNoSubEntanglement(num, graphs, J, h, width)
+function getAllWeightsNoSubEntanglement(num, graphs, J, J2, h, width)
     weights::Vector{Float64}=Float64[];
     push!(weights, 0)
     push!(weights, 0);
     for i=2:num
         println("order: ", i);
-        push!(weights, calculateWeightNoSubEntanglement(i, graphs, J, h, width));
+        push!(weights, calculateWeightNoSubEntanglement(i, graphs, J, J2, h, width));
+    end
+    return weights;
+end
+
+
+
+#HASJKJASJKANKSA
+
+
+function calculateBaseWeightSpi(J, J2, h, width)
+    bonds::Vector{bond}=bond[];
+    temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], 1);
+    return sz;
+end
+
+function getAllWeightsSpi(num, graphs, J, J2, h, width)
+    local weights::Vector{Float64}=Float64[];
+    base=calculateBaseWeightSpi(J, J2, h, width);
+    push!(weights, base)
+    for i=1:num
+        println("order: ", i);
+        push!(weights, calculateWeightSpi(i, graphs, weights, J, J2, h, width));
+    end
+    return weights;
+end
+#max order 56
+function calculateInfiniteLatticeSpi(order, J, J2, h, graphs, width)
+    @time begin
+    println("weights starting!!");
+    @time begin
+        weights=getAllWeightsSpi(order, graphs, J, J2, h, width);
+    end
+    sum=weights[1];
+
+    println("weights done!!! ");
+    for i=1:order
+        println("order: ", order);
+        sum+=weights[i+1]*graphs[i].latticeConstant;
+    end
+end
+    return sum;
+end
+
+function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    temp=copy(theGraph.nearBonds);
+    bonds=append!(temp, theGraph.farBonds);
+    temp=calculateEigensystemTransverseNoSymmetry(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    for i=1:length(list)
+        sum+=weights[list[i]+1];
+    end
+    sum+=theGraph.numSites*weights[1];
+    return sz-sum;
+end
+
+
+
+
+function calculateWeightNoSubSpi(num, graphs::Vector{graph}, J, J2, h, width)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    bonds=append!(theGraph.nearBonds, theGraph.farBonds);
+    temp=calculateEigensystemTransverseNoSymmetry(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    return sz;
+
+end
+
+function getAllWeightsNoSubSpi(num, graphs, J, J2, h, width)
+    weights::Vector{Float64}=Float64[];
+    base=calculateBaseWeightSpi(J, J2, h, width);
+    push!(weights, base)
+    for i=1:num
+        println("order: ", i);
+        push!(weights, calculateWeightNoSubSpi(i, graphs, J, J2, h, width));
     end
     return weights;
 end

@@ -66,6 +66,8 @@ function calculateExpESq(beta, E, partition)
     return sum;
 end
 
+
+
 function calculateHeatCapacity(beta, E, E2)
     return (beta^2)*(E2-E^2);
 end
@@ -341,7 +343,7 @@ function getLowestLyingStates(eigenvalues, eigenvectors)
     eigensystem=Any[];
     min=eigenvalues[1];
     index=1;
-    println("length eigenvalues, ", length(eigenvalues));
+    #println("length eigenvalues, ", length(eigenvalues));
     for i=1:length(eigenvalues)
         if(eigenvalues[i]<min)
             min=eigenvalues[i];
@@ -387,7 +389,7 @@ function innerProduct(eigenvector, states, eigenvector2)
 end
 
 function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
-    temp=calculateEigensystemTransverse(N, J, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
+    temp=calculateEigensystemTransverse(N, J, J2, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
     eigenvector2=eigensystem[2];
     states2=temp[3][eigensystem[3]];
@@ -404,7 +406,7 @@ end
 
 #list is a list of all states
 
-function generateFidelityList(hmin, hmax, num, N, J, bonds)
+function generateFidelityList(hmin, hmax, num, N, J, J2, bonds)
     hstep=hmax/num-hmin/num;
     i=hmin;
     eigenvectors=Any[];
@@ -414,7 +416,7 @@ function generateFidelityList(hmin, hmax, num, N, J, bonds)
 
     while(i<=hmax+hstep)
         println("on i: ", i);
-        temp=calculateEigensystemTransverse(N, J, i, bonds,"lanczos", "one", i, 0);
+        temp=calculateEigensystemTransverse(N, J, J2, i, bonds,"lanczos", "one", i, 0);
         eigensystem=getLowestLyingStates(temp[1], temp[2]);
         eigenvector=eigensystem[2];
         state=temp[3][eigensystem[3]];
@@ -430,7 +432,7 @@ function generateFidelityList(hmin, hmax, num, N, J, bonds)
     return all;
 end
 
-function calculateFidelity(hmin, hmax, num, N, J, bonds)
+function calculateFidelity(hmin, hmax, num, N, J, J2, bonds)
     println("begin");
     println(J);
     fidelities=Any[];
@@ -439,7 +441,7 @@ function calculateFidelity(hmin, hmax, num, N, J, bonds)
     println("hlist begin");
     hlist=generateHListUniform(hmin, hmax, num);
     println("fidelity list begin");
-    list=generateFidelityList(hmin, hmax, num, N, J, bonds);
+    list=generateFidelityList(hmin, hmax, num, N, J, J2, bonds);
     println("fidelity list length", length(list));
     eigenvectors=list[1];
     states=list[2];
@@ -591,7 +593,7 @@ function calculateFlippabilityNew(eigenvector, states, N, plaquettes)
 end
 
 
-function generateHListUniform(J, num)
+function generateHListUniform(J, J2, num)
     list::Array{Float64}=Float64[];
     i=(1/10)*J;
     interval=(J-i)/num;
@@ -603,7 +605,7 @@ function generateHListUniform(J, num)
     return list;
 end
 
-function generateHListUniformHalf(J, num)
+function generateHListUniformHalf(J, J2, num)
     list::Array{Float64}=Float64[];
     i=(1/10)*J;
     interval=(0.5*J-i)/num;
@@ -615,7 +617,7 @@ function generateHListUniformHalf(J, num)
     return list;
 end
 
-function generateHListLog(J, num)
+function generateHListLog(J, J2, num)
     list::Array{Float64}=Float64[];
     i=0.1*J;
     start=log(2, i);
@@ -633,7 +635,7 @@ function generateHListUniform(hmin, hmax, num)
     inc=hmax/num-hmin/num;
     i=hmin;
     hlist=Float64[];
-    while(i<=hmax)
+    while(i<=hmax+inc)
         push!(hlist, i);
         i+=inc;
         if(inc==0)

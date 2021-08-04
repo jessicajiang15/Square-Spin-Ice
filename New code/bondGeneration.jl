@@ -4,36 +4,36 @@ include("necessaryStructures.jl");
 
 
 #which: true: check i for periodic, false: check j for periodic
-function addBond(i, j, which, N, bonds, site0)
+function addBond(i, j, which, N, bonds, site0, isNear)
     newi::Int=which=="i"||which=="ij" ? wrap(i, N) : i;
     newj::Int=which=="j"||which=="ij" ? wrap(j, N) : j;
     tempcount::Int=newj+1+(newi)*N;
     sit::site=site(tempcount, newi,newj);
-    bnd::bond=bond(site0, sit);
+    bnd::bond=bond(site0, sit, isNear);
     push!(bonds, bnd);
 end
 
 function upperRight(i, j, N, bonds, site0)
     if(j!=N-1)
-        addBond(i-1, j+1, "ij", N, bonds, site0);
+        addBond(i-1, j+1, "ij", N, bonds, site0, false);
     end
 end
 
 function bottomRight(i, j, N, bonds, site0)
     if(j!=N-1)
-        addBond(i+1, j+1, "ij", N, bonds, site0);
+        addBond(i+1, j+1, "ij", N, bonds, site0, false);
     end
 end
 
 function bottomLeft(i, j, N, bonds, site0)
     if(j==0)
-        addBond(i+1, j-1, "ij", N, bonds, site0);
+        addBond(i+1, j-1, "ij", N, bonds, site0, false);
     end
 end
 
 function upperLeft(i, j, N, bonds, site0)
     if(j==0)
-        addBond(i-1, j-1, "ij", N, bonds, site0);
+        addBond(i-1, j-1, "ij", N, bonds, site0, false);
     end
 end
 
@@ -52,18 +52,18 @@ function bondListFrustrated(N)
             site0::site=site(count, i, j);
 
             if(i!=N-1)
-                addBond(i+1, j, "i", N, bonds, site0);
+                addBond(i+1, j, "i", N, bonds, site0, true);
             end
             if(i==0)
-                addBond(i-1, j, "i", N, bonds, site0);
+                addBond(i-1, j, "i", N, bonds, site0, true);
             end
 
             if(j!=N-1)
-                addBond(i, j+1, "j", N, bonds, site0);
+                addBond(i, j+1, "j", N, bonds, site0, true);
             end
 
             if(j==0)
-                addBond(i, j-1, "j", N, bonds, site0);
+                addBond(i, j-1, "j", N, bonds, site0, true);
             end
 
             if(i%2==0)
@@ -107,18 +107,18 @@ function bondListFourNeighbors(N)
             #bug: ened to recaluate count given current count and relative position
             site0::site=site(count, i, j);
             if(i!=N-1)
-                addBond(i+1, j, "i", N, bonds, site0);
+                addBond(i+1, j, "i", N, bonds, site0, true);
             end
             if(i==0)
-                addBond(i-1, j, "i", N, bonds, site0);
+                addBond(i-1, j, "i", N, bonds, site0, true);
             end
 
             if(j!=N-1)
-                addBond(i, j+1, "j", N, bonds, site0);
+                addBond(i, j+1, "j", N, bonds, site0, true);
             end
 
             if(j==0)
-                addBond(i, j-1, "j", N, bonds, site0);
+                addBond(i, j-1, "j", N, bonds, site0, true);
             end
         end
     end
@@ -141,33 +141,33 @@ function bondListEightNeighbors(N)
             #bug: ened to recaluate count given current count and relative position
             site0::site=site(count, i, j);
             if(i!=N-1)
-                addBond(i+1, j, "i", N, bonds, site0);
+                addBond(i+1, j, "i", N, bonds, site0, true);
             end
             if(i==0)
-                addBond(i-1, j, "i", N, bonds, site0);
+                addBond(i-1, j, "i", N, bonds, site0, true);
             end
 
             if(j!=N-1)
-                addBond(i, j+1, "j", N, bonds, site0);
+                addBond(i, j+1, "j", N, bonds, site0, true);
             end
 
             if(j==0)
-                addBond(i, j-1, "j", N, bonds, site0);
+                addBond(i, j-1, "j", N, bonds, site0, true);
             end
 
             if(j!=N-1)
-                addBond(i+1, j+1, "ij", N, bonds, site0);
+                addBond(i+1, j+1, "ij", N, bonds, site0, false);
             end
 
             if(j==0)
-                addBond(i+1, j-1, "ij", N, bonds, site0);
+                addBond(i+1, j-1, "ij", N, bonds, site0, false);
             end
 
             if(j==0)
-                addBond(i-1, j-1, "ij", N, bonds, site0);
+                addBond(i-1, j-1, "ij", N, bonds, site0, false);
             end
             if(j!=N-1)
-                addBond(i-1, j+1, "ij", N, bonds, site0);
+                addBond(i-1, j+1, "ij", N, bonds, site0, false);
             end
 
         end

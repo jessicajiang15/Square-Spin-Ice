@@ -66,7 +66,7 @@ function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
 end
 
 #let N b e how many sites??
-function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, width)
+function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar, width)
     #println("timing matrix generation");
     @time begin
     randomList=generateRandomh(hbar, width, bonds);
@@ -84,9 +84,9 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     push!(theInfo, evenSpins[1]);
     push!(theInfo2, evenSpins[2]);
     oddSpins=singleOutEvenOddSpins(false, 2^(N));
-        #println("STARTING EVEN");
+        println("STARTING EVEN");
         @time begin
-        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, eigmethod, randomList);
+        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, J2, eigmethod, randomList);
         #println("H[1,1]", HtempEven[1, 1]);
     end
     #println("size even", size(HtempEven));
@@ -126,9 +126,9 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
         push!(theInfo, oddSpins[1]);
         push!(theInfo2, oddSpins[2]);
 
-        #println("STARTING ODD");
+        println("STARTING ODD");
         @time begin
-        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, eigmethod, randomList);
+        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, J2, eigmethod, randomList);
     end
 
 
@@ -167,7 +167,7 @@ function calculateEigensystemTransverse(N, J, h, bonds,eigmethod, num, hbar, wid
     return eigensystem;
 end
 
-function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num, hbar, width, h1orh2)
+function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, num, hbar, width, h1orh2)
     randomList=generateRandomh(hbar, width, bonds);
     #println(randomList);
     #the info contains the states
@@ -177,12 +177,12 @@ function calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,eigmethod, num,
     eigenvectors::Array{Any}=Any[];
     local Htemp;
     push!(theInfo, 0:2^(N)-1);
-    #println("timing h");
+    println("timing h");
     @time begin
         if(h1orh2=="H1")
-            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randomList);
+            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, randomList);
         else
-            Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, randomList);
+            Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, randomList);
         end
     end
     n::Int=0;

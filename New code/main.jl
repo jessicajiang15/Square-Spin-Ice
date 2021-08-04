@@ -7,25 +7,28 @@ function main()
     @time begin
         Random.seed!(123);
     println("hello")
-    latticeType = "none"
+    latticeType = "frustrated"
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "none"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
     num="one"
     file=false;
 
+
+
     bonds::Array{bond} = bond[]
     local eigenvalues
     local eigenvectors
     local temp
     J = 1;
+    J2=1;
     N = 4;
     h = 1;
-    numSites=1;
+    numSites=16;
     width = 0;
 
 
@@ -39,6 +42,7 @@ function main()
     elseif( latticeType == "two")
         bonds=bondListTwo();
     end
+    println("BONDS LENGTH??", length(bonds));
 
     if (hamiltonianType == "heisenberg")
         if (method == "symmetry")
@@ -54,9 +58,9 @@ function main()
         end
     elseif (hamiltonianType == "transverse")
         if(method=="none")
-            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, h, bonds,eigmethod, num, h, width, "H2");
+            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H2");
         else
-            temp = calculateEigensystemTransverse(numSites, J, h, bonds,eigmethod, num, h, width);
+            temp = calculateEigensystemTransverse(numSites, J, J2, h, bonds,eigmethod, num, h, width);
         end
     end
 
@@ -65,7 +69,7 @@ function main()
     listA=[0, 1, 4, 5];
 
     println("eigenvalues: ", (eigenvalues));
-    println((eigenvectors));
+    #println((eigenvectors));
 
     if(file)
         io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
@@ -94,9 +98,15 @@ println()
 #thetest();
 #println("starting");
 #lol()
-thesztestinfinitelattice()
-#theentanglementtestinfinitelattice()
-
+#thesztestinfinitelattice()
+#spitest()
+#spij1j2()
+#weightspigraphs()
+#spiinfinitelattice()
+#entanglementasj1j2()
+#spij1j2()
+theentanglementtestinfinitelattice()
+#entanglementtest2()
 #entanglemenvttest();
 #testbond();
 #test();

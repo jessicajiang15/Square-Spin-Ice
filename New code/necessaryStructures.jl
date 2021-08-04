@@ -8,6 +8,7 @@ end
 struct bond
     site1::site
     site2::site
+    isNear::Bool;
 end
 
 

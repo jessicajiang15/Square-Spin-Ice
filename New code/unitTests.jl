@@ -114,11 +114,11 @@ function calculategsentanglement()
         println(listA);
         bonds = bondListFrustrated(N)
         for i=1:length(hs)
-            temp = calculateEigensystemTransverse(N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+            temp = calculateEigensystemTransverse(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
             eigenvalues = temp[1]
             eigenvectors = temp[2]
             eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-            entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N);
+            entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N*N);
             push!(entropies, entropy);
         end
     #println(entropy);
@@ -357,4 +357,60 @@ function huh()
     N=4;
     listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
     println(listA);
+end
+
+
+
+function entanglementtest2()
+    println("Starting!!");
+    @time begin
+    N=4;
+    J=1
+    J2=1;
+    h=0.1
+
+        listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
+        println(listA);
+        bonds = bondListFrustrated(N)
+            temp = calculateEigensystemTransverse(N*N, J, J2, h, bonds,"lanczos", "one", h, 0);
+            eigenvalues = temp[1]
+            eigenvectors = temp[2]
+            eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+            println(eigenvalues);
+            entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N*N);
+    #println(entropy);
+    println(entropy)
+    #savefig("Users/Jessica/git/Square Spin Ice/szplot.png")
+end
+
+end
+
+
+function spitest()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    J2=1;
+    spis=Any[];
+    h=0.1
+    bonds = bondListFrustrated(N)
+        temp =calculateEigensystemTransverseNoSymmetry(N*N, J, J2, h, bonds,"lanczos", "one", h, 0, "H1");
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        #eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+        #println("length of temp[3] ", length(temp[3]))
+        #println("length of temp ", length(temp))
+        #println("length of eigensystem ", length(eigensystem))
+
+        #println("eigensystem[3] ", eigensystem[3]);
+        println("starting time");
+        @time begin
+        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
+        println("spi", spi);
+    end
+    end
 end

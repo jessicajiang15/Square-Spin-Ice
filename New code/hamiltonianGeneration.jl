@@ -3,7 +3,7 @@ include("momentumHelpers.jl")
 include("reflectionHelper.jl")
 using SparseArrays
 #IMPORTANT: N IS THE TOTAL NUMBER OF SITES!!!!!!!!!!!!
-function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList)
+function constructTransverseHamiltonian(states, bonds, N, J, J2, eigmethod, randList)
     #loop through ALL the possible states...
     cols::Vector{Int}=Int[];
     rows::Vector{Int}=Int[];
@@ -50,12 +50,13 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,list[i]);
                         t::Int=map[b];
+                        a= bonds[z].isNear ? J : J2;
                         if(eigmethod=="full")
-                            H[i,t]=J/4;
+                            H[i,t]=a/4;
                         end
                         push!(rows, i);
                         push!(cols, t);
-                        push!(values, (1/2)*J/4);
+                        push!(values, (1/2)*a/4);
                         end
                     end
 
@@ -69,7 +70,7 @@ function constructTransverseHamiltonian(states, bonds, N, J, eigmethod, randList
 end
 
 #H1
-function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, randList)
+function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, randList)
     cols::Vector{Int}=Int[];
     rows::Vector{Int}=Int[];
     values::Vector{Float64}=Float64[];
@@ -95,10 +96,14 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
                     local theThing;
+                    a= bonds[z].isNear ? J : J2;
+                    #println("bond1", bond1);
+                    #println("bond2", bond2);
+
                     if(getTi(bond1-1,i)==getTi(bond2-1,i))
-                        theThing=J/4;
+                        theThing=a/4;
                     else
-                        theThing=-J/4;
+                        theThing=-a/4;
                     end
                     push!(rows, i+1);
                     push!(cols, i+1);
@@ -117,7 +122,7 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, eigmethod, rand
 end
 
 #H2
-function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, randList)
+function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, randList)
     #loop through ALL the possible states...
     #println(states);
     local H;
@@ -143,6 +148,7 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, rand
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
+                    a=bonds[z].isNear ? J : J2;
                     if(bond1!=j)
                         temp::Int=bond1;
                         bond1=bond2;
@@ -150,7 +156,7 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, eigmethod, rand
                     end
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,i);
-                        H[i+1,b+1]=J/4;
+                        H[i+1,b+1]=a/4;
                         end
                     end
 
