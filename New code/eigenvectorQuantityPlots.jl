@@ -445,9 +445,9 @@ end
 
 function entanglementasj1j2()
     @time begin
-    J2=0.99;
+    J2=1;
     J1=1;
-    js=generateHListUniform(J2, J1, 50);
+    js=generateHListUniform(J2, 2, 50);
     N=4;
     h=0.1;
     bonds = bondListFrustrated(N)
@@ -537,11 +537,12 @@ function entanglementasj1j2()
             N=4;
             J=1
             J2=1;
-
-            order=56;
+            o=5;
             hs=generateHListUniform(0.1, 1, 50)
             spis=Any[];
             graphs=readFromGraphFile();
+            order=getLastGraphNumOrder(o, graphs);
+            println("order: ", order);
             println("hs: ", hs);
             for i=1:length(hs)
                 println("starting h: ", hs[i])
@@ -556,5 +557,5 @@ function entanglementasj1j2()
             end
             #TODO: plot it
             plot(hs, spis)
-            savefig("./spis NLC order: " * string(order) *", "*".png")
+            savefig("./spis NLC real order: " * string(o) *", "*".png")
         end

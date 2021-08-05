@@ -1,6 +1,15 @@
 using DelimitedFiles;
 include("calculations and plotting.jl")
 
+function getLastGraphNumOrder(order, graphs)
+    temp=graphs[1].numSquares;
+    count=1;
+    while(count<length(graphs)&&temp<=order)
+        count+=1
+        temp=graphs[count].numSquares;
+    end
+    return count;
+end
 
 function numSquares(graph)
     count=0;
@@ -509,7 +518,7 @@ function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites, theGraph.indicies);
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
@@ -530,7 +539,7 @@ function calculateWeightNoSubSpi(num, graphs::Vector{graph}, J, J2, h, width)
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
+    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites, theGraph.indicies);
     return sz;
 
 end
@@ -544,4 +553,29 @@ function getAllWeightsNoSubSpi(num, graphs, J, J2, h, width)
         push!(weights, calculateWeightNoSubSpi(i, graphs, J, J2, h, width));
     end
     return weights;
+end
+
+
+
+
+function calculateInfiniteLatticeSz(orders, J, J2, h, graphs, width)
+    @time begin
+    println("weights starting!!");
+    szs=Any[];
+    @time begin
+        weights=getAllWeightsSz(order[length(order)], graphs, J, J2, h, width);
+    end
+
+    println("weights done!!! ");
+    for order in orders
+        sum=weights[1];
+        for i=1:order
+            println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
+        push!(szs, sum);
+    end
+
+end
+    return szs;
 end
