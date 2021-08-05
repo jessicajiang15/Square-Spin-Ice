@@ -219,26 +219,19 @@ function sPi()
     @time begin
     N=4;
     J=1
-    h=0.35
+    J2=1
+    h=100
     ms=Any[];
     bonds = bondListFrustrated(N)
     spis=Any[];
-temp=calculateEigensystemTransverseNoSymmetry(N, J, h, bonds,"lanczos", "one", h, width, "H1");
+    temp =calculateEigensystemTransverseNoSymmetry(N*N, J, J2, h, bonds,"lanczos", "one", h, 0, "H1");
         #temp = calculateEigensystemTransverse(N, J, h, bonds,"lanczos", "one", h, 0);
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-
-        println("length of temp[3] ", length(temp[3]))
-        println("length of temp ", length(temp))
-        println("length of eigensystem ", length(eigensystem))
-        println("eigensystem[3] ", eigensystem[3]);
-        spi=calculateSPiSz(eigensystem[2], temp[3][eigensystem[3]], N, temp[4][eigensystem[3]]);
-        push!(spis, spi);
+        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
-
-    println("ms: ", sz);
-    println("ms matrix: ", szm);
+        println("sipi ", spi);
 end
 end
 

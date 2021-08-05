@@ -283,7 +283,7 @@ function getAllWeightsSz(num, graphs, J, J2, h, width)
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeSz(order, J, J2, h, graphs, width)
+function calculateInfiniteLatticeSz(order::Int, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
@@ -335,7 +335,6 @@ function calculateWeightNoSubSz(num, graphs::Vector{graph}, J, J2, h, width)
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
     sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
     return sz;
-
 end
 
 function getAllWeightsNoSubSz(num, graphs, J, J2, h, width)
@@ -367,19 +366,22 @@ function getAllWeightsEntanglement(num, graphs, J, J2, h, width)
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeEntanglement(order, J, J2, h, graphs, width)
+function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
         weights=getAllWeightsEntanglement(order, graphs, J, J2, h, width);
     end
-    sum=weights[1];
 
     println("weights done!!! ");
-    for i=1:order
-        println("order: ", order);
-        sum+=weights[i+1]*graphs[i].latticeConstant;
+    for order in orders
+        sum=weights[1];
+        for i=1:order
+            println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
     end
+
 end
     return sum;
 end
@@ -490,22 +492,29 @@ function getAllWeightsSpi(num, graphs, J, J2, h, width)
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeSpi(order, J, J2, h, graphs, width)
+
+function calculateInfiniteLatticeSpi(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
+    list=Float64[];
     @time begin
-        weights=getAllWeightsSpi(order, graphs, J, J2, h, width);
+        weights=getAllWeightsSpi(orders[length(orders)], graphs, J, J2, h, width);
     end
-    sum=weights[1];
 
     println("weights done!!! ");
-    for i=1:order
-        println("order: ", order);
-        sum+=weights[i+1]*graphs[i].latticeConstant;
+    for order in orders
+        sum=weights[1];
+        for i=1:order
+            println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
+        push!(list, sum);
     end
+
 end
-    return sum;
+    return list;
 end
+
 
 function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width)
     sum=0;
@@ -558,7 +567,7 @@ end
 
 
 
-function calculateInfiniteLatticeSz(orders, J, J2, h, graphs, width)
+function calculateInfiniteLatticeSz(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     szs=Any[];
@@ -570,7 +579,7 @@ function calculateInfiniteLatticeSz(orders, J, J2, h, graphs, width)
     for order in orders
         sum=weights[1];
         for i=1:order
-            println("order: ", order);
+            #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
         end
         push!(szs, sum);
@@ -578,4 +587,22 @@ function calculateInfiniteLatticeSz(orders, J, J2, h, graphs, width)
 
 end
     return szs;
+end
+
+#here order=number of graphs
+function calculateInfiniteLatticeSpi(order::Int, J, J2, h, graphs, width)
+    @time begin
+    println("weights starting!!");
+    @time begin
+        weights=getAllWeightsSpi(order, graphs, J, J2, h, width);
+    end
+    sum=weights[1];
+
+    println("weights done!!! ");
+    for i=1:order
+        println("order: ", order);
+        sum+=weights[i+1]*graphs[i].latticeConstant;
+    end
+end
+    return sum;
 end

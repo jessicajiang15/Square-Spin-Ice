@@ -527,7 +527,11 @@ function entanglementasj1j2()
         end
 
 
-
+        function putin(list1, list2)
+            for i=1:length(list2)
+                push!(list1[i], list2[i]);
+            end
+        end
 
         function spiinfinitelattice()
             println("Starting entanglement inf!!");
@@ -537,11 +541,80 @@ function entanglementasj1j2()
             N=4;
             J=1
             J2=1;
-            o=5;
-            hs=generateHListUniform(0.1, 1, 50)
+            os=Int[1, 2, 3, 4, 5];
+            hs=generateHListUniform(0.1, 1, 20)
+            graphs=readFromGraphFile();
+            orders=Int[];
+            list=Vector{Float64}[];
+
+            for i=1:length(os)
+                push!(list, Vector{Float64}[]);
+            end
+            for i=1:length(os)
+                push!(orders, getLastGraphNumOrder(os[i], graphs))
+            end
+            println("hs: ", hs);
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                @time begin
+                spis=calculateInfiniteLatticeSpi(orders, J, J2, hs[i], graphs, 0)
+                putin(list, spis);
+                end
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            end
+            end
+            #TODO: plot it
+            plot(hs, list[1], label="order "*string(os[1]))
+
+            for i=2:length(os)
+                plot!(hs, list[i], label="order "*string(os[i]))
+            end
+                savefig("./spis NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+        end
+
+
+function multipleGraphsSz()
+    maxOrder=5;
+
+
+end
+
+
+function spiinfinitelatticeone()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    J2=1;
+    #hs=generateHListUniform(0.1, 1, 20)
+    h=100
+    orders=Int[];
+    push!(orders, 22);
+    graphs=readFromGraphFile();
+    list=Vector{Float64}[];
+    spi=calculateInfiniteLatticeSpi(orders, J, J2, h, graphs, 0)
+    println("spi", spi);
+    end
+end
+
+
+
+
+        function spiinfinitelatticeold()
+            println("Starting entanglement inf!!");
+            println("Starting sz!!");
+
+            @time begin
+            N=4;
+            J=1
+            J2=1;
+            o=1;
+            hs=generateHListUniform(0.1, 1, 20)
             spis=Any[];
             graphs=readFromGraphFile();
-            order=getLastGraphNumOrder(o, graphs);
+            order::Int=getLastGraphNumOrder(o, graphs);
             println("order: ", order);
             println("hs: ", hs);
             for i=1:length(hs)
