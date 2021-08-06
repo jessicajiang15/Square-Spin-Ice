@@ -25,9 +25,9 @@ function main()
     local eigenvectors
     local temp
     J = 1;
-    J2=1;
+    J2=0;
     N = 4;
-    h = 1;
+    h = 0.1;
     numSites=16;
     width = 0;
 
@@ -94,7 +94,7 @@ end
 println()
 
 #huh()
-#main();
+main();
 #fileiotest()
 #thetest();
 #println("starting");
@@ -139,7 +139,7 @@ println()
 #lol()
 #szinfinitelatticenew()
 #calculategsentanglement()
-entanglementinfinitelatticenew()
+#entanglementinfinitelatticenew()
 
 #graphTest();
 #calculatesz()
