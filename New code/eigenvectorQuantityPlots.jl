@@ -603,7 +603,7 @@ end
 
 
 
-        function spiinfinitelatticeold()
+function spiinfinitelatticeold()
             println("Starting entanglement inf!!");
             println("Starting sz!!");
 
@@ -639,17 +639,17 @@ end
 
 
 
-                function szinfinitelatticenew()
-                    println("Starting entanglement inf!!");
-                    println("Starting sz!!");
+function szinfinitelatticenew()
+println("Starting entanglement inf!!");
+println("Starting sz!!");
 
-                    @time begin
-                    N=4;
-                    J=1
-                    J2=1;
-                    os=Int[1, 2, 3, 4, 5];
-                    hs=generateHListUniform(0.1, 1, 50)
-                    graphs=readFromGraphFile();
+@time begin
+N=4;
+J=1
+J2=1;
+os=Int[1, 2, 3, 4, 5];
+hs=generateHListUniform(0.1, 1, 50)
+graphs=readFromGraphFile();
                     orders=Int[];
                     list=Vector{Float64}[];
 
@@ -677,3 +677,44 @@ end
                     end
                         savefig("./sz NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
                 end
+
+
+
+                function entanglementinfinitelatticenew()
+                println("Starting entanglement inf!!");
+                println("Starting sz!!");
+
+                @time begin
+                N=4;
+                J=1
+                J2=1;
+                os=Int[1, 2, 3，4，5];
+                hs=generateHListUniform(0.1, 1, 50)
+                graphs=readFromGraphFile();
+                                    orders=Int[];
+                                    list=Vector{Float64}[];
+
+                                    for i=1:length(os)
+                                        push!(list, Vector{Float64}[]);
+                                    end
+                                    for i=1:length(os)
+                                        push!(orders, getLastGraphNumOrder(os[i], graphs))
+                                    end
+                                    println("hs: ", hs);
+                                    for i=1:length(hs)
+                                        println("starting h: ", hs[i])
+                                        @time begin
+                                            ents=calculateInfiniteLatticeEntanglement(orders, J, J2, hs[i], graphs, 0)
+                                        putin(list, ents);
+                                        end
+                                        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                                    end
+                                    end
+                                    #TODO: plot it
+                                    plot(hs, list[1], label="order "*string(os[1]))
+
+                                    for i=2:length(os)
+                                        plot!(hs, list[i], label="order "*string(os[i]))
+                                    end
+                                        savefig("./entanglement NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+                                end

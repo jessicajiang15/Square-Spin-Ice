@@ -137,9 +137,9 @@ println()
 #fidTest2()
 #testExtractDigits()
 #lol()
-szinfinitelatticenew()
+#szinfinitelatticenew()
 #calculategsentanglement()
-
+entanglementinfinitelatticenew()
 
 #graphTest();
 #calculatesz()

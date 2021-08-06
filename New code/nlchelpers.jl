@@ -366,7 +366,7 @@ function getAllWeightsEntanglement(num, graphs, J, J2, h, width)
     return weights;
 end
 #max order 56
-function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)
+function calculateInfiniteLatticeEntanglement(order::Int, J, J2, h, graphs, width)
     @time begin
     println("weights starting!!");
     @time begin
@@ -374,12 +374,10 @@ function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, gra
     end
 
     println("weights done!!! ");
-    for order in orders
         sum=weights[1];
         for i=1:order
             println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
-        end
     end
 
 end
@@ -754,4 +752,27 @@ function getAllWeightsNoSubFidelity(num, graphs, J, J2, h, width, fidelityList, 
         push!(weights, calculateWeightNoSubFidelity(i, graphs, J, J2, h, width, fidelityList, hstep));
     end
     return weights;
+end
+
+
+function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)
+    @time begin
+    println("weights starting!!");
+    @time begin
+        weights=getAllWeightsEntanglement(orders[length(orders)], graphs, J, J2, h, width);
+    end
+
+    println("weights done!!! ");
+    ents=Any[];
+    for order in orders
+        sum=weights[1];
+        for i=1:order
+            println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
+        push!(ents, sum);
+    end
+
+end
+    return ents;
 end

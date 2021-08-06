@@ -109,10 +109,10 @@ function calculategsentanglement()
     J=1
     J2=0
     entropies=Any[];
-    hmin=1;
+    hmin=0.1;
     hmax=2;
 
-        hs=generateHListUniform(hmin, hmax, 50);
+        hs=generateHListUniform(hmin, hmax, 100);
         listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
         println(listA);
         bonds = bondListFrustrated(N)
@@ -129,7 +129,7 @@ function calculategsentanglement()
     println(entropies)
     plot(hs, entropies)
     #savefig("Users/Jessica/git/Square Spin Ice/szplot.png")
-    savefig("./entanglementplotJ2 is 0.png")
+    savefig("./entanglementplot J2: "*string(J2)*", hmin: "*string(hmin)*", hmax: "*string(hmax)*".png");
 
 end
 
