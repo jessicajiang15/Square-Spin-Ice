@@ -388,8 +388,8 @@ function innerProduct(eigenvector, states, eigenvector2)
     return sum;
 end
 
-function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J)
-    temp=calculateEigensystemTransverse(N, J, J2, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
+function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J, J2)
+    temp=calculateEigensystemTransverse(N*N, J, J2, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
     eigenvector2=eigensystem[2];
     states2=temp[3][eigensystem[3]];
@@ -416,7 +416,7 @@ function generateFidelityList(hmin, hmax, num, N, J, J2, bonds)
 
     while(i<=hmax+hstep)
         println("on i: ", i);
-        temp=calculateEigensystemTransverse(N, J, J2, i, bonds,"lanczos", "one", i, 0);
+        temp=calculateEigensystemTransverse(N*N, J, J2, i, bonds,"lanczos", "one", i, 0);
         eigensystem=getLowestLyingStates(temp[1], temp[2]);
         eigenvector=eigensystem[2];
         state=temp[3][eigensystem[3]];
@@ -451,6 +451,27 @@ function calculateFidelity(hmin, hmax, num, N, J, J2, bonds)
     end
     return fidelities;
 end
+
+
+
+
+function calculateFidelity(hstep, fidelityList)
+    eigenvectors=fidelityList[1];
+    states=fidelityList[2];
+    for i=1:length(eigenvectors)-1
+        inner=abs(innerProduct(eigenvectors[i], states[i], eigenvectors[i+1], states[i+1]));
+        push!(fidelities,2*(1-inner)/(hstep^2));
+    end
+    return fidelities;
+end
+
+function calculateFidelity(hstep, fidelityList, i)
+    eigenvectors=fidelityList[1];
+    states=fidelityList[2];
+    inner=abs(innerProduct(eigenvectors[i], states[i], eigenvectors[i+1], states[i+1]));
+    return 2*(1-inner)/(hstep^2)
+end
+
 
 function getSzPlaquette(state, plaquetteIndicies)
     sum=0;
@@ -657,7 +678,7 @@ function generateHListUniform(hmin, hmax, num)
     inc=hmax/num-hmin/num;
     i=hmin;
     hlist=Float64[];
-    while(i<=hmax+inc)
+    while(i<=hmax)
         push!(hlist, i);
         i+=inc;
         if(inc==0)

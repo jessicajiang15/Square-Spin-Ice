@@ -39,10 +39,12 @@ function calculatefidelity()
     @time begin
     N=4;
     J=1
-    J2=1;
-
-    deltah=0.001;
-    hs=generateHListUniform(0.1, 1, 50);
+    J2=0;
+    hmin=0.2;
+    hmax=1;
+    num=50;
+    deltah=(hmax-hmin)/num;
+    hs=generateHListUniform(hmin, hmax, num);
     fids=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -52,7 +54,7 @@ function calculatefidelity()
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-        fid=calculateFidelity(eigensystem[2], temp[3][eigensystem[3]], hs[i], N, deltah, bonds, J)
+        fid=calculateFidelity(eigensystem[2], temp[3][eigensystem[3]], hs[i], N, deltah, bonds, J, J2)
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(fids, fid);
     end
@@ -60,8 +62,7 @@ function calculatefidelity()
     end
     #TODO: plot it
     plot(hs, fids)
-    savefig("./fidelityplot.png")
-
+    savefig("./fidelityplot, J2 is 0.png")
 end
 
 
@@ -503,9 +504,9 @@ function entanglementasj1j2()
 
 
 
-        function weightspigraphs()
-            println("Starting sz inf!!");
-            println("Starting sz!!");
+function weightspigraphs()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
 
             @time begin
             N=4;
@@ -632,3 +633,47 @@ end
             plot(hs, spis)
             savefig("./spis NLC real order: " * string(o) *", "*".png")
         end
+
+
+
+
+
+
+                function szinfinitelatticenew()
+                    println("Starting entanglement inf!!");
+                    println("Starting sz!!");
+
+                    @time begin
+                    N=4;
+                    J=1
+                    J2=1;
+                    os=Int[1, 2, 3, 4, 5];
+                    hs=generateHListUniform(0.1, 1, 50)
+                    graphs=readFromGraphFile();
+                    orders=Int[];
+                    list=Vector{Float64}[];
+
+                    for i=1:length(os)
+                        push!(list, Vector{Float64}[]);
+                    end
+                    for i=1:length(os)
+                        push!(orders, getLastGraphNumOrder(os[i], graphs))
+                    end
+                    println("hs: ", hs);
+                    for i=1:length(hs)
+                        println("starting h: ", hs[i])
+                        @time begin
+                            szs=calculateInfiniteLatticeSz(orders, J, J2, hs[i], graphs, 0)
+                        putin(list, szs);
+                        end
+                        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                    end
+                    end
+                    #TODO: plot it
+                    plot(hs, list[1], label="order "*string(os[1]))
+
+                    for i=2:length(os)
+                        plot!(hs, list[i], label="order "*string(os[i]))
+                    end
+                        savefig("./sz NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+                end

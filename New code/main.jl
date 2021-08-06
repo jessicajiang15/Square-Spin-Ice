@@ -107,7 +107,7 @@ println()
 #spiinfinitelattice()
 #spiinfinitelatticeold()
 #sPi();
-spiinfinitelattice()
+#spiinfinitelattice()
 #entanglementasj1j2()
 #spij1j2()
 #theentanglementtestinfinitelattice()
@@ -134,8 +134,10 @@ spiinfinitelattice()
 
 #testPlot();
 #calculatefidelity()
+#fidTest2()
 #testExtractDigits()
 #lol()
+szinfinitelatticenew()
 #calculategsentanglement()
 
 

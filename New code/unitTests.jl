@@ -107,14 +107,17 @@ function calculategsentanglement()
     @time begin
     N=4;
     J=1
+    J2=0
     entropies=Any[];
+    hmin=1;
+    hmax=2;
 
-        hs=generateHListUniform(J, 50);
+        hs=generateHListUniform(hmin, hmax, 50);
         listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
         println(listA);
         bonds = bondListFrustrated(N)
         for i=1:length(hs)
-            temp = calculateEigensystemTransverse(N*N, J, hs[i], bonds,"lanczos", "one", hs[i], 0);
+            temp = calculateEigensystemTransverse(N*N, J, J2, hs[i], bonds,"lanczos", "one", hs[i], 0);
             eigenvalues = temp[1]
             eigenvectors = temp[2]
             eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -126,7 +129,7 @@ function calculategsentanglement()
     println(entropies)
     plot(hs, entropies)
     #savefig("Users/Jessica/git/Square Spin Ice/szplot.png")
-    savefig("./entanglementplotnew.png")
+    savefig("./entanglementplotJ2 is 0.png")
 
 end
 
@@ -200,16 +203,21 @@ function fidTest2()
     num=50;
     N=4;
     J=1;
-    hmin=0.1*J;
-    hmax=J;
+    J2=0;
+    hmin=0.2;
+    hmax=1;
     bonds = bondListFrustrated(N)
     hs=generateHListUniform(hmin, hmax, num);
+    println("hs length: ", length(hs));
+
     println("hs", hs);
 
-    fids=calculateFidelity(hmin, hmax, num, N, J, bonds);
+    fids=calculateFidelity(hmin, hmax, num, N, J, J2, bonds);
     println("fids: ", fids);
+    println("fids length: ", length(fids));
+
     plot(hs, fids);
-    savefig("./fidelityplot2.png");
+    savefig("./fidelityplot J2 is 0.png");
 end
 
 
