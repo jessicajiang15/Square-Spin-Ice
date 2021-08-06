@@ -125,11 +125,13 @@ end
 function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, randList)
     #loop through ALL the possible states...
     #println(states);
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
     local H;
+
     if(eigmethod=="full")
         H=zeros(Float64, 2^(N), 2^(N));
-    else
-        H=spzeros(Float64,  2^(N), 2^(N));
     end
     #H::Matrix{Float64}=zeros(Int, length(list),length(list));
 
@@ -142,26 +144,34 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, 
             theThing= getTi(j-1,i) == 1 ? randList[j]/2 : -randList[j]/2;
             #1/2 for double counting
             #println((1/2)*theThing);
-            H[i+1,i+1]+= theThing;
+            push!(cols, i+1);
+            push!(rows, i+1);
+            push!(values, theThing);
+            if(eigmethod=="full")
+                H[i+1,i+1]+= theThing;
+            end
             for z=1:length(bonds)
                 #get the number of the thing it is bonding with!
                 if containsSite(j,bonds[z])
                     bond1::Int=bonds[z].site1.num;
                     bond2::Int=bonds[z].site2.num;
                     a=bonds[z].isNear ? J : J2;
-                    if(bond1!=j)
-                        temp::Int=bond1;
-                        bond1=bond2;
-                        bond2=temp;
-                    end
                         #flip the bits at those relevant places
                         b::Int=flipBits(bond1-1, bond2-1,i);
-                        H[i+1,b+1]=a/4;
+                        push!(cols, b+1);
+                        push!(rows, i+1);
+                        push!(values, a/4);
+                        if(eigmethod=="full")
+                            H[i+1,b+1]=a/4;
+                        end
                         end
                     end
 
                 end
                 #println("i count ", i, count);
+            end
+            if(eigmethod!="full")
+                H=sparse(rows, cols, values);
             end
         return H;
 end

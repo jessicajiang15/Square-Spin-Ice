@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "symmetry"
+    method = "none"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -27,7 +27,7 @@ function main()
     J = 1;
     J2=0;
     N = 4;
-    h = 0.1;
+    h = 0.01;
     numSites=16;
     width = 0;
 
@@ -140,7 +140,7 @@ main();
 #szinfinitelatticenew()
 #calculategsentanglement()
 #entanglementinfinitelatticenew()
-
+entanglementinfinitelatticenew()
 #graphTest();
 #calculatesz()
 
