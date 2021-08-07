@@ -94,7 +94,7 @@ end
 println()
 
 #huh()
-main();
+#main();
 #fileiotest()
 #thetest();
 #println("starting");
@@ -138,9 +138,10 @@ main();
 #testExtractDigits()
 #lol()
 #szinfinitelatticenew()
+#calculateSpiTest()
 #calculategsentanglement()
-#entanglementinfinitelatticenew()
 entanglementinfinitelatticenew()
+#entanglementinfinitelatticenew()
 #graphTest();
 #calculatesz()
 

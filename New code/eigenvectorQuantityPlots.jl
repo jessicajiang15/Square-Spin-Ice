@@ -116,8 +116,8 @@ function calculateSpiTest()
     @time begin
     N=4;
     J=1
-    J2=1;
-    hs=generateHListUniform(0.1, 1, 100);
+    J2=0;
+    hs=generateHListUniform(0.1, 10, 50);
     spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -135,7 +135,7 @@ function calculateSpiTest()
         #println("eigensystem[3] ", eigensystem[3]);
         println("starting time");
         @time begin
-        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N);
+        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
     end
         println("h: ", hs[i], " , spi: ", spi);
 
@@ -146,7 +146,7 @@ function calculateSpiTest()
     end
     #TODO: plot it
     plot(hs, spis)
-    savefig("./spiplotsmallh.png")
+    savefig("./spiplot j2=0.png")
 end
 
 function calculateStaggeredFlippabilityTest()

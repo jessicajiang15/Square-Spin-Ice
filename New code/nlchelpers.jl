@@ -697,16 +697,22 @@ end
     return list;
 end
 
+#so this should return a list of fidelities as a function of h, period.
 function calculateInfiniteLatticeFidelities(orders::Vector{Int}, J, J2, h, graphs, width, hmin, hmax, num)
     hstep=hmax/num-hmin/num;
     hlist=generateHListUniform(hmin, hmax, num);
     count=1;
+    #gives a list of all the lists of eigenvectors needed to calculate the fidelity. each
+    #element in this list is a list of all eigenvectors from hmin to hmax corresponding to a specific graph
+    #use each to calculate the weights corresponding to a specific h value
+    fidelityLists=generateListsofFidelityLists(order, graphs, hmin, hmax, num, J, J2, width);
+
     for h in hlist
+        weights=Any[];
         for order in orders
+            push!(weights, calculateFidelity(hstep, fidelityLists[1], h))
             for i=1:order
-                fidelityLists=generateListsofFidelityLists(order, graphs, hmin, hmax, num, J, J2, width);
-                weights=Any[];
-                push!(weights, calculateFidelity(hstep, fidelityLists[1], h))
+                #the fidelity lists of each h value???????
                 for fidelityList in fidelityLists
                     push!(weights, calculateWeightFidelities(i, graphs, weights, fidelityList, hstep, count))
                 end

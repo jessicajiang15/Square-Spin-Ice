@@ -562,7 +562,7 @@ function calculateSPiSzNew(eigenvector, states, N)
                 #println("im done 2");
                 #println("im done 3");
                 #plauettes[j][1] gives the leading index of the plaquette
-                totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(z+j);
+                totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(z, N/4)+getPlaquetteNumber(j, N/4));
                 #*(-1)^(i+j)
                 #println("im done 4");
             end
