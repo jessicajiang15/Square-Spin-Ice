@@ -552,19 +552,12 @@ end
 
 function calculateSPiSzNew(eigenvector, states, N)
     totalsum=0;
-    for i=1:length(states)
-        #println("state: ", i);
         for j=1:N
             for z=1:N
-                #println("im done 1");
-                jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
-                zSz=getTi(z-1, states[i])==1 ? 1/2 : -1/2;
-                #println("im done 2");
-                #println("im done 3");
-                #plauettes[j][1] gives the leading index of the plaquette
-                totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(z, N/4)+getPlaquetteNumber(j, N/4));
-                #*(-1)^(i+j)
-                #println("im done 4");
+                for i=1:length(states)
+                    jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
+                    zSz=getTi(z-1, states[i])==1 ? 1/2 : -1/2;
+                    totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(z, round(sqrt(N)))+getPlaquetteNumber(j, round(sqrt(N))));
             end
         end
     end

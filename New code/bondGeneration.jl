@@ -240,7 +240,19 @@ function plaquetteIndicies(plaquetteIndex, N)
 end
 
 function getPlaquetteNumber(index, N)
-    return getRow(index, N)%2==0 ? 1 : 0;
+    if(getRow(index, N)%2==0)
+        if(((index-1)%N)%2==0)
+            return 0;
+        else
+            return 1;
+        end
+    else
+        if(((index-1)%N)%2==0)
+            return 1;
+        else
+            return 0;
+        end
+    end
 end
 
 

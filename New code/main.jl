@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "none"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -25,9 +25,9 @@ function main()
     local eigenvectors
     local temp
     J = 1;
-    J2=0;
+    J2= 0;
     N = 4;
-    h = 0.01;
+    h = 0.1;
     numSites=16;
     width = 0;
 
@@ -58,7 +58,7 @@ function main()
         end
     elseif (hamiltonianType == "transverse")
         if(method=="none")
-            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H2");
+            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H1");
         else
             temp = calculateEigensystemTransverse(numSites, J, J2, h, bonds,eigmethod, num, h, width);
         end
@@ -92,7 +92,7 @@ end
 end
 
 println()
-
+#testNumbering()
 #huh()
 #main();
 #fileiotest()
@@ -125,13 +125,13 @@ println()
 #fidTest2()
 #plottest()
 #calculateSpiTestAbs()
-#calculateSpiTest()
+calculateSpiTest()
 #test();
 #fidTest()
 #fidTest2()
 #plottest()
 #testMeasures();
-
+#sPi()
 #testPlot();
 #calculatefidelity()
 #fidTest2()
@@ -140,7 +140,7 @@ println()
 #szinfinitelatticenew()
 #calculateSpiTest()
 #calculategsentanglement()
-entanglementinfinitelatticenew()
+#entanglementinfinitelatticenew()
 #entanglementinfinitelatticenew()
 #graphTest();
 #calculatesz()

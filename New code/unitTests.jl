@@ -228,8 +228,7 @@ function sPi()
     N=4;
     J=1
     J2=1
-    h=100
-    ms=Any[];
+    h=0.1
     bonds = bondListFrustrated(N)
     spis=Any[];
     temp =calculateEigensystemTransverseNoSymmetry(N*N, J, J2, h, bonds,"lanczos", "one", h, 0, "H1");
@@ -237,7 +236,8 @@ function sPi()
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
+        println("eigenvalues ", eigenvalues);
+        spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N^2);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         println("sipi ", spi);
 end
@@ -411,5 +411,12 @@ function spitest()
         spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
         println("spi", spi);
     end
+    end
+end
+
+
+function testNumbering()
+    for i=1:16
+        println("i, ", i, ", num: ", getPlaquetteNumber(i, 4));
     end
 end

@@ -117,7 +117,7 @@ function calculateSpiTest()
     N=4;
     J=1
     J2=0;
-    hs=generateHListUniform(0.1, 10, 50);
+    hs=generateHListUniform(0.1, 2, 100);
     spis=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -446,9 +446,9 @@ end
 
 function entanglementasj1j2()
     @time begin
-    J2=1;
+    J2=0;
     J1=1;
-    js=generateHListUniform(J2, 2, 50);
+    js=generateHListUniform(0.1, 2, 100);
     N=4;
     h=0.1;
     bonds = bondListFrustrated(N)
@@ -477,8 +477,8 @@ function entanglementasj1j2()
 
     function spij1j2()
         @time begin
-        J2=0.99;
-        J1=1;
+        J2=0;
+        J1=2;
         js=generateHListUniform(J2, J1, 100);
         N=4;
         h=0.1;
@@ -680,15 +680,15 @@ graphs=readFromGraphFile();
 
 
 
-                function entanglementinfinitelatticenew()
-                println("Starting entanglement inf!!");
-                println("Starting sz!!");
+function entanglementinfinitelatticenew()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
 
-                @time begin
-                N=4;
-                J=1
+    @time begin
+    N=4;
+    J=1
                 J2=1;
-                os=Int[1, 2, 3, 4, 5];
+                os=Int[1, 2, 3, 4];
                 hs=generateHListUniform(0.1, 1, 50)
                 graphs=readFromGraphFile();
                                     orders=Int[];
@@ -715,6 +715,6 @@ graphs=readFromGraphFile();
 
                                     for i=2:length(os)
                                         plot!(hs, list[i], label="order "*string(os[i]))
-                                    end
-                                        savefig("./entanglement NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
-                                end
+                end
+            savefig("./entanglement NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+end
