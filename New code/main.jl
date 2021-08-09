@@ -111,7 +111,7 @@ spiinfinitelattice()
 #spiinfinitelattice()
 #entanglementasj1j2()
 #spij1j2()
-#theentanglementtestinfinitelattice()
+theentanglementtestinfinitelattice()
 #entanglementtest2()
 #entanglemenvttest();
 #testbond();

@@ -544,7 +544,7 @@ function weightspigraphs()
             J=1
             J2=1;
             os=Int[1, 2, 3, 4, 5];
-            hs=generateHListUniform(1, 2, 50)
+            hs=generateHListUniform(0.1, 1, 50)
             graphs=readFromGraphFile();
             orders=Int[];
             list=Vector{Float64}[];
@@ -571,7 +571,7 @@ function weightspigraphs()
             for i=2:length(os)
                 plot!(hs, list[i], label="order "*string(os[i]))
             end
-                savefig("./spis NLC orders: " * string(os) *", hs: "*string(length(hs))*"hrangehigh.png")
+                savefig("./spis NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
         end
 
 
