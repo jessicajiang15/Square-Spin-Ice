@@ -420,3 +420,9 @@ function testNumbering()
         println("i, ", i, ", num: ", getPlaquetteNumber(i, 4));
     end
 end
+
+function testlo()
+    graphs=readFromGraphFile();
+
+    println(getLastGraphNumOrder(6, graphs));
+end

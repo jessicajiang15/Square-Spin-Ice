@@ -107,6 +107,7 @@ println()
 #spiinfinitelattice()
 #spiinfinitelatticeold()
 #sPi();
+#testlo()
 spiinfinitelattice()
 #entanglementasj1j2()
 #spij1j2()
