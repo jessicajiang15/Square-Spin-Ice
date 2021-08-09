@@ -543,7 +543,7 @@ function weightspigraphs()
             N=4;
             J=1
             J2=1;
-            os=Int[1, 2, 3, 4, 5];
+            os=Int[1, 2, 3, 4];
             hs=generateHListUniform(0.1, 1, 20)
             graphs=readFromGraphFile();
             orders=Int[];
