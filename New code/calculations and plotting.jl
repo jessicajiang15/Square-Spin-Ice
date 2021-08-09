@@ -628,7 +628,7 @@ function calculateFlippabilityNew(eigenvector, states, N, plaquettes)
     return -total/(length(plaquettes));
 end
 
-
+#=
 function generateHListUniform(J, J2, num)
     list::Array{Float64}=Float64[];
     i=(1/10)*J;
@@ -640,6 +640,7 @@ function generateHListUniform(J, J2, num)
     end
     return list;
 end
+=#
 
 function generateHListUniformHalf(J, J2, num)
     list::Array{Float64}=Float64[];

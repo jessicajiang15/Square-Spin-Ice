@@ -477,9 +477,9 @@ function entanglementasj1j2()
 
     function spij1j2()
         @time begin
-        J2=0;
-        J1=2;
-        js=generateHListUniform(J2, J1, 100);
+        J1=1;
+        js=generateHListUniform(0.999, 1.001, 50);
+        println(js);
         N=4;
         h=0.1;
         bonds = bondListFrustrated(N)
@@ -492,6 +492,7 @@ function entanglementasj1j2()
             eigenvalues = temp[1]
             eigenvectors = temp[2]
             spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
+            println("spi, ", spi);
             push!(spis, spi);
         end
         println("spis, ", spis);

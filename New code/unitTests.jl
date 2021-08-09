@@ -227,7 +227,7 @@ function sPi()
     @time begin
     N=4;
     J=1
-    J2=1
+    J2=0.999
     h=0.1
     bonds = bondListFrustrated(N)
     spis=Any[];
