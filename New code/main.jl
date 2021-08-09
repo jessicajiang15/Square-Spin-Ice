@@ -104,7 +104,7 @@ println()
 #spij1j2()
 #weightspigraphs()
 #spiinfinitelatticeone()
-#spiinfinitelattice()
+spiinfinitelattice()
 #spiinfinitelatticeold()
 #sPi();
 #testlo()
