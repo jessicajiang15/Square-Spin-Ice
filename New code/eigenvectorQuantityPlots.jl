@@ -478,7 +478,7 @@ function entanglementasj1j2()
     function spij1j2()
         @time begin
         J1=1;
-        js=generateHListUniform(0.999, 1.001, 50);
+        js=generateHListUniform(0, 2, 400);
         println(js);
         N=4;
         h=0.1;

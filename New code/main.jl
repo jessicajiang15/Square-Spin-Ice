@@ -125,7 +125,7 @@ spij1j2()
 #fidTest2()
 #plottest()
 #calculateSpiTestAbs()
-calculateSpiTest()
+#calculateSpiTest()
 #test();
 #fidTest()
 #fidTest2()
