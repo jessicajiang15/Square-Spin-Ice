@@ -214,7 +214,15 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
         append!(eigenvectors, eigtemp.vectors);
         #println("finished odd eigenvalues");
     elseif(eigmethod=="lanczos")
-        values, vecs, info=eigsolve(Htemp, n, :SR; krylovdim=200, ishermitian=true);
+        local vals=nothing
+        local vecs=nothing
+        local info=nothing;
+        while(vals==nothing)
+            try
+                vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+            catch
+            end
+        end
         println(values);
         append!(eigenvalues, values);
         append!(eigenvectors, vecs);

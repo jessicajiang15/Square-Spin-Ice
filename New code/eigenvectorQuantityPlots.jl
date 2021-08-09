@@ -648,7 +648,7 @@ println("Starting sz!!");
 N=4;
 J=1
 J2=1;
-os=Int[1, 2, 3, 4, 5, 6];
+os=Int[1, 2, 3, 4, 5];
 hs=generateHListUniform(0.1, 1, 50)
 graphs=readFromGraphFile();
                     orders=Int[];
@@ -690,7 +690,7 @@ function entanglementinfinitelatticenew()
     J=1
                 J2=1;
                 os=Int[1, 2, 3, 4, 5];
-                hs=generateHListUniform(0.1, 1, 20)
+                hs=generateHListUniform(0.1, 1, 50)
                 graphs=readFromGraphFile();
                                     orders=Int[];
                                     list=Vector{Float64}[];
@@ -719,3 +719,34 @@ function entanglementinfinitelatticenew()
                 end
             savefig("./entanglement NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
 end
+
+
+
+
+    function flippabilityj1j2()
+        @time begin
+        J1=1;
+        js=generateHListUniform(0, 2, 100);
+        println(js);
+        N=4;
+        h=0.1;
+        bonds = bondListFrustrated(N)
+        squareIndicies=generateListsofPlaquetteIndiciesFlip(N);
+
+        flips=Any[];
+
+        for j in js
+            println("j: ", j);
+            temp =calculateEigensystemTransverseNoSymmetry(N*N, J1, j, h, bonds,"lanczos", "one", h, 0, "H1");
+            eigenvalues = temp[1]
+            eigenvectors = temp[2]
+            eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+            flip=calculateFlippabilityNew(eigenvectors[1], temp[3][1], N, squareIndicies)
+            println("flip, ", flip);
+            push!(flips, flip);
+        end
+        println("flips, ", flips);
+            plot(js, flips);
+            savefig("./flipplot"*", jmin: "*string(js[1])*", jmax: "*string(js[length(js)])*", h: "*string(h)*".png");
+        end
+        end
