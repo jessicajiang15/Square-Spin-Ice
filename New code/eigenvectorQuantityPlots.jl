@@ -448,7 +448,7 @@ function entanglementasj1j2()
     @time begin
     J2=0;
     J1=1;
-    js=generateHListUniform(0.1, 2, 100);
+    js=generateHListUniform(0.1, 2, 200);
     N=4;
     h=0.1;
     bonds = bondListFrustrated(N)
