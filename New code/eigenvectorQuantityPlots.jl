@@ -76,7 +76,7 @@ function thesztest()
     J=1
     J2=1;
 
-    hs=generateHListUniformHalf(J, J2, 50)
+    hs=generateHListUniform(0.1, 1, 20)
     ms=Any[];
     bonds = bondListFrustrated(N)
     println("hs: ", hs);
@@ -87,10 +87,8 @@ function thesztest()
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
 
-        println("length of temp[3] ", length(temp[3]))
-        println("length of temp ", length(temp))
-        println("length of eigensystem ", length(eigensystem))
-        println("eigensystem[3] ", eigensystem[3]);
+        println("eigenvalues: ", eigenvalues);
+
         sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
@@ -104,7 +102,7 @@ function thesztest()
     end
     #TODO: plot it
     plot(hs, ms)
-    savefig("./szplotnewnewnewlol.png")
+    savefig("./szplotnewnewnewlol ugh.png")
 end
 
 
@@ -690,7 +688,7 @@ function entanglementinfinitelatticenew()
     J=1
     bonds = bondListFrustrated(N)
                 J2=1;
-                os=Int[1, 2, 3, 4, 5];
+                os=Int[1, 2, 3, 4, 5, 6];
                 listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
                 hs=generateHListUniform(0.1, 2, 100)
                 graphs=readFromGraphFile();

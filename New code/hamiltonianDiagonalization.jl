@@ -111,8 +111,9 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true, tol=10^-18);
                 catch
+                    println("failed")
                 end
             end
             #println("even eigenvalues: ", vals);
@@ -153,8 +154,10 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true, tol=10^-18);
                 catch
+                    println("failed")
+
                 end
             end
             #println("odd eigenvalues: ", vals);
@@ -214,15 +217,17 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
         append!(eigenvectors, eigtemp.vectors);
         #println("finished odd eigenvalues");
     elseif(eigmethod=="lanczos")
-        local vals=nothing
-        local vecs=nothing
-        local info=nothing;
-        while(vals==nothing)
-            try
-                vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
-            catch
-            end
-        end
+    #    local values=nothing
+    #    local vecs=nothing
+    #    local info=nothing;
+        #while(vals==nothing)
+            #try
+                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=100, ishermitian=true);
+            #catch
+
+            #    println("failed")
+            #end
+        #end
         println(values);
         append!(eigenvalues, values);
         append!(eigenvectors, vecs);

@@ -573,6 +573,7 @@ function calculateInfiniteLatticeSz(orders::Vector{Int}, J, J2, h, graphs, width
     szs=Any[];
     @time begin
         weights=getAllWeightsSz(orders[length(orders)], graphs, J, J2, h, width);
+        println("weights", weights);
     end
 
     println("weights done!!! ");
