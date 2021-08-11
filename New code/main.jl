@@ -80,7 +80,7 @@ function main()
 
         io=open("eigenvectors"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
             for i=1:length(eigenvectors)
-                write(io, "``$(eigenvectors[i]) \n")
+                write(io, "$(eigenvectors[i]) \n")
             end
         end
     end
@@ -92,6 +92,7 @@ end
 end
 
 println()
+#theentanglementtestinfinitelattice()
 #testNumbering()
 #huh()
 #main();
@@ -104,7 +105,7 @@ println()
 #spij1j2()
 #weightspigraphs()
 #spiinfinitelatticeone()
-spiinfinitelattice()
+#spiinfinitelattice()
 #spiinfinitelatticeold()
 #sPi();
 #flippabilityj1j2()
@@ -140,7 +141,7 @@ entanglementinfinitelatticenew()
 #fidTest2()
 #testExtractDigits()
 #lol()
-szinfinitelatticenew()
+#szinfinitelatticenew()
 #calculateSpiTest()
 #calculategsentanglement()
 #entanglementinfinitelatticenew()
