@@ -310,6 +310,8 @@ function calculateWeightSz(num, graphs::Vector{graph}, weights, J, J2, h, width)
     temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
+    println("h: ", h);
+    println("eigenvalues: ", eigenvalues);
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
     sz=theGraph.numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites);
     for i=1:length(list)

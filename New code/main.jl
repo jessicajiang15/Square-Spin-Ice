@@ -25,7 +25,7 @@ function main()
     local eigenvectors
     local temp
     J = 1;
-    J2= 0;
+    J2= 1;
     N = 4;
     h = 0.1;
     numSites=16;

@@ -648,8 +648,8 @@ println("Starting sz!!");
 N=4;
 J=1
 J2=1;
-os=Int[1, 2, 3, 4, 5];
-hs=generateHListUniform(0.1, 1, 50)
+os=Int[1, 2, 3, 4];
+hs=generateHListUniform(0.1, 1, 20)
 graphs=readFromGraphFile();
                     orders=Int[];
                     list=Vector{Float64}[];
@@ -690,9 +690,9 @@ function entanglementinfinitelatticenew()
     J=1
     bonds = bondListFrustrated(N)
                 J2=1;
-                os=Int[1, 2, 3, 4];
+                os=Int[1, 2, 3, 4, 5];
                 listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
-                hs=generateHListUniform(0.8, 1, 2)
+                hs=generateHListUniform(0.1, 2, 100)
                 graphs=readFromGraphFile();
                 entropies=Any[];
 
