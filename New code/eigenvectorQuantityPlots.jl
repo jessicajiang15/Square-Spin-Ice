@@ -702,7 +702,7 @@ function entanglementinfinitelatticenew()
     J=1
     bonds = bondListFrustrated(N)
                 J2=1;
-                os=Int[4, 5];
+                os=Int[4, 5, 6];
                 #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
                 listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
 
