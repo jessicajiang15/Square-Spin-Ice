@@ -446,7 +446,8 @@ function entanglementasj1j2()
     @time begin
     J2=0;
     J1=1;
-    js=generateHListUniform(0.1, 2, 200);
+    js=generateHListUniform(0.1, 2, 50);
+    println(js);
     N=4;
     h=0.1;
     bonds = bondListFrustrated(N)
@@ -454,8 +455,18 @@ function entanglementasj1j2()
     println(listA);
 
     entropies=Any[];
-
+    yes=false;
     for j in js
+        if(j>1&&!yes)
+                yes=true;
+                temp = calculateEigensystemTransverse(N*N, J1, 1, h, bonds,"lanczos", "one", h, 0);
+                eigenvalues = temp[1]
+                eigenvectors = temp[2]
+                eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+                entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N*N);
+                push!(entropies, entropy);
+                push!(js, 1);
+        end
         println("j: ", j);
         temp = calculateEigensystemTransverse(N*N, J1, j, h, bonds,"lanczos", "one", h, 0);
         eigenvalues = temp[1]
@@ -465,6 +476,8 @@ function entanglementasj1j2()
         println(entropy);
         push!(entropies, entropy);
     end
+
+
     println(entropies);
         plot(js, entropies);
         savefig("./entanglemententropyplot"*", jmin: "*string(js[1])*", jmax: "*string(js[length(js)])*", h, "*string(h)*".png");
@@ -688,9 +701,11 @@ function entanglementinfinitelatticenew()
     J=1
     bonds = bondListFrustrated(N)
                 J2=1;
-                os=Int[1, 2, 3, 4, 5, 6];
-                listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
-                hs=generateHListUniform(0.1, 2, 100)
+                os=Int[4, 5];
+                #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
+                listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
+
+                hs=generateHListUniform(0.1, 1, 20)
                 graphs=readFromGraphFile();
                 entropies=Any[];
 
@@ -720,18 +735,22 @@ function entanglementinfinitelatticenew()
                                     end
                                     end
                                     #TODO: plot it
-                                    push!(list, entropies./2);
+                                    push!(list, entropies);
 
-                                    println("entropies ED: ", entropies./2);
+                                    println("entropies ED: ", entropies);
 
-                                    plot(hs, list[1], label="order "*string(os[1]))
+                                    plot(hs, list[1].*2, label="order "*string(os[1]))
 
                                     println("entropies nlc: ", list);
 
 
                                     for i=2:length(list)
-                                        str=i<=length(os) ? string(os[i]) : "Ed";
-                                        plot!(hs, list[i], label="order "*str)
+                                        str=i<=length(os) ? "order "*string(os[i]) : "ED";
+                                        if(i!=length(list))
+                                            plot!(hs, list[i].*2, label=str)
+                                        else
+                                            plot!(hs, list[i], label=str)
+                                        end
                                     end
             savefig("./entanglement NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
 end
