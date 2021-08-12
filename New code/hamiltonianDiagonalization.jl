@@ -70,6 +70,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
     #println("timing matrix generation");
     @time begin
     randomList=generateRandomh(hbar, width, bonds);
+    println(randomList);
     #println(randomList);
     #the info contains the states
     theInfo::Array{Any}=Any[];

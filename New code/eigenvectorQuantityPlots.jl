@@ -83,6 +83,7 @@ function thesztest()
     for i=1:length(hs)
         println("starting h: ", hs[i])
         temp = calculateEigensystemTransverse(N*N, J, J2, hs[i], bonds,"lanczos", "one", hs[i], 0);
+
         eigenvalues = temp[1]
         eigenvectors = temp[2]
         eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -705,7 +706,7 @@ function entanglementinfinitelatticenew()
                 #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
                 listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
 
-                hs=generateHListUniform(0.1, 1, 20)
+                hs=generateHListUniform(0.1, 1, 50)
                 graphs=readFromGraphFile();
                 entropies=Any[];
 

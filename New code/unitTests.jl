@@ -16,12 +16,12 @@ function testMeasures()
     map::Dict{Int, Int}=Dict([(1, 1), (2, 2), (3, 3)]);
     testState::Vector{Float64}=[1/sqrt(2), 1/sqrt(4), 1/sqrt(4)];
     sz=calculateSz(testState, states, N);
-    sx=calculateSx(testState, states, map, N);
+    #sx=calculateSx(testState, states, map, N);
     ind=indiciesAllSquares(N);
-    stflippability=calculateStaggeredFlippability(testState, states, ind, N);
+    #stflippability=calculateStaggeredFlippability(testState, states, ind, N);
     println("sz, ", sz);
-    println("sx, ", sx);
-    println("flip, ", stflippability);
+    #println("sx, ", sx);
+    #println("flip, ", stflippability);
 
 end
 
