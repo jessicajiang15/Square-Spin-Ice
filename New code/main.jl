@@ -93,7 +93,8 @@ end
 
 println()
 #thesztest()
-entanglementinfinitelatticenewj1j2()
+entanglementEDj1j2vsh()
+#entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
 #testNumbering()

@@ -855,3 +855,45 @@ function entanglementinfinitelatticenewj1j2()
     end
     savefig("./entanglement J2J1 vs h, order: " * string(order) *", hs: "*string(length(hs))*", js: "*string(length(js))*".png")
 end
+
+
+
+
+function entanglementEDj1j2vsh()
+    println("Starting!!");
+    @time begin
+    N=4;
+    J=1
+    J2=0
+    hmin=0.1;
+    hmax=2;
+    allData=Any[]
+    hs=generateHListUniform(hmin, hmax, 50)
+    println("hs", hs);
+        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
+        println(listA);
+        bonds = bondListFrustrated(N)
+        for j in js
+            entropies=Any[];
+            for i=1:length(hs)
+                temp = calculateEigensystemTransverse(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0);
+                eigenvalues = temp[1]
+                eigenvectors = temp[2]
+                eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+                entropy=getEntanglementEntropy(eigensystem[2], temp[3][eigensystem[3]], listA, N*N);
+                push!(entropies, entropy);
+            end
+            push!(allData, entropies);
+        end
+
+    #println(entropy);
+    end
+    plot(hs, allData[1], label="j2: "*string(js[1]));
+    for i=2:length(allData)
+        plot!(hs, allData[i], label="j2: "*string(js[i]));
+    end
+    println(allData)
+    savefig("./entanglementplot J2J1 js: "*string((js))*", hmin: "*string(hmin)*", hmax: "*string(hmax)*".png");
+
+end

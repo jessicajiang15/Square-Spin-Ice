@@ -685,6 +685,29 @@ function generateHListUniform(hmin, hmax, num)
 end
 
 
+
+function generateHListUniformIncludeOne(hmin, hmax, num)
+    inc=hmax/num-hmin/num;
+    i=hmin;
+    yes=false;
+    hlist=Float64[];
+    while(i<=hmax)
+        push!(hlist, i);
+        i+=inc;
+        if(i>1&&i!=1&&!yes)
+            push!(hlist, 1);
+            yes=true;
+        end
+        if(inc==0)
+            break;
+        end
+        println("inc", inc);
+    end
+    return hlist;
+end
+
+
+
 function storeInformation(bonds, N)
     plaquettes=generateListsofPlaquetteIndiciesFlip(N);
 
