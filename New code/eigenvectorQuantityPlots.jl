@@ -555,9 +555,10 @@ function weightspigraphs()
             N=4;
             J=1
             J2=1;
-            os=Int[4, 5, 6];
+            os=Int[1, 2, 3, 4, 5, 6];
             bonds = bondListFrustrated(N)
             hs=generateHListUniform(0.1, 1, 50)
+            println("hs: ", hs);
             graphs=readFromGraphFile();
             orders=Int[];
             list=Vector{Float64}[];
