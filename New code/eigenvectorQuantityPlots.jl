@@ -547,6 +547,7 @@ function weightspigraphs()
             end
         end
 
+
         function spiinfinitelattice()
             println("Starting entanglement inf!!");
             println("Starting sz!!");
@@ -896,4 +897,96 @@ function entanglementEDj1j2vsh()
     println(allData)
     savefig("./entanglementplot J2J1 js: "*string((js))*", hmin: "*string(hmin)*", hmax: "*string(hmax)*".png");
 
+end
+
+
+
+
+function calculateSpij1j2ED()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    hmin=0.1;
+    hmax=2;
+    J2=0;
+    hs=generateHListUniform(hmin, hmax, 50);
+    spis=Any[];
+    bonds = bondListFrustrated(N)
+    js=generateHListUniformIncludeOne(0.1, 2, 5);
+    println("hs: ", hs);
+    for j in js
+        te=Any[];
+        for i=1:length(hs)
+            println("starting h: ", hs[i])
+            temp =calculateEigensystemTransverseNoSymmetry(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+            eigenvalues = temp[1]
+            eigenvectors = temp[2]
+            println("starting time");
+            @time begin
+            spi=calculateSPiSzNew(eigenvectors[1], temp[3][1], N*N);
+            end
+            push!(te, spi);
+
+    end
+    push!(spis, te);
+
+    end
+
+        println("spis: ", spis);
+
+        println("length spis", length(spis))
+        println("length js", length(js));
+
+    #println("spis: ", spis);
+    plot(hs ,spis[1], label="j2: "*string(js[1]));
+    for i=2:length(spis)
+        plot!(hs ,spis[i], label="j2: "*string(js[i]));
+    end
+    end
+    #TODO: plot it
+    savefig("./spi J2J1 js: "*string((js))*", hmin: "*string(hmin)*", hmax: "*string(hmax)*".png");
+end
+
+
+
+
+
+function spiNLCj1j2()
+            println("Starting entanglement inf!!");
+            println("Starting sz!!")
+            @time begin
+            N=4;
+            J=1
+            J2=1;
+            js=generateHListUniformIncludeOne(0.1, 2, 5);
+            o=3;
+            hs=generateHListUniform(0.1, 1, 20)
+            spis=Any[];
+            graphs=readFromGraphFile();
+            order::Int=getLastGraphNumOrder(o, graphs);
+            println("order: ", order);
+            println("hs: ", hs);
+            println("js: ", js);
+
+            for j in js
+
+                for i=1:length(hs)
+                    println("starting h: ", hs[i])
+                    @time begin
+                    spi=calculateInfiniteLatticeSpi(order, J, J2, hs[i], graphs, 0)
+                    end
+                    #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                    push!(spis, spi);
+                end
+            end
+
+            println("spis: ", spis);
+
+            end
+            #TODO: plot it
+            plot(hs, spis)
+            savefig("./spis NLC real order: " * string(o) *", "*".png")
 end

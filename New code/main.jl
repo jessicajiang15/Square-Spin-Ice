@@ -93,7 +93,7 @@ end
 
 println()
 #thesztest()
-entanglementEDj1j2vsh()
+#entanglementEDj1j2vsh()
 #entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
@@ -127,6 +127,7 @@ entanglementEDj1j2vsh()
 #testbond();
 #spiinfinitelattice()
 #test();
+calculateSpij1j2ED()
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
 #thesztest()
@@ -135,6 +136,7 @@ entanglementEDj1j2vsh()
 #calculateStaggeredFlippabilityTest()
 #entanglementinfinitelatticenew()
 #fidTest2()
+#alculateSpij1j2ED()
 #plottest()
 #calculateSpiTestAbs()
 #calculateSpiTest()

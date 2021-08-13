@@ -225,11 +225,10 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
             try
                 values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=100, ishermitian=true);
             catch
-
                 println("failed")
             end
         end
-        println(values);
+        #println(values);
         append!(eigenvalues, values);
         append!(eigenvectors, vecs);
     else
