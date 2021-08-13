@@ -112,7 +112,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true, tol=10^(-16));
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
                 catch
                     println("failed")
                 end
@@ -155,7 +155,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true, tol=10^(-16));
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
                 catch
                     println("failed")
 

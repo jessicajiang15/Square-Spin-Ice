@@ -90,7 +90,7 @@ function thesztest()
 
         println("eigenvalues: ", eigenvalues);
 
-        sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N);
+        sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N*N);
         #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         push!(ms, sz);
         println("mz:", ms);
@@ -806,3 +806,52 @@ end
             savefig("./flipplot"*", jmin: "*string(js[1])*", jmax: "*string(js[length(js)])*", h: "*string(h)*".png");
         end
         end
+
+
+
+
+
+function entanglementinfinitelatticenewj1j2()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+    @time begin
+        N=4;
+        J=1
+    #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
+    hs=generateHListUniform(0.1, 1, 50);
+    js=generateHListUniform(0.1, 2, 5);
+    graphs=readFromGraphFile();
+    order=getLastGraphNumOrder(5, graphs);
+    entropies=Any[];
+    #list of different order 5s at different j values
+    list=Vector{Float64}[];
+
+    for j in js
+        println("starting j: ", j)
+        temp=Float64[];
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                @time begin
+                    entanglement=calculateInfiniteLatticeEntanglement(order, J, j, hs[i], graphs, 0)
+                    push!(temp, entanglement);
+                end
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            end
+            push!(list, temp);
+    end
+
+    end
+    println("entropies j1 j2: ", list);
+
+    plot(hs, list[1], label="J2: "*string(js[1]))
+
+    println("entropies nlc: ", list);
+
+
+    for i=2:length(list)
+        str="J2: "*string(js[i]);
+        plot!(hs, list[i], label=str)
+    end
+    savefig("./entanglement J2J1 vs h, order: " * string(order) *", hs: "*string(length(hs))*", js: "*string(length(js))*".png")
+end

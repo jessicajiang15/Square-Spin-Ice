@@ -93,6 +93,7 @@ end
 
 println()
 #thesztest()
+entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
 #testNumbering()
@@ -112,7 +113,7 @@ println()
 #sPi();
 #flippabilityj1j2()
 #testlo()
-spiinfinitelattice()
+#spiinfinitelattice()
 #plottest()
 #entanglementasj1j2()
 #spij1j2()
