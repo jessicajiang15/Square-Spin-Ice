@@ -555,11 +555,14 @@ function weightspigraphs()
             N=4;
             J=1
             J2=1;
-            os=Int[1, 2, 3, 4, 5];
+            os=Int[4, 5, 6];
+            bonds = bondListFrustrated(N)
             hs=generateHListUniform(0.1, 1, 50)
             graphs=readFromGraphFile();
             orders=Int[];
             list=Vector{Float64}[];
+            spisother=Float64[];
+
 
             for i=1:length(os)
                 push!(list, Vector{Float64}[]);
@@ -573,17 +576,33 @@ function weightspigraphs()
                 @time begin
                 spis=calculateInfiniteLatticeSpi(orders, J, J2, hs[i], graphs, 0)
                 putin(list, spis);
+                temp =calculateEigensystemTransverseNoSymmetry(N*N, J, J2, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+                eigenvalues = temp[1]
+                eigenvectors = temp[2]
+                eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+                spi=calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], N*N);
+                push!(spisother, spi);
                 end
                 #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
             end
             end
             #TODO: plot it
+            push!(list, spisother);
+            println("ED spis: ", spisother);
             plot(hs, list[1], label="order "*string(os[1]))
 
-            for i=2:length(os)
-                plot!(hs, list[i], label="order "*string(os[i]))
+            println("spiinfinitelattice nlc: ", list);
+
+
+            for i=2:length(list)
+                str=i<=length(os) ? "order "*string(os[i]) : "ED";
+                if(i!=length(list))
+                    plot!(hs, list[i], label=str)
+                else
+                    plot!(hs, list[i], label=str)
+                end
             end
-                savefig("./spis NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+            savefig("./spi NLC orders with ED: " * string(os) *", hs: "*string(length(hs))*".png")
         end
 
 

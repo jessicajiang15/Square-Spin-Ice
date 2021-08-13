@@ -93,7 +93,7 @@ end
 
 println()
 #thesztest()
-entanglementinfinitelatticenew()
+#entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
 #testNumbering()
 #huh()
@@ -112,7 +112,7 @@ entanglementinfinitelatticenew()
 #sPi();
 #flippabilityj1j2()
 #testlo()
-#spiinfinitelattice()
+spiinfinitelattice()
 #plottest()
 #entanglementasj1j2()
 #spij1j2()
@@ -123,6 +123,7 @@ entanglementinfinitelatticenew()
 #entanglementtest2()
 #entanglemenvttest();
 #testbond();
+#spiinfinitelattice()
 #test();
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];

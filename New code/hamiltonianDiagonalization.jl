@@ -70,7 +70,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
     #println("timing matrix generation");
     @time begin
     randomList=generateRandomh(hbar, width, bonds);
-    println(randomList);
+    #println(randomList);
     #println(randomList);
     #the info contains the states
     theInfo::Array{Any}=Any[];
@@ -218,17 +218,17 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
         append!(eigenvectors, eigtemp.vectors);
         #println("finished odd eigenvalues");
     elseif(eigmethod=="lanczos")
-    #    local values=nothing
-    #    local vecs=nothing
-    #    local info=nothing;
-        #while(vals==nothing)
-            #try
+        local values=nothing
+        local vecs=nothing
+        local info=nothing;
+        while(values==nothing)
+            try
                 values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=100, ishermitian=true);
-            #catch
+            catch
 
-            #    println("failed")
-            #end
-        #end
+                println("failed")
+            end
+        end
         println(values);
         append!(eigenvalues, values);
         append!(eigenvectors, vecs);
