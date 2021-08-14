@@ -962,7 +962,7 @@ function spiNLCj1j2()
             J=1
             J2=1;
             js=generateHListUniformIncludeOne(0.1, 2, 5);
-            o=1;
+            o=5;
             hs=generateHListUniform(0.1, 2, 100)
             spis=Any[];
             graphs=readFromGraphFile();
