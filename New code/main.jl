@@ -94,7 +94,7 @@ end
 println()
 #thesztest()
 #entanglementEDj1j2vsh()
-#entanglementinfinitelatticenewj1j2()
+entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
 #testNumbering()
@@ -127,7 +127,7 @@ println()
 #testbond();
 #spiinfinitelattice()
 #test();
-spiNLCj1j2()
+#spiNLCj1j2()
 #calculateSpij1j2ED()
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];

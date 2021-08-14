@@ -820,7 +820,7 @@ function entanglementinfinitelatticenewj1j2()
         N=4;
         J=1
     #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
-    hs=generateHListUniform(0.1, 1, 50);
+    hs=generateHListUniform(0.1, 2, 100);
     js=generateHListUniform(0.1, 2, 5);
     graphs=readFromGraphFile();
     order=getLastGraphNumOrder(5, graphs);
@@ -854,7 +854,7 @@ function entanglementinfinitelatticenewj1j2()
         str="J2: "*string(js[i]);
         plot!(hs, list[i], label=str)
     end
-    savefig("./entanglement J2J1 vs h, order: " * string(order) *", hs: "*string(length(hs))*", js: "*string(length(js))*".png")
+    savefig("./entanglement NLC J2J1 vs h, order: " * string(order) *", hs: "*string(length(hs))*", js: "*string(length(js))*".png")
 end
 
 
