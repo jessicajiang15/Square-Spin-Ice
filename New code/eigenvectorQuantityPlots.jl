@@ -684,6 +684,7 @@ J2=1;
 os=Int[1, 2, 3, 4];
 hs=generateHListUniform(0.1, 1, 20)
 graphs=readFromGraphFile();
+
                     orders=Int[];
                     list=Vector{Float64}[];
 
@@ -993,4 +994,35 @@ function spiNLCj1j2()
                 plot!(hs, spis[i], label="j2: "*string(js[i]));
             end
             savefig("./spis NLC j2j1 order: " * string(o) *", js: "*string(js)*", num h: "*string(length(hs))*".png")
+end
+
+
+
+
+function calculatefidelityJ1J2ED()
+    println("Starting fid!!");
+    @time begin
+    N=4;
+    J=1
+    hmin=0.1;
+    hmax=1;
+    num=50;
+    hs=generateHListUniform(hmin, hmax, num);
+    js=generateHListUniformIncludeOne(0.1, 2, 5);
+    fids=Any[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    for j in js
+        te=calculateFidelity(hmin, hmax, num, N*N, J, j, bonds)
+        push!(fids, te);
+    end
+
+    println("fids: ", fids);
+    end
+    #TODO: plot it
+    plot(hs, fids[1], label="j2: "*string(js[1]))
+    for i=2:length(fids)
+        plot!(hs, fids[i], label="j2: "*string(js[i]));
+    end
+    savefig("./fidelity ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
 end

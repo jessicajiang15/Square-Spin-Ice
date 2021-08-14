@@ -208,11 +208,11 @@ function fidTest2()
     println("starting fid");
 
 
-    num=50;
+    num=10;
     N=4;
     J=1;
-    J2=0;
-    hmin=0.2;
+    J2=1;
+    hmin=0.1;
     hmax=1;
     bonds = bondListFrustrated(N)
     hs=generateHListUniform(hmin, hmax, num);
@@ -220,7 +220,7 @@ function fidTest2()
 
     println("hs", hs);
 
-    fids=calculateFidelity(hmin, hmax, num, N, J, J2, bonds);
+    fids=calculateFidelity(hmin, hmax, num, N*N, J, J2, bonds);
     println("fids: ", fids);
     println("fids length: ", length(fids));
 

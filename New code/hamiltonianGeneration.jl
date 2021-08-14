@@ -160,7 +160,7 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, 
                         b::Int=flipBits(bond1-1, bond2-1,i);
                         push!(cols, b+1);
                         push!(rows, i+1);
-                        push!(values, a/4);
+                        push!(values, (1/2)*a/4);
                         if(eigmethod=="full")
                             H[i+1,b+1]=a/4;
                         end

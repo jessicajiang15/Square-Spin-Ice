@@ -11,7 +11,7 @@ function main()
     #heisenberg or transverse
     hamiltonianType = "transverse"
     #symmetry or momentum2d or reflection
-    method = "none"
+    method = "symmetry"
     #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
     eigmethod="lanczos"
     #test=16, all=all, one=1, ignore if eigmethod=full
@@ -27,7 +27,7 @@ function main()
     J = 1;
     J2= 1;
     N = 4;
-    h = 0.1;
+    h = 1;
     numSites=16;
     width = 0;
 
@@ -58,7 +58,7 @@ function main()
         end
     elseif (hamiltonianType == "transverse")
         if(method=="none")
-            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H1");
+            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H2");
         else
             temp = calculateEigensystemTransverse(numSites, J, J2, h, bonds,eigmethod, num, h, width);
         end
@@ -69,6 +69,7 @@ function main()
     listA=[0, 1, 4, 5];
 
     println("eigenvalues: ", (eigenvalues));
+    #println(eigenvalues[1]==eigenvalues[2]);
     #println((eigenvectors));
 
     if(file)
@@ -92,18 +93,12 @@ end
 end
 
 println()
-#thesztest()
 #entanglementEDj1j2vsh()
-entanglementinfinitelatticenewj1j2()
+#entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()
 #testNumbering()
-#huh()
 #main();
-#fileiotest()
-#thetest();
-#println("starting");
-#lol()
 #thesztestinfinitelattice()
 #spitest()
 #spij1j2()
@@ -150,6 +145,7 @@ entanglementinfinitelatticenewj1j2()
 #testMeasures()
 #testPlot();
 #calculatefidelity()
+calculatefidelityJ1J2ED()
 #fidTest2()
 #testExtractDigits()
 #lol()

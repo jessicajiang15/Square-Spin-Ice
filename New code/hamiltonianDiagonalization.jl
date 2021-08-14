@@ -112,12 +112,12 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=200, ishermitian=true);
                 catch
                     println("failed")
                 end
             end
-            #println("even eigenvalues: ", vals);
+            println("even eigenvalues: ", vals);
             push!(eigenvalues, vals[1]);
             push!(eigenvectors, vecs[1]);
         else
@@ -155,13 +155,12 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
             local info=nothing;
             while(vals==nothing)
                 try
-                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=100, ishermitian=true);
+                    vals, vecs, info=eigsolve(HtempOdd, 1, :SR; krylovdim=200, ishermitian=true);
                 catch
                     println("failed")
-
                 end
             end
-            #println("odd eigenvalues: ", vals);
+            println("odd eigenvalues: ", vals);
 
             push!(eigenvalues, vals[1]);
             push!(eigenvectors, vecs[1]);
@@ -223,14 +222,15 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
         local info=nothing;
         while(values==nothing)
             try
-                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=100, ishermitian=true);
+                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=200, ishermitian=true, tol=10^(-16));
             catch
                 println("failed")
             end
         end
         #println(values);
-        append!(eigenvalues, values);
-        append!(eigenvectors, vecs);
+        println(values);
+        append!(eigenvalues, values[1]);
+        append!(eigenvectors, vecs[1]);
     else
         eigtemp=eigs((Htemp), nev=n);
         #eigtemp=eigen(Htemp);

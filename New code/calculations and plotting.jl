@@ -381,7 +381,7 @@ function innerProduct(eigenvector, states, eigenvector2, states2)
 end
 
 #assumes the two states are the same
-function innerProduct(eigenvector, states, eigenvector2)
+function innerProduct(eigenvector, eigenvector2, states)
     sum=0;
     for i=1:length(states)
            sum+=conj(eigenvector[i])*eigenvector2[i];
@@ -390,7 +390,7 @@ function innerProduct(eigenvector, states, eigenvector2)
 end
 
 function calculateFidelity(eigenvector, states, h, N, deltah, bonds, J, J2)
-    temp=calculateEigensystemTransverse(N*N, J, J2, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
+    temp=calculateEigensystemTransverse(N, J, J2, h+deltah, bonds,"lanczos", "one", h+deltah, 0);
     eigensystem=getLowestLyingStates(temp[1], temp[2]);
     eigenvector2=eigensystem[2];
     states2=temp[3][eigensystem[3]];
@@ -417,12 +417,38 @@ function generateFidelityList(hmin, hmax, num, N, J, J2, bonds)
 
     while(i<=hmax+hstep)
         println("on i: ", i);
-        temp=calculateEigensystemTransverse(N*N, J, J2, i, bonds,"lanczos", "one", i, 0);
+        temp=calculateEigensystemTransverse(N, J, J2, i, bonds,"lanczos", "one", i, 0);
         eigensystem=getLowestLyingStates(temp[1], temp[2]);
         eigenvector=eigensystem[2];
         state=temp[3][eigensystem[3]];
         push!(eigenvectors, eigenvector);
         push!(states, state);
+        if(hstep<=0)
+            break;
+        end
+        i+=hstep;
+    end
+    push!(all, eigenvectors);
+    push!(all, states);
+    return all;
+end
+
+
+function generateFidelityListH1(hmin, hmax, num, N, J, J2, bonds)
+    hstep=hmax/num-hmin/num;
+    i=hmin;
+    eigenvectors=Any[];
+    states=Any[];
+    all=Any[];
+    println(J);
+
+    while(i<=hmax+hstep)
+        println("on i: ", i);
+        temp=calculateEigensystemTransverseNoSymmetry(N, J, J2, i, bonds,"lanczos", "one", i, 0, "H1");
+        #eigensystem=getLowestLyingStates(temp[1], temp[2]);
+        #eigenvector=eigensystem[2];
+        push!(eigenvectors, temp[2]);
+        push!(states, 0:2^(N)-1);
         if(hstep<=0)
             break;
         end
