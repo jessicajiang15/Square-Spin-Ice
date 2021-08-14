@@ -963,7 +963,7 @@ function spiNLCj1j2()
             J2=1;
             js=generateHListUniformIncludeOne(0.1, 2, 5);
             o=1;
-            hs=generateHListUniform(0.1, 1, 50)
+            hs=generateHListUniform(0.1, 2, 100)
             spis=Any[];
             graphs=readFromGraphFile();
             order::Int=getLastGraphNumOrder(o, graphs);
