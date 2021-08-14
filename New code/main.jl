@@ -127,7 +127,8 @@ println()
 #testbond();
 #spiinfinitelattice()
 #test();
-calculateSpij1j2ED()
+spiNLCj1j2()
+#calculateSpij1j2ED()
 #calculategsentanglement()
 #println(singleOutEvenOddSpins(true,2^(4*4), 4))[1];
 #thesztest()

@@ -962,8 +962,8 @@ function spiNLCj1j2()
             J=1
             J2=1;
             js=generateHListUniformIncludeOne(0.1, 2, 5);
-            o=3;
-            hs=generateHListUniform(0.1, 1, 20)
+            o=1;
+            hs=generateHListUniform(0.1, 1, 50)
             spis=Any[];
             graphs=readFromGraphFile();
             order::Int=getLastGraphNumOrder(o, graphs);
@@ -972,21 +972,25 @@ function spiNLCj1j2()
             println("js: ", js);
 
             for j in js
-
+                te=Any[];
                 for i=1:length(hs)
                     println("starting h: ", hs[i])
                     @time begin
-                    spi=calculateInfiniteLatticeSpi(order, J, J2, hs[i], graphs, 0)
+                    spi=calculateInfiniteLatticeSpi(order, J, j, hs[i], graphs, 0)
                     end
                     #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
-                    push!(spis, spi);
+                    push!(te, spi);
                 end
+                push!(spis, te);
             end
 
             println("spis: ", spis);
 
             end
             #TODO: plot it
-            plot(hs, spis)
-            savefig("./spis NLC real order: " * string(o) *", "*".png")
+            plot(hs, spis[1], label="j2: "*string(js[1]));
+            for i=2:length(spis)
+                plot!(hs, spis[i], label="j2: "*string(js[i]));
+            end
+            savefig("./spis NLC j2j1 order: " * string(o) *", js: "*string(js)*", num h: "*string(length(hs))*".png")
 end
