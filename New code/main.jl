@@ -93,7 +93,7 @@ end
 end
 
 println()
-thesztestj1j2ED()
+#thesztestj1j2ED()
 #entanglementEDj1j2vsh()
 #entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
@@ -140,6 +140,7 @@ thesztestj1j2ED()
 #test();
 #fidTest()
 #fidTest2()
+szNLCj1j2()
 #plottest()
 #testMeasures();
 #sPi()

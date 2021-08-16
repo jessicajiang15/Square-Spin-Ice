@@ -1065,3 +1065,45 @@ function thesztestj1j2ED()
     end
     savefig("./sz ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
 end
+
+
+
+
+
+function szNLCj1j2()
+    println("Starting sz inf!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    o=5;
+    graphs=readFromGraphFile();
+
+    order=getLastGraphNumOrder(o, graphs);
+    hs=generateHListUniform(0.1, 2, 50)
+    js=generateHListUniform(0.1, 2, 5)
+
+    ms=Any[];
+    println("hs: ", hs);
+    for j in js
+        te=Any[];
+        for i=1:length(hs)
+            println("starting h: ", hs[i])
+            sz=calculateInfiniteLatticeSz(order, J, j, hs[i], graphs, 0)
+            #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            push!(te, sz);
+        end
+        push!(ms, te);
+    end
+
+    println("ms: ", ms);
+
+    end
+    #TODO: plot it
+    plot(hs, ms[1], label="j2: "*string(js[1]))
+    for i=2:length(ms)
+        plot!(hs, ms[i], label="j2: "*string(js[i]));
+    end
+    savefig("./sz NLC j2j1, js: "*string(js)*", num h: "*string(length(hs))*", order: "*string(o)*".png")
+end
