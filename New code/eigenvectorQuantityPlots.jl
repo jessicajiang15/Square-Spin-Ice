@@ -1107,3 +1107,67 @@ function szNLCj1j2()
     end
     savefig("./sz NLC j2j1, js: "*string(js)*", num h: "*string(length(hs))*", order: "*string(o)*".png")
 end
+
+
+
+
+function szinfinitelatticewithED()
+println("Starting entanglement inf!!");
+println("Starting sz!!");
+
+@time begin
+N=4;
+J=1
+J2=1;
+os=Int[5, 6];
+hs=generateHListUniform(0.1, 1, 50)
+graphs=readFromGraphFile();
+bonds = bondListFrustrated(N)
+
+ms=Any[];
+
+                    orders=Int[];
+                    list=Vector{Float64}[];
+
+                    for i=1:length(os)
+                        push!(list, Vector{Float64}[]);
+                    end
+                    for i=1:length(os)
+                        push!(orders, getLastGraphNumOrder(os[i], graphs))
+                    end
+                    println("hs: ", hs);
+                    for i=1:length(hs)
+                        println("starting h: ", hs[i])
+                        @time begin
+                            szs=calculateInfiniteLatticeSz(orders, J, J2, hs[i], graphs, 0)
+                        putin(list, szs);
+                        temp = calculateEigensystemTransverse(N*N, J, J2, hs[i], bonds,"lanczos", "one", hs[i], 0);
+
+                        eigenvalues = temp[1]
+                        eigenvectors = temp[2]
+                        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+                        println("eigenvalues: ", eigenvalues);
+
+                        sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N*N);
+                        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                        push!(ms, sz);
+                        end
+                        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                    end
+                    end
+                    #TODO: plot it
+                    push!(list, ms);
+
+                    plot(hs, list[1], label="order "*string(os[1]))
+
+                    for i=2:length(list)
+                        str=i<=length(os) ? "order "*string(os[i]) : "ED";
+                        if(i!=length(list))
+                            plot!(hs, list[i], label=str)
+                        else
+                            plot!(hs, list[i], label=str)
+                        end
+                    end
+                    savefig("./sz NLC with ED orders: " * string(os) *", hs: "*string(length(hs))*".png")
+                end
