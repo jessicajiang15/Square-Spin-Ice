@@ -1026,3 +1026,42 @@ function calculatefidelityJ1J2ED()
     end
     savefig("./fidelity ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
 end
+
+
+
+function thesztestj1j2ED()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+    N=4;
+    J=1
+    js=generateHListUniformIncludeOne(0.1, 2, 5);
+    hs=generateHListUniform(0.1, 2, 100)
+    ms=Vector{Float64}[];
+    bonds = bondListFrustrated(N)
+    println("hs: ", hs);
+    for j in js
+        te=Float64[];
+        for i=1:length(hs)
+            println("starting h: ", hs[i])
+            temp = calculateEigensystemTransverse(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0);
+            eigenvalues = temp[1]
+            eigenvectors = temp[2]
+            eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+            println("eigenvalues: ", eigenvalues);
+            sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N*N);
+            #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            push!(te, sz);
+        end
+        push!(ms, te);
+    end
+    println("ms: ", ms);
+    end
+    #TODO: plot it
+    plot(hs, ms[1], label="j2: "*string(js[1]))
+    for i=2:length(ms)
+        plot!(hs, ms[i], label="j2: "*string(js[i]));
+    end
+    savefig("./sz ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
+end

@@ -93,6 +93,7 @@ end
 end
 
 println()
+thesztestj1j2ED()
 #entanglementEDj1j2vsh()
 #entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
@@ -145,7 +146,7 @@ println()
 #testMeasures()
 #testPlot();
 #calculatefidelity()
-calculatefidelityJ1J2ED()
+#calculatefidelityJ1J2ED()
 #fidTest2()
 #testExtractDigits()
 #lol()
