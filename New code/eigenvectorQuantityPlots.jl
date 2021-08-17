@@ -873,7 +873,7 @@ function entanglementEDj1j2vsh()
         allData=Any[]
         hs=generateHListUniform(hmin, hmax, 50)
         println("hs", hs);
-        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        js=generateHListUniformIncludeOne(0.9, 1.1, 10);
         listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
         println(listA);
         bonds = bondListFrustrated(N)
