@@ -1037,7 +1037,7 @@ function thesztestj1j2ED()
     @time begin
         N=4;
         J=1
-        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        js=generateHListUniformIncludeOne(0, 2, 5);
         hs=generateHListUniform(0.1, 2, 100)
         ms=Vector{Float64}[];
         bonds = bondListFrustrated(N)
