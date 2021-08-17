@@ -1323,7 +1323,7 @@ function szinfinitelatticemanyJ2andorders()
     @time begin
         N=4;
         J=1
-        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        js=generateHListUniformIncludeOne(0, 2, 5);
         os=Int[1, 2, 3, 4, 5];
         hmin=0.1;
         hmax=10;
