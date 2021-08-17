@@ -869,7 +869,7 @@ function entanglementEDj1j2vsh()
         J=1
         J2=0
         hmin=0.1;
-        hmax=2;
+        hmax=0.6;
         allData=Any[]
         hs=generateHListUniform(hmin, hmax, 50)
         println("hs", hs);
