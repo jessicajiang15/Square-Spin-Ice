@@ -1185,7 +1185,7 @@ function spiinfinitelatticemultipleJsandorders()
         os=Int[1, 2, 3, 4, 5];
         bonds = bondListFrustrated(N)
         hmin=0.1;
-        hmax=10;
+        hmax=2.5;
         hs=generateHListUniform(hmin, hmax, 50)
         println("hs: ", hs);
         graphs=readFromGraphFile();
