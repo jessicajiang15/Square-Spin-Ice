@@ -228,7 +228,7 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, 
             end
         end
         #println(values);
-        println(values);
+        #println(values);
         append!(eigenvalues, values[1]);
         append!(eigenvectors, vecs[1]);
     else
