@@ -556,9 +556,11 @@ function weightspigraphs()
             N=4;
             J=1
             J2=1;
-            os=Int[1, 2, 3, 4, 5, 6];
+            os=Int[1, 2, 3, 4, 5];
             bonds = bondListFrustrated(N)
-            hs=generateHListUniform(0.1, 1, 50)
+            hmin=0.9;
+            hmax=10;
+            hs=generateHListUniform(hmin, hmax, 10)
             println("hs: ", hs);
             graphs=readFromGraphFile();
             orders=Int[];
@@ -582,7 +584,7 @@ function weightspigraphs()
                 eigenvalues = temp[1]
                 eigenvectors = temp[2]
                 eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-                spi=calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], N*N);
+                spi=calculateSPiSzNew(eigenvectors, temp[3][1], N*N);
                 push!(spisother, spi);
                 end
                 #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
@@ -604,7 +606,7 @@ function weightspigraphs()
                     plot!(hs, list[i], label=str)
                 end
             end
-            savefig("./spi NLC orders with ED: " * string(os) *", hs: "*string(length(hs))*".png")
+            savefig("./spi NLC orders with ED: " * string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
         end
 
 
@@ -822,7 +824,7 @@ function entanglementinfinitelatticenewj1j2()
         J=1
     #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
     hs=generateHListUniform(0.1, 2, 100);
-    js=generateHListUniform(0.1, 2, 5);
+    js=generateHListUniformIncludeOne(0.1, 2, 5);
     graphs=readFromGraphFile();
     order=getLastGraphNumOrder(5, graphs);
     entropies=Any[];
@@ -842,7 +844,6 @@ function entanglementinfinitelatticenewj1j2()
             end
             push!(list, temp);
     end
-
     end
     println("entropies j1 j2: ", list);
 
@@ -1170,4 +1171,66 @@ ms=Any[];
                         end
                     end
                     savefig("./sz NLC with ED orders: " * string(os) *", hs: "*string(length(hs))*".png")
+                end
+
+
+function spiinfinitelatticemultipleJsandorders()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+                    @time begin
+                    N=4;
+                    J=1
+                    js=generateHListUniformIncludeOne(0.1, 1, 5);
+                    os=Int[1, 2, 3, 4, 5];
+                    bonds = bondListFrustrated(N)
+                    hmin=0.1;
+                    hmax=10;
+                    hs=generateHListUniform(hmin, hmax, 50)
+                    println("hs: ", hs);
+                    graphs=readFromGraphFile();
+                    orders=Int[];
+
+
+                    for i=1:length(os)
+                        push!(orders, getLastGraphNumOrder(os[i], graphs))
+                    end
+                    println("hs: ", hs);
+    for j in js
+        spisother=Float64[];
+        list=Vector{Float64}[];
+
+        for i=1:length(os)
+            push!(list, Vector{Float64}[]);
+        end
+        for i=1:length(hs)
+            println("starting h: ", hs[i])
+            spis=calculateInfiniteLatticeSpi(orders, J, j, hs[i], graphs, 0)
+            putin(list, spis);
+            temp =calculateEigensystemTransverseNoSymmetry(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+            eigenvector = temp[2]
+
+            spi=calculateSPiSzNew(eigenvector, temp[3][1], N*N);
+            push!(spisother, spi);
+            #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+        end
+        #TODO: plot it
+        push!(list, spisother);
+        println("ED spis: ", spisother);
+        plot(hs, list[1], label="order "*string(os[1]))
+
+        println("spiinfinitelattice nlc: ", list);
+
+
+        for i=2:length(list)
+            str=i<=length(os) ? "order "*string(os[i]) : "ED";
+            if(i!=length(list))
+                plot!(hs, list[i], label=str)
+            else
+                plot!(hs, list[i], label=str)
+            end
+        end
+        savefig("./spi NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+        end
+    end
                 end

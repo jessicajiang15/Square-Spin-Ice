@@ -293,7 +293,7 @@ function calculateInfiniteLatticeSz(order::Int, J, J2, h, graphs, width)
 
     println("weights done!!! ");
     for i=1:order
-        println("order: ", order);
+        #println("order: ", order);
         sum+=weights[i+1]*graphs[i].latticeConstant;
     end
 end
@@ -344,7 +344,7 @@ function getAllWeightsNoSubSz(num, graphs, J, J2, h, width)
     base=calculateBaseWeightSz(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightNoSubSz(i, graphs, J, J2, h, width));
     end
     return weights;
@@ -378,7 +378,7 @@ function calculateInfiniteLatticeEntanglement(order::Int, J, J2, h, graphs, widt
     println("weights done!!! ");
         sum=weights[1];
         for i=1:order
-            println("order: ", order);
+            #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
     end
 
@@ -460,7 +460,7 @@ function getAllWeightsNoSubEntanglement(num, graphs, J, J2, h, width)
     push!(weights, 0)
     push!(weights, 0);
     for i=2:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightNoSubEntanglement(i, graphs, J, J2, h, width));
     end
     return weights;
@@ -474,10 +474,9 @@ end
 function calculateBaseWeightSpi(J, J2, h, width)
     bonds::Vector{bond}=bond[];
     temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], 1);
+    eigenvalue = temp[1][1]
+    eigenvector = temp[2]
+    sz=calculateSPiSzNew(eigenvector, temp[3][1], 1, Int[1]);
     return sz;
 end
 
@@ -486,7 +485,7 @@ function getAllWeightsSpi(num, graphs, J, J2, h, width)
     base=calculateBaseWeightSpi(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightSpi(i, graphs, weights, J, J2, h, width));
     end
     return weights;
@@ -505,7 +504,7 @@ function calculateInfiniteLatticeSpi(orders::Vector{Int}, J, J2, h, graphs, widt
     for order in orders
         sum=weights[1];
         for i=1:order
-            println("order: ", order);
+            #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
         end
         push!(list, sum);
@@ -524,10 +523,9 @@ function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
     temp=calculateEigensystemTransverseNoSymmetry(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-    sz=theGraph.numSites*calculateSPiSzNew(eigensystem[2], temp[3][eigensystem[3]], theGraph.numSites, theGraph.indicies);
+    eigenvector = temp[2]
+    #eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    sz=theGraph.numSites*calculateSPiSzNew(eigenvector, temp[3][1], theGraph.numSites, theGraph.indicies);
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
@@ -558,7 +556,7 @@ function getAllWeightsNoSubSpi(num, graphs, J, J2, h, width)
     base=calculateBaseWeightSpi(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightNoSubSpi(i, graphs, J, J2, h, width));
     end
     return weights;
@@ -601,7 +599,7 @@ function calculateInfiniteLatticeSpi(order::Int, J, J2, h, graphs, width)
 
     println("weights done!!! ");
     for i=1:order
-        println("order: ", order);
+        #println("order: ", order);
         sum+=weights[i+1]*graphs[i].latticeConstant;
     end
 end
@@ -670,7 +668,7 @@ function getAllWeightsFidelity(num, graphs, J, J2, h, width, fidelityList)
     base=calculateBaseWeightSpi(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightFidelity(i, graphs, weights, J, J2, h, width, fidelityList));
     end
     return weights;
@@ -690,7 +688,7 @@ function calculateInfiniteLatticeFidelity(orders::Vector{Int}, J, J2, h, graphs,
     for order in orders
         sum=weights[1];
         for i=1:order
-            println("order: ", order);
+            #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
         end
         push!(list, sum);
@@ -757,7 +755,7 @@ function getAllWeightsNoSubFidelity(num, graphs, J, J2, h, width, fidelityList, 
     base=calculateBaseWeightSpi(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightNoSubFidelity(i, graphs, J, J2, h, width, fidelityList, hstep));
     end
     return weights;
@@ -776,7 +774,7 @@ function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, gra
     for order in orders
         sum=weights[1];
         for i=1:order
-            println("order: ", order);
+            #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
         end
         push!(ents, sum);

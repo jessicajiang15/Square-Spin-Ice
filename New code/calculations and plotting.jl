@@ -592,8 +592,14 @@ function calculateSPiSzNew(eigenvector, states, N)
 end
 
 
+
+
+
 function calculateSPiSzNew(eigenvector, states, N, indicies)
     totalsum=0;
+    println("length,", length(eigenvector))
+    println("length, ", length(indicies));
+
     for i=1:length(states)
         #println("state: ", i);
         for j=1:N
@@ -603,6 +609,7 @@ function calculateSPiSzNew(eigenvector, states, N, indicies)
                 zSz=getTi(z-1, states[i])==1 ? 1/2 : -1/2;
                 #println("im done 2");
                 #println("im done 3");
+
                 #plauettes[j][1] gives the leading index of the plaquette
                 totalsum+=jSz*zSz*abs2(eigenvector[i])*(-1)^(indicies[z]+indicies[j]);
                 #*(-1)^(i+j)
