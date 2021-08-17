@@ -1249,14 +1249,14 @@ function entanglementinfinitelatticemultipleJ2andorders()
         N=4;
         J=1
         hmin=0.1;
-        hmax=10;
+        hmax=5;
         js=generateHListUniformIncludeOne(0.1, 2, 5)
         bonds = bondListFrustrated(N)
         os=Int[1, 2, 3, 4, 5];
         #listA=plaquetteIndicies(generateCheckerboardPlaquettes(N)[1], N);
         listA=plaquetteIndicies(generateCheckerboardNoCrossPlaquettes(N)[1], N);
 
-        hs=generateHListUniform(hmin, hmax, 50)
+        hs=generateHListUniform(hmin, hmax, 100)
         graphs=readFromGraphFile();
 
         orders=Int[];
