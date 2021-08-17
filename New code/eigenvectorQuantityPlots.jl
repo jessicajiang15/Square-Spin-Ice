@@ -1309,3 +1309,78 @@ function entanglementinfinitelatticemultipleJ2andorders()
 
     end
 end
+
+
+
+
+
+
+
+function szinfinitelatticemanyJ2andorders()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+    @time begin
+        N=4;
+        J=1
+        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        os=Int[1, 2, 3, 4, 5];
+        hmin=0.1;
+        hmax=10;
+        hs=generateHListUniform(hmin, hmax, 50)
+        graphs=readFromGraphFile();
+        bonds = bondListFrustrated(N)
+
+
+        orders=Int[];
+
+        for i=1:length(os)
+            push!(orders, getLastGraphNumOrder(os[i], graphs))
+        end
+        println("hs: ", hs);
+
+        for j in js
+            list=Vector{Float64}[];
+            ms=Any[];
+
+            for i=1:length(os)
+                push!(list, Vector{Float64}[]);
+            end
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                @time begin
+                    szs=calculateInfiniteLatticeSz(orders, J, j, hs[i], graphs, 0)
+                    putin(list, szs);
+                    temp = calculateEigensystemTransverse(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0);
+
+                    eigenvalues = temp[1]
+                    eigenvectors = temp[2]
+                    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+
+                    println("eigenvalues: ", eigenvalues);
+
+                    sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N*N);
+                    #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                    push!(ms, sz);
+                end
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            end
+            #TODO: plot it
+            push!(list, ms);
+
+            plot(hs, list[1], label="order "*string(os[1]))
+
+            for i=2:length(list)
+                str=i<=length(os) ? "order "*string(os[i]) : "ED";
+                if(i!=length(list))
+                    plot!(hs, list[i], label=str)
+                else
+                    plot!(hs, list[i], label=str)
+                end
+            end
+            savefig("./sz NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+        end
+
+    end
+
+end
