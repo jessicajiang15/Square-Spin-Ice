@@ -94,13 +94,14 @@ end
 
 println()
 #scalez2()
+szinfinitelatticemanyJ2andorders()
 #thesztestj1j2ED()
 #scalesz()
 
 #entanglementEDj1j2vsh()
 #szinfinitelatticemanyJ2andorders()
 #entanglementinfinitelatticemultipleJ2andorders()
-spiinfinitelatticemultipleJsandorders()
+#spiinfinitelatticemultipleJsandorders()
 #entanglementinfinitelatticenewj1j2()
 #entanglementinfinitelatticenew()
 #theentanglementtestinfinitelattice()

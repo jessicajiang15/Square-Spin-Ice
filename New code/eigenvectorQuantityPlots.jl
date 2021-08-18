@@ -1326,7 +1326,7 @@ function szinfinitelatticemanyJ2andorders()
         js=generateHListUniformIncludeOne(0, 2, 5);
         os=Int[1, 2, 3, 4, 5];
         hmin=0.1;
-        hmax=10;
+        hmax=2.5;
         hs=generateHListUniform(hmin, hmax, 100)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)

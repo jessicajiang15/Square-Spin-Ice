@@ -592,16 +592,26 @@ function scalez2()
     append!(sz7, sz72)
     append!(sz7, sz73)
 
-    factor=1.25
+    #factor=1.25
+
+    #factor1=0.55
+    #factor2=0.68
+    #factor3=1
+    factor1=1
+    factor2=0.75
+    factor3=0.55
+
+
+
     factory=1.
 
-    display(plot(hs, sz1, label="J2=0"))
-    display(plot!(hs, sz2, label="J2=0.4"));
-    display(plot!(hs, sz3, label="J2=0.8"));
+    #display(plot(hs*factor1, sz1, label="J2=0, h factor "*string(factor1)));
+    #display(plot!(hs*factor2, sz2, label="J2=0.4, h factor "*string(factor2)));
+    #display(plot!(hs*factor3, sz3, label="J2=0.8, h factor "*string(factor3)));
     #display(plot!(hs.*factor, sz4.*factory));
-    display(plot!(hs.*factor, sz5.*factory, label="J2=1.2"));
-    display(plot!(hs.*factor, sz6.*factory, label="J2=1.6"));
-    display(plot!(hs.*factor, sz7.*factory, label="J2=2"));
+    display(plot(hs.*factor1, sz5.*factory, label="J2=1.2, h factor "*string(factor1)));
+    display(plot!(hs.*factor2, sz6.*factory, label="J2=1.6, h factor "*string(factor2)));
+    display(plot!(hs.*factor3, sz7.*factory, label="J2=2, h factor "*string(factor3)));
 
 
 
