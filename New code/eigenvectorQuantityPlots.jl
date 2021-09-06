@@ -555,12 +555,12 @@ function spiinfinitelattice()
     @time begin
         N=4;
         J=1
-        J2=1;
+        J2=0;
         os=Int[1, 2, 3, 4, 5];
         bonds = bondListFrustrated(N)
-        hmin=0.9;
-        hmax=10;
-        hs=generateHListUniform(hmin, hmax, 10)
+        hmin=0.1;
+        hmax=2;
+        hs=generateHListUniform(hmin, hmax, 100)
         println("hs: ", hs);
         graphs=readFromGraphFile();
         orders=Int[];
@@ -1160,6 +1160,8 @@ function szinfinitelatticewithED()
     #TODO: plot it
     push!(list, ms);
 
+    println(ms);
+
     plot(hs, list[1], label="order "*string(os[1]))
 
     for i=2:length(list)
@@ -1356,9 +1358,6 @@ function szinfinitelatticemanyJ2andorders()
                     eigenvalues = temp[1]
                     eigenvectors = temp[2]
                     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-
-                    println("eigenvalues: ", eigenvalues);
-
                     sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], N*N);
                     #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
                     push!(ms, sz);
@@ -1369,6 +1368,8 @@ function szinfinitelatticemanyJ2andorders()
             push!(list, ms);
 
             plot(hs, list[1], label="order "*string(os[1]))
+
+            println(ms);
 
             for i=2:length(list)
                 str=i<=length(os) ? "order "*string(os[i]) : "ED";

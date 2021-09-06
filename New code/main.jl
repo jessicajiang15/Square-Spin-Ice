@@ -94,7 +94,7 @@ end
 
 println()
 #scalez2()
-szinfinitelatticemanyJ2andorders()
+#szinfinitelatticemanyJ2andorders()
 #thesztestj1j2ED()
 #scalesz()
 
@@ -129,6 +129,7 @@ szinfinitelatticemanyJ2andorders()
 #entanglemenvttest();
 #testbond();
 #spiinfinitelattice()
+spiinfinitelattice()
 #test();
 #spiNLCj1j2()
 #calculateSpij1j2ED()
