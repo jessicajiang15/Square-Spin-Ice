@@ -556,11 +556,11 @@ function spiinfinitelattice()
         N=4;
         J=1
         J2=0;
-        os=Int[1, 2, 3, 4, 5];
+        os=Int[6];
         bonds = bondListFrustrated(N)
         hmin=0.1;
         hmax=2;
-        hs=generateHListUniform(hmin, hmax, 100)
+        hs=generateHListUniform(hmin, hmax, 50)
         println("hs: ", hs);
         graphs=readFromGraphFile();
         orders=Int[];
@@ -1184,7 +1184,7 @@ function spiinfinitelatticemultipleJsandorders()
         N=4;
         J=1
         js=generateHListUniformIncludeOne(0.1, 1, 5);
-        os=Int[1, 2, 3, 4, 5];
+        os=Int[6];
         bonds = bondListFrustrated(N)
         hmin=0.1;
         hmax=2.5;

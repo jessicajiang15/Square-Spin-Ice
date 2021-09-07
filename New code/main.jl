@@ -129,7 +129,13 @@ println()
 #entanglemenvttest();
 #testbond();
 #spiinfinitelattice()
-spiinfinitelattice()
+#spiGraphj20()
+#spiGraphj201()
+#spiGraphj2028()
+#spiGraphj2046()
+#spiGraphj2082()
+#spiGraphj21()
+#spiinfinitelattice()
 #test();
 #spiNLCj1j2()
 #calculateSpij1j2ED()
@@ -184,5 +190,5 @@ spiinfinitelattice()
 #thesztestinfinitelattice()
 #weightsszgraphs2()
 #weightsszgraphs3()
-
+spiinfinitelatticemultipleJsandorders()
 #weightsszgraphs4()
