@@ -5,91 +5,147 @@ using Plots
 
 function main()
     @time begin
-        Random.seed!(123);
-    println("hello")
-    latticeType = "frustrated"
-    #heisenberg or transverse
-    hamiltonianType = "transverse"
-    #symmetry or momentum2d or reflection
-    method = "symmetry"
-    #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
-    eigmethod="lanczos"
-    #test=16, all=all, one=1, ignore if eigmethod=full
-    num="one"
-    file=false;
+        Random.seed!(123)
+        println("hello")
+        latticeType = "frustrated"
+        #heisenberg or transverse
+        hamiltonianType = "transverse"
+        #symmetry or momentum2d or reflection
+        method = "symmetry"
+        #lanczos (Krylovit), full (LinearALgebra), sparse (Arpack)
+        eigmethod = "lanczos"
+        #test=16, all=all, one=1, ignore if eigmethod=full
+        num = "one"
+        file = false
 
 
 
-    bonds::Array{bond} = bond[]
-    local eigenvalues
-    local eigenvectors
-    local temp
-    J = 1;
-    J2= 1;
-    N = 4;
-    h = 1;
-    numSites=16;
-    width = 0;
+        bonds::Array{bond} = bond[]
+        local eigenvalues
+        local eigenvectors
+        local temp
+        J = 1
+        J2 = 1
+        N = 4
+        h = 1
+        numSites = 16
+        width = 0
 
 
 
-    if (latticeType == "frustrated")
-        bonds = bondListFrustrated(N)
-    elseif (latticeType == "four")
-        bonds = bondListFourNeighbors(N)
-    elseif (latticeType == "eight")
-        bonds = bondListEightNeighbors(N)
-    elseif( latticeType == "two")
-        bonds=bondListTwo();
-    end
-    println("BONDS LENGTH??", length(bonds));
-
-    if (hamiltonianType == "heisenberg")
-        if (method == "symmetry")
-            temp = calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
-        elseif(method=="momentum")
-            temp = calculateEigensystemHeisenbergMomentum(N, J, bonds, eigmethod, num)
-        elseif(method=="momentum2d")
-            temp = calculateEigensystemHeisenbergMomentum2d(N, J, bonds, eigmethod, num)
-        elseif(method=="reflection")
-            temp=calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num);
-        else
-            println("error");
+        if (latticeType == "frustrated")
+            bonds = bondListFrustrated(N)
+        elseif (latticeType == "four")
+            bonds = bondListFourNeighbors(N)
+        elseif (latticeType == "eight")
+            bonds = bondListEightNeighbors(N)
+        elseif (latticeType == "two")
+            bonds = bondListTwo()
         end
-    elseif (hamiltonianType == "transverse")
-        if(method=="none")
-            temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,eigmethod, num, h, width, "H2");
-        else
-            temp = calculateEigensystemTransverse(numSites, J, J2, h, bonds,eigmethod, num, h, width);
-        end
-    end
+        println("BONDS LENGTH??", length(bonds))
 
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
-    listA=[0, 1, 4, 5];
-
-    println("eigenvalues: ", (eigenvalues));
-    #println(eigenvalues[1]==eigenvalues[2]);
-    #println((eigenvectors));
-
-    if(file)
-        io=open("eigenvalues"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
-            for i=1:length(eigenvalues)
-                write(io, "$(eigenvalues[i]) \n")
+        if (hamiltonianType == "heisenberg")
+            if (method == "symmetry")
+                temp =
+                    calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
+            elseif (method == "momentum")
+                temp = calculateEigensystemHeisenbergMomentum(
+                    N,
+                    J,
+                    bonds,
+                    eigmethod,
+                    num,
+                )
+            elseif (method == "momentum2d")
+                temp = calculateEigensystemHeisenbergMomentum2d(
+                    N,
+                    J,
+                    bonds,
+                    eigmethod,
+                    num,
+                )
+            elseif (method == "reflection")
+                temp = calculateEigensystemHeisenbergReflection(
+                    N,
+                    J,
+                    bonds,
+                    eigmethod,
+                    num,
+                )
+            else
+                println("error")
+            end
+        elseif (hamiltonianType == "transverse")
+            if (method == "none")
+                temp = calculateEigensystemTransverseNoSymmetry(
+                    numSites,
+                    J,
+                    J2,
+                    h,
+                    bonds,
+                    eigmethod,
+                    num,
+                    h,
+                    width,
+                    "H2",
+                )
+            else
+                temp = calculateEigensystemTransverse(
+                    numSites,
+                    J,
+                    J2,
+                    h,
+                    bonds,
+                    eigmethod,
+                    num,
+                    h,
+                    width,
+                )
             end
         end
 
-        io=open("eigenvectors"*latticeType*hamiltonianType*method*eigmethod*".txt", "w") do io
-            for i=1:length(eigenvectors)
-                write(io, "$(eigenvectors[i]) \n")
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        listA = [0, 1, 4, 5]
+
+        println("eigenvalues: ", (eigenvalues))
+        #println(eigenvalues[1]==eigenvalues[2]);
+        #println((eigenvectors));
+
+        if (file)
+            io = open(
+                "eigenvalues" *
+                latticeType *
+                hamiltonianType *
+                method *
+                eigmethod *
+                ".txt",
+                "w",
+            ) do io
+                for i = 1:length(eigenvalues)
+                    write(io, "$(eigenvalues[i]) \n")
+                end
+            end
+
+            io = open(
+                "eigenvectors" *
+                latticeType *
+                hamiltonianType *
+                method *
+                eigmethod *
+                ".txt",
+                "w",
+            ) do io
+                for i = 1:length(eigenvectors)
+                    write(io, "$(eigenvectors[i]) \n")
+                end
             end
         end
+
+        println("bye")
+        println("TOTAL TIME")
+
     end
-
-    println("bye")
-    println("TOTAL TIME");
-
-end
 end
 
 println()
@@ -190,6 +246,13 @@ println()
 #thesztestinfinitelattice()
 #weightsszgraphs2()
 #weightsszgraphs3()
-spiinfinitelattice()
+#spiGraphj2064()
+#spiinfinitelattice()
 #spiinfinitelatticemultipleJsandorders()
 #weightsszgraphs4()
+#moreTest()
+#spiGraphj201()
+#spiGraphj20()
+spiinfinitelattice()
+#spiGraphj201()
+#spiGraphj2082()

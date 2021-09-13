@@ -560,7 +560,7 @@ function spiinfinitelattice()
         bonds = bondListFrustrated(N)
         hmin=0.1;
         hmax=2;
-        hs=generateHListUniform(hmin, hmax, 50)
+        hs=generateHListUniform(hmin, hmax, 100)
         println("hs: ", hs);
         graphs=readFromGraphFile();
         orders=Int[];
@@ -606,7 +606,7 @@ function spiinfinitelattice()
             plot!(hs, list[i], label=str)
         end
     end
-    savefig("./spi NLC orders with ED: " * string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+    savefig("./spi NLC orders with ED, orders: " * string(os) *", j2: "*string(J2)*", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
 end
 
 
