@@ -1,6 +1,6 @@
 include("entanglement helper.jl")
 include("nlchelpers.jl")
-using LsqFit
+#using LsqFit
 
 
 function test()
@@ -1254,6 +1254,7 @@ end
 
 
 function fitting(xdata, ydata)
+    #=
     model(t, p)=(p[1]*((t)).^(p[2])).+p[3];
 
     p0=[0.5, 0.5, 0.5];
@@ -1262,6 +1263,6 @@ function fitting(xdata, ydata)
 
     println("fit: ", fit);
 
-
+=#
 
 end
