@@ -613,153 +613,143 @@ end
 
 #lmao
 
-function getBaseFidelityList(order, graphs, hmin, hmax, num, J, J2, width)
-    hstep=hmax/num-hmin/num;
-    i=hmin;
-    list=Any[];
-    while(i<=hmax)
+function getBaseStatesList(order, graphs, hs, J, J2, width, hstep)
+    hstep=(hs[length(hs)]-hs[1])/length(hs);
+    ultList=Any[];
+    listA=Any[];
+    for h in hs
         theGraph=graphs[order];
         list=theGraph.subgraphList;
         temp=copy(theGraph.nearBonds);
         bonds=append!(temp, theGraph.farBonds);
-        temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, i, bonds,"lanczos", "one", i, width, "H1");
-        eigensystem=getLowestLyingStates(temp[1], temp[2]);
-        eigenvector=eigensystem[2];
-        state=temp[3][eigensystem[3]];
-        push!(list, eigenvector);
-        push!(list, state);
-        i+=hstep;
+        temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        local currState=Any[];
+        push!(currState,eigenvectors)
+        push!(currState, 0:1);
+
+        println("currestate ", typeof(currState));
+        println("currestate ", typeof(list));
+
+        push!(listA,currState)
     end
-    return list;
+    push!(ultList, listA);
+    return ultList;
 end
 
+#=
+organizing fidelity:
+1. need a list of all the "states" for any particular order (all the different hs)
+2. loop through ALL those states and get a list of fidelities from that list
+3. now, go onto the next order and do the same thing
+=#
+
 #returns a list of ALL the gs eigenvectors from hmin to hmax of the graph with num=order, with num many h values
-function generateFidelitiesList(order, graphs, hmin, hmax, num, J, J2, width)
-    hstep=hmax/num-hmin/num;
-    i=hmin;
-    list=Any[];
-    while(i<=hmax)
-        theGraph=graphs[order];
-        list=theGraph.subgraphList;
-        temp=copy(theGraph.nearBonds);
-        bonds=append!(temp, theGraph.farBonds);
-        temp=calculateEigensystemTransverseNoSymmetry(theGraph.numSites, J, J2, i, bonds,"lanczos", "one", i, width, "H1");
-        eigensystem=getLowestLyingStates(temp[1], temp[2]);
-        eigenvector=eigensystem[2];
-        state=temp[3][eigensystem[3]];
-        push!(list, eigenvector);
-        push!(list, state);
-        i+=hstep;
+#returns all states of differnet h at a particular order
+function generateStatesList(order, graphs, hs, J, J2, width, hstep)
+    states=[];
+    vectors=[];
+    ultimateList=[];
+    for i=1:length(order)
+        listA=Any[];
+        for h in hs
+            theGraph=graphs[order];
+            list=theGraph.subgraphList;
+            temp=copy(theGraph.nearBonds);
+            bonds=append!(temp, theGraph.farBonds);
+            temp=calculateEigensystemTransverseNoSymmetry(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+            currState=Any[];
+            push!(currState,temp[2])
+            push!(currState, temp[3][1]);
+            push!(listA,currState)
+        end
+        push!(ultimateList, listA);
     end
-    return list;
+    return ultimateList;
 end
 
 #returns a list of ALL the lists of eigenvectors of graphs up to graph order, num steps for h
-function generateListsofFidelityLists(order, graphs, hmin, hmax, num, J, J2, width)
+#has list of states sorted by order,
+function generateListsofFidelityLists(order, graphs, hs, J, J2, width)
     list=Vector{Any}[];
-    push!(list, getBaseFidelityList(order, graphs, hmin, hmax, num));
+    push!(list, getBaseFidelityList(order, graphs, hs));
     for i=1:order
-        push!(list, generateFidelitiesList(order, graphs, hmin, hmax, num, J, J2, width));
+        push!(list, generateFidelitiesList(order, graphs, hs, J, J2, width));
     end
-end
-
-function getAllWeightsFidelity(num, graphs, J, J2, h, width, fidelityList)
-    local weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSpi(J, J2, h, width);
-    push!(weights, base)
-    for i=1:num
-        #println("order: ", i);
-        push!(weights, calculateWeightFidelity(i, graphs, weights, J, J2, h, width, fidelityList));
-    end
-    return weights;
-end
-#max order 56
-
-
-function calculateInfiniteLatticeFidelity(orders::Vector{Int}, J, J2, h, graphs, width, fidelityList)
-    @time begin
-    println("weights starting!!");
-    list=Float64[];
-    @time begin
-        weights=getAllWeightsSpi(orders[length(orders)], graphs, J, J2, h, width);
-    end
-
-    println("weights done!!! ");
-    for order in orders
-        sum=weights[1];
-        for i=1:order
-            #println("order: ", order);
-            sum+=weights[i+1]*graphs[i].latticeConstant;
-        end
-        push!(list, sum);
-    end
-
-end
     return list;
 end
 
-#so this should return a list of fidelities as a function of h, period.
-function calculateInfiniteLatticeFidelities(orders::Vector{Int}, J, J2, h, graphs, width, hmin, hmax, num)
-    hstep=hmax/num-hmin/num;
-    hlist=generateHListUniform(hmin, hmax, num);
-    count=1;
-    #gives a list of all the lists of eigenvectors needed to calculate the fidelity. each
-    #element in this list is a list of all eigenvectors from hmin to hmax corresponding to a specific graph
-    #use each to calculate the weights corresponding to a specific h value
-    fidelityLists=generateListsofFidelityLists(order, graphs, hmin, hmax, num, J, J2, width);
-
-    for h in hlist
-        weights=Any[];
-        for order in orders
-            push!(weights, calculateFidelity(hstep, fidelityLists[1], h))
-            for i=1:order
-                #the fidelity lists of each h value???????
-                for fidelityList in fidelityLists
-                    push!(weights, calculateWeightFidelities(i, graphs, weights, fidelityList, hstep, count))
-                end
-            end
-        end
-        count+=1;
-    end
-
-
-
-end
-
-#the fidelity list here is a single fidelity list for a single graph!!
-function calculateWeightFidelities(num, graphs, weights, fidelityList, hstep, count)
-    sum=0;
-    #the graph to calculate weight of
-    theGraph=graphs[num];
-    fid=calculateFidelity(hstep, fidelityList, order+1);
+function getFidelityWeightAtParticularHValueandOrder(hIndex, order, fidelityLists, weights)
     sum=weights[1];
-    for i=1:length(list)
-        sum+=weights[list[i]+1];
+    fid=fidelityLists[order+1][hIndex];
+    if(order==0)
+        return fid-sum;
     end
-    sum+=theGraph.numSites*weights[1];
+    for i=2:order
+        sum+=weights[i];
+    end
     return fid-sum;
 end
 
-
-
-
-function calculateWeightNoSubFidelity(num, graphs::Vector{graph}, fidelityList, hstep)
-    sum=0;
-    sz=calculateFidelity(hstep, fidelityList);
-    return sz;
-
-end
-
-function getAllWeightsNoSubFidelity(num, graphs, J, J2, h, width, fidelityList, hstep)
-    weights::Vector{Float64}=Float64[];
-    base=calculateBaseWeightSpi(J, J2, h, width);
-    push!(weights, base)
-    for i=1:num
-        #println("order: ", i);
-        push!(weights, calculateWeightNoSubFidelity(i, graphs, J, J2, h, width, fidelityList, hstep));
+function getFidelityWeightsPerH(fidelityLists)
+    #loop through all hs,
+    weightsPerH=[];
+    #fidelities list is a list of fidelities per order, each list having all the fidelities at different hs
+    #println("LSNAKLNSKLAS", length(fidelityLists[1]))
+    println(fidelityLists);
+    for hIndex=1:length(fidelityLists[1])
+        weights=[];
+        #println("LSNAKLNSKLAS2", length(fidelityLists))
+        push!(weights, fidelityLists[1][hIndex])
+        #loop through all the orders
+        for order=1:length(fidelityLists)
+            fidWeight=getFidelityWeightAtParticularHValueandOrder(hIndex, order, fidelityLists, weights)
+            push!(weights, fidWeight);
+        end
+        push!(weightsPerH, weights);
     end
-    return weights;
+    return weightsPerH;
 end
+
+function calculateFidelitiesForEverything(order, graphs, J, J2, hs, width)
+    hstep=(hs[length(hs)]-hs[1])/length(hs);
+    statesList=getBaseStatesList(order, graphs, hs, J, J2, width, hstep);
+    stateTemp=generateStatesList(order, graphs, hs, J, J2, width, hstep);
+    println("lengthbase", length(statesList))
+    println("lengthbase", length(stateTemp))
+
+    append!(statesList, stateTemp);
+    println("stateslist",statesList);
+
+    fidelities=[];
+
+    for list in statesList
+        println("hstep",hstep);
+        fidTemp=calculateFidelity(hstep, list)
+        push!(fidelities, fidTemp);
+    end
+    println("should be number of orders+1 (including 0th order)", length(fidelities));
+    return fidelities;
+end
+
+function calculateInfiniteLatticeFidelity(order, graphs, J, J2, hs, width)
+    fidelitiesNLCResult=[];
+    fidelities=calculateFidelitiesForEverything(order, graphs, J, J2, hs, width);
+    println("length fid", length(fidelities));
+    weights=getFidelityWeightsPerH(fidelities);
+    println("elngth", length(weights));
+    for i=1:length(weights)
+        sum=weights[1];
+        for j=2:length(weights)
+            sum+=weights[j]*graphs[j-1].latticeConstant;
+        end
+        push!(fidelitiesNLCResult, sum);
+    end
+    return fidelitiesNLCResult;
+end
+#max order 56
+
 
 
 function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)

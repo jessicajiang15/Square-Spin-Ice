@@ -1385,3 +1385,20 @@ function szinfinitelatticemanyJ2andorders()
     end
 
 end
+
+
+function fidelityInfiniteLattice()
+    N=4;
+    J=1
+    order=1;
+    hmin=0.1;
+    hmax=1;
+    hs=generateHListUniform(hmin, hmax, 1)
+    println("num h: ", length(hs));
+    graphs=readFromGraphFile();
+    J2=1;
+    width=0;
+    fidelities=calculateInfiniteLatticeFidelity(order, graphs, J, J2, hs, width);
+    println(fidelities);
+    plot!(hs[1:length(fidelities)], fidelities);
+end

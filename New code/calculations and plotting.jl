@@ -482,11 +482,14 @@ end
 
 
 
-function calculateFidelity(hstep, fidelityList)
-    eigenvectors=fidelityList[1];
-    states=fidelityList[2];
-    for i=1:length(eigenvectors)-1
-        inner=abs(innerProduct(eigenvectors[i], states[i], eigenvectors[i+1], states[i+1]));
+function calculateFidelity(hstep, stateList)
+    fidelities=Any[];
+    for i=1:length(stateList)-1
+        eigenvector=stateList[i][1];
+        state=stateList[i][2];
+        eigenvector2=stateList[i+1][1];
+        state2=stateList[i+1][2];
+        inner=abs(innerProduct(eigenvector, state, eigenvector2, state2));
         push!(fidelities,2*(1-inner)/(hstep^2));
     end
     return fidelities;
