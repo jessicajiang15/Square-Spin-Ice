@@ -149,8 +149,10 @@ function main()
 end
 
 println()
-fidelityInfiniteLattice()
-#scalez2()
+#fidelityInfiniteLattice()
+fidelityInfiniteLatticeMultipleJ2()
+#fidelityInfiniteLattice()
+#scalez2()fidTest2()
 #szinfinitelatticemanyJ2andorders()
 #thesztestj1j2ED()
 #scalesz()

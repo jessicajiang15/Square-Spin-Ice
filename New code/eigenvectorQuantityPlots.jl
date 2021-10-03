@@ -1392,74 +1392,109 @@ function fidelityInfiniteLattice()
     J=1
     hmin=0.1;
     hmax=1;
-    hs=generateHListUniform(hmin, hmax, 10)
+    num=10
+    hs=generateHListUniform(hmin, hmax, num)
     println("num h: ", length(hs));
     graphs=readFromGraphFile();
     J2=1;
     width=0;
+    bonds = bondListFrustrated(N)
 
-    os=Int[1, 2, 3];
+    te=calculateFidelity(hmin, hmax, num, N*N, J, J2, bonds);
+
+
+    os=Int[1, 2];
 
     orders=Int[];
 
     for i=1:length(os)
         push!(orders, getLastGraphNumOrder(os[i], graphs))
     end
-    println("prders ",orders);
+
+    println("orders ",orders);
 
     fidelities=calculateInfiniteLatticeFidelity(orders, graphs, J, J2, hs, width);
     println(fidelities);
 
 
-                plot(hs[1:length(fidelities[1])], fidelities[1], label="order "*string(os[1]))
+    display(plot(hs[1:length(fidelities[1])], fidelities[1], title="NLC Fidelity susceptibility vs. h", label="Order "*string(os[1]), xlabel="h", ylabel="Fidelity"))
 
-                println("fidelities nlc: ", fidelities);
-
-
-                for i=2:length(fidelities)
-                    str="order "*string(os[i]);
-                    display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
-                end
-                savefig("./fidelity NLC orders with ED, J2, " *string(J2)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
-                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
-            end
+    println("fidelities nlc: ", fidelities);
 
 
+    for i=2:length(fidelities)
+        str="Order "*string(os[i]);
+        display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
+    end
+    display(plot!(hs, te, label="ED"))
+    savefig("./fidelity NLC orders with ED, J2, " *string(J2)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+    #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+end
 
 
-        function fidelityInfiniteLattice()
-            N=4;
-            J=1
-            hmin=0.1;
-            hmax=1;
-            hs=generateHListUniform(hmin, hmax, 10)
-            println("num h: ", length(hs));
-            graphs=readFromGraphFile();
-            J2=1;
-            width=0;
-
-            os=Int[1, 2, 3];
-
-            orders=Int[];
-
-            for i=1:length(os)
-                push!(orders, getLastGraphNumOrder(os[i], graphs))
-            end
-            println("prders ",orders);
-
-            fidelities=calculateInfiniteLatticeFidelity(orders, graphs, J, J2, hs, width);
-            println(fidelities);
 
 
-                        plot(hs[1:length(fidelities[1])], fidelities[1], label="order "*string(os[1]))
+function fidelityInfiniteLattice2()
+    N=4;
+    J=1
+    hmin=0.1;
+    hmax=1;
+    hs=generateHListUniform(hmin, hmax, 10)
+    println("num h: ", length(hs));
+    graphs=readFromGraphFile();
 
-                        println("fidelities nlc: ", fidelities);
+    J2=1;
+    width=0;
+
+    order=getLastGraphNumOrder(2, graphs);
+
+    fidelities=calculateInfiniteLatticeFidelity(order, graphs, J, J2, hs, width);
+    println("fidelities nlc: ", fidelities);
+    te=calculateFidelity(hmin, hmax, num, N*N, J, j, bonds);
 
 
-                        for i=2:length(fidelities)
-                            str="order "*string(os[i]);
-                            display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
-                        end
-                        savefig("./fidelity NLC orders with ED, J2, " *string(J2)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
-                        #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
-                    end
+    display(plot(hs[1:length(fidelities)], fidelities, label="order "*string(order)))
+
+
+
+end
+
+
+function fidelityInfiniteLatticeMultipleJ2()
+    N=4;
+    J=1
+    hmin=0.1;
+    hmax=3;
+    num=50;
+    js=generateHListUniformIncludeOne(0.1, 1, 5);
+    hs=generateHListUniform(hmin, hmax, num)
+    println("num h: ", length(hs));
+    graphs=readFromGraphFile();
+    width=0;
+    bonds = bondListFrustrated(N)
+
+
+
+    os=Int[1, 2, 3, 4, 5];
+
+    orders=Int[];
+
+    for i=1:length(os)
+        push!(orders, getLastGraphNumOrder(os[i], graphs))
+    end
+
+    println("orders ",orders);
+    for j in js
+        fidelities=calculateInfiniteLatticeFidelity(orders, graphs, J, j, hs, width);
+        println("j2=", j, ", fidelities: ", fidelities);
+        display(plot(hs[1:length(fidelities[1])], fidelities[1], title="NLC Fidelity susceptibility vs. h, J2="*string(j), label="Order "*string(os[1]), xlabel="h", ylabel="Fidelity"))
+        println("fidelities nlc: ", fidelities);
+        te=calculateFidelity(hmin, hmax, num, N*N, J, j, bonds);
+        for i=2:length(fidelities)
+            str="Order "*string(os[i]);
+            display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
+        end
+        display(plot!(hs, te, label="ED"))
+        savefig("./fidelity NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+    end
+end
