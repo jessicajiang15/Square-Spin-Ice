@@ -616,25 +616,23 @@ end
 function getBaseStatesList(order, graphs, hs, J, J2, width, hstep)
     hstep=(hs[length(hs)]-hs[1])/length(hs);
     ultList=Any[];
-    listA=Any[];
-    for h in hs
-        theGraph=graphs[order];
-        list=theGraph.subgraphList;
-        temp=copy(theGraph.nearBonds);
-        bonds=append!(temp, theGraph.farBonds);
-        temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
-        eigenvalues = temp[1]
-        eigenvectors = temp[2]
-        local currState=Any[];
-        push!(currState,eigenvectors)
-        push!(currState, 0:1);
-
-        println("currestate ", typeof(currState));
-        println("currestate ", typeof(list));
-
-        push!(listA,currState)
+    for i=1:order
+        listA=Any[];
+        for h in hs
+            theGraph=graphs[order];
+            list=theGraph.subgraphList;
+            temp=copy(theGraph.nearBonds);
+            bonds=append!(temp, theGraph.farBonds);
+            temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+            eigenvalues = temp[1]
+            eigenvectors = temp[2]
+            local currState=Any[];
+            push!(currState,eigenvectors)
+            push!(currState, 0:1);
+            push!(listA,currState)
+        end
+        push!(ultList, listA);
     end
-    push!(ultList, listA);
     return ultList;
 end
 
@@ -680,13 +678,11 @@ function generateListsofFidelityLists(order, graphs, hs, J, J2, width)
     return list;
 end
 
+#here we dont do order+1 because we inputted the index inside the list, which is the correct index by itself
 function getFidelityWeightAtParticularHValueandOrder(hIndex, order, fidelityLists, weights)
-    sum=weights[1];
-    fid=fidelityLists[order+1][hIndex];
-    if(order==0)
-        return fid-sum;
-    end
-    for i=2:order
+    sum=0;
+    fid=fidelityLists[order][hIndex];
+    for i=1:order
         sum+=weights[i];
     end
     return fid-sum;
@@ -696,11 +692,8 @@ function getFidelityWeightsPerH(fidelityLists)
     #loop through all hs,
     weightsPerH=[];
     #fidelities list is a list of fidelities per order, each list having all the fidelities at different hs
-    #println("LSNAKLNSKLAS", length(fidelityLists[1]))
-    println(fidelityLists);
     for hIndex=1:length(fidelityLists[1])
         weights=[];
-        #println("LSNAKLNSKLAS2", length(fidelityLists))
         push!(weights, fidelityLists[1][hIndex])
         #loop through all the orders
         for order=1:length(fidelityLists)
@@ -716,33 +709,26 @@ function calculateFidelitiesForEverything(order, graphs, J, J2, hs, width)
     hstep=(hs[length(hs)]-hs[1])/length(hs);
     statesList=getBaseStatesList(order, graphs, hs, J, J2, width, hstep);
     stateTemp=generateStatesList(order, graphs, hs, J, J2, width, hstep);
-    println("lengthbase", length(statesList))
-    println("lengthbase", length(stateTemp))
 
     append!(statesList, stateTemp);
-    println("stateslist",statesList);
 
     fidelities=[];
 
     for list in statesList
-        println("hstep",hstep);
         fidTemp=calculateFidelity(hstep, list)
         push!(fidelities, fidTemp);
     end
-    println("should be number of orders+1 (including 0th order)", length(fidelities));
     return fidelities;
 end
 
-function calculateInfiniteLatticeFidelity(order, graphs, J, J2, hs, width)
+function calculateInfiniteLatticeFidelity(order::Int, graphs, J, J2, hs, width)
     fidelitiesNLCResult=[];
     fidelities=calculateFidelitiesForEverything(order, graphs, J, J2, hs, width);
-    println("length fid", length(fidelities));
     weights=getFidelityWeightsPerH(fidelities);
-    println("elngth", length(weights));
     for i=1:length(weights)
-        sum=weights[1];
-        for j=2:length(weights)
-            sum+=weights[j]*graphs[j-1].latticeConstant;
+        sum=weights[i][1];
+        for j=2:length(weights[i])
+            sum+=weights[i][j]*graphs[j-1].latticeConstant;
         end
         push!(fidelitiesNLCResult, sum);
     end
@@ -750,6 +736,29 @@ function calculateInfiniteLatticeFidelity(order, graphs, J, J2, hs, width)
 end
 #max order 56
 
+function calculateInfiniteLatticeFidelity(orders::Vector{Int}, graphs, J, J2, hs, width)
+    fidelitiesNLCResults=[];
+    println("order ", orders[length(orders)]);
+    fidelities=calculateFidelitiesForEverything(orders[length(orders)], graphs, J, J2, hs, width);
+    weights=getFidelityWeightsPerH(fidelities);
+    for order in orders
+        fid=[];
+        for i=1:length(weights)
+            println("length weights,should be order+1", length(weights[i]));
+            sum=weights[i][1];
+            for j=2:order+1
+                println("j", j)
+                println("i", i)
+                println("j-1", j-1)
+                println("length, ", length(weights[i]));
+                sum+=weights[i][j]*graphs[j-1].latticeConstant;
+            end
+            push!(fid, sum);
+        end
+        push!(fidelitiesNLCResults, fid);
+    end
+    return fidelitiesNLCResults;
+end
 
 
 function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)
