@@ -683,8 +683,8 @@ function szinfinitelatticenew()
         N=4;
         J=1
         J2=1;
-        os=Int[1, 2, 3, 4];
-        hs=generateHListUniform(0.1, 1, 20)
+        os=Int[1];
+        hs=generateHListUniform(0.1, 1, 10)
         graphs=readFromGraphFile();
 
         orders=Int[];
@@ -1400,10 +1400,10 @@ function fidelityInfiniteLattice()
     width=0;
     bonds = bondListFrustrated(N)
 
-    te=calculateFidelity(hmin, hmax, num, N*N, J, J2, bonds);
+    #te=calculateFidelity(hmin, hmax, num, N*N, J, J2, bonds);
 
 
-    os=Int[1, 2];
+    os=Int[1];
 
     orders=Int[];
 
@@ -1426,7 +1426,7 @@ function fidelityInfiniteLattice()
         str="Order "*string(os[i]);
         display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
     end
-    display(plot!(hs, te, label="ED"))
+    #display(plot!(hs, te, label="ED"))
     savefig("./fidelity NLC orders with ED, J2, " *string(J2)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
     #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
 end
@@ -1464,7 +1464,7 @@ function fidelityInfiniteLatticeMultipleJ2()
     N=4;
     J=1
     hmin=0.1;
-    hmax=3;
+    hmax=2;
     num=50;
     js=generateHListUniformIncludeOne(0.1, 1, 5);
     hs=generateHListUniform(hmin, hmax, num)
@@ -1472,8 +1472,6 @@ function fidelityInfiniteLatticeMultipleJ2()
     graphs=readFromGraphFile();
     width=0;
     bonds = bondListFrustrated(N)
-
-
 
     os=Int[1, 2, 3, 4, 5];
 
@@ -1495,6 +1493,6 @@ function fidelityInfiniteLatticeMultipleJ2()
             display(plot!(hs[1:length(fidelities[i])], fidelities[i], label=str));
         end
         display(plot!(hs, te, label="ED"))
-        savefig("./fidelity NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+        savefig("./fidelity NLC orders with ED new, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
     end
 end

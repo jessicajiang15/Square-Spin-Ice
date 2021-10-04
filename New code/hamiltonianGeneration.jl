@@ -118,6 +118,9 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, 
             if(eigmethod!="full")
                 H=sparse(rows, cols, values);
             end
+            if(N<=1)
+                println("num sites, ", N, ", H", Matrix(H))
+            end
         return H;
 end
 
@@ -172,6 +175,9 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, 
             end
             if(eigmethod!="full")
                 H=sparse(rows, cols, values);
+            end
+            if(N<=1)
+                println("num sites, ", N, ", H", Matrix(H))
             end
         return H;
 end

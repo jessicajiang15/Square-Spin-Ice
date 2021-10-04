@@ -484,7 +484,9 @@ end
 
 function calculateFidelity(hstep, stateList)
     fidelities=Any[];
+    println("length", length(stateList));
     for i=1:length(stateList)-1
+        println("kalsa");
         eigenvector=stateList[i][1];
         state=stateList[i][2];
         eigenvector2=stateList[i+1][1];

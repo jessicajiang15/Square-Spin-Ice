@@ -269,3 +269,5 @@ fidelityInfiniteLatticeMultipleJ2()
 #spiinfinitelattice()
 #spiGraphj201()
 #spiGraphj2082()
+
+#hamiltonianTest()

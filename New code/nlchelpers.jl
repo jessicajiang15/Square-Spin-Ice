@@ -268,6 +268,7 @@ function calculateBaseWeightSz(J, J2, h, width)
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    println("eigenvector test, ", eigensystem[2]);
     sz=calculateSz(eigensystem[2], temp[3][eigensystem[3]], 1);
     return sz;
 end
@@ -618,13 +619,11 @@ function getBaseStatesList(order, graphs, hs, J, J2, width, hstep)
     ultList=Any[];
     listA=[];
         for h in hs
-            theGraph=graphs[order];
-            list=theGraph.subgraphList;
-            temp=copy(theGraph.nearBonds);
-            bonds=append!(temp, theGraph.farBonds);
+            bonds::Vector{bond}=bond[];
             temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
             eigenvalues = temp[1]
             eigenvectors = temp[2]
+            println("base state eigenvector: ", eigenvectors);
             local currState=Any[];
             push!(currState,eigenvectors)
             push!(currState, 0:1);
@@ -788,3 +787,14 @@ function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, gra
 end
     return ents;
 end
+
+
+
+
+    function temp(order, graphs, J, J2, hs, width)
+        hstep=(hs[length(hs)]-hs[1])/length(hs);
+        statesList=getBaseStatesList(order, graphs, hs, J, J2, width, hstep);
+        println(statesList);
+        fidelity=calculateFidelity(hstep, statesList[1]);
+        println("fidelity, ", fidelity);
+    end

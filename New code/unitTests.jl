@@ -1517,3 +1517,13 @@ function nlcSpiRatioTest(one1, two1, three1, four1, five1, six1, orders, nums, h
     end
 
 end
+
+function hamiltonianTest()
+    order=1;
+    hs=generateHListUniform(0.1, 1, 10)
+    graphs=readFromGraphFile();
+    J=1
+    J2=1
+    width=0
+    temp(order, graphs, J, J2, hs, width);
+end
