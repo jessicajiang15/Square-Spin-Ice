@@ -1572,9 +1572,9 @@ function susceptibilityJ2J1ED()
         J=1
         nums=getPlaquetteNumberList(N);
         h2=0.1;
-        js=generateHListUniformIncludeOne(0, 2, 5);
+        js=generateHListUniformIncludeOne(0.1, 2, 5);
         println("js: ", js);
-        hs=generateHListUniform(0.1, 2, 100)
+        hs=generateHListUniform(0.1, 2, 50)
         ms=Vector{Float64}[];
         bonds = bondListFrustrated(N);
         println("hs: ", hs);
