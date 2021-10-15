@@ -1519,11 +1519,19 @@ function nlcSpiRatioTest(one1, two1, three1, four1, five1, six1, orders, nums, h
 end
 
 function hamiltonianTest()
-    order=1;
-    hs=generateHListUniform(0.1, 1, 10)
-    graphs=readFromGraphFile();
-    J=1
-    J2=1
-    width=0
-    temp(order, graphs, J, J2, hs, width);
+    lol=getPlaquetteNumberList(4);
+    h=0.1;
+    h2=0.1;
+    N=16;
+    J=1;
+    J2=1;
+
+    bonds = bondListFrustrated(4)
+    eigensystem=calculateEigensystemSusceptibility(N, J, J2, h, h2, bonds,"lanczos", "one", h, h2, 0, lol);
+    Eh=eigensystem[1][1]
+    println("Eh:", eigensystem[1]);
+    eigensystem=calculateEigensystemTransverse(N, J, J2, h, bonds, "lanczos", "one", h, 0);
+    E0=eigensystem[1][1]
+    println("E0:", eigensystem[1]);
+    println(calculateSusceptibility(E0,Eh,h2));
 end

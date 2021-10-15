@@ -1391,19 +1391,19 @@ function fidelityInfiniteLattice()
     N=4;
     J=1
     hmin=0.1;
-    hmax=1;
-    num=10
+    hmax=2;
+    num=20
     hs=generateHListUniform(hmin, hmax, num)
     println("num h: ", length(hs));
     graphs=readFromGraphFile();
-    J2=1;
+    J2=0;
     width=0;
     bonds = bondListFrustrated(N)
 
     #te=calculateFidelity(hmin, hmax, num, N*N, J, J2, bonds);
 
 
-    os=Int[1];
+    os=Int[1, 2, 3, 4];
 
     orders=Int[];
 
@@ -1495,4 +1495,109 @@ function fidelityInfiniteLatticeMultipleJ2()
         display(plot!(hs, te, label="ED"))
         savefig("./fidelity NLC orders with ED new, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
     end
+end
+
+function susceptibilityMultipleJ2J1AndOrders()
+    println("Starting sus inf!!");
+    @time begin
+        J=1
+        N=4;
+        js=generateHListUniformIncludeOne(0.1, 1, 5);
+        os=Int[1, 2, 3, 4, 5, 6];
+        bonds = bondListFrustrated(N)
+        hmin=9;
+        h2=0.1;
+        hmax=10;
+        hs=generateHListUniform(hmin, hmax, 2)
+        println("hs: ", hs);
+        graphs=readFromGraphFile();
+        orders=Int[];
+        nums=getPlaquetteNumberList(4);
+
+
+        for i=1:length(os)
+            push!(orders, getLastGraphNumOrder(os[i], graphs))
+        end
+        println("hs: ", hs);
+        for j in js
+            suses=Float64[];
+            list=Vector{Float64}[];
+
+            for i=1:length(os)
+                push!(list, Vector{Float64}[]);
+            end
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                sus=calculateInfiniteLatticeSusceptibility(orders, J, j, hs[i], h2, graphs, 0)
+                putin(list, sus);
+                temp =calculateEigensystemTransverseNoSymmetry(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+                E0 = temp[1][1];
+                temp2=calculateEigensystemSusceptibility(N, J, J2, h, h2, bonds,"lanczos", "one", h, h2, 0, nums);
+                Eh=temp[1][1];
+                su=calculateSusceptibility(E0, Eh, h2);
+                push!(suses, su);
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            end
+            #TODO: plot it
+            push!(list, suses);
+            plot(hs, list[1], label="Order "*string(os[1]))
+
+            println("susceptibilities nlc: ", list);
+
+
+            for i=2:length(list)
+                str=i<=length(os) ? "Order "*string(os[i]) : "Exact Diagonalization";
+                if(i!=length(list))
+                    plot!(hs, list[i], label=str)
+                else
+                    plot!(hs, list[i], label=str)
+                end
+            end
+            savefig("./sus NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+        end
+    end
+end
+
+
+
+
+
+
+function susceptibilityJ2J1ED()
+    println("Starting sz!!");
+    println("Starting sz!!");
+
+    @time begin
+        N=4;
+        J=1
+        nums=getPlaquetteNumberList(N);
+        h2=0.1;
+        js=generateHListUniformIncludeOne(0, 2, 5);
+        println("js: ", js);
+        hs=generateHListUniform(0.1, 2, 100)
+        ms=Vector{Float64}[];
+        bonds = bondListFrustrated(N);
+        println("hs: ", hs);
+        for j in js
+            te=Float64[];
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                temp =calculateEigensystemTransverseNoSymmetry(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+                E0 = temp[1][1];
+                temp2=calculateEigensystemSusceptibility(N*N, J, j, hs[i], h2, bonds,"lanczos", "one", hs[i], h2, 0, nums);
+                Eh=temp2[1][1];
+                su=calculateSusceptibility(E0, Eh, h2);
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                push!(te, su);
+            end
+            push!(ms, te);
+        end
+        println("sus: ", ms);
+    end
+    #TODO: plot it
+    plot(hs, ms[1], label="J2: "*string(js[1]))
+    for i=2:length(ms)
+        plot!(hs, ms[i], label="J2: "*string(js[i]), xlabel="h", ylabel="Susceptibility");
+    end
+    savefig("./susceptibility ED js: "*string(js)*", num h: "*string(length(hs))*".png")
 end

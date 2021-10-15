@@ -423,3 +423,68 @@ function calculateEigensystemHeisenbergReflection(N, J, bonds, eigmethod, num)
     push!(eigensystem, eigenvectors);
     return eigensystem;
 end
+
+
+
+
+
+#let N b e how many sites??
+function calculateEigensystemSusceptibility(N, J, J2, h, h2, bonds,eigmethod, num, hbar, hbar2, width, sites2)
+    #println("timing matrix generation");
+    @time begin
+    randomList=generateRandomh(hbar, width, bonds);
+    randomList2=generateRandomh(hbar2, width, bonds);
+    theInfo::Array{Any}=Any[];
+    eigensystem::Array{Any}=Any[];
+    eigenvalues::Array{Any}=Any[];
+    eigenvectors::Array{Any}=Any[];
+    local Htemp;
+    push!(theInfo, 0:2^(N)-1);
+    println("timing h");
+    Htemp=constructSusceptibilityHamiltonian(bonds, N, J, J2, eigmethod, randomList, randomList2, sites2);
+
+    n::Int=0;
+    if(num=="all")
+        n=length(evenSpins[1]);
+    elseif(num=="one")
+        n=1;
+    else
+        n=16;
+    end
+    if(eigmethod=="full")
+        eigtemp=eigen(Hermitian(Htemp));
+        append!(eigenvalues, eigtemp.values);
+        append!(eigenvectors, eigtemp.vectors);
+        #println("finished odd eigenvalues");
+    elseif(eigmethod=="lanczos")
+        local values=nothing
+        local vecs=nothing
+        local info=nothing;
+        while(values==nothing)
+            try
+                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=200, ishermitian=true, tol=10^(-16));
+            catch
+                println("failed")
+            end
+        end
+        #println(values);
+        #println(values);
+        append!(eigenvalues, values[1]);
+        append!(eigenvectors, vecs[1]);
+    else
+        eigtemp=eigs((Htemp), nev=n);
+        #eigtemp=eigen(Htemp);
+        #println(eigtemp);
+        #println(length(eigtemp[1]));
+        append!(eigenvalues, eigtemp[1]);
+        append!(eigenvectors, eigtemp[2]);
+        #append!(eigenvalues, eigtemp.values);
+        #append!(eigenvectors, eigtemp.vectors);
+    end
+
+push!(eigensystem, eigenvalues);
+push!(eigensystem, eigenvectors);
+push!(eigensystem, theInfo);
+end
+return eigensystem;
+end

@@ -750,3 +750,8 @@ function storeInformation(bonds, N)
     plaquettes=generateListsofPlaquetteIndiciesFlip(N);
 
 end
+
+
+function calculateSusceptibility(E0, Eh, hs)
+    return (E0-Eh)/(hs^2)
+end

@@ -278,3 +278,11 @@ function generateListsofPlaquetteIndiciesFlip(N)
     end
     return plaquetteLists;
 end
+
+function getPlaquetteNumberList(N)
+    nums=Int[];
+    for i=1:N*N
+        push!(nums, getPlaquetteNumber(i, N));
+    end
+    return nums;
+end

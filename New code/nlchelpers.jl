@@ -66,198 +66,198 @@ function readNumGraphs(r, startingIndex)
             break;
         end
         count=1;
-            if(row==1)
-                num=r[i, count];
+        if(row==1)
+            num=r[i, count];
 
-                while(num!=""&&count<=length(r[i,:]))
-                    #println("wtf", num);
-                    if(count==1)
-                        if(i==10)
-                            println("num", num);
-                        end
-                        graphNum=num;
-                    elseif(count==2)
-                        numSites=num;
-                    elseif(count==3)
-                        numNearestNeighborBonds=num;
-                    elseif(count==4)
-                        numFarNeighborBonds=num;
-                    elseif(count==5)
-                        numSquares=num;
-                    elseif(count==6)
-                        numPlaquettes=num;
-                    elseif(count==7)
-                        numSubgraphs=num;
-                    elseif(count==8)
-                        latticeConstant=num/2;
+            while(num!=""&&count<=length(r[i,:]))
+                #println("wtf", num);
+                if(count==1)
+                    if(i==10)
+                        println("num", num);
                     end
-                    #println("count", num);
-                    count+=1;
-                    if(count<=length(r[i,:]))
-                        num=r[i, count];
-                    end
+                    graphNum=num;
+                elseif(count==2)
+                    numSites=num;
+                elseif(count==3)
+                    numNearestNeighborBonds=num;
+                elseif(count==4)
+                    numFarNeighborBonds=num;
+                elseif(count==5)
+                    numSquares=num;
+                elseif(count==6)
+                    numPlaquettes=num;
+                elseif(count==7)
+                    numSubgraphs=num;
+                elseif(count==8)
+                    latticeConstant=num/2;
                 end
-            elseif(row==2)
+                #println("count", num);
+                count+=1;
+                if(count<=length(r[i,:]))
                     num=r[i, count];
-                    which=1;
-                    num1=0;
-                    num2=0;
-                    while(num!=""&&count<=length(r[i,:]))
-                        if(which==1)
-                            num1=num;
-                        else
-                            num2=num;
-                            push!(nearBonds, bond(site(num1, 0, 0), site(num2, 0, 0), true));
-                        end
-                        which= which == 2 ? 1 : 2;
-                        count+=1;
-                        if(count<=length(r[i,:]))
-                            num=r[i, count];
-                        end
-                    end
-            elseif(row==3)
-                num=r[i, count];
-                which=1;
-                num1=0;
-                num2=0;
-                while(num!=""&&count<=length(r[i,:]))
-                    if(which==1)
-                        num1=num;
-                    else
-                        num2=num;
-                        push!(farBonds, bond(site(num1, 0, 0), site(num2, 0, 0), false));
-                    end
-                    which= which == 2 ? 1 : 2;
-                    count+=1;
-                    if(count<=length(r[i,:]))
-                        num=r[i, count];
-                    end
                 end
-            elseif(row==4)
-                num=r[i, count];
-                which=1;
-                num1=0;
-                num2=0;
-                num3=0;
-                num4=0;
-                while(num!=""&&count<=length(r[i,:]))
-                    if(which==1)
-                        num1=num;
-                    elseif(which==2)
-                        num2=num;
-                    elseif(which==3)
-                        num3=num;
-                    elseif(which==4)
-                        num4=num;
-                        push!(squares, square(site(num1, 0, 0), site(num2, 0, 0), site(num3, 0, 0), site(num4, 0, 0)));
-                        which=0;
-                    end
-                    which+=1;
-                    count+=1;
-                    if(count<=length(r[i,:]))
-                        num=r[i, count];
-                    end
-                end
-            elseif(row==5)
-                num=r[i, count];
-                #println("the row ",row, ", ", r[i, :]);
-                which=1;
-                num1=0;
-                num2=0;
-                num3=0;
-                num4=0;
-                while(num!=""&&count<=length(r[i,:]))
-                    if(which==1)
-                        num1=num;
-                    elseif(which==2)
-                        num2=num;
-                    elseif(which==3)
-                        num3=num;
-                    elseif(which==4)
-                        num4=num;
-                        push!(plaquettes, square(site(num1, 0, 0), site(num2, 0, 0), site(num3, 0, 0), site(num4, 0, 0)));
-                        which=0;
-                    end
-                    which+=1;
-                    count+=1;
-                    if(count<=length(r[i,:]))
-                        num=r[i, count];
-                    end
-                end
-            elseif(row==6)
-                index=findfirst(isequal(""), r[i, :]);
-                index = index==nothing ? length(r[i,:]) : index;
-                siteNumbering=r[i, 1:index-1];
-            elseif(row==7)
-                index=findfirst(isequal(""), r[i, :]);
-                index = index==nothing ? length(r[i,:]) : index;
-                subgraphList=r[i, 1:index-1];
             end
-            row+=1;
+        elseif(row==2)
+            num=r[i, count];
+            which=1;
+            num1=0;
+            num2=0;
+            while(num!=""&&count<=length(r[i,:]))
+                if(which==1)
+                    num1=num;
+                else
+                    num2=num;
+                    push!(nearBonds, bond(site(num1, 0, 0), site(num2, 0, 0), true));
+                end
+                which= which == 2 ? 1 : 2;
+                count+=1;
+                if(count<=length(r[i,:]))
+                    num=r[i, count];
+                end
+            end
+        elseif(row==3)
+            num=r[i, count];
+            which=1;
+            num1=0;
+            num2=0;
+            while(num!=""&&count<=length(r[i,:]))
+                if(which==1)
+                    num1=num;
+                else
+                    num2=num;
+                    push!(farBonds, bond(site(num1, 0, 0), site(num2, 0, 0), false));
+                end
+                which= which == 2 ? 1 : 2;
+                count+=1;
+                if(count<=length(r[i,:]))
+                    num=r[i, count];
+                end
+            end
+        elseif(row==4)
+            num=r[i, count];
+            which=1;
+            num1=0;
+            num2=0;
+            num3=0;
+            num4=0;
+            while(num!=""&&count<=length(r[i,:]))
+                if(which==1)
+                    num1=num;
+                elseif(which==2)
+                    num2=num;
+                elseif(which==3)
+                    num3=num;
+                elseif(which==4)
+                    num4=num;
+                    push!(squares, square(site(num1, 0, 0), site(num2, 0, 0), site(num3, 0, 0), site(num4, 0, 0)));
+                    which=0;
+                end
+                which+=1;
+                count+=1;
+                if(count<=length(r[i,:]))
+                    num=r[i, count];
+                end
+            end
+        elseif(row==5)
+            num=r[i, count];
+            #println("the row ",row, ", ", r[i, :]);
+            which=1;
+            num1=0;
+            num2=0;
+            num3=0;
+            num4=0;
+            while(num!=""&&count<=length(r[i,:]))
+                if(which==1)
+                    num1=num;
+                elseif(which==2)
+                    num2=num;
+                elseif(which==3)
+                    num3=num;
+                elseif(which==4)
+                    num4=num;
+                    push!(plaquettes, square(site(num1, 0, 0), site(num2, 0, 0), site(num3, 0, 0), site(num4, 0, 0)));
+                    which=0;
+                end
+                which+=1;
+                count+=1;
+                if(count<=length(r[i,:]))
+                    num=r[i, count];
+                end
+            end
+        elseif(row==6)
+            index=findfirst(isequal(""), r[i, :]);
+            index = index==nothing ? length(r[i,:]) : index;
+            siteNumbering=r[i, 1:index-1];
+        elseif(row==7)
+            index=findfirst(isequal(""), r[i, :]);
+            index = index==nothing ? length(r[i,:]) : index;
+            subgraphList=r[i, 1:index-1];
+        end
+        row+=1;
     end
     return graph(graphNum, numSites, numNearestNeighborBonds, numFarNeighborBonds, numSquares, numPlaquettes, numSubgraphs, latticeConstant, nearBonds, farBonds, squares, plaquettes, siteNumbering, subgraphList);
 end
 
 #=
 function readNumGraphs(file, numGraphs)
-    lines=readlines(file);
-    num=0;
-    numNearestNeighborBonds=0;
-    numFarNeighborBonds=0;
-    numSquares=0;
-    numPlaquettes=0;
-    numSubgraphs=0;
-    latticeConstant=0;
-    bonds::Vector{bond}=bond[];
-    squares::Vector{square}=square[];
-    plaquettes::Vector{square}=square[];
-    siteNumbering::Vector{Int}=Int[];
-    subgraphList=Any[];
-    #true if you JUST read a " ", false otherwise
-    yes=false;
-    for j=1:length(lines)
-        str=lines[j]
-            if(i==1)
-                    number="";
-                    count=1;
-                    for i=firstindex(str):lastindex(str)
-                        if(str[i]==" ")
-                            if(!yes)
-                                num=parse(Int64, number);
-                            else
-                                num=0;
-                            end
-                            if(count==1)
+lines=readlines(file);
+num=0;
+numNearestNeighborBonds=0;
+numFarNeighborBonds=0;
+numSquares=0;
+numPlaquettes=0;
+numSubgraphs=0;
+latticeConstant=0;
+bonds::Vector{bond}=bond[];
+squares::Vector{square}=square[];
+plaquettes::Vector{square}=square[];
+siteNumbering::Vector{Int}=Int[];
+subgraphList=Any[];
+#true if you JUST read a " ", false otherwise
+yes=false;
+for j=1:length(lines)
+str=lines[j]
+if(i==1)
+number="";
+count=1;
+for i=firstindex(str):lastindex(str)
+if(str[i]==" ")
+if(!yes)
+num=parse(Int64, number);
+else
+num=0;
+end
+if(count==1)
 
-                            elseif(count==2)
-                            elseif(count==3)
-                            elseif(count==4)
-                            elseif(count==5)
-                            elseif(count==6)
-                            elseif(count==7)
-                            elseif(count==8)
+elseif(count==2)
+elseif(count==3)
+elseif(count==4)
+elseif(count==5)
+elseif(count==6)
+elseif(count==7)
+elseif(count==8)
 
-                            end
-                            count+=1;
-                        else
-                            number*=str[i];
-                        end
-                    end
-                end
-            elseif(i==2)
+end
+count+=1;
+else
+number*=str[i];
+end
+end
+end
+elseif(i==2)
 
-            elseif(i==3)
+elseif(i==3)
 
-            elseif(i==4)
+elseif(i==4)
 
-            elseif(i==5)
+elseif(i==5)
 
-            elseif(i==6)
-            end
-        end
-    #initialize graph here
-    graph=0;
-    return graph;
+elseif(i==6)
+end
+end
+#initialize graph here
+graph=0;
+return graph;
 end
 
 =#
@@ -286,18 +286,18 @@ end
 #max order 56
 function calculateInfiniteLatticeSz(order::Int, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    @time begin
-        weights=getAllWeightsSz(order, graphs, J, J2, h, width);
-    end
-    sum=weights[1];
+        println("weights starting!!");
+        @time begin
+            weights=getAllWeightsSz(order, graphs, J, J2, h, width);
+        end
+        sum=weights[1];
 
-    println("weights done!!! ");
-    for i=1:order
-        #println("order: ", order);
-        sum+=weights[i+1]*graphs[i].latticeConstant;
+        println("weights done!!! ");
+        for i=1:order
+            #println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
     end
-end
     return sum;
 end
 
@@ -371,19 +371,19 @@ end
 #max order 56
 function calculateInfiniteLatticeEntanglement(order::Int, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    @time begin
-        weights=getAllWeightsEntanglement(order, graphs, J, J2, h, width);
-    end
+        println("weights starting!!");
+        @time begin
+            weights=getAllWeightsEntanglement(order, graphs, J, J2, h, width);
+        end
 
-    println("weights done!!! ");
+        println("weights done!!! ");
         sum=weights[1];
         for i=1:order
             #println("order: ", order);
             sum+=weights[i+1]*graphs[i].latticeConstant;
-    end
+        end
 
-end
+    end
     return sum;
 end
 
@@ -495,23 +495,23 @@ end
 
 function calculateInfiniteLatticeSpi(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    list=Float64[];
-    @time begin
-        weights=getAllWeightsSpi(orders[length(orders)], graphs, J, J2, h, width);
-    end
-
-    println("weights done!!! ");
-    for order in orders
-        sum=weights[1];
-        for i=1:order
-            #println("order: ", order);
-            sum+=weights[i+1]*graphs[i].latticeConstant;
+        println("weights starting!!");
+        list=Float64[];
+        @time begin
+            weights=getAllWeightsSpi(orders[length(orders)], graphs, J, J2, h, width);
         end
-        push!(list, sum);
-    end
 
-end
+        println("weights done!!! ");
+        for order in orders
+            sum=weights[1];
+            for i=1:order
+                #println("order: ", order);
+                sum+=weights[i+1]*graphs[i].latticeConstant;
+            end
+            push!(list, sum);
+        end
+
+    end
     return list;
 end
 
@@ -533,9 +533,6 @@ function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width
     sum+=theGraph.numSites*weights[1];
     return sz-sum;
 end
-
-
-
 
 function calculateWeightNoSubSpi(num, graphs::Vector{graph}, J, J2, h, width)
     sum=0;
@@ -568,42 +565,42 @@ end
 
 function calculateInfiniteLatticeSz(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    szs=Any[];
-    @time begin
-        weights=getAllWeightsSz(orders[length(orders)], graphs, J, J2, h, width);
-        println("weights", weights);
-    end
-
-    println("weights done!!! ");
-    for order in orders
-        sum=weights[1];
-        for i=1:order
-            #println("order: ", order);
-            sum+=weights[i+1]*graphs[i].latticeConstant;
+        println("weights starting!!");
+        szs=Any[];
+        @time begin
+            weights=getAllWeightsSz(orders[length(orders)], graphs, J, J2, h, width);
+            println("weights", weights);
         end
-        push!(szs, sum);
-    end
 
-end
+        println("weights done!!! ");
+        for order in orders
+            sum=weights[1];
+            for i=1:order
+                #println("order: ", order);
+                sum+=weights[i+1]*graphs[i].latticeConstant;
+            end
+            push!(szs, sum);
+        end
+
+    end
     return szs;
 end
 
 #here order=number of graphs
 function calculateInfiniteLatticeSpi(order::Int, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    @time begin
-        weights=getAllWeightsSpi(order, graphs, J, J2, h, width);
-    end
-    sum=weights[1];
+        println("weights starting!!");
+        @time begin
+            weights=getAllWeightsSpi(order, graphs, J, J2, h, width);
+        end
+        sum=weights[1];
 
-    println("weights done!!! ");
-    for i=1:order
-        #println("order: ", order);
-        sum+=weights[i+1]*graphs[i].latticeConstant;
+        println("weights done!!! ");
+        for i=1:order
+            #println("order: ", order);
+            sum+=weights[i+1]*graphs[i].latticeConstant;
+        end
     end
-end
     return sum;
 end
 
@@ -618,17 +615,17 @@ function getBaseStatesList(order, graphs, hs, J, J2, width, hstep)
     hstep=(hs[length(hs)]-hs[1])/length(hs);
     ultList=Any[];
     listA=[];
-        for h in hs
-            bonds::Vector{bond}=bond[];
-            temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
-            eigenvalues = temp[1]
-            eigenvectors = temp[2]
-            println("base state eigenvector: ", eigenvectors);
-            local currState=Any[];
-            push!(currState,eigenvectors)
-            push!(currState, 0:1);
-            push!(listA,currState)
-        end
+    for h in hs
+        bonds::Vector{bond}=bond[];
+        temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+        eigenvalues = temp[1]
+        eigenvectors = temp[2]
+        println("base state eigenvector: ", eigenvectors);
+        local currState=Any[];
+        push!(currState,eigenvectors)
+        push!(currState, 0:1);
+        push!(listA,currState)
+    end
     push!(ultList, listA);
     return ultList;
 end
@@ -768,33 +765,114 @@ end
 
 function calculateInfiniteLatticeEntanglement(orders::Vector{Int}, J, J2, h, graphs, width)
     @time begin
-    println("weights starting!!");
-    @time begin
-        weights=getAllWeightsEntanglement(orders[length(orders)], graphs, J, J2, h, width);
-    end
-
-    println("weights done!!! ");
-    ents=Any[];
-    for order in orders
-        sum=weights[1];
-        for i=1:order
-            #println("order: ", order);
-            sum+=weights[i+1]*graphs[i].latticeConstant;
+        println("weights starting!!");
+        @time begin
+            weights=getAllWeightsEntanglement(orders[length(orders)], graphs, J, J2, h, width);
         end
-        push!(ents, sum);
-    end
 
-end
+        println("weights done!!! ");
+        ents=Any[];
+        for order in orders
+            sum=weights[1];
+            for i=1:order
+                #println("order: ", order);
+                sum+=weights[i+1]*graphs[i].latticeConstant;
+            end
+            push!(ents, sum);
+        end
+
+    end
     return ents;
 end
 
 
 
 
-    function temp(order, graphs, J, J2, hs, width)
-        hstep=(hs[length(hs)]-hs[1])/length(hs);
-        statesList=getBaseStatesList(order, graphs, hs, J, J2, width, hstep);
-        println(statesList);
-        fidelity=calculateFidelity(hstep, statesList[1]);
-        println("fidelity, ", fidelity);
+function temp(order, graphs, J, J2, hs, width)
+    hstep=(hs[length(hs)]-hs[1])/length(hs);
+    statesList=getBaseStatesList(order, graphs, hs, J, J2, width, hstep);
+    println(statesList);
+    fidelity=calculateFidelity(hstep, statesList[1]);
+    println("fidelity, ", fidelity);
+end
+
+
+
+
+#SUSCEPTIBILITY NLC STARTS HERE
+function calculateBaseWeightSusceptibility(J, J2, h, h2, width)
+    bonds::Vector{bond}=bond[];
+    #Eh calculation
+    temp=calculateEigensystemSusceptibility(1, J, J2, h, bonds,"lanczos", "one", h, width, h2, Int[1]);
+    eigenvalues = temp[1]
+    eigenvectors = temp[2]
+    eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+    #E0 calculation
+    temp=calculateEigensystemTransverseNoSymmetry(1, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+    eigenvalues1 = temp[1]
+    eigenvectors1 = temp[2]
+    Eh=eigenvalues[1];
+    E0=eigenvalues1[1];
+    sus=calculateSusceptibility(E0, Eh, h2);
+    return sus;
+end
+
+
+function calculateWeightSusceptibility(num, graphs::Vector{graph}, weights, J, J2, h, h2, width)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    temp=copy(theGraph.nearBonds);
+    bonds=append!(temp, theGraph.farBonds);
+    #Eh calculation
+    temp=calculateEigensystemSusceptibility(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, h2, theGraph.indicies);
+    eigenvalues = temp[1];
+    eigenvectors = temp[2];
+
+    #E0 calculation
+    temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
+    eigenvalues1 = temp[1];
+    eigenvectors1 = temp[2];
+
+    E0=eigenvalues1[1]
+    Eh=eigenvalues[1]
+
+    sus=calculateSusceptibility(E0, Eh, h2);
+
+    for i=1:length(list)
+        sum+=weights[list[i]+1];
     end
+    sum+=weights[1];
+    return sus-sum;
+end
+
+function getAllWeightsSusceptibility(num, graphs, J, J2, h, h2, width)
+    local weights::Vector{Float64}=Float64[];
+    base=calculateBaseWeightSusceptibility(J, J2, h, h2, width);
+    push!(weights, base)
+    for i=1:num
+        push!(weights, calculateWeightSusceptibility(i, graphs, weights, J, J2, h, h2, width));
+    end
+    return weights;
+end
+
+function calculateInfiniteLatticeSusceptibility(orders::Vector{Int}, J, J2, h, h2, graphs, width)
+    @time begin
+        sus=Any[];
+        @time begin
+            weights=getAllWeightsSusceptibiltiy(orders[length(orders)], graphs, J, J2, h, h2, width);
+        end
+
+        for order in orders
+            sum=weights[1];
+            for i=1:order
+                #println("order: ", order);
+                sum+=weights[i+1]*graphs[i].latticeConstant;
+            end
+            push!(sus, sum);
+        end
+
+    end
+    return sus;
+end

@@ -150,13 +150,13 @@ end
 
 println()
 #fidelityInfiniteLattice()
-fidelityInfiniteLatticeMultipleJ2()
+#fidelityInfiniteLatticeMultipleJ2()
 #fidelityInfiniteLattice()
 #scalez2()fidTest2()
 #szinfinitelatticemanyJ2andorders()
 #thesztestj1j2ED()
 #scalesz()
-
+susceptibilityJ2J1ED()
 #entanglementEDj1j2vsh()
 #szinfinitelatticemanyJ2andorders()
 #entanglementinfinitelatticemultipleJ2andorders()
@@ -269,5 +269,4 @@ fidelityInfiniteLatticeMultipleJ2()
 #spiinfinitelattice()
 #spiGraphj201()
 #spiGraphj2082()
-
 #hamiltonianTest()
