@@ -800,10 +800,11 @@ end
 
 
 #SUSCEPTIBILITY NLC STARTS HERE
+#N, J, J2, h, h2, bonds,eigmethod, num, hbar, hbar2, width, sites2
 function calculateBaseWeightSusceptibility(J, J2, h, h2, width)
     bonds::Vector{bond}=bond[];
     #Eh calculation
-    temp=calculateEigensystemSusceptibility(1, J, J2, h, bonds,"lanczos", "one", h, width, h2, Int[1]);
+    temp=calculateEigensystemSusceptibility(1, J, J2, h,h2, bonds,"lanczos", "one", h, h2, width, Int[1]);
     eigenvalues = temp[1]
     eigenvectors = temp[2]
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -826,7 +827,7 @@ function calculateWeightSusceptibility(num, graphs::Vector{graph}, weights, J, J
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
     #Eh calculation
-    temp=calculateEigensystemSusceptibility(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width, h2, theGraph.indicies);
+    temp=calculateEigensystemSusceptibility(theGraph.numSites, J, J2, h, h2, bonds,"lanczos", "one", h, h2, width, theGraph.indicies);
     eigenvalues = temp[1];
     eigenvectors = temp[2];
 
@@ -861,7 +862,7 @@ function calculateInfiniteLatticeSusceptibility(orders::Vector{Int}, J, J2, h, h
     @time begin
         sus=Any[];
         @time begin
-            weights=getAllWeightsSusceptibiltiy(orders[length(orders)], graphs, J, J2, h, h2, width);
+            weights=getAllWeightsSusceptibility(orders[length(orders)], graphs, J, J2, h, h2, width);
         end
 
         for order in orders

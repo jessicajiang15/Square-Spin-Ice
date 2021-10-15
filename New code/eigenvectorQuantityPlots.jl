@@ -1601,3 +1601,76 @@ function susceptibilityJ2J1ED()
     end
     savefig("./susceptibility ED js: "*string(js)*", num h: "*string(length(hs))*".png")
 end
+
+
+
+
+function susinfinitelatticemanyJ2andorders()
+    println("Starting sus inf!!");
+    println("Starting sus!!");
+
+    @time begin
+        N=4;
+        h2=0.1;
+        J=1
+        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        os=Int[1, 2, 3, 4, 5];
+        hmin=0.1;
+        nums=getPlaquetteNumberList(N);
+
+        hmax=2;
+        hs=generateHListUniform(hmin, hmax, 50)
+        graphs=readFromGraphFile();
+        bonds = bondListFrustrated(N)
+
+
+        orders=Int[];
+
+        for i=1:length(os)
+            push!(orders, getLastGraphNumOrder(os[i], graphs))
+        end
+        println("hs: ", hs);
+
+        for j in js
+            list=Vector{Float64}[];
+            ms=Any[];
+
+            for i=1:length(os)
+                push!(list, Vector{Float64}[]);
+            end
+            for i=1:length(hs)
+                println("starting h: ", hs[i])
+                @time begin
+                    szs=calculateInfiniteLatticeSusceptibility(orders, J, j, hs[i], h2, graphs, 0)
+                    putin(list, szs);
+                    temp =calculateEigensystemTransverseNoSymmetry(N*N, J, j, hs[i], bonds,"lanczos", "one", hs[i], 0, "H1");
+                    E0 = temp[1][1];
+                    temp2=calculateEigensystemSusceptibility(N*N, J, j, hs[i], h2, bonds,"lanczos", "one", hs[i], h2, 0, nums);
+                    Eh=temp2[1][1];
+                    sz=calculateSusceptibility(E0, Eh, h2);
+                    #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+                    push!(ms, sz);
+                end
+                #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+            end
+            #TODO: plot it
+            push!(list, ms);
+
+            plot(hs, list[1], label="order "*string(os[1]))
+
+            println(ms);
+
+            for i=2:length(list)
+                str=i<=length(os) ? "order "*string(os[i]) : "ED";
+                if(i!=length(list))
+                    plot!(hs, list[i], label=str)
+                else
+                    plot!(hs, list[i], label=str)
+                end
+            end
+            savefig("./sus NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+        end
+
+    end
+
+end
