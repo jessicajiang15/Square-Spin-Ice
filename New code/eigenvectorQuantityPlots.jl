@@ -1781,3 +1781,39 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
     end
 
 end
+
+
+function calculateEDMeanFieldSz()
+    N=4;
+    bonds = bondListFrustrated(N)
+    result=obtainMeanFieldMapping(N*N, bonds)
+    map1=result[1];
+    map2=result[2];
+    firstGuess=0.1;
+    maxIterations=50;
+
+
+        @time begin
+            J=1
+            js=generateHListUniformIncludeOne(0.1, 2, 1);
+            hs=generateHListUniform(0.1, 1, 10)
+            ms=Vector{Float64}[];
+            println("hs: ", hs);
+            for j in js
+                te=Float64[];
+                for i=1:length(hs)
+                    println("starting h: ", hs[i])
+                    sz=calculateSelfConsistentMz(N*N, map1, map2, hs[i], J, j, bonds, J, firstGuess, maxIterations)
+                    push!(te, sz);
+                end
+                push!(ms, te);
+            end
+            println("ms: ", ms);
+        end
+        #TODO: plot it
+        plot(hs, ms[1], label="j2: "*string(js[1]))
+        for i=2:length(ms)
+            plot!(hs, ms[i], label="j2: "*string(js[i]));
+        end
+        savefig("./sz mean field ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
+end

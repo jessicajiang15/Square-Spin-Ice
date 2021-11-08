@@ -898,6 +898,28 @@ function obtainMapOfNumNearFarBonds(graph)
     return list;
 end
 
+
+function obtainMapOfNumNearFarBonds(N, bonds)
+    list=Any[];
+    near::Dict{Int,Int}=Dict{Int, Int}();
+    far::Dict{Int,Int}=Dict{Int, Int}();
+    for i=1:N
+        near[i]=0;
+        far[i]=0;
+    end
+
+    for i=1:length(bonds)
+        if(bonds[i].isNear)
+            near[bonds[i].site1.num]+=1;
+        else
+            far[bonds[i].site1.num]+=1;
+        end
+    end
+    push!(list, near);
+    push!(list, far);
+    return list;
+end
+
 #how many external sites is it connected to
 #map1: how many far bonds connected to this site
 #map2: how many near bonds connected
@@ -919,12 +941,33 @@ function obtainMeanFieldMapping(graph)
     return list;
 end
 
+
+function obtainMeanFieldMapping(N, bonds)
+    maps=obtainMapOfNumNearFarBonds(N, bonds);
+    map1=maps[1];
+    map2=maps[2];
+
+    near::Dict{Int,Int}=Dict{Int, Int}();
+    far::Dict{Int,Int}=Dict{Int, Int}();
+    list=Any[];
+
+    for i=1:N
+        near[i]=4-map1[i];
+        far[i]=2-map2[i];
+    end
+    push!(list, near);
+    push!(list, far);
+    return list;
+end
+
 #needs to calcualte the actual field at any given point.
 #map1: how many nearbonds. map2: how many far bonds
 function calculateActualField(site, map1, map2, h, J1, J2, m)
     value=map1[site]*m*J1-map2[site]*m*J2;
     return value;
 end
+
+
 
 function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
     hs2=Float64[];
