@@ -1,5 +1,6 @@
 include("entanglement helper.jl")
 include("nlchelpers.jl")
+include("metropolisHelpers.jl")
 #using LsqFit
 
 
@@ -1534,4 +1535,18 @@ function hamiltonianTest()
     E0=eigensystem[1][1]
     println("E0:", eigensystem[1]);
     println(calculateSusceptibility(E0,Eh,h2));
+end
+
+
+
+function metropolisTest()
+    thermalizationSteps=0;
+    iterations=1000;
+    N=4;
+    bonds=bondListFourNeighbors(N)
+    J=1;
+    T=1;
+    energies=metropolisAlgorithm(thermalizationSteps, iterations, bonds, N*N, J, T);
+
+    plot(1:length(energies), energies);
 end

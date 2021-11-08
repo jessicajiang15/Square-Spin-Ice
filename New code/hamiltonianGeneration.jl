@@ -124,7 +124,7 @@ function constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, 
     return H;
 end
 
-#H2
+#H2, this is sxsx+sz so field is in the z direction
 function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, randList)
     #loop through ALL the possible states...
     #println(states);
@@ -183,6 +183,7 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, 
 end
 
 #TODO: update this and update the other one
+#field is in the x direction!!! USE THIS ONE
 function constructTransverseHamiltonianSzBasis(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
     list=states[1];

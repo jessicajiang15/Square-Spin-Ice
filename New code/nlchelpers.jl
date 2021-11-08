@@ -309,8 +309,8 @@ function calculateWeightSz(num, graphs::Vector{graph}, weights, J, J2, h, width)
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
     temp=calculateEigensystemTransverse(theGraph.numSites, J, J2, h, bonds,"lanczos", "one", h, width);
-    eigenvalues = temp[1]
-    eigenvectors = temp[2]
+    eigenvalues = temp[1];
+    eigenvectors = temp[2];
     println("h: ", h);
     println("eigenvalues: ", eigenvalues);
     eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
@@ -318,13 +318,10 @@ function calculateWeightSz(num, graphs::Vector{graph}, weights, J, J2, h, width)
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
+    #why???????? i thought weights[1] was the base weight with a site number of 1
     sum+=theGraph.numSites*weights[1];
     return sz-sum;
-
 end
-
-
-
 
 function calculateWeightNoSubSz(num, graphs::Vector{graph}, J, J2, h, width)
     sum=0;
@@ -530,6 +527,7 @@ function calculateWeightSpi(num, graphs::Vector{graph}, weights, J, J2, h, width
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
+    #why is this here??????
     sum+=theGraph.numSites*weights[1];
     return sz-sum;
 end
@@ -839,7 +837,7 @@ function calculateWeightSusceptibility(num, graphs::Vector{graph}, weights, J, J
     E0=eigenvalues1[1]
     Eh=eigenvalues[1]
 
-    sus=calculateSusceptibility(E0, Eh, h2);
+    sus=theGraph.numSites*calculateSusceptibility(E0, Eh, h2);
 
     for i=1:length(list)
         sum+=weights[list[i]+1];
@@ -876,4 +874,154 @@ function calculateInfiniteLatticeSusceptibility(orders::Vector{Int}, J, J2, h, h
 
     end
     return sus;
+end
+
+#obtain a map mapping each site to the number of near bonds it has an number of far bonds
+function obtainMapOfNumNearFarBonds(graph)
+    list=Any[];
+    nearBonds=graph.nearBonds;
+    farBonds=graph.farBonds;
+    near::Dict{Int,Int}=Dict{Int, Int}();
+    far::Dict{Int,Int}=Dict{Int, Int}();
+    for i=1:graph.numSites
+        near[i]=0;
+        far[i]=0;
+    end
+    for i=1:length(graph.farBonds)
+        far[graph.farBonds[i].site1.num]+=1;
+    end
+    for i=1:length(graph.nearBonds)
+        far[graph.nearBonds[i].site1.num]+=1;
+    end
+    push!(list, near);
+    push!(list, far);
+    return list;
+end
+
+#how many external sites is it connected to
+function obtainMeanFieldMapping(graph)
+    maps=obtainMapOfNumNearFarBonds(graph);
+    map1=maps[1];
+    map2=maps[2];
+
+    near::Dict{Int,Int}=Dict{Int, Int}();
+    far::Dict{Int,Int}=Dict{Int, Int}();
+    list=Any[];
+
+    for i=1:graph.numSites
+        near[i]=4-map1[i];
+        far[i]=2-map2[i];
+    end
+    push!(list, near);
+    push!(list, far);
+    return list;
+end
+
+#needs to calcualte the actual field at any given point.
+#map1: how many nearbonds. map2: how many far bonds
+function calculateActualField(site, map1, map2, h, J1, J2, m)
+    return h+map1[site]*m*J1+map1[site]*m*J2;
+end
+
+function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
+    hs=Float64[];
+    ms=firstGuess;
+    count=0;
+    percentError=1;
+    while((abs(percentError)>0.01)&&count<maxIterations)
+        println("iteration: ", count);
+        for i=1:numSites
+            push!(hs,calculateActualField(i, map1, map2, h, J1, J2, ms));
+        end
+        #N, J, J2, h::Vector{Float64}, bonds, eigmethod, num
+        #calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float}, bonds,eigmethod, num, h1orh2)
+        temp=calculateEigensystemTransverse(numSites, J1, J2, hs, bonds,"lanczos", "one");
+        eigenvalues = temp[1];
+        eigenvectors = temp[2];
+        println("h: ", h);
+        println("eigenvalues: ", eigenvalues);
+
+        temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
+        eigenvalue = temp[1][1]
+        eigenvector = temp[2]
+
+
+        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
+        sz=numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], numSites);
+        percentError=(sz-ms)/ms;
+        count+=1;
+        println("percentError", percentError);
+        println("ms: ", ms);
+        ms=sz;
+    end
+    return ms;
+end
+
+
+
+
+function calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations)
+    bonds::Vector{bond}=bond[];
+    map1::Dict{Int, Int}=Dict{Int, Int}();
+    map2::Dict{Int, Int}=Dict{Int, Int}();
+    map1[1]=4;
+    map2[1]=2;
+    sz=calculateSelfConsistentMz(1, map1, map2, h, J, J2, bonds, J, firstGuess, maxIterations)
+    println("Sz, ", sz);
+    return sz;
+end
+
+#we are calculating spin in z direction so we want field in x direction, so H1
+function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, h, firstGuess, maxIterations)
+    sum=0;
+    #the graph to calculate weight of
+    theGraph=graphs[num];
+    list=theGraph.subgraphList;
+    maps=obtainMeanFieldMapping(theGraph);
+    temp=copy(theGraph.nearBonds);
+    bonds=append!(temp, theGraph.farBonds);
+    sz=calculateSelfConsistentMz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, firstGuess, maxIterations);
+    for i=1:length(list)
+        sum+=weights[list[i]+1];
+    end
+    sum+=theGraph.numSites*weights[1];
+    return sz-sum;
+end
+
+
+function getAllWeightsMeanFieldSz(num, graphs, J, J2, h, firstGuess, maxIterations)
+    local weights::Vector{Float64}=Float64[];
+    #J, J2, h, firstGuess, maxIterations
+    base=calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations);
+    push!(weights, base)
+    for i=1:num
+        println("order: ", i);
+        #num, graphs::Vector{graph}, weights, J, J2, h, firstGuess, maxIterations
+        push!(weights, calculateWeightMeanFieldSz(i, graphs, weights, J, J2, h, firstGuess, maxIterations));
+    end
+    return weights;
+end
+#max order 56
+
+function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations)
+    @time begin
+        println("weights starting!!");
+        szs=Any[];
+        @time begin
+            weights=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, firstGuess, maxIterations);
+            println("weights", weights);
+        end
+
+        println("weights done!!! ");
+        for order in orders
+            sum=weights[1];
+            for i=1:order
+                #println("order: ", order);
+                sum+=weights[i+1]*graphs[i].latticeConstant;
+            end
+            push!(szs, sum);
+        end
+
+    end
+    return szs;
 end

@@ -3,7 +3,6 @@ using LinearAlgebra
 using KrylovKit
 using Arpack
 
-
 function calculateEigensystemHeisenberg(N, J, bonds, eigmethod, num)
         eigensystem::Array{Any}=Any[];
 
@@ -185,69 +184,7 @@ function calculateEigensystemTransverse(N, J, J2, h, bonds,eigmethod, num, hbar,
     return eigensystem;
 end
 
-function calculateEigensystemTransverseNoSymmetry(N, J, J2, h, bonds,eigmethod, num, hbar, width, h1orh2)
-    randomList=generateRandomh(hbar, width, bonds);
-    #println(randomList);
-    #the info contains the states
-    theInfo::Array{Any}=Any[];
-    eigensystem::Array{Any}=Any[];
-    eigenvalues::Array{Any}=Any[];
-    eigenvectors::Array{Any}=Any[];
-    local Htemp;
-    push!(theInfo, 0:2^(N)-1);
-    println("timing h");
-    @time begin
-        if(h1orh2=="H1")
-            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, randomList);
-        else
-            Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, randomList);
-        end
-    end
-    n::Int=0;
-    if(num=="all")
-        n=length(evenSpins[1]);
-    elseif(num=="one")
-        n=1;
-    else
-        n=16;
-    end
-    if(eigmethod=="full")
-        eigtemp=eigen(Hermitian(Htemp));
-        append!(eigenvalues, eigtemp.values);
-        append!(eigenvectors, eigtemp.vectors);
-        #println("finished odd eigenvalues");
-    elseif(eigmethod=="lanczos")
-        local values=nothing
-        local vecs=nothing
-        local info=nothing;
-        while(values==nothing)
-            try
-                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=200, ishermitian=true, tol=10^(-16));
-            catch
-                println("failed")
-            end
-        end
-        #println(values);
-        #println(values);
-        append!(eigenvalues, values[1]);
-        append!(eigenvectors, vecs[1]);
-    else
-        eigtemp=eigs((Htemp), nev=n);
-        #eigtemp=eigen(Htemp);
-        #println(eigtemp);
-        #println(length(eigtemp[1]));
-        append!(eigenvalues, eigtemp[1]);
-        append!(eigenvectors, eigtemp[2]);
-        #append!(eigenvalues, eigtemp.values);
-        #append!(eigenvectors, eigtemp.vectors);
-    end
 
-push!(eigensystem, eigenvalues);
-push!(eigensystem, eigenvectors);
-push!(eigensystem, theInfo);
-return eigensystem;
-
-end
 
 #refStates, N, psector, bonds, refStatesMap
 function calculateEigensystemHeisenbergMomentum(N, J, bonds, eigmethod, num)
@@ -487,4 +424,189 @@ push!(eigensystem, eigenvectors);
 push!(eigensystem, theInfo);
 end
 return eigensystem;
+end
+
+
+
+#numSites, J1, J2, hs, bonds,"lanczos", "one"
+#takes in a list of fields at each site and applies that field
+function calculateEigensystemTransverse(N, J, J2, hs::Vector{Float64}, bonds, eigmethod, num)
+    #println("timing matrix generation");
+    @time begin
+    #println(randomList);
+    #println(randomList);
+    #the info contains the states
+    theInfo::Array{Any}=Any[];
+    #contains a map of the states
+    theInfo2::Array{Any}=Any[];
+    eigensystem::Array{Any}=Any[];
+    eigenvalues::Array{Any}=Any[];
+    eigenvectors::Array{Any}=Any[];
+    evenSpins=singleOutEvenOddSpins(true, 2^(N));
+    #println("length", length(evenSpins[1]));
+
+    push!(theInfo, evenSpins[1]);
+    push!(theInfo2, evenSpins[2]);
+    oddSpins=singleOutEvenOddSpins(false, 2^(N));
+        #println("STARTING EVEN");
+        @time begin
+        HtempEven=constructTransverseHamiltonian(evenSpins, bonds, N, J, J2, eigmethod, hs);
+        #println("H[1,1]", HtempEven[1, 1]);
+    end
+    #println("size even", size(HtempEven));
+
+    n::Int=0;
+    if(num=="all")
+        n=length(evenSpins[1]);
+    elseif(num=="one")
+        n=1;
+    else
+        n=16;
+    end
+
+        if(eigmethod=="full")
+            eigtemp=eigen(Hermitian(HtempEven));
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+            #println("finished even eigenvalues");
+        elseif(eigmethod=="lanczos")
+            local vals=nothing
+            local vecs=nothing
+            local info=nothing;
+            while(vals==nothing)
+                try
+                    vals, vecs, info=eigsolve(HtempEven, 1, :SR; krylovdim=200, ishermitian=true);
+                catch
+                    println("failed")
+                end
+            end
+            println("even eigenvalues: ", vals);
+            push!(eigenvalues, vals[1]);
+            push!(eigenvectors, vecs[1]);
+        else
+            eigtemp=eigs(HtempEven, nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            #println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
+        #eigtemp=eigs(Symmetric(HtempEven), nev=2^(N*N-1));
+
+        push!(theInfo, oddSpins[1]);
+        push!(theInfo2, oddSpins[2]);
+
+        #println("STARTING ODD");
+        @time begin
+        HtempOdd=constructTransverseHamiltonian(oddSpins, bonds, N, J, J2, eigmethod, hs);
+    end
+
+
+    #println("size odd", size(HtempOdd));
+
+
+        if(eigmethod=="full")
+            eigtemp=eigen(Hermitian(HtempOdd));
+            append!(eigenvalues, eigtemp.values);
+            append!(eigenvectors, eigtemp.vectors);
+        #    println("finished odd eigenvalues");
+        elseif(eigmethod=="lanczos")
+            local vals=nothing
+            local vecs=nothing
+            local info=nothing;
+            while(vals==nothing)
+                try
+                    vals, vecs, info=eigsolve(HtempOdd, 1, :SR; krylovdim=200, ishermitian=true);
+                catch
+                    println("failed")
+                end
+            end
+            println("odd eigenvalues: ", vals);
+
+            push!(eigenvalues, vals[1]);
+            push!(eigenvectors, vecs[1]);
+            #println("vecs", vecs[1]);
+            #println("length vecs, ", length(vecs[1]));
+        else
+            eigtemp=eigs((HtempOdd), nev=n);
+            #eigtemp=eigen(Htemp);
+            #println(eigtemp);
+            #println(length(eigtemp[1]));
+            append!(eigenvalues, eigtemp[1]);
+            append!(eigenvectors, eigtemp[2]);
+            #append!(eigenvalues, eigtemp.values);
+            #append!(eigenvectors, eigtemp.vectors);
+        end
+    end
+
+    push!(eigensystem, eigenvalues);
+    push!(eigensystem, eigenvectors);
+    push!(eigensystem, theInfo);
+    push!(eigensystem, theInfo2);
+    return eigensystem;
+end
+
+
+
+
+
+
+function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float}, bonds,eigmethod, num, h1orh2)
+    #println(randomList);
+    #the info contains the states
+    theInfo::Array{Any}=Any[];
+    eigensystem::Array{Any}=Any[];
+    eigenvalues::Array{Any}=Any[];
+    eigenvectors::Array{Any}=Any[];
+    local Htemp;
+    push!(theInfo, 0:2^(N)-1);
+    println("timing h");
+    @time begin
+        if(h1orh2=="H1")
+            #H1= field is in x direction
+            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, hs);
+        else
+            #H2= field is in the z direction
+            Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, hs);
+        end
+    end
+    n::Int=0;
+    if(num=="all")
+        n=length(evenSpins[1]);
+    elseif(num=="one")
+        n=1;
+    else
+        n=16;
+    end
+    if(eigmethod=="full")
+        eigtemp=eigen(Hermitian(Htemp));
+        append!(eigenvalues, eigtemp.values);
+        append!(eigenvectors, eigtemp.vectors);
+        #println("finished odd eigenvalues");
+    elseif(eigmethod=="lanczos")
+        local values=nothing
+        local vecs=nothing
+        local info=nothing;
+        while(values==nothing)
+            try
+                values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=200, ishermitian=true, tol=10^(-16));
+            catch
+                println("failed")
+            end
+        end
+        append!(eigenvalues, values[1]);
+        append!(eigenvectors, vecs[1]);
+    else
+        eigtemp=eigs((Htemp), nev=n);
+        append!(eigenvalues, eigtemp[1]);
+        append!(eigenvectors, eigtemp[2]);
+    end
+
+push!(eigensystem, eigenvalues);
+push!(eigensystem, eigenvectors);
+push!(eigensystem, theInfo);
+return eigensystem;
+
 end

@@ -683,7 +683,7 @@ function szinfinitelatticenew()
         N=4;
         J=1
         J2=1;
-        os=Int[1];
+        os=Int[1, 2, 3, 4, 5];
         hs=generateHListUniform(0.1, 1, 10)
         graphs=readFromGraphFile();
 
@@ -712,7 +712,7 @@ function szinfinitelatticenew()
     for i=2:length(os)
         plot!(hs, list[i], label="order "*string(os[i]))
     end
-    savefig("./sz NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
+    savefig("./sz NEW PLS CHECK NLC orders: " * string(os) *", hs: "*string(length(hs))*".png")
 end
 
 
@@ -1574,7 +1574,7 @@ function susceptibilityJ2J1ED()
         h2=0.1;
         js=generateHListUniformIncludeOne(0.1, 2, 5);
         println("js: ", js);
-        hs=generateHListUniform(0.1, 2, 50)
+        hs=generateHListUniform(0.1, 2, 20)
         ms=Vector{Float64}[];
         bonds = bondListFrustrated(N);
         println("hs: ", hs);
@@ -1673,4 +1673,49 @@ function susinfinitelatticemanyJ2andorders()
 
     end
 
+end
+
+
+
+
+
+function szMeanFieldInfiniteLattice()
+    println("Starting entanglement inf!!");
+    println("Starting sz!!");
+
+    @time begin
+        N=4;
+        J=1
+        J2=1;
+        os=Int[1, 2, 3, 4, 5];
+        hs=generateHListUniform(0.1, 1, 10)
+        graphs=readFromGraphFile();
+
+        orders=Int[];
+        list=Vector{Float64}[];
+
+        for i=1:length(os)
+            push!(list, Vector{Float64}[]);
+        end
+        for i=1:length(os)
+            push!(orders, getLastGraphNumOrder(os[i], graphs))
+        end
+        println("hs: ", hs);
+        for i=1:length(hs)
+            println("starting h: ", hs[i])
+            @time begin
+                #calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations)
+                szs=calculateInfiniteLatticeMeanFieldSz(orders, J, J2, hs[i], graphs, 0.5, 50)
+                putin(list, szs);
+            end
+            #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
+        end
+    end
+    #TODO: plot it
+    plot(hs, list[1], label="order "*string(os[1]))
+
+    for i=2:length(os)
+        plot!(hs, list[i], label="order "*string(os[i]))
+    end
+    savefig("./sz MEAN FIELD orders: " * string(os) *", hs: "*string(length(hs))*".png")
 end
