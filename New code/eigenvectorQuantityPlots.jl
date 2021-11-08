@@ -1742,7 +1742,7 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
-        maxIterations=50;
+        maxIterations=10;
 
         orders=Int[];
 
