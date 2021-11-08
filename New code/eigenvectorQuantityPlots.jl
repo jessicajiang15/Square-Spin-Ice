@@ -1795,8 +1795,8 @@ function calculateEDMeanFieldSz()
 
         @time begin
             J=1
-            js=generateHListUniformIncludeOne(0.1, 2, 1);
-            hs=generateHListUniform(0.1, 1, 10)
+            js=generateHListUniformIncludeOne(0.1, 2, 5);
+            hs=generateHListUniform(0.1, 1, 50)
             ms=Vector{Float64}[];
             println("hs: ", hs);
             for j in js
