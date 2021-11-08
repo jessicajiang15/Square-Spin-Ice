@@ -1790,7 +1790,7 @@ function calculateEDMeanFieldSz()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=50;
+    maxIterations=10;
 
 
         @time begin
