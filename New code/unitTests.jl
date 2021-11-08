@@ -1550,3 +1550,13 @@ function metropolisTest()
 
     plot(1:length(energies), energies);
 end
+
+
+function meanFieldTest()
+    J=1
+    J2=1
+    h=0.1
+    firstGuess=10
+    maxIterations=30;
+    println(calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations));
+end

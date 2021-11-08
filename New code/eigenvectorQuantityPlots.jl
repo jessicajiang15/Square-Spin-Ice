@@ -1688,8 +1688,10 @@ function szMeanFieldInfiniteLattice()
         J=1
         J2=1;
         os=Int[1, 2, 3, 4, 5];
-        hs=generateHListUniform(0.1, 1, 10)
+        hs=generateHListUniform(0.1, 1, 50)
         graphs=readFromGraphFile();
+        firstGuess=0.1;
+        maxIterations=50;
 
         orders=Int[];
         list=Vector{Float64}[];
@@ -1705,7 +1707,7 @@ function szMeanFieldInfiniteLattice()
             println("starting h: ", hs[i])
             @time begin
                 #calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations)
-                szs=calculateInfiniteLatticeMeanFieldSz(orders, J, J2, hs[i], graphs, 0.5, 50)
+                szs=calculateInfiniteLatticeMeanFieldSz(orders, J, J2, hs[i], graphs, firstGuess, maxIterations)
                 putin(list, szs);
             end
             #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);

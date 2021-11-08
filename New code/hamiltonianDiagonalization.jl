@@ -552,8 +552,10 @@ end
 
 
 
-
-function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float}, bonds,eigmethod, num, h1orh2)
+#to get first eigenvalue: use temp[1][1]
+#to get first eigenvector: use temp[2][1]
+#to get states list: use temp[3][1]
+function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float64},hs2::Vector{Float64}, bonds,eigmethod, num, h1orh2)
     #println(randomList);
     #the info contains the states
     theInfo::Array{Any}=Any[];
@@ -566,7 +568,7 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float}, b
     @time begin
         if(h1orh2=="H1")
             #H1= field is in x direction
-            Htemp=constructTransverseHamiltonianNoSymmetrySx(bonds, N, J, J2, eigmethod, hs);
+            Htemp=constructTransverseHamiltonianNoSymmetrySxMeanField(bonds, N, J, J2, eigmethod, hs, hs2);
         else
             #H2= field is in the z direction
             Htemp=constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, hs);

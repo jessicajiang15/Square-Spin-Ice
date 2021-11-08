@@ -891,7 +891,7 @@ function obtainMapOfNumNearFarBonds(graph)
         far[graph.farBonds[i].site1.num]+=1;
     end
     for i=1:length(graph.nearBonds)
-        far[graph.nearBonds[i].site1.num]+=1;
+        near[graph.nearBonds[i].site1.num]+=1;
     end
     push!(list, near);
     push!(list, far);
@@ -899,6 +899,8 @@ function obtainMapOfNumNearFarBonds(graph)
 end
 
 #how many external sites is it connected to
+#map1: how many far bonds connected to this site
+#map2: how many near bonds connected
 function obtainMeanFieldMapping(graph)
     maps=obtainMapOfNumNearFarBonds(graph);
     map1=maps[1];
@@ -920,34 +922,30 @@ end
 #needs to calcualte the actual field at any given point.
 #map1: how many nearbonds. map2: how many far bonds
 function calculateActualField(site, map1, map2, h, J1, J2, m)
-    return h+map1[site]*m*J1+map1[site]*m*J2;
+    value=map1[site]*m*J1-map2[site]*m*J2;
+    return value;
 end
 
 function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
+    hs2=Float64[];
     hs=Float64[];
     ms=firstGuess;
+    if(ms==0)
+        println("ERROR: don't input 0 initial guess");
+        return 0;
+    end
     count=0;
     percentError=1;
     while((abs(percentError)>0.01)&&count<maxIterations)
         println("iteration: ", count);
         for i=1:numSites
-            push!(hs,calculateActualField(i, map1, map2, h, J1, J2, ms));
+            push!(hs2,calculateActualField(i, map1, map2, h, J1, J2, ms));
+            push!(hs, h);
         end
-        #N, J, J2, h::Vector{Float64}, bonds, eigmethod, num
-        #calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float}, bonds,eigmethod, num, h1orh2)
-        temp=calculateEigensystemTransverse(numSites, J1, J2, hs, bonds,"lanczos", "one");
-        eigenvalues = temp[1];
-        eigenvectors = temp[2];
-        println("h: ", h);
-        println("eigenvalues: ", eigenvalues);
-
-        temp=calculateEigensystemTransverseNoSymmetry(numSites, J, J2, h, bonds,"lanczos", "one", h, width, "H1");
-        eigenvalue = temp[1][1]
-        eigenvector = temp[2]
-
-
-        eigensystem=getLowestLyingStates(eigenvalues, eigenvectors);
-        sz=numSites*calculateSz(eigensystem[2], temp[3][eigensystem[3]], numSites);
+        temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
+        eigenvector = temp[2];
+        states=temp[3][1];
+        sz=numSites*calculateSz(eigenvector, states, numSites);
         percentError=(sz-ms)/ms;
         count+=1;
         println("percentError", percentError);
@@ -964,7 +962,9 @@ function calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations)
     bonds::Vector{bond}=bond[];
     map1::Dict{Int, Int}=Dict{Int, Int}();
     map2::Dict{Int, Int}=Dict{Int, Int}();
+    #near bonds
     map1[1]=4;
+    #far bonds
     map2[1]=2;
     sz=calculateSelfConsistentMz(1, map1, map2, h, J, J2, bonds, J, firstGuess, maxIterations)
     println("Sz, ", sz);

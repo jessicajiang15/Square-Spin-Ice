@@ -570,3 +570,72 @@ function constructSusceptibilityHamiltonian(bonds, N, J, J2, eigmethod, randList
     end
     return H;
 end
+
+
+
+
+
+function constructTransverseHamiltonianNoSymmetrySxMeanField(bonds, N, J, J2, eigmethod, originalH, newFieldH)
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    if(eigmethod=="full")
+        H=zeros(Float64, 2^(N), 2^(N));
+    end
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+    for i=0:2^(N)-1
+        #NOW loop through all the possible SITES
+        for j=1:N
+            #mean field theory field calculation
+            theThing= getTi(j-1,i) == 1 ? newFieldH[j]/2 : -newFieldH[j]/2;
+            #1/2 for double counting
+            #println((1/2)*theThing);
+            push!(cols, i+1);
+            push!(rows, i+1);
+            push!(values, theThing);
+            if(eigmethod=="full")
+                H[i+1,i+1]+= theThing;
+            end
+            #original field
+            b::Int=flipBit(j-1, i);
+            push!(rows, i+1);
+            push!(cols, b+1);
+            push!(values, originalH[j]/2);
+            if(eigmethod=="full")
+                H[i+1,b+1]=originalH[j]/2;
+            end
+            #for this particular site, find ALL of its bonds
+            for z=1:length(bonds)
+                #get the number of the thing it is bonding with!
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
+                    local theThing;
+                    a= bonds[z].isNear ? J : J2;
+                    #println("bond1", bond1);
+                    #println("bond2", bond2);
+
+                    if(getTi(bond1-1,i)==getTi(bond2-1,i))
+                        theThing=a/4;
+                    else
+                        theThing=-a/4;
+                    end
+                    push!(rows, i+1);
+                    push!(cols, i+1);
+                    push!(values, (1/2)*theThing);
+                    if(eigmethod=="full")
+                        H[i+1,i+1]+= (1/2)*theThing;
+                    end
+                end
+            end
+        end
+    end
+    if(eigmethod!="full")
+        H=sparse(rows, cols, values);
+    end
+    if(N<=1)
+        println("num sites, ", N, ", H", Matrix(H))
+    end
+    return H;
+end

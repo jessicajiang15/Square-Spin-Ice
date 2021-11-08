@@ -149,8 +149,9 @@ function main()
 end
 
 println()
-metropolisTest()
-#szMeanFieldInfiniteLattice()
+#metropolisTest()
+#meanFieldTest()
+szMeanFieldInfiniteLattice()
 #fidelityInfiniteLattice()
 #susinfinitelatticemanyJ2andorders()
 #fidelityInfiniteLatticeMultipleJ2()

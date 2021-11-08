@@ -197,7 +197,6 @@ end
 #N IS TOTAL NUMBER OF STATES
 function calculateSz(eigenvector, states, N)
     sum=0;
-    println("lol");
     for i=1:length(states)
         temp=countBits(states[i]);
         sum+=(1/2)*(temp-(N-temp))*conj(eigenvector[i])*eigenvector[i];
