@@ -1541,7 +1541,7 @@ end
 
 function metropolisTest()
     thermalizationSteps=0;
-    iterations=1000;
+    iterations=1000000;
     N=4;
     bonds=bondListFourNeighbors(N)
     J=1;
@@ -1559,4 +1559,16 @@ function meanFieldTest()
     firstGuess=10
     maxIterations=30;
     println(calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations));
+
+    graphs=readFromGraphFile();
+
+    obtainMapOfNumNearFarBonds(graphs)
+end
+
+function bondsmaptest()
+    N=16;
+    bonds = bondListFrustrated(4)
+    map=obtainMapOfNumNearFarBonds(N, bonds);
+    println(map)
+
 end

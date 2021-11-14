@@ -150,10 +150,11 @@ end
 
 println()
 #metropolisTest()
+#bondsmaptest()
 #meanFieldTest()
 #szMeanFieldInfiniteLattice()
-#calculateEDMeanFieldSz()
-meanFieldSzInfiniteLatticeManyJ2AndOrders()
+calculateEDMeanFieldSz()
+#meanFieldSzInfiniteLatticeManyJ2AndOrders()
 #fidelityInfiniteLattice()
 #susinfinitelatticemanyJ2andorders()
 #fidelityInfiniteLatticeMultipleJ2()

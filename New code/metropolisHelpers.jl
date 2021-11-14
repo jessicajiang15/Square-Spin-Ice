@@ -37,11 +37,7 @@ function metropolisAlgorithm(thermalizationSteps, iterations, bonds, N, J, T)
                 energy=temp;
                 state=b;
             else
-                println("T", T);
-                println("energy", energy);
-                println("energy2", temp);
-
-                probability=exp(-(1/T)*energy)*exp(-(1/T)*temp);
+                probability=exp((1/T)*energy)*exp((1/T)*temp);
                 if(rand()<probability)
                     energy=temp;
                     state=b;

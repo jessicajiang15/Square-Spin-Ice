@@ -889,9 +889,13 @@ function obtainMapOfNumNearFarBonds(graph)
     end
     for i=1:length(graph.farBonds)
         far[graph.farBonds[i].site1.num]+=1;
+        far[graph.farBonds[i].site2.num]+=1;
+
     end
     for i=1:length(graph.nearBonds)
         near[graph.nearBonds[i].site1.num]+=1;
+        near[graph.nearBonds[i].site2.num]+=1;
+
     end
     push!(list, near);
     push!(list, far);
@@ -911,8 +915,11 @@ function obtainMapOfNumNearFarBonds(N, bonds)
     for i=1:length(bonds)
         if(bonds[i].isNear)
             near[bonds[i].site1.num]+=1;
+            near[bonds[i].site2.num]+=1;
+
         else
             far[bonds[i].site1.num]+=1;
+            near[bonds[i].site2.num]+=1;
         end
     end
     push!(list, near);
