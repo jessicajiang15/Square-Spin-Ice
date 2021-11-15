@@ -304,7 +304,13 @@ function plaquetteTests()
     state=9508;
     for i=1:length(squareIndicies)
         println("plaquette: ", squareIndicies[i], " , number: ", getPlaquetteNumber(squareIndicies[i][1], N))
-        println("is neel: ", isNeel(state, squareIndicies[i], N));
+    end
+end
+
+function plaquetteTest()
+    N=4
+    for i=1:N*N
+        println("number: ", getPlaquetteNumberStart0(i, N))
     end
 end
 
@@ -1568,7 +1574,28 @@ end
 function bondsmaptest()
     N=16;
     bonds = bondListFrustrated(4)
-    map=obtainMapOfNumNearFarBonds(N, bonds);
+    maps=obtainMapOfNumNearFarBonds(N, bonds);
+    println(bonds);
+    map=obtainMapOfNumNearFarBonds(N, bonds, maps);
     println(map)
+end
 
+
+function bondsTest()
+    N=4;
+    bonds = bondListFrustratedNoPBC(N)
+    maps=obtainMapOfNumNearFarBonds(N*N, bonds);
+    factors=calculateExternalFieldFactors(N, maps[1], maps[2]);
+    println(maps);
+    println(factors);
+end
+
+
+function lel()
+    N=4;
+    bonds = bondListFrustratedNoPBC(N)
+    maps=obtainMapOfNumNearFarBonds(N*N, bonds);
+    factors=calculateExternalFieldFactors(N, maps[1], maps[2]);
+    result=obtainMeanFieldMapping(N*N, bonds, maps, factors);
+    println(result);
 end

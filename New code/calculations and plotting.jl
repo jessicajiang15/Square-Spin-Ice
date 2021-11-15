@@ -754,3 +754,30 @@ end
 function calculateSusceptibility(E0, Eh, hs)
     return (E0-Eh)/(hs^2)
 end
+
+function calculateNeelOrderSz(eigenvector, states, N)
+    totalsum=0;
+        for j=1:N
+                for i=1:length(states)
+                    jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
+                    totalsum+=jSz*abs2(eigenvector[i])*(-1)^(getPlaquetteNumber(j, round(sqrt(N))));
+        end
+    end
+    return totalsum/(N);
+end
+
+
+
+
+function calculateNeelOrderSz(eigenvector, states, N, indicies)
+    totalsum=0;
+    for i=1:length(states)
+        #println("state: ", i);
+        for j=1:N
+                #println("im done 1");
+                jSz=getTi(j-1, states[i])==1 ? 1/2 : -1/2;
+                totalsum+=jSz*abs2(eigenvector[i])*(-1)^(indicies[j]);
+            end
+    end
+    return totalsum/(N);
+end

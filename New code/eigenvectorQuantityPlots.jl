@@ -1785,17 +1785,18 @@ end
 
 function calculateEDMeanFieldSz()
     N=4;
-    bonds = bondListFrustrated(N)
-    result=obtainMeanFieldMapping(N*N, bonds)
+    bonds = bondListFrustratedNoPBC(N)
+    maps=obtainMapOfNumNearFarBonds(N*N, bonds);
+    factors=calculateExternalFieldFactors(N, maps[1], maps[2]);
+    result=obtainMeanFieldMapping(N*N, bonds, maps, factors);
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=20;
-
+    maxIterations=10;
         @time begin
             J=1
-            js=generateHListUniformIncludeOne(0.1, 2, 5);
-            hs=generateHListUniform(0.1, 1, 50)
+            js=generateHListUniformIncludeOne(0.1, 1, 5);
+            hs=generateHListUniform(0.1, 5, 100)
             ms=Vector{Float64}[];
             println("hs: ", hs);
             for j in js

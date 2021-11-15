@@ -13,6 +13,16 @@ function addBond(i, j, which, N, bonds, site0, isNear)
     push!(bonds, bnd);
 end
 
+function addBondNoPBC(i, j, which, N, bonds, site0, isNear)
+    if(i<0||j<0||i>(N-1)||j>(N-1))
+        return;
+    end
+    tempcount::Int=j+1+(i)*N;
+    sit::site=site(tempcount, i,j);
+    bnd::bond=bond(site0, sit, isNear);
+    push!(bonds, bnd);
+end
+
 function upperRight(i, j, N, bonds, site0)
     if(j!=N-1)
         addBond(i-1, j+1, "ij", N, bonds, site0, false);
@@ -37,9 +47,33 @@ function upperLeft(i, j, N, bonds, site0)
     end
 end
 
+
+
+function upperRightNoPBC(i, j, N, bonds, site0)
+    if(j!=N-1)
+        addBondNoPBC(i-1, j+1, "ij", N, bonds, site0, false);
+    end
+end
+
+function bottomRightNoPBC(i, j, N, bonds, site0)
+    if(j!=N-1)
+        addBondNoPBC(i+1, j+1, "ij", N, bonds, site0, false);
+    end
+end
+
+function bottomLeftNoPBC(i, j, N, bonds, site0)
+    if(j==0)
+        addBondNoPBC(i+1, j-1, "ij", N, bonds, site0, false);
+    end
+end
+
+function upperLeftNoPBC(i, j, N, bonds, site0)
+    if(j==0)
+        addBondNoPBC(i-1, j-1, "ij", N, bonds, site0, false);
+    end
+end
+
 function bondListFrustrated(N)
-    println("timing bondlist");
-    @time begin
     bonds::Array{bond}=bond[];
     if(N<=1)
         return bonds;
@@ -87,8 +121,6 @@ function bondListFrustrated(N)
 
         end
     end
-    println(length(bonds));
-end
     return bonds;
 end
 
@@ -256,6 +288,24 @@ function getPlaquetteNumber(index, N)
 end
 
 
+function getPlaquetteNumberStart0(index, N)
+    if(getRow(index, N)%2==0)
+        if(((index-1)%N)%2==0)
+            return 1;
+        else
+            return 0;
+        end
+    else
+        if(((index-1)%N)%2==0)
+            return 0;
+        else
+            return 1;
+        end
+    end
+end
+
+
+
 function getRow(index, N)
     return ((index-1)÷N)+1;
 end
@@ -285,4 +335,74 @@ function getPlaquetteNumberList(N)
         push!(nums, getPlaquetteNumber(i, N));
     end
     return nums;
+end
+
+
+
+function bondListFrustratedNoPBC(N)
+    bonds::Array{bond}=bond[];
+    if(N<=1)
+        return bonds;
+    end
+    count::Int=0;
+    for i=0:N-1
+        for j=0:N-1
+            count+=1;
+            #bug: ened to recaluate count given current count and relative position
+            site0::site=site(count, i, j);
+                if(i!=N-1)
+                    addBondNoPBC(i+1, j, "i", N, bonds, site0, true);
+                end
+                if(i==0)
+                    addBondNoPBC(i-1, j, "i", N, bonds, site0, true);
+                end
+
+                if(j!=N-1)
+                    addBondNoPBC(i, j+1, "j", N, bonds, site0, true);
+                end
+
+                if(j==0)
+                    addBondNoPBC(i, j-1, "j", N, bonds, site0, true);
+                end
+
+
+                if(i%2==0)
+                    #odd no \ and even no /
+                    if(count%2==0)
+                        upperRightNoPBC(i, j, N, bonds, site0);
+                        bottomLeftNoPBC(i, j, N, bonds, site0);
+                    else
+                        upperLeftNoPBC(i, j, N, bonds, site0);
+                        bottomRightNoPBC(i, j, N, bonds, site0);
+                    end
+                else
+                    if(count%2!=0)
+                        upperRightNoPBC(i, j, N, bonds, site0);
+                        bottomLeftNoPBC(i, j, N, bonds, site0);
+                    else
+                        upperLeftNoPBC(i, j, N, bonds, site0);
+                        bottomRightNoPBC(i, j, N, bonds, site0);
+                    end
+                end
+
+        end
+    end
+    return bonds;
+end
+
+function isExternal(site, mapBondsNear, mapBondsFar)
+    return 4-mapBondsNear[site]!=0||2-mapBondsFar[site]!=0;
+end
+
+#for now input N and try to get it to work!!
+function calculateExternalFieldFactors(N, mapBondsNear, mapBondsFar)
+    list=zeros(N*N);
+
+    for i=1:N*N
+        if(isExternal(i, mapBondsNear, mapBondsFar))
+            num=getPlaquetteNumber(i, N);
+            list[i]= num==0 ? -1 : 1;
+        end
+    end
+    return list;
 end

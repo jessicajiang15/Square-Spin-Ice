@@ -916,10 +916,9 @@ function obtainMapOfNumNearFarBonds(N, bonds)
         if(bonds[i].isNear)
             near[bonds[i].site1.num]+=1;
             near[bonds[i].site2.num]+=1;
-
         else
             far[bonds[i].site1.num]+=1;
-            near[bonds[i].site2.num]+=1;
+            far[bonds[i].site2.num]+=1;
         end
     end
     push!(list, near);
@@ -949,8 +948,7 @@ function obtainMeanFieldMapping(graph)
 end
 
 
-function obtainMeanFieldMapping(N, bonds)
-    maps=obtainMapOfNumNearFarBonds(N, bonds);
+function obtainMeanFieldMapping(N, bonds, maps, factors)
     map1=maps[1];
     map2=maps[2];
 
@@ -959,23 +957,23 @@ function obtainMeanFieldMapping(N, bonds)
     list=Any[];
 
     for i=1:N
-        near[i]=4-map1[i];
-        far[i]=2-map2[i];
+        near[i]=(4-map1[i])*factors[i];
+        far[i]=-(2-map2[i])*factors[i];
     end
     push!(list, near);
     push!(list, far);
     return list;
 end
 
-#needs to calcualte the actual field at any given point.
-#map1: how many nearbonds. map2: how many far bonds
 function calculateActualField(site, map1, map2, h, J1, J2, m)
-    value=map1[site]*m*J1-map2[site]*m*J2;
+    #no more factors bc its integrated into map
+    value=map1[site]*m*J1+map2[site]*m*J2;
     return value;
 end
 
-
-
+#map 1: how many near bonds each site has
+#map 2: how many far bonds each site has
+#factors: whether the far/near bond has a factor of +-1.
 function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
     hs2=Float64[];
     hs=Float64[];
@@ -995,7 +993,37 @@ function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, fi
         temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
         eigenvector = temp[2];
         states=temp[3][1];
-        sz=numSites*calculateSz(eigenvector, states, numSites);
+        sz=numSites*calculateNeelOrderSz(eigenvector, states, numSites);
+        percentError=(sz-ms)/ms;
+        count+=1;
+        println("percentError", percentError);
+        println("ms: ", ms);
+        ms=sz;
+    end
+    return ms;
+end
+
+
+function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations, indicies)
+    hs2=Float64[];
+    hs=Float64[];
+    ms=firstGuess;
+    if(ms==0)
+        println("ERROR: don't input 0 initial guess");
+        return 0;
+    end
+    count=0;
+    percentError=1;
+    while((abs(percentError)>0.01)&&count<maxIterations)
+        println("iteration: ", count);
+        for i=1:numSites
+            push!(hs2,calculateActualField(i, map1, map2, h, J1, J2, ms));
+            push!(hs, h);
+        end
+        temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
+        eigenvector = temp[2];
+        states=temp[3][1];
+        sz=numSites*calculateNeelOrderSz(eigenvector, states, numSites, indicies);
         percentError=(sz-ms)/ms;
         count+=1;
         println("percentError", percentError);
