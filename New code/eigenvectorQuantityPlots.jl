@@ -1792,11 +1792,11 @@ function calculateEDMeanFieldSz()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=10;
+    maxIterations=20;
         @time begin
             J=1
-            js=generateHListUniformIncludeOne(0.1, 1, 5);
-            hs=generateHListUniform(0.1, 5, 100)
+            js=generateHListUniform(0.1, 1, 5);
+            hs=generateHListUniform(0.1, 3, 100)
             ms=Vector{Float64}[];
             println("hs: ", hs);
             for j in js

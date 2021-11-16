@@ -1599,3 +1599,16 @@ function lel()
     result=obtainMeanFieldMapping(N*N, bonds, maps, factors);
     println(result);
 end
+
+function testtest()
+    N=4;
+    bonds = bondListFrustratedNoPBC(N)
+    maps=obtainMapOfNumNearFarBonds(N*N, bonds);
+    factors=calculateExternalFieldFactors(N, maps[1], maps[2]);
+    result=obtainMeanFieldMapping(N*N, bonds, maps, factors);
+    map1=result[1];
+    map2=result[2];
+    firstGuess=0.19347940353388252;
+    maxIterations=5;
+    test=calculateSelfConsistentMz(N*N, map1, map2, 5, 1, 0.1, bonds, 1, firstGuess, maxIterations)
+end

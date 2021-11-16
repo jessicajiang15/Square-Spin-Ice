@@ -929,7 +929,7 @@ end
 #how many external sites is it connected to
 #map1: how many far bonds connected to this site
 #map2: how many near bonds connected
-function obtainMeanFieldMapping(graph)
+function obtainMeanFieldMapping(graph, factors)
     maps=obtainMapOfNumNearFarBonds(graph);
     map1=maps[1];
     map2=maps[2];
@@ -939,8 +939,8 @@ function obtainMeanFieldMapping(graph)
     list=Any[];
 
     for i=1:graph.numSites
-        near[i]=4-map1[i];
-        far[i]=2-map2[i];
+        near[i]=(4-map1[i])*factors[i];
+        far[i]=-(2-map2[i])*factors[i];
     end
     push!(list, near);
     push!(list, far);
@@ -975,29 +975,32 @@ end
 #map 2: how many far bonds each site has
 #factors: whether the far/near bond has a factor of +-1.
 function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
-    hs2=Float64[];
     hs=Float64[];
     ms=firstGuess;
+    for i=1:numSites
+        push!(hs, h);
+    end
     if(ms==0)
         println("ERROR: don't input 0 initial guess");
         return 0;
     end
     count=0;
     percentError=1;
-    while((abs(percentError)>0.01)&&count<maxIterations)
+    while((abs(percentError)>0.00001)&&count<maxIterations)
+        hs2=Float64[];
         println("iteration: ", count);
         for i=1:numSites
             push!(hs2,calculateActualField(i, map1, map2, h, J1, J2, ms));
-            push!(hs, h);
         end
         temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
         eigenvector = temp[2];
         states=temp[3][1];
-        sz=numSites*calculateNeelOrderSz(eigenvector, states, numSites);
-        percentError=(sz-ms)/ms;
+        sz=calculateNeelOrderSz(eigenvector, states, numSites);
+        percentError=(sz-ms);
         count+=1;
+        println("initial guess: ", ms);
+        println("calculated sz: ", sz);
         println("percentError", percentError);
-        println("ms: ", ms);
         ms=sz;
     end
     return ms;
@@ -1058,7 +1061,7 @@ function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, 
     maps=obtainMeanFieldMapping(theGraph);
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
-    sz=calculateSelfConsistentMz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, firstGuess, maxIterations);
+    sz=calculateSelfConsistentMz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, firstGuess, maxIterations, theGraph.indicies);
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
