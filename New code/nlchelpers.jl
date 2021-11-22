@@ -926,10 +926,11 @@ function obtainMapOfNumNearFarBonds(N, bonds)
     return list;
 end
 
+
 #how many external sites is it connected to
 #map1: how many far bonds connected to this site
 #map2: how many near bonds connected
-function obtainMeanFieldMapping(graph, factors)
+function obtainMeanFieldMapping(graph)
     maps=obtainMapOfNumNearFarBonds(graph);
     map1=maps[1];
     map2=maps[2];
@@ -939,8 +940,9 @@ function obtainMeanFieldMapping(graph, factors)
     list=Any[];
 
     for i=1:graph.numSites
-        near[i]=(4-map1[i])*factors[i];
-        far[i]=-(2-map2[i])*factors[i];
+        factor=graph.indicies[i]==1 ? 1 : -1;
+        near[i]=(4-map1[i])*factor;
+        far[i]=-(2-map2[i])*factor;
     end
     push!(list, near);
     push!(list, far);
@@ -1047,7 +1049,7 @@ function calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations)
     map1[1]=4;
     #far bonds
     map2[1]=2;
-    sz=calculateSelfConsistentMz(1, map1, map2, h, J, J2, bonds, J, firstGuess, maxIterations)
+    sz=calculateSelfConsistentMz(1, map1, map2, h, J, J2, bonds, J, firstGuess, maxIterations, Int[1])
     println("Sz, ", sz);
     return sz;
 end

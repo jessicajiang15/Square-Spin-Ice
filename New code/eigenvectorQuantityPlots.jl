@@ -1734,7 +1734,7 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
     @time begin
         N=4;
         J=1
-        js=generateHListUniformIncludeOne(0.1, 2, 5);
+        js=generateHListUniform(0.1, 2, 5);
         os=Int[1, 2, 3, 4, 5];
         hmin=0.1;
         hmax=2.5;
@@ -1792,11 +1792,11 @@ function calculateEDMeanFieldSz()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=20;
+    maxIterations=50;
         @time begin
             J=1
-            js=[1];
-            hs=generateHListUniform(0.1, 3, 100)
+            js=[0.1];
+            hs=generateHListUniform(1.5, 1.9, 50)
             ms=Vector{Float64}[];
             println("hs: ", hs);
             for j in js
