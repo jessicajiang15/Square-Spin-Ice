@@ -1735,14 +1735,14 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
         N=4;
         J=1
         js=generateHListUniform(0.1, 2, 5);
-        os=Int[1, 2, 3, 4, 5];
+        os=Int[1, 2, 3, 4];
         hmin=0.1;
         hmax=2.5;
         hs=generateHListUniform(hmin, hmax, 50)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
-        maxIterations=10;
+        maxIterations=20;
 
         orders=Int[];
 
@@ -1792,11 +1792,11 @@ function calculateEDMeanFieldSz()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=50;
+    maxIterations=20;
         @time begin
             J=1
-            js=[0.1];
-            hs=generateHListUniform(1.5, 1.9, 50)
+            js=generateHListUniformIncludeOne(0.9, 1, 5);
+            hs=generateHListUniform(0.1, 2, 50)
             ms=Vector{Float64}[];
             println("hs: ", hs);
             for j in js
