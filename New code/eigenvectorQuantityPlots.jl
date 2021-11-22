@@ -1795,7 +1795,7 @@ function calculateEDMeanFieldSz()
     maxIterations=20;
         @time begin
             J=1
-            js=generateHListUniform(0.8, 1, 5);
+            js=[1];
             hs=generateHListUniform(0.1, 3, 100)
             ms=Vector{Float64}[];
             println("hs: ", hs);
