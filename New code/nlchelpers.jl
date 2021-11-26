@@ -1008,6 +1008,26 @@ function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, fi
     return ms;
 end
 
+function calculateOneSelfConsistentSz(numSites, map1, map2, h, J1, J2, bonds, J, m, indicies)
+    hs=Float64[];
+    for i=1:numSites
+        push!(hs, h);
+    end
+    if(m==0)
+        println("ERROR: don't input 0 initial guess");
+        return 0;
+    end
+    hs2=Float64[];
+    for i=1:numSites
+        push!(hs2,calculateActualField(i, map1, map2, h, J1, J2, m));
+    end
+    temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
+    eigenvector = temp[2];
+    states=temp[3][1];
+    sz=calculateNeelOrderSz(eigenvector, states, numSites, indicies);
+    return sz;
+end
+
 
 function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations, indicies)
     hs=Float64[];
@@ -1021,6 +1041,7 @@ function calculateSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, fi
     end
     count=0;
     percentError=1;
+    #plot different iterations
     while((abs(percentError)>0.00001)&&count<maxIterations)
         hs2=Float64[];
         println("iteration: ", count);
@@ -1052,13 +1073,13 @@ function calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations)
     map1[1]=4;
     #far bonds
     map2[1]=2;
-    sz=calculateSelfConsistentMz(1, map1, map2, h, J, J2, bonds, J, firstGuess, maxIterations, Int[1])
+    sz=calculateOneSelfConsistentSz(1, map1, map2, h, J, J2, bonds, J, firstGuess, Int[1])
     println("Sz, ", sz);
     return sz;
 end
 
 #we are calculating spin in z direction so we want field in x direction, so H1
-function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, h, firstGuess, maxIterations)
+function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, h, guess, maxIterations)
     sum=0;
     #the graph to calculate weight of
     theGraph=graphs[num];
@@ -1066,7 +1087,7 @@ function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, 
     maps=obtainMeanFieldMapping(theGraph);
     temp=copy(theGraph.nearBonds);
     bonds=append!(temp, theGraph.farBonds);
-    sz=calculateSelfConsistentMz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, firstGuess, maxIterations, theGraph.indicies);
+    sz=calculateOneSelfConsistentSz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, guess, theGraph.indicies);
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
@@ -1089,25 +1110,52 @@ function getAllWeightsMeanFieldSz(num, graphs, J, J2, h, firstGuess, maxIteratio
 end
 #max order 56
 
-function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations)
+
+
+function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations, absoluteError)
     @time begin
         println("weights starting!!");
         szs=Any[];
+        currGuess=Any[];
+        map=Dict{Float64, Vector{Float64}}();
         @time begin
             weights=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, firstGuess, maxIterations);
             println("weights", weights);
+            map[firstGuess]=weights;
+        end
+
+        for i=1:length(orders)
+            push!(currGuess, firstGuess);
         end
 
         println("weights done!!! ");
         for order in orders
-            sum=weights[1];
-            for i=1:order
-                #println("order: ", order);
-                sum+=weights[i+1]*graphs[i].latticeConstant;
+            sum=0;
+            #println("order: ", order);
+            ms=firstGuess;
+            currWeights=map[ms];
+            error=absoluteError+eps();
+            count=0;
+            while((abs(error)>absoluteError)&&count<maxIterations)
+                sum=currWeights[1];
+                for i=1:order
+                    sum+=currWeights[i+1]*graphs[i].latticeConstant;
+                end
+                percentError=(sum-ms);
+                count+=1;
+                println("initial guess: ", ms);
+                println("calculated sz: ", sum);
+                println("error", error);
+                ms=sum;
+                if(haskey(map, ms))
+                    currWeights= map[ms];
+                else
+                    map[ms]=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, ms, maxIterations);
+                    currWeights=map[ms];
+                end
             end
             push!(szs, sum);
         end
-
     end
     return szs;
 end

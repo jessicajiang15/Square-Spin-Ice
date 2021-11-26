@@ -1734,18 +1734,17 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
     @time begin
         N=4;
         J=1
-        js=generateHListUniform(0.1, 2, 5);
-        os=Int[1, 2, 3, 4];
+        js=generateHListUniform(0.1, 1, 5);
+        os=Int[1, 2, 3, 4, 5];
         hmin=0.1;
         hmax=2.5;
         hs=generateHListUniform(hmin, hmax, 50)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
-        maxIterations=20;
-
+        maxIterations=10;
+        absError=0.0001;
         orders=Int[];
-
         for i=1:length(os)
             push!(orders, getLastGraphNumOrder(os[i], graphs))
         end
@@ -1761,7 +1760,7 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
             for i=1:length(hs)
                 println("starting h: ", hs[i])
                 @time begin
-                    szs=calculateInfiniteLatticeMeanFieldSz(orders, J, j, hs[i], graphs, firstGuess, maxIterations)
+                    szs=calculateInfiniteLatticeMeanFieldSz(orders, J, j, hs[i], graphs, firstGuess, maxIterations, absError)
                     putin(list, szs);
                 end
                 #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
@@ -1775,7 +1774,7 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
                 str="order "*string(os[i]);
                 plot!(hs, list[i], label=str)
             end
-            savefig("./sz mean field calc NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
+            savefig("./sz mean field calc NLC orders with ED THIS ONE, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
         end
 
     end
