@@ -1830,11 +1830,11 @@ function trackEDMeanFieldSzEachIteration()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=10;
+    maxIterations=50;
         @time begin
             J=1
-            J2=1;
-            hs=generateHListUniform(0.1, 2, 5);
+            J2=0.1;
+            hs=generateHListUniform(1.5, 1.8, 20);
             ms=Vector{Float64}[];
             println("hs: ", hs);
             te=Vector{Any}[];
