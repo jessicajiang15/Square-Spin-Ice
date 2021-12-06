@@ -1159,3 +1159,40 @@ function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, grap
     end
     return szs;
 end
+
+
+
+
+function trackEachIterationSelfConsistentMz(numSites, map1, map2, h, J1, J2, bonds, J, firstGuess, maxIterations)
+    hs=Float64[];
+    ms=firstGuess;
+    each=Any[];
+    push!(each, ms);
+    for i=1:numSites
+        push!(hs, h);
+    end
+    if(ms==0)
+        println("ERROR: don't input 0 initial guess");
+        return 0;
+    end
+    count=0;
+    while(count<maxIterations)
+        hs2=Float64[];
+        println("iteration: ", count);
+        for i=1:numSites
+            push!(hs2,calculateActualField(i, map1, map2, h, J1, J2, ms));
+        end
+        temp=calculateEigensystemTransverseNoSymmetry(numSites, J1, J2, hs, hs2, bonds,"lanczos", "one", "H1");
+        eigenvector = temp[2];
+        states=temp[3][1];
+        sz=calculateNeelOrderSz(eigenvector, states, numSites);
+        percentError=(sz-ms);
+        count+=1;
+        println("initial guess: ", ms);
+        println("calculated sz: ", sz);
+        println("percentError", percentError);
+        ms=sz;
+        push!(each, ms);
+    end
+    return each;
+end

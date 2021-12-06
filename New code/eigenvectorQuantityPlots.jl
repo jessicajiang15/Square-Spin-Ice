@@ -1794,7 +1794,7 @@ function calculateEDMeanFieldSz()
     maxIterations=20;
         @time begin
             J=1
-            js=generateHListUniformIncludeOne(0.9, 1, 5);
+            js=[0];
             hs=generateHListUniform(0.1, 2, 50)
             ms=Vector{Float64}[];
             println("hs: ", hs);
@@ -1815,4 +1815,40 @@ function calculateEDMeanFieldSz()
             plot!(hs, ms[i], label="j2: "*string(js[i]));
         end
         savefig("./sz mean field ED j2j1, js: "*string(js)*", num h: "*string(length(hs))*".png")
+end
+
+
+
+
+
+function trackEDMeanFieldSzEachIteration()
+    N=4;
+    bonds = bondListFrustratedNoPBC(N)
+    maps=obtainMapOfNumNearFarBonds(N*N, bonds);
+    factors=calculateExternalFieldFactors(N, maps[1], maps[2]);
+    result=obtainMeanFieldMapping(N*N, bonds, maps, factors);
+    map1=result[1];
+    map2=result[2];
+    firstGuess=0.1;
+    maxIterations=10;
+        @time begin
+            J=1
+            J2=1;
+            hs=generateHListUniform(0.1, 2, 5);
+            ms=Vector{Float64}[];
+            println("hs: ", hs);
+            te=Vector{Any}[];
+                for i=1:length(hs)
+                    println("starting h: ", hs[i])
+                    each=trackEachIterationSelfConsistentMz(N*N, map1, map2, hs[i], J, J2, bonds, J, firstGuess, maxIterations)
+                    push!(te, each);
+                end
+            println("ms: ", ms);
+        end
+        #TODO: plot it
+        plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]))
+        for i=2:length(te)
+            plot!(1:maxIterations+1, te[i], label="h: "*string(hs[i]));
+        end
+        savefig("./sz mean field iterations ED, js: "*string(J2)*", num h: "*string(length(hs))*".png")
 end
