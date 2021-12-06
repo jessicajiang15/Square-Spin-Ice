@@ -1830,11 +1830,11 @@ function trackEDMeanFieldSzEachIteration()
     map1=result[1];
     map2=result[2];
     firstGuess=0.1;
-    maxIterations=50;
+    maxIterations=40;
         @time begin
             J=1
             J2=0.1;
-            hs=generateHListUniform(0.1, 2, 50);
+            hs=generateHListUniform(1.5, 1.7, 10);
             ms=Vector{Float64}[];
             println("hs: ", hs);
             te=Vector{Any}[];
@@ -1846,9 +1846,9 @@ function trackEDMeanFieldSzEachIteration()
             println("ms: ", ms);
         end
         #TODO: plot it
-        plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]))
+        plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]), legend=false)
         for i=2:length(te)
-            plot!(1:maxIterations+1, te[i], label="h: "*string(hs[i]));
+            plot!(1:maxIterations+1, te[i], label="h: "*string(hs[i]), legend=false);
         end
-        savefig("./sz mean field iterations ED, js: "*string(J2)*", num h: "*string(length(hs))*".png")
+        savefig("./sz mean field iterations ED, js: "*string(J2)*", num h: "*string(length(hs))*"hmin, 1.5, hmax, 2.png")
 end
