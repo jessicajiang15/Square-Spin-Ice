@@ -1686,12 +1686,12 @@ function szMeanFieldInfiniteLattice()
     @time begin
         N=4;
         J=1
-        J2=1;
-        os=Int[1, 2, 3, 4, 5];
+        J2=0;
+        os=Int[1, 2, 3];
         hs=generateHListUniform(0.1, 1, 50)
         graphs=readFromGraphFile();
         firstGuess=0.1;
-        maxIterations=50;
+        maxIterations=30;
 
         orders=Int[];
         list=Vector{Float64}[];
@@ -1734,15 +1734,16 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
     @time begin
         N=4;
         J=1
-        js=generateHListUniform(0.1, 1, 5);
+        js=[0]
+        #js=generateHListUniform(0.1, 1, 5);
         os=Int[1, 2, 3];
         hmin=0.1;
-        hmax=2.5;
-        hs=generateHListUniform(hmin, hmax, 10)
+        hmax=2;
+        hs=generateHListUniform(hmin, hmax, 50)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
-        maxIterations=10;
+        maxIterations=20;
         absError=0.0001;
         orders=Int[];
         for i=1:length(os)

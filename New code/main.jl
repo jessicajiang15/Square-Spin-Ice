@@ -149,14 +149,14 @@ function main()
 end
 
 println()
-#meanFieldSzInfiniteLatticeManyJ2AndOrders()
+meanFieldSzInfiniteLatticeManyJ2AndOrders()
 #lel();
 #metropolisTest()
 #bondsmaptest()
 #meanFieldTest()
 #szMeanFieldInfiniteLattice()
 #testtest()
-trackEDMeanFieldSzEachIteration()
+#trackEDMeanFieldSzEachIteration()
 #calculateEDMeanFieldSz()
 #testtest()
 #plaquetteTest()
