@@ -1844,7 +1844,7 @@ function trackEDMeanFieldSzEachIteration()
                     each=trackEachIterationSelfConsistentMz(N*N, map1, map2, hs[i], J, J2, bonds, J, firstGuess, maxIterations)
                     push!(te, each);
                 end
-            println("ms: ", ms);
+            println("ms: ", te);
         end
         #TODO: plot it
         plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]), legend=false)

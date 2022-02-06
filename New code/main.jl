@@ -149,7 +149,8 @@ function main()
 end
 
 println()
-meanFieldSzInfiniteLatticeManyJ2AndOrders()
+trackEDMeanFieldSzEachIteration()
+#meanFieldSzInfiniteLatticeManyJ2AndOrders()
 #lel();
 #metropolisTest()
 #bondsmaptest()
