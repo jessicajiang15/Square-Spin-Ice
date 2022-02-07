@@ -149,6 +149,7 @@ function main()
 end
 
 println()
+#findHcFromIterations()
 trackEDMeanFieldSzEachIteration()
 #meanFieldSzInfiniteLatticeManyJ2AndOrders()
 #lel();
