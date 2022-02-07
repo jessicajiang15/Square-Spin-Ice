@@ -1834,9 +1834,9 @@ function trackEDMeanFieldSzEachIteration()
     maxIterations=40;
         @time begin
             J=1
-            J2=0;
-            hmin=1.65
-            hmax=1.75
+            J2=0.28;
+            hmin=1.3
+            hmax=1.4
             hs=generateHListUniform(hmin, hmax, 20);
             ms=Vector{Float64}[];
             println("hs: ", hs);
