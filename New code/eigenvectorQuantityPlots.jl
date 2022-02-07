@@ -1834,8 +1834,8 @@ function trackEDMeanFieldSzEachIteration()
     maxIterations=40;
         @time begin
             J=1
-            J2=0.64;
-            hs=generateHListUniform(0.9, 1.2, 20);
+            J2=0.46;
+            hs=generateHListUniform(1.2, 1.4, 20);
             ms=Vector{Float64}[];
             println("hs: ", hs);
             te=Vector{Any}[];
@@ -1847,9 +1847,9 @@ function trackEDMeanFieldSzEachIteration()
             println("ms: ", te);
         end
         #TODO: plot it
-        plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]), legend=false)
+        plot(1:maxIterations+1, te[1], label="h: "*string(hs[1]))
         for i=2:length(te)
-            plot!(1:maxIterations+1, te[i], label="h: "*string(hs[i]), legend=false);
+            plot!(1:maxIterations+1, te[i], label="h: "*string(hs[i]));
         end
         savefig("./sz mean field iterations ED, js: "*string(J2)*", num h: "*string(length(hs))*"hmin, 1.5, hmax, 2.png")
 end
