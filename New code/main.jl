@@ -150,8 +150,8 @@ end
 
 println()
 #findHcFromIterations()
-trackEDMeanFieldSzEachIteration()
-#meanFieldSzInfiniteLatticeManyJ2AndOrders()
+#trackEDMeanFieldSzEachIteration()
+meanFieldSzInfiniteLatticeManyJ2AndOrders()
 #lel();
 #metropolisTest()
 #bondsmaptest()

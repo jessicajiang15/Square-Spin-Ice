@@ -1736,10 +1736,10 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
         J=1
         js=[0]
         #js=generateHListUniform(0.1, 1, 5);
-        os=Int[1, 2, 3];
+        os=Int[1, 2,3,4];
         hmin=0.1;
         hmax=2;
-        hs=generateHListUniform(hmin, hmax, 50)
+        hs=generateHListUniform(hmin, hmax, 20)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
