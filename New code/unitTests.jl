@@ -1,7 +1,7 @@
 include("entanglement helper.jl")
 include("nlchelpers.jl")
 include("metropolisHelpers.jl")
-using LsqFit
+#using LsqFit
 
 
 function test()
@@ -1217,7 +1217,7 @@ end
 
 
 function fitting(xdata, ydata)
-
+#=
     model(t, p)=(p[1]*((t)).^(p[2])).+p[3];
 
     p0=[0.5, 0.5, 0.5];
@@ -1228,6 +1228,7 @@ function fitting(xdata, ydata)
     plot!(f);
 
     println("fit: ", fit);
+    =#
 end
 
 
@@ -1978,11 +1979,13 @@ end
 
 
 function fittingLinear(xdata, ydata)
+    #=
     model(t, p)=p[1]*t.+p[2];
     p0=[0.5, 0.5];
     fit = curve_fit(model, xdata, ydata, p0);
     #f(x)=fit[1,1]*x+fit[1, 2];
     println("fit: ", fit.param);
+    =#
 end
 
 function getHcFromIterationsJ20()
