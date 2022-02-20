@@ -1117,6 +1117,8 @@ function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, grap
         println("weights starting!!");
         szs=Any[];
         currGuess=Any[];
+        #map is a map that maps a certain mean field value to a specific set of weights so that
+        #you don't need to recalculate them
         map=Dict{Float64, Vector{Float64}}();
         @time begin
             weights=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, firstGuess, maxIterations);

@@ -404,5 +404,6 @@ function calculateExternalFieldFactors(N, mapBondsNear, mapBondsFar)
             list[i]= num==0 ? -1 : 1;
         end
     end
+
     return list;
 end
