@@ -1,0 +1,5095 @@
+nohup: ignoring input
+WARNING: using Plots.wrap in module Main conflicts with an existing identifier.
+
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+inc0.0049999999999999906
+hs: [1.1, 1.105, 1.1099999999999999, 1.1149999999999998, 1.1199999999999997, 1.1249999999999996, 1.1299999999999994, 1.1349999999999993, 1.1399999999999992, 1.1449999999999991, 1.149999999999999, 1.154999999999999, 1.1599999999999988, 1.1649999999999987, 1.1699999999999986, 1.1749999999999985, 1.1799999999999984, 1.1849999999999983, 1.1899999999999982, 1.194999999999998, 1.199999999999998]
+starting h: 1.1
+iteration: 0
+timing h
+  0.747695 seconds (131.70 k allocations: 224.255 MiB, 28.68% gc time)
+initial guess: 0.1
+calculated sz: 0.1304990770282167
+percentError0.030499077028216692
+iteration: 1
+timing h
+  0.662720 seconds (88 allocations: 313.503 MiB, 31.48% gc time)
+initial guess: 0.1304990770282167
+calculated sz: 0.16193221155459409
+percentError0.03143313452637739
+iteration: 2
+timing h
+  0.687898 seconds (88 allocations: 313.503 MiB, 32.09% gc time)
+initial guess: 0.16193221155459409
+calculated sz: 0.18982928722854994
+percentError0.027897075673955857
+iteration: 3
+timing h
+  0.463685 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18982928722854994
+calculated sz: 0.21117481170538197
+percentError0.021345524476832023
+iteration: 4
+timing h
+  0.422820 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21117481170538197
+calculated sz: 0.225620120603539
+percentError0.014445308898157039
+iteration: 5
+timing h
+  0.580182 seconds (88 allocations: 313.503 MiB, 21.31% gc time)
+initial guess: 0.225620120603539
+calculated sz: 0.23457491221679388
+percentError0.008954791613254881
+iteration: 6
+timing h
+  0.454382 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23457491221679388
+calculated sz: 0.23982209282140868
+percentError0.005247180604614793
+iteration: 7
+timing h
+  0.656038 seconds (88 allocations: 313.503 MiB, 32.38% gc time)
+initial guess: 0.23982209282140868
+calculated sz: 0.24279480023034056
+percentError0.0029727074089318795
+iteration: 8
+timing h
+  0.666896 seconds (88 allocations: 313.503 MiB, 31.33% gc time)
+initial guess: 0.24279480023034056
+calculated sz: 0.24444667133393067
+percentError0.001651871103590108
+iteration: 9
+timing h
+  0.453708 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24444667133393067
+calculated sz: 0.24535469590726952
+percentError0.0009080245733388559
+iteration: 10
+timing h
+  0.380552 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24535469590726952
+calculated sz: 0.2458508581768657
+percentError0.0004961622695961732
+iteration: 11
+timing h
+  0.580104 seconds (88 allocations: 313.503 MiB, 21.18% gc time)
+initial guess: 0.2458508581768657
+calculated sz: 0.24612108510188488
+percentError0.00027022692501918466
+iteration: 12
+timing h
+  0.452934 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24612108510188488
+calculated sz: 0.24626799752128575
+percentError0.00014691241940087418
+iteration: 13
+timing h
+  0.669702 seconds (88 allocations: 313.503 MiB, 32.17% gc time)
+initial guess: 0.24626799752128575
+calculated sz: 0.24634779088837863
+percentError7.979336709287854e-5
+iteration: 14
+timing h
+  0.667159 seconds (88 allocations: 313.503 MiB, 31.33% gc time)
+initial guess: 0.24634779088837863
+calculated sz: 0.24639110665442057
+percentError4.331576604194032e-5
+iteration: 15
+timing h
+  0.452977 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24639110665442057
+calculated sz: 0.24641461385053254
+percentError2.3507196111965944e-5
+iteration: 16
+timing h
+  0.371884 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24641461385053254
+calculated sz: 0.24642736907647195
+percentError1.2755225939409254e-5
+iteration: 17
+timing h
+  0.580560 seconds (88 allocations: 313.503 MiB, 21.20% gc time)
+initial guess: 0.24642736907647195
+calculated sz: 0.24643428959840818
+percentError6.920521936237822e-6
+iteration: 18
+timing h
+  0.453109 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24643428959840818
+calculated sz: 0.24643804425021448
+percentError3.7546518062980816e-6
+iteration: 19
+timing h
+  0.657452 seconds (88 allocations: 313.503 MiB, 32.33% gc time)
+initial guess: 0.24643804425021448
+calculated sz: 0.2464400812440259
+percentError2.0369938114050967e-6
+iteration: 20
+timing h
+  0.688500 seconds (88 allocations: 313.503 MiB, 30.84% gc time)
+initial guess: 0.2464400812440259
+calculated sz: 0.24644118634992307
+percentError1.1051058971811578e-6
+iteration: 21
+timing h
+  0.453352 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644118634992307
+calculated sz: 0.24644178588542776
+percentError5.995355046861661e-7
+iteration: 22
+timing h
+  0.369481 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644178588542776
+calculated sz: 0.24644211114058887
+percentError3.2525516110992747e-7
+iteration: 23
+timing h
+  0.618726 seconds (88 allocations: 313.503 MiB, 20.27% gc time)
+initial guess: 0.24644211114058887
+calculated sz: 0.24644228759500886
+percentError1.7645441999225575e-7
+iteration: 24
+timing h
+  0.452417 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644228759500886
+calculated sz: 0.2464423833233258
+percentError9.572831694004691e-8
+iteration: 25
+timing h
+  0.660151 seconds (88 allocations: 313.503 MiB, 32.11% gc time)
+initial guess: 0.2464423833233258
+calculated sz: 0.24644243525687204
+percentError5.193354624122293e-8
+iteration: 26
+timing h
+  0.667158 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.24644243525687204
+calculated sz: 0.2464424634313226
+percentError2.8174450550366714e-8
+iteration: 27
+timing h
+  0.455049 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2464424634313226
+calculated sz: 0.2464424787162432
+percentError1.5284920606983832e-8
+iteration: 28
+timing h
+  0.374184 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2464424787162432
+calculated sz: 0.24644248700843477
+percentError8.292191572278895e-9
+iteration: 29
+timing h
+  0.579509 seconds (88 allocations: 313.503 MiB, 21.23% gc time)
+initial guess: 0.24644248700843477
+calculated sz: 0.24644249150702216
+percentError4.498587391488229e-9
+iteration: 30
+timing h
+  0.462207 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644249150702216
+calculated sz: 0.24644249394756085
+percentError2.440538687809024e-9
+iteration: 31
+timing h
+  0.658347 seconds (88 allocations: 313.503 MiB, 32.23% gc time)
+initial guess: 0.24644249394756085
+calculated sz: 0.24644249527157402
+percentError1.324013176873251e-9
+iteration: 32
+timing h
+  0.667543 seconds (88 allocations: 313.503 MiB, 31.28% gc time)
+initial guess: 0.24644249527157402
+calculated sz: 0.24644249598986848
+percentError7.182944516959111e-10
+iteration: 33
+timing h
+  0.453270 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644249598986848
+calculated sz: 0.24644249637956353
+percentError3.8969505400388016e-10
+iteration: 34
+timing h
+  0.374664 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644249637956353
+calculated sz: 0.2464424965909447
+percentError2.1138116257368722e-10
+iteration: 35
+timing h
+  0.580425 seconds (88 allocations: 313.503 MiB, 21.13% gc time)
+initial guess: 0.2464424965909447
+calculated sz: 0.24644249670562493
+percentError1.14680237528475e-10
+iteration: 36
+timing h
+  0.452705 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24644249670562493
+calculated sz: 0.24644249676785193
+percentError6.222700132951786e-11
+iteration: 37
+timing h
+  0.667993 seconds (88 allocations: 313.503 MiB, 32.05% gc time)
+initial guess: 0.24644249676785193
+calculated sz: 0.24644249680161093
+percentError3.3758995598986985e-11
+iteration: 38
+timing h
+  0.669000 seconds (88 allocations: 313.503 MiB, 31.30% gc time)
+initial guess: 0.24644249680161093
+calculated sz: 0.2464424968199257
+percentError1.831476637015328e-11
+iteration: 39
+timing h
+  0.452994 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2464424968199257
+calculated sz: 0.24644249682986902
+percentError9.943323941996596e-12
+starting h: 1.105
+iteration: 0
+timing h
+  0.375269 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.1285157428964634
+percentError0.028515742896463386
+iteration: 1
+timing h
+  0.582774 seconds (88 allocations: 313.503 MiB, 21.33% gc time)
+initial guess: 0.1285157428964634
+calculated sz: 0.15780996817367854
+percentError0.029294225277215147
+iteration: 2
+timing h
+  0.453463 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15780996817367854
+calculated sz: 0.18408824891114658
+percentError0.026278280737468046
+iteration: 3
+timing h
+  0.655853 seconds (88 allocations: 313.503 MiB, 32.40% gc time)
+initial guess: 0.18408824891114658
+calculated sz: 0.20466741279668885
+percentError0.020579163885542262
+iteration: 4
+timing h
+  0.733296 seconds (88 allocations: 313.503 MiB, 34.26% gc time)
+initial guess: 0.20466741279668885
+calculated sz: 0.21903172081520633
+percentError0.014364308018517485
+iteration: 5
+timing h
+  0.454380 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21903172081520633
+calculated sz: 0.22824262581247362
+percentError0.009210904997267289
+iteration: 6
+timing h
+  0.366769 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22824262581247362
+calculated sz: 0.2338250956599049
+percentError0.005582469847431271
+iteration: 7
+timing h
+  0.599960 seconds (88 allocations: 313.503 MiB, 20.95% gc time)
+initial guess: 0.2338250956599049
+calculated sz: 0.2370922027988944
+percentError0.0032671071389895057
+iteration: 8
+timing h
+  0.461453 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2370922027988944
+calculated sz: 0.23896499337476262
+percentError0.0018727905758682273
+iteration: 9
+timing h
+  0.656178 seconds (88 allocations: 313.503 MiB, 32.36% gc time)
+initial guess: 0.23896499337476262
+calculated sz: 0.24002573095229374
+percentError0.0010607375775311123
+iteration: 10
+timing h
+  0.675352 seconds (88 allocations: 313.503 MiB, 31.09% gc time)
+initial guess: 0.24002573095229374
+calculated sz: 0.24062244162423962
+percentError0.0005967106719458881
+iteration: 11
+timing h
+  0.453941 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24062244162423962
+calculated sz: 0.240956827979269
+percentError0.00033438635502938685
+iteration: 12
+timing h
+  0.367644 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.240956827979269
+calculated sz: 0.24114380810733557
+percentError0.00018698012806656061
+iteration: 13
+timing h
+  0.602862 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.24114380810733557
+calculated sz: 0.24124823624015576
+percentError0.00010442813282018903
+iteration: 14
+timing h
+  0.473581 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24124823624015576
+calculated sz: 0.24130651983254972
+percentError5.828359239395953e-5
+iteration: 15
+timing h
+  0.680772 seconds (88 allocations: 313.503 MiB, 31.82% gc time)
+initial guess: 0.24130651983254972
+calculated sz: 0.24133903690171155
+percentError3.251706916182484e-5
+iteration: 16
+timing h
+  0.689869 seconds (88 allocations: 313.503 MiB, 31.06% gc time)
+initial guess: 0.24133903690171155
+calculated sz: 0.24135717472325524
+percentError1.8137821543695587e-5
+iteration: 17
+timing h
+  0.473462 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24135717472325524
+calculated sz: 0.2413672907016662
+percentError1.011597841096834e-5
+iteration: 18
+timing h
+  0.385489 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2413672907016662
+calculated sz: 0.24137293230101978
+percentError5.64159935356745e-6
+iteration: 19
+timing h
+  0.603782 seconds (88 allocations: 313.503 MiB, 20.89% gc time)
+initial guess: 0.24137293230101978
+calculated sz: 0.24137607846051254
+percentError3.1461594927617575e-6
+iteration: 20
+timing h
+  0.473407 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24137607846051254
+calculated sz: 0.2413778329484524
+percentError1.754487939847893e-6
+iteration: 21
+timing h
+  0.656960 seconds (88 allocations: 313.503 MiB, 32.42% gc time)
+initial guess: 0.2413778329484524
+calculated sz: 0.24137881134544928
+percentError9.783969968923945e-7
+iteration: 22
+timing h
+  0.691764 seconds (88 allocations: 313.503 MiB, 30.91% gc time)
+initial guess: 0.24137881134544928
+calculated sz: 0.2413793569489084
+percentError5.456034591344583e-7
+iteration: 23
+timing h
+  0.474329 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2413793569489084
+calculated sz: 0.2413796612037475
+percentError3.042548390730371e-7
+iteration: 24
+timing h
+  0.384072 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2413796612037475
+calculated sz: 0.24137983087065934
+percentError1.6966691185338334e-7
+iteration: 25
+timing h
+  0.604739 seconds (88 allocations: 313.503 MiB, 20.87% gc time)
+initial guess: 0.24137983087065934
+calculated sz: 0.24137992548483603
+percentError9.461417668776839e-8
+iteration: 26
+timing h
+  0.468633 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24137992548483603
+calculated sz: 0.24137997824608334
+percentError5.276124731556919e-8
+iteration: 27
+timing h
+  0.685911 seconds (88 allocations: 313.503 MiB, 31.88% gc time)
+initial guess: 0.24137997824608334
+calculated sz: 0.24138000766816473
+percentError2.9422081382346477e-8
+iteration: 28
+timing h
+  0.693294 seconds (88 allocations: 313.503 MiB, 30.85% gc time)
+initial guess: 0.24138000766816473
+calculated sz: 0.2413800240752878
+percentError1.6407123076822572e-8
+iteration: 29
+timing h
+  0.473653 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2413800240752878
+calculated sz: 0.24138003322466617
+percentError9.14937836604679e-9
+iteration: 30
+timing h
+  0.385279 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24138003322466617
+calculated sz: 0.24138003832677846
+percentError5.102112288213334e-9
+iteration: 31
+timing h
+  0.602039 seconds (88 allocations: 313.503 MiB, 21.01% gc time)
+initial guess: 0.24138003832677846
+calculated sz: 0.24138004117194142
+percentError2.84516296633619e-9
+iteration: 32
+timing h
+  0.473910 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24138004117194142
+calculated sz: 0.2413800427585463
+percentError1.5866048752588569e-9
+iteration: 33
+timing h
+  0.669384 seconds (88 allocations: 313.503 MiB, 32.08% gc time)
+initial guess: 0.2413800427585463
+calculated sz: 0.24138004364330917
+percentError8.847628740760172e-10
+iteration: 34
+timing h
+  0.672664 seconds (88 allocations: 313.503 MiB, 31.52% gc time)
+initial guess: 0.24138004364330917
+calculated sz: 0.24138004413669545
+percentError4.933862762790397e-10
+iteration: 35
+timing h
+  0.453622 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24138004413669545
+calculated sz: 0.24138004441182145
+percentError2.7512600531132136e-10
+iteration: 36
+timing h
+  0.367540 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24138004441182145
+calculated sz: 0.2413800445652346
+percentError1.5341314330008515e-10
+iteration: 37
+timing h
+  0.580170 seconds (88 allocations: 313.503 MiB, 21.24% gc time)
+initial guess: 0.2413800445652346
+calculated sz: 0.24138004465081037
+percentError8.557576869350214e-11
+iteration: 38
+timing h
+  0.459301 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.24138004465081037
+calculated sz: 0.2413800446985138
+percentError4.7703424543854567e-11
+iteration: 39
+timing h
+  0.681695 seconds (88 allocations: 313.503 MiB, 31.93% gc time)
+initial guess: 0.2413800446985138
+calculated sz: 0.2413800447251263
+percentError2.6612517745050468e-11
+starting h: 1.1099999999999999
+iteration: 0
+timing h
+  0.692811 seconds (88 allocations: 313.503 MiB, 30.84% gc time)
+initial guess: 0.1
+calculated sz: 0.12657797471796747
+percentError0.026577974717967467
+iteration: 1
+timing h
+  0.472530 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12657797471796747
+calculated sz: 0.15377913275896907
+percentError0.027201158041001594
+iteration: 2
+timing h
+  0.385320 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15377913275896907
+calculated sz: 0.17841006689665698
+percentError0.02463093413768791
+iteration: 3
+timing h
+  0.592437 seconds (88 allocations: 313.503 MiB, 21.16% gc time)
+initial guess: 0.17841006689665698
+calculated sz: 0.19812044475195403
+percentError0.019710377855297057
+iteration: 4
+timing h
+  0.473713 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19812044475195403
+calculated sz: 0.21229291775276146
+percentError0.014172473000807428
+iteration: 5
+timing h
+  0.680646 seconds (88 allocations: 313.503 MiB, 31.86% gc time)
+initial guess: 0.21229291775276146
+calculated sz: 0.22168785686194376
+percentError0.009394939109182293
+iteration: 6
+timing h
+  0.693622 seconds (88 allocations: 313.503 MiB, 30.91% gc time)
+initial guess: 0.22168785686194376
+calculated sz: 0.22757701530369592
+percentError0.005889158441752168
+iteration: 7
+timing h
+  0.465808 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22757701530369592
+calculated sz: 0.23113838617651622
+percentError0.0035613708728202964
+iteration: 8
+timing h
+  0.387313 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23113838617651622
+calculated sz: 0.2332451155850043
+percentError0.0021067294084880783
+iteration: 9
+timing h
+  0.580439 seconds (88 allocations: 313.503 MiB, 21.20% gc time)
+initial guess: 0.2332451155850043
+calculated sz: 0.23447506366219126
+percentError0.0012299480771869598
+iteration: 10
+timing h
+  0.453617 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23447506366219126
+calculated sz: 0.23518760723615167
+percentError0.0007125435739604169
+iteration: 11
+timing h
+  0.658856 seconds (88 allocations: 313.503 MiB, 32.26% gc time)
+initial guess: 0.23518760723615167
+calculated sz: 0.23559855570591579
+percentError0.0004109484697641108
+iteration: 12
+timing h
+  0.666812 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.23559855570591579
+calculated sz: 0.23583495022740253
+percentError0.00023639452148674356
+iteration: 13
+timing h
+  0.455495 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23583495022740253
+calculated sz: 0.2359707312624128
+percentError0.00013578103501027394
+iteration: 14
+timing h
+  0.369684 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2359707312624128
+calculated sz: 0.23604865471913933
+percentError7.792345672652523e-5
+iteration: 15
+timing h
+  0.600177 seconds (88 allocations: 313.503 MiB, 20.74% gc time)
+initial guess: 0.23604865471913933
+calculated sz: 0.2360933522356541
+percentError4.4697516514785596e-5
+iteration: 16
+timing h
+  0.459846 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2360933522356541
+calculated sz: 0.23611898384361704
+percentError2.5631607962928182e-5
+iteration: 17
+timing h
+  0.664600 seconds (88 allocations: 313.503 MiB, 32.62% gc time)
+initial guess: 0.23611898384361704
+calculated sz: 0.23613367980244318
+percentError1.4695958826138611e-5
+iteration: 18
+timing h
+  0.681055 seconds (88 allocations: 313.503 MiB, 32.64% gc time)
+initial guess: 0.23613367980244318
+calculated sz: 0.23614210499125635
+percentError8.425188813165896e-6
+iteration: 19
+timing h
+  0.452939 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23614210499125635
+calculated sz: 0.23614693489215358
+percentError4.8299008972296775e-6
+iteration: 20
+timing h
+  0.369291 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23614693489215358
+calculated sz: 0.23614970364082508
+percentError2.76874867150001e-6
+iteration: 21
+timing h
+  0.580083 seconds (88 allocations: 313.503 MiB, 21.20% gc time)
+initial guess: 0.23614970364082508
+calculated sz: 0.2361512908027683
+percentError1.587161943233939e-6
+iteration: 22
+timing h
+  0.465426 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2361512908027683
+calculated sz: 0.23615220062092263
+percentError9.09818154315456e-7
+iteration: 23
+timing h
+  0.681824 seconds (88 allocations: 313.503 MiB, 31.93% gc time)
+initial guess: 0.23615220062092263
+calculated sz: 0.23615272215831007
+percentError5.21537387443427e-7
+iteration: 24
+timing h
+  0.692811 seconds (88 allocations: 313.503 MiB, 30.96% gc time)
+initial guess: 0.23615272215831007
+calculated sz: 0.2361530211195532
+percentError2.989612431225641e-7
+iteration: 25
+timing h
+  0.473933 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2361530211195532
+calculated sz: 0.2361531924929341
+percentError1.7137338090278398e-7
+iteration: 26
+timing h
+  0.382260 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2361531924929341
+calculated sz: 0.2361532907291475
+percentError9.823621341387145e-8
+iteration: 27
+timing h
+  0.590934 seconds (88 allocations: 313.503 MiB, 20.90% gc time)
+initial guess: 0.2361532907291475
+calculated sz: 0.2361533470409584
+percentError5.6311810880949054e-8
+iteration: 28
+timing h
+  0.464049 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2361533470409584
+calculated sz: 0.23615337932047767
+percentError3.2279519279754254e-8
+iteration: 29
+timing h
+  0.682757 seconds (88 allocations: 313.503 MiB, 32.04% gc time)
+initial guess: 0.23615337932047767
+calculated sz: 0.2361533978239966
+percentError1.850351893928348e-8
+iteration: 30
+timing h
+  0.691651 seconds (88 allocations: 313.503 MiB, 30.88% gc time)
+initial guess: 0.2361533978239966
+calculated sz: 0.23615340843077479
+percentError1.0606778177990606e-8
+iteration: 31
+timing h
+  0.474071 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23615340843077479
+calculated sz: 0.23615341451085986
+percentError6.0800850743003565e-9
+iteration: 32
+timing h
+  0.382920 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23615341451085986
+calculated sz: 0.23615341799615622
+percentError3.485296357075285e-9
+iteration: 33
+timing h
+  0.604180 seconds (88 allocations: 313.503 MiB, 20.84% gc time)
+initial guess: 0.23615341799615622
+calculated sz: 0.236153419993998
+percentError1.9978417808985682e-9
+iteration: 34
+timing h
+  0.453264 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.236153419993998
+calculated sz: 0.23615342113925006
+percentError1.1452520598531635e-9
+iteration: 35
+timing h
+  0.708002 seconds (88 allocations: 313.503 MiB, 35.82% gc time)
+initial guess: 0.23615342113925006
+calculated sz: 0.23615342179573282
+percentError6.564827570443299e-10
+iteration: 36
+timing h
+  0.693224 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.23615342179573282
+calculated sz: 0.23615342217202417
+percentError3.7629135918315626e-10
+iteration: 37
+timing h
+  0.456868 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23615342217202417
+calculated sz: 0.23615342238774178
+percentError2.1571761044114623e-10
+iteration: 38
+timing h
+  0.368109 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23615342238774178
+calculated sz: 0.23615342251137078
+percentError1.2362899592943677e-10
+iteration: 39
+timing h
+  0.583495 seconds (88 allocations: 313.503 MiB, 21.10% gc time)
+initial guess: 0.23615342251137078
+calculated sz: 0.2361534225822482
+percentError7.087741504818723e-11
+starting h: 1.1149999999999998
+iteration: 0
+timing h
+  0.474318 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.12468475642494825
+percentError0.024684756424948245
+iteration: 1
+timing h
+  0.682991 seconds (88 allocations: 313.503 MiB, 31.92% gc time)
+initial guess: 0.12468475642494825
+calculated sz: 0.14984112504602082
+percentError0.025156368621072567
+iteration: 2
+timing h
+  0.695169 seconds (88 allocations: 313.503 MiB, 30.97% gc time)
+initial guess: 0.14984112504602082
+calculated sz: 0.17280631279740072
+percentError0.0229651877513799
+iteration: 3
+timing h
+  0.474698 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17280631279740072
+calculated sz: 0.19155409830366665
+percentError0.018747785506265935
+iteration: 4
+timing h
+  0.402989 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19155409830366665
+calculated sz: 0.20542125458564495
+percentError0.013867156281978293
+iteration: 5
+timing h
+  0.605718 seconds (88 allocations: 313.503 MiB, 21.00% gc time)
+initial guess: 0.20542125458564495
+calculated sz: 0.2149169345620218
+percentError0.009495679976376847
+iteration: 6
+timing h
+  0.473981 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2149169345620218
+calculated sz: 0.22107201859453637
+percentError0.0061550840325145795
+iteration: 7
+timing h
+  0.661401 seconds (88 allocations: 313.503 MiB, 32.32% gc time)
+initial guess: 0.22107201859453637
+calculated sz: 0.22491882812062994
+percentError0.003846809526093564
+iteration: 8
+timing h
+  0.693255 seconds (88 allocations: 313.503 MiB, 30.83% gc time)
+initial guess: 0.22491882812062994
+calculated sz: 0.22726795602075378
+percentError0.002349127900123843
+iteration: 9
+timing h
+  0.474564 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22726795602075378
+calculated sz: 0.22868214485923163
+percentError0.0014141888384778534
+iteration: 10
+timing h
+  0.386576 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22868214485923163
+calculated sz: 0.22952615928024506
+percentError0.0008440144210134226
+iteration: 11
+timing h
+  0.599101 seconds (88 allocations: 313.503 MiB, 20.65% gc time)
+initial guess: 0.22952615928024506
+calculated sz: 0.2300272785933251
+percentError0.0005011193130800562
+iteration: 12
+timing h
+  0.455507 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2300272785933251
+calculated sz: 0.23032389345462706
+percentError0.00029661486130194703
+iteration: 13
+timing h
+  0.656458 seconds (88 allocations: 313.503 MiB, 32.43% gc time)
+initial guess: 0.23032389345462706
+calculated sz: 0.23049914053472084
+percentError0.0001752470800937822
+iteration: 14
+timing h
+  0.667187 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.23049914053472084
+calculated sz: 0.23060256880767713
+percentError0.0001034282729562852
+iteration: 15
+timing h
+  0.453099 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23060256880767713
+calculated sz: 0.23066357172383026
+percentError6.100291615313003e-5
+iteration: 16
+timing h
+  0.372485 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23066357172383026
+calculated sz: 0.23069953824272774
+percentError3.596651889747893e-5
+iteration: 17
+timing h
+  0.588704 seconds (88 allocations: 313.503 MiB, 21.27% gc time)
+initial guess: 0.23069953824272774
+calculated sz: 0.23072073892290093
+percentError2.120068017319454e-5
+iteration: 18
+timing h
+  0.453098 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23072073892290093
+calculated sz: 0.23073323415542166
+percentError1.2495232520726152e-5
+iteration: 19
+timing h
+  0.663007 seconds (88 allocations: 313.503 MiB, 32.47% gc time)
+initial guess: 0.23073323415542166
+calculated sz: 0.23074059801309196
+percentError7.363857670306118e-6
+iteration: 20
+timing h
+  0.667351 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.23074059801309196
+calculated sz: 0.23074493758297207
+percentError4.339569880107419e-6
+iteration: 21
+timing h
+  0.453868 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23074493758297207
+calculated sz: 0.23074749485159707
+percentError2.5572686249974996e-6
+iteration: 22
+timing h
+  0.367838 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23074749485159707
+calculated sz: 0.23074900180268335
+percentError1.5069510862775193e-6
+iteration: 23
+timing h
+  0.579349 seconds (88 allocations: 313.503 MiB, 21.19% gc time)
+initial guess: 0.23074900180268335
+calculated sz: 0.2307498898127999
+percentError8.880101165509302e-7
+iteration: 24
+timing h
+  0.456998 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2307498898127999
+calculated sz: 0.23075041309302247
+percentError5.232802225696442e-7
+iteration: 25
+timing h
+  0.682009 seconds (88 allocations: 313.503 MiB, 31.93% gc time)
+initial guess: 0.23075041309302247
+calculated sz: 0.23075072144680936
+percentError3.083537868930897e-7
+iteration: 26
+timing h
+  0.692560 seconds (88 allocations: 313.503 MiB, 30.89% gc time)
+initial guess: 0.23075072144680936
+calculated sz: 0.23075090315037874
+percentError1.8170356938518317e-7
+iteration: 27
+timing h
+  0.474435 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23075090315037874
+calculated sz: 0.23075101022266795
+percentError1.0707228920159295e-7
+iteration: 28
+timing h
+  0.384635 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23075101022266795
+calculated sz: 0.2307510733170398
+percentError6.309437186602374e-8
+iteration: 29
+timing h
+  0.602040 seconds (88 allocations: 313.503 MiB, 20.85% gc time)
+initial guess: 0.2307510733170398
+calculated sz: 0.23075111049655062
+percentError3.7179510803397875e-8
+iteration: 30
+timing h
+  0.452578 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23075111049655062
+calculated sz: 0.23075113240525907
+percentError2.190870845852899e-8
+iteration: 31
+timing h
+  0.657814 seconds (88 allocations: 313.503 MiB, 32.40% gc time)
+initial guess: 0.23075113240525907
+calculated sz: 0.23075114531535065
+percentError1.2910091579110272e-8
+iteration: 32
+timing h
+  0.666792 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.23075114531535065
+calculated sz: 0.23075115292285997
+percentError7.60750931694254e-9
+iteration: 33
+timing h
+  0.474148 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23075115292285997
+calculated sz: 0.2307511574057218
+percentError4.482861831744955e-9
+iteration: 34
+timing h
+  0.388396 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2307511574057218
+calculated sz: 0.2307511600473499
+percentError2.6416281107000117e-9
+iteration: 35
+timing h
+  0.603225 seconds (88 allocations: 313.503 MiB, 20.99% gc time)
+initial guess: 0.2307511600473499
+calculated sz: 0.23075116160396603
+percentError1.55661611378477e-9
+iteration: 36
+timing h
+  0.474817 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.23075116160396603
+calculated sz: 0.23075116252123365
+percentError9.172676229685095e-10
+iteration: 37
+timing h
+  0.684295 seconds (88 allocations: 313.503 MiB, 32.08% gc time)
+initial guess: 0.23075116252123365
+calculated sz: 0.23075116306175053
+percentError5.40516881253339e-10
+iteration: 38
+timing h
+  0.690609 seconds (88 allocations: 313.503 MiB, 31.06% gc time)
+initial guess: 0.23075116306175053
+calculated sz: 0.2307511633802552
+percentError3.185046670850511e-10
+iteration: 39
+timing h
+  0.473857 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2307511633802552
+calculated sz: 0.2307511635679684
+percentError1.877132060901232e-10
+starting h: 1.1199999999999997
+iteration: 0
+timing h
+  0.385399 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.12283507147079636
+percentError0.02283507147079636
+iteration: 1
+timing h
+  0.603258 seconds (88 allocations: 313.503 MiB, 20.81% gc time)
+initial guess: 0.12283507147079636
+calculated sz: 0.14599694689675236
+percentError0.02316187542595599
+iteration: 2
+timing h
+  0.474447 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14599694689675236
+calculated sz: 0.16728774034884633
+percentError0.021290793452093976
+iteration: 3
+timing h
+  0.672054 seconds (88 allocations: 313.503 MiB, 32.01% gc time)
+initial guess: 0.16728774034884633
+calculated sz: 0.18498917932925588
+percentError0.017701438980409545
+iteration: 4
+timing h
+  0.691576 seconds (88 allocations: 313.503 MiB, 30.81% gc time)
+initial guess: 0.18498917932925588
+calculated sz: 0.19843745574912133
+percentError0.013448276419865457
+iteration: 5
+timing h
+  0.473499 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19843745574912133
+calculated sz: 0.20794064118401476
+percentError0.009503185434893424
+iteration: 6
+timing h
+  0.386147 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20794064118401476
+calculated sz: 0.2143080059964867
+percentError0.006367364812471937
+iteration: 7
+timing h
+  0.604568 seconds (88 allocations: 313.503 MiB, 20.88% gc time)
+initial guess: 0.2143080059964867
+calculated sz: 0.2184209332204921
+percentError0.004112927224005414
+iteration: 8
+timing h
+  0.470493 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2184209332204921
+calculated sz: 0.2210144775080401
+percentError0.0025935442875479886
+iteration: 9
+timing h
+  0.683132 seconds (88 allocations: 313.503 MiB, 32.01% gc time)
+initial guess: 0.2210144775080401
+calculated sz: 0.22262502908210396
+percentError0.0016105515740638676
+iteration: 10
+timing h
+  0.693812 seconds (88 allocations: 313.503 MiB, 30.86% gc time)
+initial guess: 0.22262502908210396
+calculated sz: 0.22361561050632436
+percentError0.0009905814242203992
+iteration: 11
+timing h
+  0.472209 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22361561050632436
+calculated sz: 0.22422127594605012
+percentError0.000605665439725761
+iteration: 12
+timing h
+  0.386567 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22422127594605012
+calculated sz: 0.2245902519549507
+percentError0.0003689760089005678
+iteration: 13
+timing h
+  0.604288 seconds (88 allocations: 313.503 MiB, 20.90% gc time)
+initial guess: 0.2245902519549507
+calculated sz: 0.22481453737242751
+percentError0.00022428541747682162
+iteration: 14
+timing h
+  0.474449 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22481453737242751
+calculated sz: 0.2249506875952273
+percentError0.00013615022279978017
+iteration: 15
+timing h
+  0.682868 seconds (88 allocations: 313.503 MiB, 32.00% gc time)
+initial guess: 0.2249506875952273
+calculated sz: 0.22503326856678899
+percentError8.258097156169097e-5
+iteration: 16
+timing h
+  0.688034 seconds (88 allocations: 313.503 MiB, 30.98% gc time)
+initial guess: 0.22503326856678899
+calculated sz: 0.22508333259641827
+percentError5.0064029629287576e-5
+iteration: 17
+timing h
+  0.474065 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22508333259641827
+calculated sz: 0.2251136743552184
+percentError3.034175880012313e-5
+iteration: 18
+timing h
+  0.387742 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2251136743552184
+calculated sz: 0.2251320598947072
+percentError1.838553948879662e-5
+iteration: 19
+timing h
+  0.581555 seconds (88 allocations: 313.503 MiB, 21.18% gc time)
+initial guess: 0.2251320598947072
+calculated sz: 0.22514319934949278
+percentError1.1139454785591418e-5
+iteration: 20
+timing h
+  0.474806 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22514319934949278
+calculated sz: 0.22514994808435765
+percentError6.74873486486427e-6
+iteration: 21
+timing h
+  0.685741 seconds (88 allocations: 313.503 MiB, 31.81% gc time)
+initial guess: 0.22514994808435765
+calculated sz: 0.2251540365763372
+percentError4.088491979553632e-6
+iteration: 22
+timing h
+  0.694217 seconds (88 allocations: 313.503 MiB, 31.03% gc time)
+initial guess: 0.2251540365763372
+calculated sz: 0.2251565133894943
+percentError2.4768131570984675e-6
+iteration: 23
+timing h
+  0.462820 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2251565133894943
+calculated sz: 0.22515801382338466
+percentError1.5004338903557013e-6
+iteration: 24
+timing h
+  0.378964 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22515801382338466
+calculated sz: 0.22515892276617716
+percentError9.089427925046412e-7
+iteration: 25
+timing h
+  0.604508 seconds (88 allocations: 313.503 MiB, 20.91% gc time)
+initial guess: 0.22515892276617716
+calculated sz: 0.2251594733885839
+percentError5.506224067253207e-7
+iteration: 26
+timing h
+  0.474377 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2251594733885839
+calculated sz: 0.22515980694534832
+percentError3.3355676443136417e-7
+iteration: 27
+timing h
+  0.682615 seconds (88 allocations: 313.503 MiB, 32.03% gc time)
+initial guess: 0.22515980694534832
+calculated sz: 0.22516000900740116
+percentError2.0206205283979095e-7
+iteration: 28
+timing h
+  0.693826 seconds (88 allocations: 313.503 MiB, 30.88% gc time)
+initial guess: 0.22516000900740116
+calculated sz: 0.22516013141241437
+percentError1.22405013208704e-7
+iteration: 29
+timing h
+  0.473998 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516013141241437
+calculated sz: 0.22516020556279412
+percentError7.415037975300187e-8
+iteration: 30
+timing h
+  0.370781 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516020556279412
+calculated sz: 0.22516025048152458
+percentError4.4918730457421674e-8
+iteration: 31
+timing h
+  0.583363 seconds (88 allocations: 313.503 MiB, 21.35% gc time)
+initial guess: 0.22516025048152458
+calculated sz: 0.22516027769231228
+percentError2.721078770639984e-8
+iteration: 32
+timing h
+  0.453325 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516027769231228
+calculated sz: 0.22516029417601846
+percentError1.6483706177794488e-8
+iteration: 33
+timing h
+  0.657632 seconds (88 allocations: 313.503 MiB, 32.53% gc time)
+initial guess: 0.22516029417601846
+calculated sz: 0.22516030416151314
+percentError9.985494681119533e-9
+iteration: 34
+timing h
+  0.679969 seconds (88 allocations: 313.503 MiB, 31.15% gc time)
+initial guess: 0.22516030416151314
+calculated sz: 0.22516031021050548
+percentError6.048992334806158e-9
+iteration: 35
+timing h
+  0.455949 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516031021050548
+calculated sz: 0.22516031387484578
+percentError3.6643403034108957e-9
+iteration: 36
+timing h
+  0.367103 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516031387484578
+calculated sz: 0.2251603160946193
+percentError2.2197735316531464e-9
+iteration: 37
+timing h
+  0.580325 seconds (88 allocations: 313.503 MiB, 21.21% gc time)
+initial guess: 0.2251603160946193
+calculated sz: 0.22516031743931714
+percentError1.3446978253117692e-9
+iteration: 38
+timing h
+  0.474451 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.22516031743931714
+calculated sz: 0.22516031825389868
+percentError8.145815411086943e-10
+iteration: 39
+timing h
+  0.682763 seconds (88 allocations: 313.503 MiB, 32.01% gc time)
+initial guess: 0.22516031825389868
+calculated sz: 0.22516031874735004
+percentError4.934513631038584e-10
+starting h: 1.1249999999999996
+iteration: 0
+timing h
+  0.688143 seconds (88 allocations: 313.503 MiB, 31.48% gc time)
+initial guess: 0.1
+calculated sz: 0.12102790582413142
+percentError0.021027905824131415
+iteration: 1
+timing h
+  0.474160 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12102790582413142
+calculated sz: 0.14224720955131767
+percentError0.02121930372718625
+iteration: 2
+timing h
+  0.379383 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14224720955131767
+calculated sz: 0.16186418986571385
+percentError0.019616980314396182
+iteration: 3
+timing h
+  0.604125 seconds (88 allocations: 313.503 MiB, 21.01% gc time)
+initial guess: 0.16186418986571385
+calculated sz: 0.17844672892282853
+percentError0.01658253905711468
+iteration: 4
+timing h
+  0.473440 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17844672892282853
+calculated sz: 0.19136518178874629
+percentError0.012918452865917751
+iteration: 5
+timing h
+  0.683338 seconds (88 allocations: 313.503 MiB, 31.97% gc time)
+initial guess: 0.19136518178874629
+calculated sz: 0.20077460456369842
+percentError0.00940942277495213
+iteration: 6
+timing h
+  0.693716 seconds (88 allocations: 313.503 MiB, 30.89% gc time)
+initial guess: 0.20077460456369842
+calculated sz: 0.20728758967727462
+percentError0.006512985113576203
+iteration: 7
+timing h
+  0.473992 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20728758967727462
+calculated sz: 0.2116351852887799
+percentError0.004347595611505273
+iteration: 8
+timing h
+  0.370292 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2116351852887799
+calculated sz: 0.21446664408436417
+percentError0.002831458795584274
+iteration: 9
+timing h
+  0.604099 seconds (88 allocations: 313.503 MiB, 20.91% gc time)
+initial guess: 0.21446664408436417
+calculated sz: 0.2162809588630685
+percentError0.0018143147787043346
+iteration: 10
+timing h
+  0.473531 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2162809588630685
+calculated sz: 0.2174313792203798
+percentError0.0011504203573113048
+iteration: 11
+timing h
+  0.685763 seconds (88 allocations: 313.503 MiB, 31.95% gc time)
+initial guess: 0.2174313792203798
+calculated sz: 0.21815597470798986
+percentError0.000724595487610058
+iteration: 12
+timing h
+  0.671362 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.21815597470798986
+calculated sz: 0.21861043851270315
+percentError0.0004544638047132843
+iteration: 13
+timing h
+  0.468057 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21861043851270315
+calculated sz: 0.21889472063280466
+percentError0.0002842821201015089
+iteration: 14
+timing h
+  0.390557 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21889472063280466
+calculated sz: 0.21907225293675936
+percentError0.00017753230395470276
+iteration: 15
+timing h
+  0.604445 seconds (88 allocations: 313.503 MiB, 20.95% gc time)
+initial guess: 0.21907225293675936
+calculated sz: 0.2191830054903361
+percentError0.00011075255357673175
+iteration: 16
+timing h
+  0.456493 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2191830054903361
+calculated sz: 0.21925205304702883
+percentError6.904755669273621e-5
+iteration: 17
+timing h
+  0.662325 seconds (88 allocations: 313.503 MiB, 32.34% gc time)
+initial guess: 0.21925205304702883
+calculated sz: 0.21929508263114733
+percentError4.302958411850355e-5
+iteration: 18
+timing h
+  0.668195 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.21929508263114733
+calculated sz: 0.21932189137383923
+percentError2.6808742691897258e-5
+iteration: 19
+timing h
+  0.463452 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21932189137383923
+calculated sz: 0.2193385914131132
+percentError1.6700039273981337e-5
+iteration: 20
+timing h
+  0.367190 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2193385914131132
+calculated sz: 0.21934899339321975
+percentError1.0401980106544695e-5
+iteration: 21
+timing h
+  0.581462 seconds (88 allocations: 313.503 MiB, 21.26% gc time)
+initial guess: 0.21934899339321975
+calculated sz: 0.21935547209605546
+percentError6.478702835710504e-6
+iteration: 22
+timing h
+  0.453589 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21935547209605546
+calculated sz: 0.21935950709664895
+percentError4.035000593483051e-6
+iteration: 23
+timing h
+  0.660595 seconds (88 allocations: 313.503 MiB, 32.44% gc time)
+initial guess: 0.21935950709664895
+calculated sz: 0.21936202007574016
+percentError2.512979091207068e-6
+iteration: 24
+timing h
+  0.667669 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.21936202007574016
+calculated sz: 0.21936358512404092
+percentError1.565048300761207e-6
+iteration: 25
+timing h
+  0.452610 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936358512404092
+calculated sz: 0.21936455980535935
+percentError9.74681318433035e-7
+iteration: 26
+timing h
+  0.367623 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936455980535935
+calculated sz: 0.21936516681421112
+percentError6.070088517662331e-7
+iteration: 27
+timing h
+  0.605001 seconds (88 allocations: 313.503 MiB, 20.82% gc time)
+initial guess: 0.21936516681421112
+calculated sz: 0.21936554484389376
+percentError3.7802968264055714e-7
+iteration: 28
+timing h
+  0.475401 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936554484389376
+calculated sz: 0.21936578027061684
+percentError2.3542672308862755e-7
+iteration: 29
+timing h
+  0.683949 seconds (88 allocations: 313.503 MiB, 32.03% gc time)
+initial guess: 0.21936578027061684
+calculated sz: 0.21936592688786036
+percentError1.4661724351272554e-7
+iteration: 30
+timing h
+  0.693712 seconds (88 allocations: 313.503 MiB, 30.85% gc time)
+initial guess: 0.21936592688786036
+calculated sz: 0.21936601819695303
+percentError9.130909267573983e-8
+iteration: 31
+timing h
+  0.486337 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936601819695303
+calculated sz: 0.21936607506165037
+percentError5.686469733978683e-8
+iteration: 32
+timing h
+  0.388658 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936607506165037
+calculated sz: 0.21936611047534815
+percentError3.5413697779818065e-8
+iteration: 33
+timing h
+  0.604578 seconds (88 allocations: 313.503 MiB, 20.87% gc time)
+initial guess: 0.21936611047534815
+calculated sz: 0.2193661325299843
+percentError2.2054636145130146e-8
+iteration: 34
+timing h
+  0.474139 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2193661325299843
+calculated sz: 0.21936614626495868
+percentError1.3734974380064102e-8
+iteration: 35
+timing h
+  0.683277 seconds (88 allocations: 313.503 MiB, 31.99% gc time)
+initial guess: 0.21936614626495868
+calculated sz: 0.21936615481871996
+percentError8.553761282614758e-9
+iteration: 36
+timing h
+  0.693342 seconds (88 allocations: 313.503 MiB, 30.88% gc time)
+initial guess: 0.21936615481871996
+calculated sz: 0.21936616014574684
+percentError5.327026875168173e-9
+iteration: 37
+timing h
+  0.473584 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936616014574684
+calculated sz: 0.21936616346327004
+percentError3.3175232005966393e-9
+iteration: 38
+timing h
+  0.384967 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21936616346327004
+calculated sz: 0.2193661655293062
+percentError2.066036175474295e-9
+iteration: 39
+timing h
+  0.588217 seconds (88 allocations: 313.503 MiB, 21.37% gc time)
+initial guess: 0.2193661655293062
+calculated sz: 0.2193661668159946
+percentError1.2866883947193486e-9
+starting h: 1.1299999999999994
+iteration: 0
+timing h
+  0.459797 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.119262250633187
+percentError0.019262250633186997
+iteration: 1
+timing h
+  0.679108 seconds (88 allocations: 313.503 MiB, 32.16% gc time)
+initial guess: 0.119262250633187
+calculated sz: 0.13859216243893605
+percentError0.019329911805749042
+iteration: 2
+timing h
+  0.694062 seconds (88 allocations: 313.503 MiB, 30.95% gc time)
+initial guess: 0.13859216243893605
+calculated sz: 0.15654451701510028
+percentError0.01795235457616423
+iteration: 3
+timing h
+  0.474508 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15654451701510028
+calculated sz: 0.1719476344713348
+percentError0.015403117456234516
+iteration: 4
+timing h
+  0.385862 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1719476344713348
+calculated sz: 0.18423064316363041
+percentError0.012283008692295622
+iteration: 5
+timing h
+  0.582833 seconds (88 allocations: 313.503 MiB, 21.18% gc time)
+initial guess: 0.18423064316363041
+calculated sz: 0.1934395157396099
+percentError0.009208872575979493
+iteration: 6
+timing h
+  0.453215 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1934395157396099
+calculated sz: 0.2000190510045917
+percentError0.006579535264981784
+iteration: 7
+timing h
+  0.723792 seconds (88 allocations: 313.503 MiB, 34.98% gc time)
+initial guess: 0.2000190510045917
+calculated sz: 0.20455649313284055
+percentError0.004537442128248859
+iteration: 8
+timing h
+  0.669003 seconds (88 allocations: 313.503 MiB, 31.31% gc time)
+initial guess: 0.20455649313284055
+calculated sz: 0.20760871071377046
+percentError0.0030522175809299112
+iteration: 9
+timing h
+  0.452483 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20760871071377046
+calculated sz: 0.2096273113581501
+percentError0.0020186006443796423
+iteration: 10
+timing h
+  0.369663 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2096273113581501
+calculated sz: 0.2109472947870928
+percentError0.0013199834289426837
+iteration: 11
+timing h
+  0.587430 seconds (88 allocations: 313.503 MiB, 21.04% gc time)
+initial guess: 0.2109472947870928
+calculated sz: 0.21180404217669102
+percentError0.0008567473895982336
+iteration: 12
+timing h
+  0.453051 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21180404217669102
+calculated sz: 0.2123574309087421
+percentError0.0005533887320510744
+iteration: 13
+timing h
+  0.658738 seconds (88 allocations: 313.503 MiB, 32.36% gc time)
+initial guess: 0.2123574309087421
+calculated sz: 0.21271375379244922
+percentError0.0003563228837071275
+iteration: 14
+timing h
+  0.666697 seconds (88 allocations: 313.503 MiB, 31.30% gc time)
+initial guess: 0.21271375379244922
+calculated sz: 0.21294272316572063
+percentError0.00022896937327140932
+iteration: 15
+timing h
+  0.454985 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21294272316572063
+calculated sz: 0.21308966491563436
+percentError0.000146941749913726
+iteration: 16
+timing h
+  0.370119 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21308966491563436
+calculated sz: 0.21318388633385246
+percentError9.422141821810448e-5
+iteration: 17
+timing h
+  0.579110 seconds (88 allocations: 313.503 MiB, 21.18% gc time)
+initial guess: 0.21318388633385246
+calculated sz: 0.2132442702065436
+percentError6.038387269113876e-5
+iteration: 18
+timing h
+  0.454536 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2132442702065436
+calculated sz: 0.21328295522958163
+percentError3.8685023038026456e-5
+iteration: 19
+timing h
+  0.663563 seconds (88 allocations: 313.503 MiB, 32.38% gc time)
+initial guess: 0.21328295522958163
+calculated sz: 0.21330773338703424
+percentError2.4778157452609584e-5
+iteration: 20
+timing h
+  0.666652 seconds (88 allocations: 313.503 MiB, 31.31% gc time)
+initial guess: 0.21330773338703424
+calculated sz: 0.2133236018119941
+percentError1.586842495987506e-5
+iteration: 21
+timing h
+  0.452331 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2133236018119941
+calculated sz: 0.21333376334783133
+percentError1.0161535837216462e-5
+iteration: 22
+timing h
+  0.370219 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21333376334783133
+calculated sz: 0.21334027003203093
+percentError6.506684199603097e-6
+iteration: 23
+timing h
+  0.579719 seconds (88 allocations: 313.503 MiB, 21.15% gc time)
+initial guess: 0.21334027003203093
+calculated sz: 0.21334443626927768
+percentError4.166237246749915e-6
+iteration: 24
+timing h
+  0.453319 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21334443626927768
+calculated sz: 0.21334710385231884
+percentError2.667583041154886e-6
+iteration: 25
+timing h
+  0.663014 seconds (88 allocations: 313.503 MiB, 32.48% gc time)
+initial guess: 0.21334710385231884
+calculated sz: 0.21334881184220164
+percentError1.707989882804295e-6
+iteration: 26
+timing h
+  0.682748 seconds (88 allocations: 313.503 MiB, 31.01% gc time)
+initial guess: 0.21334881184220164
+calculated sz: 0.21334990541681226
+percentError1.0935746106166544e-6
+iteration: 27
+timing h
+  0.453404 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21334990541681226
+calculated sz: 0.21335060559540373
+percentError7.001785914673153e-7
+iteration: 28
+timing h
+  0.371255 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335060559540373
+calculated sz: 0.21335105389412018
+percentError4.4829871645446495e-7
+iteration: 29
+timing h
+  0.587974 seconds (88 allocations: 313.503 MiB, 21.40% gc time)
+initial guess: 0.21335105389412018
+calculated sz: 0.21335134092266844
+percentError2.8702854826256896e-7
+iteration: 30
+timing h
+  0.453685 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335134092266844
+calculated sz: 0.21335152469576726
+percentError1.837730988218933e-7
+iteration: 31
+timing h
+  0.663581 seconds (88 allocations: 313.503 MiB, 32.35% gc time)
+initial guess: 0.21335152469576726
+calculated sz: 0.21335164235833337
+percentError1.1766256610701298e-7
+iteration: 32
+timing h
+  0.668848 seconds (88 allocations: 313.503 MiB, 31.41% gc time)
+initial guess: 0.21335164235833337
+calculated sz: 0.21335171769292982
+percentError7.533459644992746e-8
+iteration: 33
+timing h
+  0.459027 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335171769292982
+calculated sz: 0.21335176592658855
+percentError4.823365873374286e-8
+iteration: 34
+timing h
+  0.367493 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335176592658855
+calculated sz: 0.21335179680864116
+percentError3.08820526095932e-8
+iteration: 35
+timing h
+  0.604205 seconds (88 allocations: 313.503 MiB, 20.81% gc time)
+initial guess: 0.21335179680864116
+calculated sz: 0.21335181658114713
+percentError1.977250596585378e-8
+iteration: 36
+timing h
+  0.473663 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335181658114713
+calculated sz: 0.2133518292406814
+percentError1.2659534281977969e-8
+iteration: 37
+timing h
+  0.662263 seconds (88 allocations: 313.503 MiB, 32.68% gc time)
+initial guess: 0.2133518292406814
+calculated sz: 0.21335183734605323
+percentError8.105371818167839e-9
+iteration: 38
+timing h
+  0.667719 seconds (88 allocations: 313.503 MiB, 31.33% gc time)
+initial guess: 0.21335183734605323
+calculated sz: 0.21335184253559505
+percentError5.1895418240466284e-9
+iteration: 39
+timing h
+  0.456593 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.21335184253559505
+calculated sz: 0.21335184585825587
+percentError3.3226608131542434e-9
+starting h: 1.1349999999999993
+iteration: 0
+timing h
+  0.385112 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.11753710458334644
+percentError0.01753710458334644
+iteration: 1
+timing h
+  0.603797 seconds (88 allocations: 313.503 MiB, 20.85% gc time)
+initial guess: 0.11753710458334644
+calculated sz: 0.13503172287732867
+percentError0.01749461829398223
+iteration: 2
+timing h
+  0.472254 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13503172287732867
+calculated sz: 0.15133654598590188
+percentError0.016304823108573202
+iteration: 3
+timing h
+  0.658819 seconds (88 allocations: 313.503 MiB, 32.52% gc time)
+initial guess: 0.15133654598590188
+calculated sz: 0.16551224881588578
+percentError0.0141757028299839
+iteration: 4
+timing h
+  0.668779 seconds (88 allocations: 313.503 MiB, 31.32% gc time)
+initial guess: 0.16551224881588578
+calculated sz: 0.17706208293987094
+percentError0.011549834123985164
+iteration: 5
+timing h
+  0.458724 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17706208293987094
+calculated sz: 0.18596112128255243
+percentError0.008899038342681492
+iteration: 6
+timing h
+  0.369857 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18596112128255243
+calculated sz: 0.19251718678377513
+percentError0.006556065501222702
+iteration: 7
+timing h
+  0.580554 seconds (88 allocations: 313.503 MiB, 21.26% gc time)
+initial guess: 0.19251718678377513
+calculated sz: 0.19718567054382746
+percentError0.004668483760052328
+iteration: 8
+timing h
+  0.453789 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19718567054382746
+calculated sz: 0.2004288631242129
+percentError0.00324319258038544
+iteration: 9
+timing h
+  0.678206 seconds (88 allocations: 313.503 MiB, 32.18% gc time)
+initial guess: 0.2004288631242129
+calculated sz: 0.20264299627932786
+percentError0.0022141331551149557
+iteration: 10
+timing h
+  0.671450 seconds (88 allocations: 313.503 MiB, 31.18% gc time)
+initial guess: 0.20264299627932786
+calculated sz: 0.20413654222991368
+percentError0.0014935459505858173
+iteration: 11
+timing h
+  0.453361 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20413654222991368
+calculated sz: 0.2051358321431724
+percentError0.000999289913258733
+iteration: 12
+timing h
+  0.385497 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2051358321431724
+calculated sz: 0.20580077460540222
+percentError0.0006649424622298117
+iteration: 13
+timing h
+  0.585177 seconds (88 allocations: 313.503 MiB, 21.03% gc time)
+initial guess: 0.20580077460540222
+calculated sz: 0.20624162173809601
+percentError0.0004408471326937946
+iteration: 14
+timing h
+  0.453041 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20624162173809601
+calculated sz: 0.20653318760510517
+percentError0.00029156586700915255
+iteration: 15
+timing h
+  0.664915 seconds (88 allocations: 313.503 MiB, 32.45% gc time)
+initial guess: 0.20653318760510517
+calculated sz: 0.20672571231987483
+percentError0.0001925247147696596
+iteration: 16
+timing h
+  0.667842 seconds (88 allocations: 313.503 MiB, 31.34% gc time)
+initial guess: 0.20672571231987483
+calculated sz: 0.20685270375749343
+percentError0.000126991437618601
+iteration: 17
+timing h
+  0.454790 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20685270375749343
+calculated sz: 0.20693640994700666
+percentError8.370618951322739e-5
+iteration: 18
+timing h
+  0.372007 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20693640994700666
+calculated sz: 0.20699155920957826
+percentError5.514926257160768e-5
+iteration: 19
+timing h
+  0.580867 seconds (88 allocations: 313.503 MiB, 21.21% gc time)
+initial guess: 0.20699155920957826
+calculated sz: 0.20702788285184193
+percentError3.632364226366369e-5
+iteration: 20
+timing h
+  0.454859 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20702788285184193
+calculated sz: 0.20705180233624002
+percentError2.391948439808833e-5
+iteration: 21
+timing h
+  0.659051 seconds (88 allocations: 313.503 MiB, 32.49% gc time)
+initial guess: 0.20705180233624002
+calculated sz: 0.20706755147368336
+percentError1.574913744334383e-5
+iteration: 22
+timing h
+  0.685540 seconds (88 allocations: 313.503 MiB, 31.53% gc time)
+initial guess: 0.20706755147368336
+calculated sz: 0.2070779201637584
+percentError1.0368690075035492e-5
+iteration: 23
+timing h
+  0.453039 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2070779201637584
+calculated sz: 0.20708474616088937
+percentError6.82599713097698e-6
+iteration: 24
+timing h
+  0.402217 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20708474616088937
+calculated sz: 0.20708923973496823
+percentError4.493574078862084e-6
+iteration: 25
+timing h
+  0.583797 seconds (88 allocations: 313.503 MiB, 21.33% gc time)
+initial guess: 0.20708923973496823
+calculated sz: 0.2070921977945294
+percentError2.95805956115891e-6
+iteration: 26
+timing h
+  0.453620 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2070921977945294
+calculated sz: 0.2070941450136128
+percentError1.9472190834202152e-6
+iteration: 27
+timing h
+  0.660359 seconds (88 allocations: 313.503 MiB, 32.49% gc time)
+initial guess: 0.2070941450136128
+calculated sz: 0.20709542680703155
+percentError1.281793418739241e-6
+iteration: 28
+timing h
+  0.669847 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.20709542680703155
+calculated sz: 0.20709627056557095
+percentError8.437585393983316e-7
+iteration: 29
+timing h
+  0.474293 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20709627056557095
+calculated sz: 0.20709682597889378
+percentError5.554133228335978e-7
+iteration: 30
+timing h
+  0.385531 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20709682597889378
+calculated sz: 0.20709719158470444
+percentError3.656058106538129e-7
+iteration: 31
+timing h
+  0.597639 seconds (88 allocations: 313.503 MiB, 20.81% gc time)
+initial guess: 0.20709719158470444
+calculated sz: 0.2070974322475127
+percentError2.406628082651796e-7
+iteration: 32
+timing h
+  0.474200 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2070974322475127
+calculated sz: 0.2070975906654174
+percentError1.5841790471093908e-7
+iteration: 33
+timing h
+  0.683575 seconds (88 allocations: 313.503 MiB, 32.04% gc time)
+initial guess: 0.2070975906654174
+calculated sz: 0.2070976949449924
+percentError1.0427957497505247e-7
+iteration: 34
+timing h
+  0.674035 seconds (88 allocations: 313.503 MiB, 31.52% gc time)
+initial guess: 0.2070976949449924
+calculated sz: 0.20709776358761348
+percentError6.864262108718933e-8
+iteration: 35
+timing h
+  0.460362 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20709776358761348
+calculated sz: 0.207097808772017
+percentError4.5184403524300976e-8
+iteration: 36
+timing h
+  0.370174 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.207097808772017
+calculated sz: 0.2070978385148789
+percentError2.9742861895609707e-8
+iteration: 37
+timing h
+  0.591671 seconds (88 allocations: 313.503 MiB, 21.16% gc time)
+initial guess: 0.2070978385148789
+calculated sz: 0.20709785809327264
+percentError1.957839373956105e-8
+iteration: 38
+timing h
+  0.456957 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20709785809327264
+calculated sz: 0.20709787098086335
+percentError1.288759071682577e-8
+iteration: 39
+timing h
+  0.662155 seconds (88 allocations: 313.503 MiB, 32.56% gc time)
+initial guess: 0.20709787098086335
+calculated sz: 0.2070978794641832
+percentError8.483319852148341e-9
+starting h: 1.1399999999999992
+iteration: 0
+timing h
+  0.669111 seconds (88 allocations: 313.503 MiB, 31.30% gc time)
+initial guess: 0.1
+calculated sz: 0.115851475971
+percentError0.015851475970999993
+iteration: 1
+timing h
+  0.474188 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.115851475971
+calculated sz: 0.13156550607004705
+percentError0.015714030099047052
+iteration: 2
+timing h
+  0.367591 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13156550607004705
+calculated sz: 0.14624704615536202
+percentError0.01468154008531497
+iteration: 3
+timing h
+  0.580487 seconds (88 allocations: 313.503 MiB, 21.16% gc time)
+initial guess: 0.14624704615536202
+calculated sz: 0.15916003380840163
+percentError0.01291298765303961
+iteration: 4
+timing h
+  0.457081 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15916003380840163
+calculated sz: 0.16988914987162199
+percentError0.010729116063220356
+iteration: 5
+timing h
+  0.688865 seconds (88 allocations: 313.503 MiB, 31.86% gc time)
+initial guess: 0.16988914987162199
+calculated sz: 0.1783699523412305
+percentError0.0084808024696085
+iteration: 6
+timing h
+  0.693689 seconds (88 allocations: 313.503 MiB, 30.84% gc time)
+initial guess: 0.1783699523412305
+calculated sz: 0.18480393722628988
+percentError0.006433984885059391
+iteration: 7
+timing h
+  0.474206 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18480393722628988
+calculated sz: 0.18953094611092403
+percentError0.0047270088846341485
+iteration: 8
+timing h
+  0.387257 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18953094611092403
+calculated sz: 0.1929211788567833
+percentError0.003390232745859284
+iteration: 9
+timing h
+  0.605380 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.1929211788567833
+calculated sz: 0.19531037398082404
+percentError0.0023891951240407328
+iteration: 10
+timing h
+  0.474819 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19531037398082404
+calculated sz: 0.19697319092860063
+percentError0.0016628169477765908
+iteration: 11
+timing h
+  0.683974 seconds (88 allocations: 313.503 MiB, 32.10% gc time)
+initial guess: 0.19697319092860063
+calculated sz: 0.19812036687646978
+percentError0.0011471759478691446
+iteration: 12
+timing h
+  0.682976 seconds (88 allocations: 313.503 MiB, 31.08% gc time)
+initial guess: 0.19812036687646978
+calculated sz: 0.19890700560478858
+percentError0.0007866387283188003
+iteration: 13
+timing h
+  0.452818 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19890700560478858
+calculated sz: 0.19944416558384806
+percentError0.0005371599790594817
+iteration: 14
+timing h
+  0.368523 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19944416558384806
+calculated sz: 0.19980991885806917
+percentError0.0003657532742211145
+iteration: 15
+timing h
+  0.581950 seconds (88 allocations: 313.503 MiB, 21.29% gc time)
+initial guess: 0.19980991885806917
+calculated sz: 0.20005847501172783
+percentError0.00024855615365865225
+iteration: 16
+timing h
+  0.453035 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20005847501172783
+calculated sz: 0.20022716282175929
+percentError0.00016868781003145927
+iteration: 17
+timing h
+  0.668227 seconds (88 allocations: 313.503 MiB, 32.94% gc time)
+initial guess: 0.20022716282175929
+calculated sz: 0.2003415430367318
+percentError0.00011438021497250928
+iteration: 18
+timing h
+  0.686662 seconds (88 allocations: 313.503 MiB, 33.08% gc time)
+initial guess: 0.2003415430367318
+calculated sz: 0.2004190520483451
+percentError7.750901161329704e-5
+iteration: 19
+timing h
+  0.452734 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2004190520483451
+calculated sz: 0.20047155373169107
+percentError5.250168334597349e-5
+iteration: 20
+timing h
+  0.366703 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20047155373169107
+calculated sz: 0.20050710639394645
+percentError3.555266225538367e-5
+iteration: 21
+timing h
+  0.580461 seconds (88 allocations: 313.503 MiB, 21.25% gc time)
+initial guess: 0.20050710639394645
+calculated sz: 0.20053117707112636
+percentError2.4070677179910405e-5
+iteration: 22
+timing h
+  0.453642 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20053117707112636
+calculated sz: 0.2005474718503369
+percentError1.6294779210529464e-5
+iteration: 23
+timing h
+  0.660539 seconds (88 allocations: 313.503 MiB, 32.62% gc time)
+initial guess: 0.2005474718503369
+calculated sz: 0.2005585017290056
+percentError1.1029878668716853e-5
+iteration: 24
+timing h
+  0.672673 seconds (88 allocations: 313.503 MiB, 31.75% gc time)
+initial guess: 0.2005585017290056
+calculated sz: 0.20056596737375149
+percentError7.465644745879851e-6
+iteration: 25
+timing h
+  0.453631 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20056596737375149
+calculated sz: 0.20057102034157723
+percentError5.0529678257416055e-6
+iteration: 26
+timing h
+  0.371860 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20057102034157723
+calculated sz: 0.2005744402461034
+percentError3.4199045261806837e-6
+iteration: 27
+timing h
+  0.583900 seconds (88 allocations: 313.503 MiB, 21.28% gc time)
+initial guess: 0.2005744402461034
+calculated sz: 0.20057675483294293
+percentError2.3145868395246794e-6
+iteration: 28
+timing h
+  0.457917 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20057675483294293
+calculated sz: 0.20057832132275608
+percentError1.5664898131428906e-6
+iteration: 29
+timing h
+  0.661784 seconds (88 allocations: 313.503 MiB, 32.76% gc time)
+initial guess: 0.20057832132275608
+calculated sz: 0.20057938149894072
+percentError1.0601761846473767e-6
+iteration: 30
+timing h
+  0.670905 seconds (88 allocations: 313.503 MiB, 31.68% gc time)
+initial guess: 0.20057938149894072
+calculated sz: 0.20058009900576712
+percentError7.175068263975959e-7
+iteration: 31
+timing h
+  0.453144 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20058009900576712
+calculated sz: 0.20058058459870373
+percentError4.855929366109901e-7
+iteration: 32
+timing h
+  0.368103 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20058058459870373
+calculated sz: 0.20058091323650634
+percentError3.286378026101655e-7
+iteration: 33
+timing h
+  0.579889 seconds (88 allocations: 313.503 MiB, 21.19% gc time)
+initial guess: 0.20058091323650634
+calculated sz: 0.20058113565042113
+percentError2.22413914785502e-7
+iteration: 34
+timing h
+  0.457916 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20058113565042113
+calculated sz: 0.200581286174477
+percentError1.5052405588633633e-7
+iteration: 35
+timing h
+  0.658906 seconds (88 allocations: 313.503 MiB, 32.61% gc time)
+initial guess: 0.200581286174477
+calculated sz: 0.20058138804521414
+percentError1.018707371236438e-7
+iteration: 36
+timing h
+  0.670482 seconds (88 allocations: 313.503 MiB, 31.25% gc time)
+initial guess: 0.20058138804521414
+calculated sz: 0.2005814569886188
+percentError6.894340465191107e-8
+iteration: 37
+timing h
+  0.454309 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.2005814569886188
+calculated sz: 0.20058150364766983
+percentError4.66590510395104e-8
+iteration: 38
+timing h
+  0.369822 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.20058150364766983
+calculated sz: 0.20058153522525843
+percentError3.157758859950732e-8
+iteration: 39
+timing h
+  0.582759 seconds (88 allocations: 313.503 MiB, 21.12% gc time)
+initial guess: 0.20058153522525843
+calculated sz: 0.20058155659612456
+percentError2.137086613229755e-8
+starting h: 1.1449999999999991
+iteration: 0
+timing h
+  0.453522 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.11420438451600452
+percentError0.014204384516004517
+iteration: 1
+timing h
+  0.684370 seconds (88 allocations: 313.503 MiB, 32.11% gc time)
+initial guess: 0.11420438451600452
+calculated sz: 0.12819285489474766
+percentError0.013988470378743137
+iteration: 2
+timing h
+  0.693499 seconds (88 allocations: 313.503 MiB, 30.90% gc time)
+initial guess: 0.12819285489474766
+calculated sz: 0.14128173054357301
+percentError0.013088875648825354
+iteration: 3
+timing h
+  0.473791 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14128173054357301
+calculated sz: 0.1529092425529273
+percentError0.011627512009354274
+iteration: 4
+timing h
+  0.385669 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1529092425529273
+calculated sz: 0.16274219365914602
+percentError0.009832951106218735
+iteration: 5
+timing h
+  0.604989 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.16274219365914602
+calculated sz: 0.1707007728222127
+percentError0.007958579163066665
+iteration: 6
+timing h
+  0.458867 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1707007728222127
+calculated sz: 0.1769086839043815
+percentError0.00620791108216881
+iteration: 7
+timing h
+  0.679117 seconds (88 allocations: 313.503 MiB, 32.10% gc time)
+initial guess: 0.1769086839043815
+calculated sz: 0.18160935066069586
+percentError0.0047006667563143645
+iteration: 8
+timing h
+  0.695571 seconds (88 allocations: 313.503 MiB, 31.04% gc time)
+initial guess: 0.18160935066069586
+calculated sz: 0.18508781269051477
+percentError0.003478462029818913
+iteration: 9
+timing h
+  0.474691 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18508781269051477
+calculated sz: 0.18761771167002622
+percentError0.002529898979511447
+iteration: 10
+timing h
+  0.369001 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18761771167002622
+calculated sz: 0.18943444224487124
+percentError0.0018167305748450213
+iteration: 11
+timing h
+  0.580742 seconds (88 allocations: 313.503 MiB, 21.20% gc time)
+initial guess: 0.18943444224487124
+calculated sz: 0.19072707147602325
+percentError0.0012926292311520038
+iteration: 12
+timing h
+  0.467695 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19072707147602325
+calculated sz: 0.19164074572520348
+percentError0.0009136742491802352
+iteration: 13
+timing h
+  0.663826 seconds (88 allocations: 313.503 MiB, 32.41% gc time)
+initial guess: 0.19164074572520348
+calculated sz: 0.19228354348769575
+percentError0.0006427977624922643
+iteration: 14
+timing h
+  0.667958 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.19228354348769575
+calculated sz: 0.1927342789752296
+percentError0.0004507354875338543
+iteration: 15
+timing h
+  0.457413 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1927342789752296
+calculated sz: 0.19304960542408942
+percentError0.0003153264488598151
+iteration: 16
+timing h
+  0.386499 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19304960542408942
+calculated sz: 0.19326984345232584
+percentError0.0002202380282364247
+iteration: 17
+timing h
+  0.604388 seconds (88 allocations: 313.503 MiB, 20.89% gc time)
+initial guess: 0.19326984345232584
+calculated sz: 0.19342349257988925
+percentError0.00015364912756340998
+iteration: 18
+timing h
+  0.465197 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19342349257988925
+calculated sz: 0.19353060082822074
+percentError0.00010710824833148891
+iteration: 19
+timing h
+  0.688391 seconds (88 allocations: 313.503 MiB, 32.21% gc time)
+initial guess: 0.19353060082822074
+calculated sz: 0.19360522424626114
+percentError7.462341804040373e-5
+iteration: 20
+timing h
+  0.693996 seconds (88 allocations: 313.503 MiB, 30.96% gc time)
+initial guess: 0.19360522424626114
+calculated sz: 0.1936571950787745
+percentError5.197083251334833e-5
+iteration: 21
+timing h
+  0.474261 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1936571950787745
+calculated sz: 0.19369337998065608
+percentError3.618490188159185e-5
+iteration: 22
+timing h
+  0.387744 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19369337998065608
+calculated sz: 0.1937185691462277
+percentError2.5189165571620764e-5
+iteration: 23
+timing h
+  0.599445 seconds (88 allocations: 313.503 MiB, 20.80% gc time)
+initial guess: 0.1937185691462277
+calculated sz: 0.19373610163346383
+percentError1.7532487236127103e-5
+iteration: 24
+timing h
+  0.474086 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19373610163346383
+calculated sz: 0.19374830371323729
+percentError1.2202079773454555e-5
+iteration: 25
+timing h
+  0.685269 seconds (88 allocations: 313.503 MiB, 32.10% gc time)
+initial guess: 0.19374830371323729
+calculated sz: 0.19375679545448699
+percentError8.491741249699869e-6
+iteration: 26
+timing h
+  0.689444 seconds (88 allocations: 313.503 MiB, 30.87% gc time)
+initial guess: 0.19375679545448699
+calculated sz: 0.1937627048158642
+percentError5.909361377204325e-6
+iteration: 27
+timing h
+  0.454371 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1937627048158642
+calculated sz: 0.19376681698582685
+percentError4.112169962655621e-6
+iteration: 28
+timing h
+  0.370364 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19376681698582685
+calculated sz: 0.19376967847638257
+percentError2.861490555727819e-6
+iteration: 29
+timing h
+  0.587211 seconds (88 allocations: 313.503 MiB, 21.15% gc time)
+initial guess: 0.19376967847638257
+calculated sz: 0.19377166964090667
+percentError1.9911645240955345e-6
+iteration: 30
+timing h
+  0.452773 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19377166964090667
+calculated sz: 0.19377305517589155
+percentError1.385534984882364e-6
+iteration: 31
+timing h
+  0.664958 seconds (88 allocations: 313.503 MiB, 32.48% gc time)
+initial guess: 0.19377305517589155
+calculated sz: 0.19377401928176635
+percentError9.641058748011133e-7
+iteration: 32
+timing h
+  0.667740 seconds (88 allocations: 313.503 MiB, 31.40% gc time)
+initial guess: 0.19377401928176635
+calculated sz: 0.1937746901384981
+percentError6.708567317492697e-7
+iteration: 33
+timing h
+  0.453284 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1937746901384981
+calculated sz: 0.1937751569411742
+percentError4.6680267609677806e-7
+iteration: 34
+timing h
+  0.376908 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1937751569411742
+calculated sz: 0.1937754817560123
+percentError3.2481483810964384e-7
+iteration: 35
+timing h
+  0.581525 seconds (88 allocations: 313.503 MiB, 21.22% gc time)
+initial guess: 0.1937754817560123
+calculated sz: 0.1937757077711988
+percentError2.2601518648301955e-7
+iteration: 36
+timing h
+  0.456441 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1937757077711988
+calculated sz: 0.19377586503868016
+percentError1.572674813710151e-7
+iteration: 37
+timing h
+  0.661485 seconds (88 allocations: 313.503 MiB, 32.72% gc time)
+initial guess: 0.19377586503868016
+calculated sz: 0.19377597446954486
+percentError1.0943086470316388e-7
+iteration: 38
+timing h
+  0.668338 seconds (88 allocations: 313.503 MiB, 31.42% gc time)
+initial guess: 0.19377597446954486
+calculated sz: 0.19377605061438513
+percentError7.614484026641222e-8
+iteration: 39
+timing h
+  0.455391 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.19377605061438513
+calculated sz: 0.1937761035979179
+percentError5.298353275562384e-8
+starting h: 1.149999999999999
+iteration: 0
+timing h
+  0.372019 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.1125948629333623
+percentError0.012594862933362289
+iteration: 1
+timing h
+  0.604017 seconds (88 allocations: 313.503 MiB, 20.90% gc time)
+initial guess: 0.1125948629333623
+calculated sz: 0.12491286905745537
+percentError0.012318006124093075
+iteration: 2
+timing h
+  0.473251 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12491286905745537
+calculated sz: 0.13644527372709983
+percentError0.011532404669644461
+iteration: 3
+timing h
+  0.685100 seconds (88 allocations: 313.503 MiB, 32.08% gc time)
+initial guess: 0.13644527372709983
+calculated sz: 0.14677665160336598
+percentError0.010331377876266146
+iteration: 4
+timing h
+  0.670925 seconds (88 allocations: 313.503 MiB, 31.53% gc time)
+initial guess: 0.14677665160336598
+calculated sz: 0.15565152169376248
+percentError0.008874870090396503
+iteration: 5
+timing h
+  0.452849 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15565152169376248
+calculated sz: 0.16299175570367272
+percentError0.00734023400991024
+iteration: 6
+timing h
+  0.374788 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16299175570367272
+calculated sz: 0.16886811826170206
+percentError0.005876362558029341
+iteration: 7
+timing h
+  0.580479 seconds (88 allocations: 313.503 MiB, 21.15% gc time)
+initial guess: 0.16886811826170206
+calculated sz: 0.17344779010762595
+percentError0.004579671845923894
+iteration: 8
+timing h
+  0.453260 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17344779010762595
+calculated sz: 0.17694122322146047
+percentError0.0034934331138345154
+iteration: 9
+timing h
+  0.659903 seconds (88 allocations: 313.503 MiB, 32.64% gc time)
+initial guess: 0.17694122322146047
+calculated sz: 0.1795621043735732
+percentError0.0026208811521127306
+iteration: 10
+timing h
+  0.693647 seconds (88 allocations: 313.503 MiB, 30.83% gc time)
+initial guess: 0.1795621043735732
+calculated sz: 0.18150367638549272
+percentError0.0019415720119195234
+iteration: 11
+timing h
+  0.474816 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18150367638549272
+calculated sz: 0.1829284805326352
+percentError0.0014248041471424666
+iteration: 12
+timing h
+  0.377578 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1829284805326352
+calculated sz: 0.18396678330696783
+percentError0.0010383027743326445
+iteration: 13
+timing h
+  0.604992 seconds (88 allocations: 313.503 MiB, 20.82% gc time)
+initial guess: 0.18396678330696783
+calculated sz: 0.1847195695478547
+percentError0.0007527862408868713
+iteration: 14
+timing h
+  0.474393 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1847195695478547
+calculated sz: 0.18526332434929738
+percentError0.0005437548014426696
+iteration: 15
+timing h
+  0.684795 seconds (88 allocations: 313.503 MiB, 32.08% gc time)
+initial guess: 0.18526332434929738
+calculated sz: 0.1856550338021541
+percentError0.00039170945285671444
+iteration: 16
+timing h
+  0.694136 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.1856550338021541
+calculated sz: 0.18593666465039624
+percentError0.0002816308482421481
+iteration: 17
+timing h
+  0.474321 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18593666465039624
+calculated sz: 0.18613886793138532
+percentError0.00020220328098907725
+iteration: 18
+timing h
+  0.388128 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18613886793138532
+calculated sz: 0.1862838983439348
+percentError0.000145030412549485
+iteration: 19
+timing h
+  0.579400 seconds (88 allocations: 313.503 MiB, 21.21% gc time)
+initial guess: 0.1862838983439348
+calculated sz: 0.18638784636965558
+percentError0.00010394802572077921
+iteration: 20
+timing h
+  0.453043 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18638784636965558
+calculated sz: 0.18646231072636188
+percentError7.44643567062997e-5
+iteration: 21
+timing h
+  0.669184 seconds (88 allocations: 313.503 MiB, 32.47% gc time)
+initial guess: 0.18646231072636188
+calculated sz: 0.18651563432171545
+percentError5.332359535356601e-5
+iteration: 22
+timing h
+  0.691500 seconds (88 allocations: 313.503 MiB, 30.96% gc time)
+initial guess: 0.18651563432171545
+calculated sz: 0.18655380896010348
+percentError3.8174638388038806e-5
+iteration: 23
+timing h
+  0.473439 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18655380896010348
+calculated sz: 0.18658113317899047
+percentError2.7324218886987106e-5
+iteration: 24
+timing h
+  0.387886 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18658113317899047
+calculated sz: 0.18660068833972626
+percentError1.9555160735790222e-5
+iteration: 25
+timing h
+  0.604808 seconds (88 allocations: 313.503 MiB, 20.87% gc time)
+initial guess: 0.18660068833972626
+calculated sz: 0.18661468204294582
+percentError1.3993703219555842e-5
+iteration: 26
+timing h
+  0.469012 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18661468204294582
+calculated sz: 0.1866246952595285
+percentError1.0013216582671625e-5
+iteration: 27
+timing h
+  0.685481 seconds (88 allocations: 313.503 MiB, 32.16% gc time)
+initial guess: 0.1866246952595285
+calculated sz: 0.18663185987466088
+percentError7.164615132393415e-6
+iteration: 28
+timing h
+  0.694216 seconds (88 allocations: 313.503 MiB, 30.89% gc time)
+initial guess: 0.18663185987466088
+calculated sz: 0.18663698608704996
+percentError5.126212389072737e-6
+iteration: 29
+timing h
+  0.473002 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18663698608704996
+calculated sz: 0.18664065374834607
+percentError3.6676612961139554e-6
+iteration: 30
+timing h
+  0.388341 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18664065374834607
+calculated sz: 0.18664327780919143
+percentError2.624060845363152e-6
+iteration: 31
+timing h
+  0.604773 seconds (88 allocations: 313.503 MiB, 20.89% gc time)
+initial guess: 0.18664327780919143
+calculated sz: 0.1866451551922193
+percentError1.8773830278706605e-6
+iteration: 32
+timing h
+  0.474807 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1866451551922193
+calculated sz: 0.18664649835240493
+percentError1.3431601856295217e-6
+iteration: 33
+timing h
+  0.685815 seconds (88 allocations: 313.503 MiB, 32.15% gc time)
+initial guess: 0.18664649835240493
+calculated sz: 0.18664745930025028
+percentError9.60947845352056e-7
+iteration: 34
+timing h
+  0.674291 seconds (88 allocations: 313.503 MiB, 31.64% gc time)
+initial guess: 0.18664745930025028
+calculated sz: 0.18664814679558606
+percentError6.874953357716151e-7
+iteration: 35
+timing h
+  0.475317 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18664814679558606
+calculated sz: 0.1866486386518308
+percentError4.918562447331354e-7
+iteration: 36
+timing h
+  0.387226 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1866486386518308
+calculated sz: 0.18664899054074507
+percentError3.5188891428505897e-7
+iteration: 37
+timing h
+  0.605433 seconds (88 allocations: 313.503 MiB, 21.04% gc time)
+initial guess: 0.18664899054074507
+calculated sz: 0.18664924229231195
+percentError2.5175156687096134e-7
+iteration: 38
+timing h
+  0.474158 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.18664924229231195
+calculated sz: 0.18664942240250637
+percentError1.801101944254313e-7
+iteration: 39
+timing h
+  0.681107 seconds (88 allocations: 313.503 MiB, 32.25% gc time)
+initial guess: 0.18664942240250637
+calculated sz: 0.1866495512582864
+percentError1.28855780018311e-7
+starting h: 1.154999999999999
+iteration: 0
+timing h
+  0.693583 seconds (88 allocations: 313.503 MiB, 30.97% gc time)
+initial guess: 0.1
+calculated sz: 0.11102195828516129
+percentError0.011021958285161282
+iteration: 1
+timing h
+  0.474087 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11102195828516129
+calculated sz: 0.12172443326995391
+percentError0.010702474984792626
+iteration: 2
+timing h
+  0.384873 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12172443326995391
+calculated sz: 0.13174134647117447
+percentError0.010016913201220556
+iteration: 3
+timing h
+  0.604477 seconds (88 allocations: 313.503 MiB, 20.92% gc time)
+initial guess: 0.13174134647117447
+calculated sz: 0.14077735073937772
+percentError0.009036004268203252
+iteration: 4
+timing h
+  0.473661 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14077735073937772
+calculated sz: 0.14864666020614672
+percentError0.007869309466769003
+iteration: 5
+timing h
+  0.686610 seconds (88 allocations: 313.503 MiB, 32.05% gc time)
+initial guess: 0.14864666020614672
+calculated sz: 0.15528342579631188
+percentError0.006636765590165156
+iteration: 6
+timing h
+  0.693951 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.15528342579631188
+calculated sz: 0.16072561374353544
+percentError0.005442187947223565
+iteration: 7
+timing h
+  0.457884 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16072561374353544
+calculated sz: 0.16508359319211843
+percentError0.004357979448582988
+iteration: 8
+timing h
+  0.385944 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16508359319211843
+calculated sz: 0.16850616558173181
+percentError0.003422572389613382
+iteration: 9
+timing h
+  0.604116 seconds (88 allocations: 313.503 MiB, 21.08% gc time)
+initial guess: 0.16850616558173181
+calculated sz: 0.17115265305568783
+percentError0.0026464874739560162
+iteration: 10
+timing h
+  0.453320 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17115265305568783
+calculated sz: 0.17317425825283536
+percentError0.00202160519714753
+iteration: 11
+timing h
+  0.660067 seconds (88 allocations: 313.503 MiB, 32.67% gc time)
+initial guess: 0.17317425825283536
+calculated sz: 0.17470407628646356
+percentError0.0015298180336281997
+iteration: 12
+timing h
+  0.668625 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.17470407628646356
+calculated sz: 0.17585347185989572
+percentError0.0011493955734321604
+iteration: 13
+timing h
+  0.479771 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17585347185989572
+calculated sz: 0.17671237926966027
+percentError0.0008589074097645477
+iteration: 14
+timing h
+  0.370183 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17671237926966027
+calculated sz: 0.17735160957782828
+percentError0.0006392303081680095
+iteration: 15
+timing h
+  0.580200 seconds (88 allocations: 313.503 MiB, 21.14% gc time)
+initial guess: 0.17735160957782828
+calculated sz: 0.17782590614911697
+percentError0.00047429657128869596
+iteration: 16
+timing h
+  0.455283 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17782590614911697
+calculated sz: 0.17817703141941085
+percentError0.0003511252702938783
+iteration: 17
+timing h
+  0.686208 seconds (88 allocations: 313.503 MiB, 32.13% gc time)
+initial guess: 0.17817703141941085
+calculated sz: 0.1784365371960098
+percentError0.000259505776598945
+iteration: 18
+timing h
+  0.694108 seconds (88 allocations: 313.503 MiB, 30.88% gc time)
+initial guess: 0.1784365371960098
+calculated sz: 0.17862809235800273
+percentError0.000191555161992929
+iteration: 19
+timing h
+  0.466895 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17862809235800273
+calculated sz: 0.17876936013196573
+percentError0.00014126777396300527
+iteration: 20
+timing h
+  0.389908 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17876936013196573
+calculated sz: 0.17887347168521253
+percentError0.00010411155324679955
+iteration: 21
+timing h
+  0.605019 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.17887347168521253
+calculated sz: 0.17895016162462354
+percentError7.66899394110121e-5
+iteration: 22
+timing h
+  0.474414 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17895016162462354
+calculated sz: 0.17900663170856115
+percentError5.647008393760977e-5
+iteration: 23
+timing h
+  0.683328 seconds (88 allocations: 313.503 MiB, 32.27% gc time)
+initial guess: 0.17900663170856115
+calculated sz: 0.17904820180606734
+percentError4.157009750618834e-5
+iteration: 24
+timing h
+  0.669120 seconds (88 allocations: 313.503 MiB, 31.32% gc time)
+initial guess: 0.17904820180606734
+calculated sz: 0.17907879728044374
+percentError3.059547437639365e-5
+iteration: 25
+timing h
+  0.455570 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17907879728044374
+calculated sz: 0.17910131216341169
+percentError2.2514882967950012e-5
+iteration: 26
+timing h
+  0.370563 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17910131216341169
+calculated sz: 0.1791178788385107
+percentError1.6566675099027872e-5
+iteration: 27
+timing h
+  0.603980 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.1791178788385107
+calculated sz: 0.17913006779556537
+percentError1.218895705465406e-5
+iteration: 28
+timing h
+  0.475081 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17913006779556537
+calculated sz: 0.17913903531605457
+percentError8.967520489205905e-6
+iteration: 29
+timing h
+  0.682169 seconds (88 allocations: 313.503 MiB, 32.23% gc time)
+initial guess: 0.17913903531605457
+calculated sz: 0.1791456325145054
+percentError6.5971984508361725e-6
+iteration: 30
+timing h
+  0.694584 seconds (88 allocations: 313.503 MiB, 30.87% gc time)
+initial guess: 0.1791456325145054
+calculated sz: 0.17915048576814166
+percentError4.853253636249999e-6
+iteration: 31
+timing h
+  0.474353 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17915048576814166
+calculated sz: 0.17915405599928874
+percentError3.5702311470819925e-6
+iteration: 32
+timing h
+  0.390429 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17915405599928874
+calculated sz: 0.1791566823471238
+percentError2.626347835071874e-6
+iteration: 33
+timing h
+  0.604609 seconds (88 allocations: 313.503 MiB, 20.84% gc time)
+initial guess: 0.1791566823471238
+calculated sz: 0.17915861432740474
+percentError1.931980280922563e-6
+iteration: 34
+timing h
+  0.474628 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17915861432740474
+calculated sz: 0.1791600355075132
+percentError1.421180108457376e-6
+iteration: 35
+timing h
+  0.683082 seconds (88 allocations: 313.503 MiB, 32.28% gc time)
+initial guess: 0.1791600355075132
+calculated sz: 0.17916108093180072
+percentError1.0454242875268527e-6
+iteration: 36
+timing h
+  0.694957 seconds (88 allocations: 313.503 MiB, 30.88% gc time)
+initial guess: 0.17916108093180072
+calculated sz: 0.17916184994515394
+percentError7.690133532189947e-7
+iteration: 37
+timing h
+  0.471866 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17916184994515394
+calculated sz: 0.1791624156287442
+percentError5.656835902478896e-7
+iteration: 38
+timing h
+  0.391735 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1791624156287442
+calculated sz: 0.17916283174252431
+percentError4.1611378012729183e-7
+iteration: 39
+timing h
+  0.605118 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.17916283174252431
+calculated sz: 0.17916313783294405
+percentError3.0609041973272966e-7
+starting h: 1.1599999999999988
+iteration: 0
+timing h
+  0.474289 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.10948473313134736
+percentError0.009484733131347359
+iteration: 1
+timing h
+  0.685990 seconds (88 allocations: 313.503 MiB, 32.22% gc time)
+initial guess: 0.10948473313134736
+calculated sz: 0.11862624417991925
+percentError0.009141511048571888
+iteration: 2
+timing h
+  0.694520 seconds (88 allocations: 313.503 MiB, 30.97% gc time)
+initial guess: 0.11862624417991925
+calculated sz: 0.12717266411727157
+percentError0.00854641993735232
+iteration: 3
+timing h
+  0.473748 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12717266411727157
+calculated sz: 0.13492459405774887
+percentError0.007751929940477298
+iteration: 4
+timing h
+  0.387375 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13492459405774887
+calculated sz: 0.14175566188834274
+percentError0.006831067830593868
+iteration: 5
+timing h
+  0.601134 seconds (88 allocations: 313.503 MiB, 21.01% gc time)
+initial guess: 0.14175566188834274
+calculated sz: 0.14761743463675223
+percentError0.005861772748409488
+iteration: 6
+timing h
+  0.474139 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14761743463675223
+calculated sz: 0.1525300861383595
+percentError0.004912651501607274
+iteration: 7
+timing h
+  0.685544 seconds (88 allocations: 313.503 MiB, 32.25% gc time)
+initial guess: 0.1525300861383595
+calculated sz: 0.15656434126096838
+percentError0.004034255122608882
+iteration: 8
+timing h
+  0.695308 seconds (88 allocations: 313.503 MiB, 31.04% gc time)
+initial guess: 0.15656434126096838
+calculated sz: 0.1598211021877797
+percentError0.0032567609268113196
+iteration: 9
+timing h
+  0.474621 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1598211021877797
+calculated sz: 0.16241352838917972
+percentError0.0025924262014000166
+iteration: 10
+timing h
+  0.386187 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16241352838917972
+calculated sz: 0.1644538617509293
+percentError0.00204033336174958
+iteration: 11
+timing h
+  0.604176 seconds (88 allocations: 313.503 MiB, 20.88% gc time)
+initial guess: 0.1644538617509293
+calculated sz: 0.16604525160748762
+percentError0.0015913898565583229
+iteration: 12
+timing h
+  0.474281 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16604525160748762
+calculated sz: 0.16727770145424506
+percentError0.0012324498467574385
+iteration: 13
+timing h
+  0.677013 seconds (88 allocations: 313.503 MiB, 32.34% gc time)
+initial guess: 0.16727770145424506
+calculated sz: 0.16822690405592744
+percentError0.0009492026016823807
+iteration: 14
+timing h
+  0.668476 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.16822690405592744
+calculated sz: 0.1689548323784632
+percentError0.0007279283225357647
+iteration: 15
+timing h
+  0.453014 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1689548323784632
+calculated sz: 0.16951123158373674
+percentError0.0005563992052735334
+iteration: 16
+timing h
+  0.382866 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16951123158373674
+calculated sz: 0.16993544733084268
+percentError0.00042421574710593823
+iteration: 17
+timing h
+  0.580477 seconds (88 allocations: 313.503 MiB, 21.20% gc time)
+initial guess: 0.16993544733084268
+calculated sz: 0.17025825837091466
+percentError0.0003228110400719797
+iteration: 18
+timing h
+  0.453069 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17025825837091466
+calculated sz: 0.17050354320197383
+percentError0.0002452848310591782
+iteration: 19
+timing h
+  0.666266 seconds (88 allocations: 313.503 MiB, 32.53% gc time)
+initial guess: 0.17050354320197383
+calculated sz: 0.17068971188797366
+percentError0.00018616868599982683
+iteration: 20
+timing h
+  0.668837 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.17068971188797366
+calculated sz: 0.17083089185278047
+percentError0.00014117996480680906
+iteration: 21
+timing h
+  0.453421 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17083089185278047
+calculated sz: 0.17093788576974436
+percentError0.00010699391696389338
+iteration: 22
+timing h
+  0.367645 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17093788576974436
+calculated sz: 0.1710189319350036
+percentError8.104616525922426e-5
+iteration: 23
+timing h
+  0.599040 seconds (88 allocations: 313.503 MiB, 20.94% gc time)
+initial guess: 0.1710189319350036
+calculated sz: 0.17108030032362745
+percentError6.13683886238614e-5
+iteration: 24
+timing h
+  0.453178 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17108030032362745
+calculated sz: 0.1711267555861966
+percentError4.645526256916166e-5
+iteration: 25
+timing h
+  0.661035 seconds (88 allocations: 313.503 MiB, 32.75% gc time)
+initial guess: 0.1711267555861966
+calculated sz: 0.1711619142778536
+percentError3.515869165698904e-5
+iteration: 26
+timing h
+  0.681435 seconds (88 allocations: 313.503 MiB, 31.03% gc time)
+initial guess: 0.1711619142778536
+calculated sz: 0.1711885191108911
+percentError2.6604833037513487e-5
+iteration: 27
+timing h
+  0.454913 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1711885191108911
+calculated sz: 0.1712086487240413
+percentError2.012961315017714e-5
+iteration: 28
+timing h
+  0.374284 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1712086487240413
+calculated sz: 0.17122387768451963
+percentError1.5228960478341769e-5
+iteration: 29
+timing h
+  0.592590 seconds (88 allocations: 313.503 MiB, 20.82% gc time)
+initial guess: 0.17122387768451963
+calculated sz: 0.17123539827607756
+percentError1.1520591557928617e-5
+iteration: 30
+timing h
+  0.475006 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17123539827607756
+calculated sz: 0.17124411305490506
+percentError8.714778827495495e-6
+iteration: 31
+timing h
+  0.659983 seconds (88 allocations: 313.503 MiB, 32.72% gc time)
+initial guess: 0.17124411305490506
+calculated sz: 0.17125070510671553
+percentError6.592051810472288e-6
+iteration: 32
+timing h
+  0.668572 seconds (88 allocations: 313.503 MiB, 31.40% gc time)
+initial guess: 0.17125070510671553
+calculated sz: 0.1712556913301276
+percentError4.986223412078994e-6
+iteration: 33
+timing h
+  0.476082 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1712556913301276
+calculated sz: 0.17125946281985072
+percentError3.771489723108923e-6
+iteration: 34
+timing h
+  0.370754 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17125946281985072
+calculated sz: 0.17126231545752837
+percentError2.8526376776583096e-6
+iteration: 35
+timing h
+  0.579978 seconds (88 allocations: 313.503 MiB, 21.17% gc time)
+initial guess: 0.17126231545752837
+calculated sz: 0.171264473075868
+percentError2.157618339632128e-6
+iteration: 36
+timing h
+  0.454218 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.171264473075868
+calculated sz: 0.1712661049938691
+percentError1.6319180010937462e-6
+iteration: 37
+timing h
+  0.663152 seconds (88 allocations: 313.503 MiB, 32.87% gc time)
+initial guess: 0.1712661049938691
+calculated sz: 0.1712673392884046
+percentError1.23429453549595e-6
+iteration: 38
+timing h
+  0.667899 seconds (88 allocations: 313.503 MiB, 31.39% gc time)
+initial guess: 0.1712673392884046
+calculated sz: 0.17126827283673626
+percentError9.335483316663673e-7
+iteration: 39
+timing h
+  0.453287 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.17126827283673626
+calculated sz: 0.1712689789151951
+percentError7.060784588397429e-7
+starting h: 1.1649999999999987
+iteration: 0
+timing h
+  0.370230 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.10798226649775591
+percentError0.007982266497755908
+iteration: 1
+timing h
+  0.579643 seconds (88 allocations: 313.503 MiB, 21.19% gc time)
+initial guess: 0.10798226649775591
+calculated sz: 0.11561683585341048
+percentError0.007634569355654569
+iteration: 2
+timing h
+  0.452898 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11561683585341048
+calculated sz: 0.12274104571904985
+percentError0.007124209865639372
+iteration: 3
+timing h
+  0.668094 seconds (88 allocations: 313.503 MiB, 32.97% gc time)
+initial guess: 0.12274104571904985
+calculated sz: 0.12922971238779135
+percentError0.006488666668741497
+iteration: 4
+timing h
+  0.670369 seconds (88 allocations: 313.503 MiB, 31.31% gc time)
+initial guess: 0.12922971238779135
+calculated sz: 0.13500449694304975
+percentError0.0057747845552584
+iteration: 5
+timing h
+  0.452571 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13500449694304975
+calculated sz: 0.14003525372344544
+percentError0.00503075678039569
+iteration: 6
+timing h
+  0.369715 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14003525372344544
+calculated sz: 0.14433439071929016
+percentError0.004299136995844721
+iteration: 7
+timing h
+  0.582104 seconds (88 allocations: 313.503 MiB, 21.11% gc time)
+initial guess: 0.14433439071929016
+calculated sz: 0.14794685017247441
+percentError0.0036124594531842524
+iteration: 8
+timing h
+  0.454233 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14794685017247441
+calculated sz: 0.150938661313949
+percentError0.002991811141474593
+iteration: 9
+timing h
+  0.666306 seconds (88 allocations: 313.503 MiB, 32.91% gc time)
+initial guess: 0.150938661313949
+calculated sz: 0.15338639171657267
+percentError0.0024477304026236657
+iteration: 10
+timing h
+  0.668260 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.15338639171657267
+calculated sz: 0.15536880321033864
+percentError0.001982411493765962
+iteration: 11
+timing h
+  0.473311 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15536880321033864
+calculated sz: 0.15696108809254533
+percentError0.001592284882206696
+iteration: 12
+timing h
+  0.371005 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15696108809254533
+calculated sz: 0.15823145018558799
+percentError0.001270362093042654
+iteration: 13
+timing h
+  0.581017 seconds (88 allocations: 313.503 MiB, 21.15% gc time)
+initial guess: 0.15823145018558799
+calculated sz: 0.1592395136653718
+percentError0.0010080634797838273
+iteration: 14
+timing h
+  0.455074 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1592395136653718
+calculated sz: 0.16003599547633013
+percentError0.000796481810958316
+iteration: 15
+timing h
+  0.688994 seconds (88 allocations: 313.503 MiB, 32.23% gc time)
+initial guess: 0.16003599547633013
+calculated sz: 0.1606631548745033
+percentError0.0006271593981731771
+iteration: 16
+timing h
+  0.695081 seconds (88 allocations: 313.503 MiB, 30.98% gc time)
+initial guess: 0.1606631548745033
+calculated sz: 0.16115565453666425
+percentError0.0004924996621609445
+iteration: 17
+timing h
+  0.462234 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16115565453666425
+calculated sz: 0.16154158535571195
+percentError0.0003859308190476973
+iteration: 18
+timing h
+  0.389406 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16154158535571195
+calculated sz: 0.16184350197204794
+percentError0.0003019166163359954
+iteration: 19
+timing h
+  0.604811 seconds (88 allocations: 313.503 MiB, 20.82% gc time)
+initial guess: 0.16184350197204794
+calculated sz: 0.1620793844598134
+percentError0.00023588248776545973
+iteration: 20
+timing h
+  0.466161 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1620793844598134
+calculated sz: 0.16226348682203037
+percentError0.00018410236221697018
+iteration: 21
+timing h
+  0.661485 seconds (88 allocations: 313.503 MiB, 32.73% gc time)
+initial guess: 0.16226348682203037
+calculated sz: 0.16240706067015453
+percentError0.00014357384812416218
+iteration: 22
+timing h
+  0.670848 seconds (88 allocations: 313.503 MiB, 31.28% gc time)
+initial guess: 0.16240706067015453
+calculated sz: 0.16251895806234334
+percentError0.0001118973921888089
+iteration: 23
+timing h
+  0.460418 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16251895806234334
+calculated sz: 0.16260612523798365
+percentError8.716717564030696e-5
+iteration: 24
+timing h
+  0.375560 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16260612523798365
+calculated sz: 0.16267400199087378
+percentError6.787675289013362e-5
+iteration: 25
+timing h
+  0.582726 seconds (88 allocations: 313.503 MiB, 21.11% gc time)
+initial guess: 0.16267400199087378
+calculated sz: 0.1627268417304036
+percentError5.2839739529825236e-5
+iteration: 26
+timing h
+  0.453054 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1627268417304036
+calculated sz: 0.16276796619307857
+percentError4.1124462674957396e-5
+iteration: 27
+timing h
+  0.661523 seconds (88 allocations: 313.503 MiB, 32.71% gc time)
+initial guess: 0.16276796619307857
+calculated sz: 0.16279996707348368
+percentError3.2000880405114174e-5
+iteration: 28
+timing h
+  0.667421 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.16279996707348368
+calculated sz: 0.16282486498992998
+percentError2.489791644630368e-5
+iteration: 29
+timing h
+  0.454720 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16282486498992998
+calculated sz: 0.16284423442345902
+percentError1.9369433529037305e-5
+iteration: 30
+timing h
+  0.373168 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16284423442345902
+calculated sz: 0.16285930167844162
+percentError1.5067254982598088e-5
+iteration: 31
+timing h
+  0.605413 seconds (88 allocations: 313.503 MiB, 20.84% gc time)
+initial guess: 0.16285930167844162
+calculated sz: 0.16287102154886235
+percentError1.1719870420728862e-5
+iteration: 32
+timing h
+  0.474119 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16287102154886235
+calculated sz: 0.16288013723311928
+percentError9.115684256932877e-6
+iteration: 33
+timing h
+  0.663939 seconds (88 allocations: 313.503 MiB, 32.74% gc time)
+initial guess: 0.16288013723311928
+calculated sz: 0.16288722710628858
+percentError7.089873169302541e-6
+iteration: 34
+timing h
+  0.675290 seconds (88 allocations: 313.503 MiB, 31.60% gc time)
+initial guess: 0.16288722710628858
+calculated sz: 0.16289274120101907
+percentError5.514094730485475e-6
+iteration: 35
+timing h
+  0.453011 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16289274120101907
+calculated sz: 0.16289702964291006
+percentError4.288441890987205e-6
+iteration: 36
+timing h
+  0.373539 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16289702964291006
+calculated sz: 0.1629003648031918
+percentError3.335160281753291e-6
+iteration: 37
+timing h
+  0.580358 seconds (88 allocations: 313.503 MiB, 21.24% gc time)
+initial guess: 0.1629003648031918
+calculated sz: 0.16290295854994832
+percentError2.5937467565129158e-6
+iteration: 38
+timing h
+  0.453332 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.16290295854994832
+calculated sz: 0.16290497567819626
+percentError2.0171282479330976e-6
+iteration: 39
+timing h
+  0.665667 seconds (88 allocations: 313.503 MiB, 32.71% gc time)
+initial guess: 0.16290497567819626
+calculated sz: 0.16290654436282073
+percentError1.5686846244755692e-6
+starting h: 1.1699999999999986
+iteration: 0
+timing h
+  0.668336 seconds (88 allocations: 313.503 MiB, 31.39% gc time)
+initial guess: 0.1
+calculated sz: 0.10651365467834124
+percentError0.006513654678341238
+iteration: 1
+timing h
+  0.486589 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10651365467834124
+calculated sz: 0.11269460366890591
+percentError0.006180948990564664
+iteration: 2
+timing h
+  0.384975 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11269460366890591
+calculated sz: 0.11844748101650307
+percentError0.005752877347597163
+iteration: 3
+timing h
+  0.606174 seconds (88 allocations: 313.503 MiB, 21.07% gc time)
+initial guess: 0.11844748101650307
+calculated sz: 0.12370208377845411
+percentError0.005254602761951041
+iteration: 4
+timing h
+  0.474454 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12370208377845411
+calculated sz: 0.1284165559829222
+percentError0.0047144722044680926
+iteration: 5
+timing h
+  0.671709 seconds (88 allocations: 313.503 MiB, 32.55% gc time)
+initial guess: 0.1284165559829222
+calculated sz: 0.1325768820864998
+percentError0.004160326103577583
+iteration: 6
+timing h
+  0.694399 seconds (88 allocations: 313.503 MiB, 30.90% gc time)
+initial guess: 0.1325768820864998
+calculated sz: 0.13619336981890065
+percentError0.0036164877324008637
+iteration: 7
+timing h
+  0.474648 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13619336981890065
+calculated sz: 0.13929528085514428
+percentError0.003101911036243632
+iteration: 8
+timing h
+  0.386377 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13929528085514428
+calculated sz: 0.1419248331850308
+percentError0.0026295523298865142
+iteration: 9
+timing h
+  0.604061 seconds (88 allocations: 313.503 MiB, 20.85% gc time)
+initial guess: 0.1419248331850308
+calculated sz: 0.14413155516929804
+percentError0.002206721984267246
+iteration: 10
+timing h
+  0.469777 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14413155516929804
+calculated sz: 0.14596759278876334
+percentError0.0018360376194652972
+iteration: 11
+timing h
+  0.686918 seconds (88 allocations: 313.503 MiB, 32.23% gc time)
+initial guess: 0.14596759278876334
+calculated sz: 0.14748420867634043
+percentError0.001516615887577094
+iteration: 12
+timing h
+  0.694078 seconds (88 allocations: 313.503 MiB, 30.93% gc time)
+initial guess: 0.14748420867634043
+calculated sz: 0.14872944600475516
+percentError0.0012452373284147222
+iteration: 13
+timing h
+  0.473742 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14872944600475516
+calculated sz: 0.1497467798014228
+percentError0.0010173337966676577
+iteration: 14
+timing h
+  0.387999 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1497467798014228
+calculated sz: 0.15057452216378367
+percentError0.000827742362360856
+iteration: 15
+timing h
+  0.604664 seconds (88 allocations: 313.503 MiB, 20.90% gc time)
+initial guess: 0.15057452216378367
+calculated sz: 0.15124575287880115
+percentError0.0006712307150174845
+iteration: 16
+timing h
+  0.456045 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15124575287880115
+calculated sz: 0.15178858289458405
+percentError0.0005428300157828969
+iteration: 17
+timing h
+  0.663002 seconds (88 allocations: 313.503 MiB, 32.70% gc time)
+initial guess: 0.15178858289458405
+calculated sz: 0.152226603796296
+percentError0.0004380209017119385
+iteration: 18
+timing h
+  0.668417 seconds (88 allocations: 313.503 MiB, 31.47% gc time)
+initial guess: 0.152226603796296
+calculated sz: 0.15257941984904744
+percentError0.0003528160527514479
+iteration: 19
+timing h
+  0.470606 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15257941984904744
+calculated sz: 0.15286319496393735
+percentError0.000283775114889917
+iteration: 20
+timing h
+  0.368724 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15286319496393735
+calculated sz: 0.15309117389536664
+percentError0.0002279789314292846
+iteration: 21
+timing h
+  0.579899 seconds (88 allocations: 313.503 MiB, 21.25% gc time)
+initial guess: 0.15309117389536664
+calculated sz: 0.15327415591650412
+percentError0.00018298202113747886
+iteration: 22
+timing h
+  0.455427 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15327415591650412
+calculated sz: 0.1534209117430269
+percentError0.00014675582652279306
+iteration: 23
+timing h
+  0.663783 seconds (88 allocations: 313.503 MiB, 32.74% gc time)
+initial guess: 0.1534209117430269
+calculated sz: 0.15353854225349012
+percentError0.00011763051046320694
+iteration: 24
+timing h
+  0.669043 seconds (88 allocations: 313.503 MiB, 31.40% gc time)
+initial guess: 0.15353854225349012
+calculated sz: 0.15363278202421476
+percentError9.423977072464673e-5
+iteration: 25
+timing h
+  0.452492 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15363278202421476
+calculated sz: 0.1537082529737902
+percentError7.54709495754402e-5
+iteration: 26
+timing h
+  0.368284 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1537082529737902
+calculated sz: 0.15376867430511687
+percentError6.0421331326665495e-5
+iteration: 27
+timing h
+  0.580590 seconds (88 allocations: 313.503 MiB, 21.26% gc time)
+initial guess: 0.15376867430511687
+calculated sz: 0.15381703500251145
+percentError4.836069739458382e-5
+iteration: 28
+timing h
+  0.452910 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15381703500251145
+calculated sz: 0.15385573475470357
+percentError3.86997521921173e-5
+iteration: 29
+timing h
+  0.685455 seconds (88 allocations: 313.503 MiB, 32.45% gc time)
+initial guess: 0.15385573475470357
+calculated sz: 0.1538866985700638
+percentError3.096381536021875e-5
+iteration: 30
+timing h
+  0.669258 seconds (88 allocations: 313.503 MiB, 31.42% gc time)
+initial guess: 0.1538866985700638
+calculated sz: 0.15391146966830435
+percentError2.477109824056134e-5
+iteration: 31
+timing h
+  0.452170 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15391146966830435
+calculated sz: 0.15393128455776847
+percentError1.9814889464120355e-5
+iteration: 32
+timing h
+  0.367765 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15393128455776847
+calculated sz: 0.1539471335818495
+percentError1.5849024081027174e-5
+iteration: 33
+timing h
+  0.582996 seconds (88 allocations: 313.503 MiB, 21.46% gc time)
+initial guess: 0.1539471335818495
+calculated sz: 0.15395980966217748
+percentError1.2676080327983508e-5
+iteration: 34
+timing h
+  0.452864 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15395980966217748
+calculated sz: 0.1539699474853743
+percentError1.013782319680967e-5
+iteration: 35
+timing h
+  0.661815 seconds (88 allocations: 313.503 MiB, 32.78% gc time)
+initial guess: 0.1539699474853743
+calculated sz: 0.15397805497244937
+percentError8.10748707508191e-6
+iteration: 36
+timing h
+  0.676723 seconds (88 allocations: 313.503 MiB, 31.50% gc time)
+initial guess: 0.15397805497244937
+calculated sz: 0.15398453852867228
+percentError6.483556222902642e-6
+iteration: 37
+timing h
+  0.474559 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15398453852867228
+calculated sz: 0.15398972328881644
+percentError5.184760144161249e-6
+iteration: 38
+timing h
+  0.386479 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.15398972328881644
+calculated sz: 0.15399386934096973
+percentError4.146052153292112e-6
+iteration: 39
+timing h
+  0.601973 seconds (88 allocations: 313.503 MiB, 21.16% gc time)
+initial guess: 0.15399386934096973
+calculated sz: 0.15399718472176468
+percentError3.3153807949548586e-6
+starting h: 1.1749999999999985
+iteration: 0
+timing h
+  0.474065 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.10507801188742776
+percentError0.00507801188742775
+iteration: 1
+timing h
+  0.661777 seconds (88 allocations: 313.503 MiB, 32.83% gc time)
+initial guess: 0.10507801188742776
+calculated sz: 0.10985782653516928
+percentError0.00477981464774152
+iteration: 2
+timing h
+  0.669043 seconds (88 allocations: 313.503 MiB, 31.40% gc time)
+initial guess: 0.10985782653516928
+calculated sz: 0.11429220254727966
+percentError0.004434376012110386
+iteration: 3
+timing h
+  0.473712 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11429220254727966
+calculated sz: 0.11834915623137218
+percentError0.004056953684092521
+iteration: 4
+timing h
+  0.385082 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11834915623137218
+calculated sz: 0.12201228258562515
+percentError0.003663126354252963
+iteration: 5
+timing h
+  0.605087 seconds (88 allocations: 313.503 MiB, 20.91% gc time)
+initial guess: 0.12201228258562515
+calculated sz: 0.12527966137854726
+percentError0.003267378792922118
+iteration: 6
+timing h
+  0.474247 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12527966137854726
+calculated sz: 0.12816171684685157
+percentError0.0028820554683043065
+iteration: 7
+timing h
+  0.686449 seconds (88 allocations: 313.503 MiB, 32.24% gc time)
+initial guess: 0.12816171684685157
+calculated sz: 0.13067848860864054
+percentError0.0025167717617889662
+iteration: 8
+timing h
+  0.677571 seconds (88 allocations: 313.503 MiB, 31.35% gc time)
+initial guess: 0.13067848860864054
+calculated sz: 0.13285674955891166
+percentError0.002178260950271127
+iteration: 9
+timing h
+  0.474516 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13285674955891166
+calculated sz: 0.13472731051294934
+percentError0.0018705609540376755
+iteration: 10
+timing h
+  0.385424 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13472731051294934
+calculated sz: 0.13632272605440485
+percentError0.0015954155414555082
+iteration: 11
+timing h
+  0.604256 seconds (88 allocations: 313.503 MiB, 20.81% gc time)
+initial guess: 0.13632272605440485
+calculated sz: 0.13767549762366013
+percentError0.0013527715692552844
+iteration: 12
+timing h
+  0.474668 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13767549762366013
+calculated sz: 0.13881677883212898
+percentError0.0011412812084688473
+iteration: 13
+timing h
+  0.686764 seconds (88 allocations: 313.503 MiB, 32.26% gc time)
+initial guess: 0.13881677883212898
+calculated sz: 0.13977553017787234
+percentError0.0009587513457433583
+iteration: 14
+timing h
+  0.694413 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.13977553017787234
+calculated sz: 0.14057804206383412
+percentError0.0008025118859617819
+iteration: 15
+timing h
+  0.473619 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14057804206383412
+calculated sz: 0.1412477383528086
+percentError0.0006696962889744806
+iteration: 16
+timing h
+  0.374182 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1412477383528086
+calculated sz: 0.14180517929542183
+percentError0.0005574409426132299
+iteration: 17
+timing h
+  0.605718 seconds (88 allocations: 313.503 MiB, 20.99% gc time)
+initial guess: 0.14180517929542183
+calculated sz: 0.1422681957633317
+percentError0.0004630164679098603
+iteration: 18
+timing h
+  0.474557 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1422681957633317
+calculated sz: 0.14265210166660527
+percentError0.00038390590327358476
+iteration: 19
+timing h
+  0.668578 seconds (88 allocations: 313.503 MiB, 32.52% gc time)
+initial guess: 0.14265210166660527
+calculated sz: 0.14296994551546044
+percentError0.0003178438488551649
+iteration: 20
+timing h
+  0.668457 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.14296994551546044
+calculated sz: 0.14323277401823567
+percentError0.00026282850277523084
+iteration: 21
+timing h
+  0.460876 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14323277401823567
+calculated sz: 0.14344989001400452
+percentError0.00021711599576884621
+iteration: 22
+timing h
+  0.369953 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14344989001400452
+calculated sz: 0.14362909405636076
+percentError0.00017920404235624576
+iteration: 23
+timing h
+  0.602639 seconds (88 allocations: 313.503 MiB, 21.03% gc time)
+initial guess: 0.14362909405636076
+calculated sz: 0.14377690395568757
+percentError0.00014780989932680622
+iteration: 24
+timing h
+  0.470072 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14377690395568757
+calculated sz: 0.14389874997697855
+percentError0.00012184602129097777
+iteration: 25
+timing h
+  0.689119 seconds (88 allocations: 313.503 MiB, 32.29% gc time)
+initial guess: 0.14389874997697855
+calculated sz: 0.14399914557803303
+percentError0.00010039560105448708
+iteration: 26
+timing h
+  0.695159 seconds (88 allocations: 313.503 MiB, 30.99% gc time)
+initial guess: 0.14399914557803303
+calculated sz: 0.14408183489646184
+percentError8.2689318428808e-5
+iteration: 27
+timing h
+  0.466073 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14408183489646184
+calculated sz: 0.14414991891811696
+percentError6.808402165511818e-5
+iteration: 28
+timing h
+  0.387084 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14414991891811696
+calculated sz: 0.14420596258505147
+percentError5.6043666934513237e-5
+iteration: 29
+timing h
+  0.603049 seconds (88 allocations: 313.503 MiB, 20.80% gc time)
+initial guess: 0.14420596258505147
+calculated sz: 0.1442520851706435
+percentError4.6122585592028864e-5
+iteration: 30
+timing h
+  0.474312 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1442520851706435
+calculated sz: 0.1442900361657291
+percentError3.7950995085606065e-5
+iteration: 31
+timing h
+  0.666866 seconds (88 allocations: 313.503 MiB, 32.57% gc time)
+initial guess: 0.1442900361657291
+calculated sz: 0.14432125874955964
+percentError3.122258383053689e-5
+iteration: 32
+timing h
+  0.671098 seconds (88 allocations: 313.503 MiB, 31.34% gc time)
+initial guess: 0.14432125874955964
+calculated sz: 0.14434694270885937
+percentError2.568395929972156e-5
+iteration: 33
+timing h
+  0.457486 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14434694270885937
+calculated sz: 0.14436806844635738
+percentError2.1125737498017827e-5
+iteration: 34
+timing h
+  0.367851 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14436806844635738
+calculated sz: 0.14438544350286026
+percentError1.7375056502871855e-5
+iteration: 35
+timing h
+  0.580991 seconds (88 allocations: 313.503 MiB, 21.15% gc time)
+initial guess: 0.14438544350286026
+calculated sz: 0.144399732814975
+percentError1.4289312114751374e-5
+iteration: 36
+timing h
+  0.454320 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.144399732814975
+calculated sz: 0.1444114837483193
+percentError1.1750933344295555e-5
+iteration: 37
+timing h
+  0.661487 seconds (88 allocations: 313.503 MiB, 32.82% gc time)
+initial guess: 0.1444114837483193
+calculated sz: 0.14442114678475088
+percentError9.663036431573069e-6
+iteration: 38
+timing h
+  0.669023 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.14442114678475088
+calculated sz: 0.14442909260253445
+percentError7.945817783572284e-6
+iteration: 39
+timing h
+  0.455344 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.14442909260253445
+calculated sz: 0.14443562616737146
+percentError6.533564837013506e-6
+starting h: 1.1799999999999984
+iteration: 0
+timing h
+  0.386198 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.10367447077690561
+percentError0.0036744707769056084
+iteration: 1
+timing h
+  0.605017 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.10367447077690561
+calculated sz: 0.10710468739043556
+percentError0.003430216613529949
+iteration: 2
+timing h
+  0.474369 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10710468739043556
+calculated sz: 0.11027476047943588
+percentError0.0031700730890003165
+iteration: 3
+timing h
+  0.686880 seconds (88 allocations: 313.503 MiB, 32.33% gc time)
+initial guess: 0.11027476047943588
+calculated sz: 0.11317651506985875
+percentError0.0029017545904228698
+iteration: 4
+timing h
+  0.694520 seconds (88 allocations: 313.503 MiB, 30.96% gc time)
+initial guess: 0.11317651506985875
+calculated sz: 0.1158089421157731
+percentError0.0026324270459143484
+iteration: 5
+timing h
+  0.458256 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1158089421157731
+calculated sz: 0.1181772770032002
+percentError0.0023683348874271037
+iteration: 6
+timing h
+  0.392469 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1181772770032002
+calculated sz: 0.12029185043071686
+percentError0.0021145734275166556
+iteration: 7
+timing h
+  0.604478 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.12029185043071686
+calculated sz: 0.12216685260181435
+percentError0.001875002171097498
+iteration: 8
+timing h
+  0.474309 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12216685260181435
+calculated sz: 0.12381912836821043
+percentError0.0016522757663960802
+iteration: 9
+timing h
+  0.687832 seconds (88 allocations: 313.503 MiB, 32.24% gc time)
+initial guess: 0.12381912836821043
+calculated sz: 0.12526708804477868
+percentError0.0014479596765682445
+iteration: 10
+timing h
+  0.669012 seconds (88 allocations: 313.503 MiB, 31.38% gc time)
+initial guess: 0.12526708804477868
+calculated sz: 0.12652978431579406
+percentError0.0012626962710153844
+iteration: 11
+timing h
+  0.457230 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12652978431579406
+calculated sz: 0.12762617569605442
+percentError0.001096391380260353
+iteration: 12
+timing h
+  0.391905 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12762617569605442
+calculated sz: 0.12857457429767358
+percentError0.0009483986016191603
+iteration: 13
+timing h
+  0.604660 seconds (88 allocations: 313.503 MiB, 20.81% gc time)
+initial guess: 0.12857457429767358
+calculated sz: 0.1293922607599208
+percentError0.0008176864622472246
+iteration: 14
+timing h
+  0.474048 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1293922607599208
+calculated sz: 0.1300952412095058
+percentError0.0007029804495850001
+iteration: 15
+timing h
+  0.680333 seconds (88 allocations: 313.503 MiB, 32.30% gc time)
+initial guess: 0.1300952412095058
+calculated sz: 0.13069811842347176
+percentError0.0006028772139659577
+iteration: 16
+timing h
+  0.691398 seconds (88 allocations: 313.503 MiB, 30.90% gc time)
+initial guess: 0.13069811842347176
+calculated sz: 0.13121405024616353
+percentError0.0005159318226917731
+iteration: 17
+timing h
+  0.474195 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13121405024616353
+calculated sz: 0.13165477126893432
+percentError0.0004407210227707903
+iteration: 18
+timing h
+  0.386751 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13165477126893432
+calculated sz: 0.13203065768088376
+percentError0.0003758864119494387
+iteration: 19
+timing h
+  0.603296 seconds (88 allocations: 313.503 MiB, 20.91% gc time)
+initial guess: 0.13203065768088376
+calculated sz: 0.13235081927238737
+percentError0.00032016159150360934
+iteration: 20
+timing h
+  0.474298 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13235081927238737
+calculated sz: 0.13262320636151795
+percentError0.00027238708913057685
+iteration: 21
+timing h
+  0.689190 seconds (88 allocations: 313.503 MiB, 32.17% gc time)
+initial guess: 0.13262320636151795
+calculated sz: 0.13285472268651796
+percentError0.00023151632500001407
+iteration: 22
+timing h
+  0.694120 seconds (88 allocations: 313.503 MiB, 30.87% gc time)
+initial guess: 0.13285472268651796
+calculated sz: 0.13305133798936403
+percentError0.00019661530284606488
+iteration: 23
+timing h
+  0.473353 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13305133798936403
+calculated sz: 0.1332181961227174
+percentError0.00016685813335337585
+iteration: 24
+timing h
+  0.395326 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1332181961227174
+calculated sz: 0.13335971610829317
+percentError0.0001415199855757665
+iteration: 25
+timing h
+  0.599355 seconds (88 allocations: 313.503 MiB, 20.89% gc time)
+initial guess: 0.13335971610829317
+calculated sz: 0.13347968474449418
+percentError0.00011996863620100662
+iteration: 26
+timing h
+  0.471497 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13347968474449418
+calculated sz: 0.13358134018782078
+percentError0.0001016554433266037
+iteration: 27
+timing h
+  0.687564 seconds (88 allocations: 313.503 MiB, 32.31% gc time)
+initial guess: 0.13358134018782078
+calculated sz: 0.13366744649559326
+percentError8.610630777247663e-5
+iteration: 28
+timing h
+  0.694497 seconds (88 allocations: 313.503 MiB, 30.90% gc time)
+initial guess: 0.13366744649559326
+calculated sz: 0.1337403594820109
+percentError7.291298641765032e-5
+iteration: 29
+timing h
+  0.454279 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1337403594820109
+calculated sz: 0.13380208445884284
+percentError6.17249768319339e-5
+iteration: 30
+timing h
+  0.368735 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13380208445884284
+calculated sz: 0.1338543265492357
+percentError5.224209039286776e-5
+iteration: 31
+timing h
+  0.587426 seconds (88 allocations: 313.503 MiB, 21.26% gc time)
+initial guess: 0.1338543265492357
+calculated sz: 0.13389853430884918
+percentError4.4207759613473785e-5
+iteration: 32
+timing h
+  0.453464 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13389853430884918
+calculated sz: 0.1339359373875727
+percentError3.740307872351911e-5
+iteration: 33
+timing h
+  0.661625 seconds (88 allocations: 313.503 MiB, 32.79% gc time)
+initial guess: 0.1339359373875727
+calculated sz: 0.133967578934376
+percentError3.1641546803296006e-5
+iteration: 34
+timing h
+  0.669920 seconds (88 allocations: 313.503 MiB, 31.32% gc time)
+initial guess: 0.133967578934376
+calculated sz: 0.133994343399527
+percentError2.6764465151013495e-5
+iteration: 35
+timing h
+  0.455003 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.133994343399527
+calculated sz: 0.13401698033127996
+percentError2.2636931752945122e-5
+iteration: 36
+timing h
+  0.372615 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.13401698033127996
+calculated sz: 0.13403612470374035
+percentError1.9144372460394576e-5
+iteration: 37
+timing h
+  0.580392 seconds (88 allocations: 313.503 MiB, 21.17% gc time)
+initial guess: 0.13403612470374035
+calculated sz: 0.134052314252735
+percentError1.618954899465508e-5
+iteration: 38
+timing h
+  0.455909 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.134052314252735
+calculated sz: 0.13406600423952225
+percentError1.3689986787246422e-5
+iteration: 39
+timing h
+  0.665913 seconds (88 allocations: 313.503 MiB, 33.03% gc time)
+initial guess: 0.13406600423952225
+calculated sz: 0.13407758000927947
+percentError1.1575769757216081e-5
+starting h: 1.1849999999999983
+iteration: 0
+timing h
+  0.668758 seconds (88 allocations: 313.503 MiB, 31.50% gc time)
+initial guess: 0.1
+calculated sz: 0.10230218283213122
+percentError0.002302182832131211
+iteration: 1
+timing h
+  0.459347 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10230218283213122
+calculated sz: 0.10443329197710133
+percentError0.0021311091449701114
+iteration: 2
+timing h
+  0.375983 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10443329197710133
+calculated sz: 0.10639409808019792
+percentError0.001960806103096596
+iteration: 3
+timing h
+  0.579758 seconds (88 allocations: 313.503 MiB, 21.21% gc time)
+initial guess: 0.10639409808019792
+calculated sz: 0.10818798634614772
+percentError0.0017938882659497973
+iteration: 4
+timing h
+  0.460431 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10818798634614772
+calculated sz: 0.1098205230577939
+percentError0.0016325367116461764
+iteration: 5
+timing h
+  0.681085 seconds (88 allocations: 313.503 MiB, 33.25% gc time)
+initial guess: 0.1098205230577939
+calculated sz: 0.11129900030302906
+percentError0.0014784772452351574
+iteration: 6
+timing h
+  0.705533 seconds (88 allocations: 313.503 MiB, 31.09% gc time)
+initial guess: 0.11129900030302906
+calculated sz: 0.11263198886780044
+percentError0.0013329885647713896
+iteration: 7
+timing h
+  0.462500 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11263198886780044
+calculated sz: 0.11382892219785042
+percentError0.0011969333300499707
+iteration: 8
+timing h
+  0.372724 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11382892219785042
+calculated sz: 0.11489972687691534
+percentError0.001070804679064924
+iteration: 9
+timing h
+  0.605434 seconds (88 allocations: 313.503 MiB, 21.00% gc time)
+initial guess: 0.11489972687691534
+calculated sz: 0.11585450816612923
+percentError0.0009547812892138907
+iteration: 10
+timing h
+  0.474453 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11585450816612923
+calculated sz: 0.11670329338510226
+percentError0.000848785218973025
+iteration: 11
+timing h
+  0.689799 seconds (88 allocations: 313.503 MiB, 32.50% gc time)
+initial guess: 0.11670329338510226
+calculated sz: 0.11745583154344107
+percentError0.0007525381583388113
+iteration: 12
+timing h
+  0.695055 seconds (88 allocations: 313.503 MiB, 31.23% gc time)
+initial guess: 0.11745583154344107
+calculated sz: 0.11812144465291542
+percentError0.0006656131094743556
+iteration: 13
+timing h
+  0.474850 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11812144465291542
+calculated sz: 0.11870892440073755
+percentError0.0005874797478221255
+iteration: 14
+timing h
+  0.374564 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11870892440073755
+calculated sz: 0.11922646710116365
+percentError0.0005175427004261018
+iteration: 15
+timing h
+  0.615213 seconds (88 allocations: 313.503 MiB, 21.94% gc time)
+initial guess: 0.11922646710116365
+calculated sz: 0.11968163980252575
+percentError0.0004551727013620971
+iteration: 16
+timing h
+  0.472232 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11968163980252575
+calculated sz: 0.12008137086923108
+percentError0.0003997310667053361
+iteration: 17
+timing h
+  0.668008 seconds (88 allocations: 313.503 MiB, 32.82% gc time)
+initial guess: 0.12008137086923108
+calculated sz: 0.12043195908245899
+percentError0.00035058821322790645
+iteration: 18
+timing h
+  0.669376 seconds (88 allocations: 313.503 MiB, 31.36% gc time)
+initial guess: 0.12043195908245899
+calculated sz: 0.12073909615805387
+percentError0.0003071370755948766
+iteration: 19
+timing h
+  0.463153 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12073909615805387
+calculated sz: 0.12100789845692983
+percentError0.0002688022988759642
+iteration: 20
+timing h
+  0.370564 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12100789845692983
+calculated sz: 0.12124294449401192
+percentError0.00023504603708209004
+iteration: 21
+timing h
+  0.580138 seconds (88 allocations: 313.503 MiB, 21.17% gc time)
+initial guess: 0.12124294449401192
+calculated sz: 0.12144831559741207
+percentError0.00020537110340014542
+iteration: 22
+timing h
+  0.454085 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12144831559741207
+calculated sz: 0.1216276377107819
+percentError0.00017932211336983694
+iteration: 23
+timing h
+  0.691901 seconds (88 allocations: 313.503 MiB, 32.25% gc time)
+initial guess: 0.1216276377107819
+calculated sz: 0.12178412286740842
+percentError0.0001564851566265152
+iteration: 24
+timing h
+  0.694423 seconds (88 allocations: 313.503 MiB, 30.95% gc time)
+initial guess: 0.12178412286740842
+calculated sz: 0.12192060929838601
+percentError0.00013648643097759205
+iteration: 25
+timing h
+  0.469885 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12192060929838601
+calculated sz: 0.12203959948092784
+percentError0.00011899018254182825
+iteration: 26
+timing h
+  0.390789 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12203959948092784
+calculated sz: 0.12214329569796785
+percentError0.00010369621704001131
+iteration: 27
+timing h
+  0.605345 seconds (88 allocations: 313.503 MiB, 20.82% gc time)
+initial guess: 0.12214329569796785
+calculated sz: 0.12223363288088818
+percentError9.033718292032755e-5
+iteration: 28
+timing h
+  0.455743 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12223363288088818
+calculated sz: 0.12231230865423778
+percentError7.867577334960685e-5
+iteration: 29
+timing h
+  0.687245 seconds (88 allocations: 313.503 MiB, 32.35% gc time)
+initial guess: 0.12231230865423778
+calculated sz: 0.12238081060680768
+percentError6.850195256989655e-5
+iteration: 30
+timing h
+  0.695251 seconds (88 allocations: 313.503 MiB, 30.94% gc time)
+initial guess: 0.12238081060680768
+qt.qpa.screen: QXcbConnection: Could not connect to display 
+Could not connect to any X display.
+connect: Connection refused
+GKS: can't connect to GKS socket application
+
+GKS: Open failed in routine OPEN_WS
+GKS: GKS not in proper state. GKS must be either in the state WSOP or WSAC in routine ACTIVATE_WS
+calculated sz: 0.12244044088526598
+percentError5.963027845830304e-5
+iteration: 31
+timing h
+  0.474128 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12244044088526598
+calculated sz: 0.12249233825413898
+percentError5.1897368872996785e-5
+iteration: 32
+timing h
+  0.385765 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12249233825413898
+calculated sz: 0.12253749779350247
+percentError4.515953936348738e-5
+iteration: 33
+timing h
+  0.597324 seconds (88 allocations: 313.503 MiB, 21.02% gc time)
+initial guess: 0.12253749779350247
+calculated sz: 0.12257678842022136
+percentError3.929062671889638e-5
+iteration: 34
+timing h
+  0.474655 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12257678842022136
+calculated sz: 0.12261096842289013
+percentError3.4180002668762755e-5
+iteration: 35
+timing h
+  0.687263 seconds (88 allocations: 313.503 MiB, 32.35% gc time)
+initial guess: 0.12261096842289013
+calculated sz: 0.12264069919746777
+percentError2.9730774577643726e-5
+iteration: 36
+timing h
+  0.696484 seconds (88 allocations: 313.503 MiB, 31.08% gc time)
+initial guess: 0.12264069919746777
+calculated sz: 0.12266655736360182
+percentError2.585816613405456e-5
+iteration: 37
+timing h
+  0.473187 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12266655736360182
+calculated sz: 0.12268904543079012
+percentError2.2488067188297656e-5
+iteration: 38
+timing h
+  0.389629 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.12268904543079012
+calculated sz: 0.12270860117188637
+percentError1.955574109624436e-5
+iteration: 39
+timing h
+  0.606227 seconds (88 allocations: 313.503 MiB, 21.03% gc time)
+initial guess: 0.12270860117188637
+calculated sz: 0.12272560584822508
+percentError1.700467633870828e-5
+starting h: 1.1899999999999982
+iteration: 0
+timing h
+  0.473963 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.1009603186590173
+percentError0.0009603186590173007
+iteration: 1
+timing h
+  0.674258 seconds (88 allocations: 313.503 MiB, 32.51% gc time)
+initial guess: 0.1009603186590173
+calculated sz: 0.10184168591696965
+percentError0.0008813672579523479
+iteration: 2
+timing h
+  0.668860 seconds (88 allocations: 313.503 MiB, 31.46% gc time)
+initial guess: 0.10184168591696965
+calculated sz: 0.10264862608543344
+percentError0.0008069401684637906
+iteration: 3
+timing h
+  0.453092 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10264862608543344
+calculated sz: 0.10338576741977762
+percentError0.0007371413343441741
+iteration: 4
+timing h
+  0.377290 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10338576741977762
+calculated sz: 0.10405775862320811
+percentError0.0006719912034304915
+iteration: 5
+timing h
+  0.579812 seconds (88 allocations: 313.503 MiB, 21.21% gc time)
+initial guess: 0.10405775862320811
+calculated sz: 0.10466919899463223
+percentError0.0006114403714241184
+iteration: 6
+timing h
+  0.453021 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10466919899463223
+calculated sz: 0.10522458168631678
+percentError0.00055538269168455
+iteration: 7
+timing h
+  0.664377 seconds (88 allocations: 313.503 MiB, 32.81% gc time)
+initial guess: 0.10522458168631678
+calculated sz: 0.10572824913415686
+percentError0.0005036674478400838
+iteration: 8
+timing h
+  0.672221 seconds (88 allocations: 313.503 MiB, 31.60% gc time)
+initial guess: 0.10572824913415686
+calculated sz: 0.10618435946739088
+percentError0.0004561103332340194
+iteration: 9
+timing h
+  0.453487 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10618435946739088
+calculated sz: 0.10659686256988614
+percentError0.0004125031024952569
+iteration: 10
+timing h
+  0.386450 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10659686256988614
+calculated sz: 0.1069694844274436
+percentError0.00037262185755745914
+iteration: 11
+timing h
+  0.605349 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.1069694844274436
+calculated sz: 0.10730571842782599
+percentError0.00033623400038239326
+iteration: 12
+timing h
+  0.467078 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10730571842782599
+calculated sz: 0.10760882236334636
+percentError0.0003031039355203685
+iteration: 13
+timing h
+  0.663823 seconds (88 allocations: 313.503 MiB, 32.85% gc time)
+initial guess: 0.10760882236334636
+calculated sz: 0.10788181999780465
+percentError0.0002729976344582885
+iteration: 14
+timing h
+  0.669096 seconds (88 allocations: 313.503 MiB, 31.44% gc time)
+initial guess: 0.10788181999780465
+calculated sz: 0.10812750618986654
+percentError0.00024568619206188913
+iteration: 15
+timing h
+  0.452976 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10812750618986654
+calculated sz: 0.10834845469822493
+percentError0.00022094850835839563
+iteration: 16
+timing h
+  0.371961 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10834845469822493
+calculated sz: 0.1085470279264086
+percentError0.00019857322818367384
+iteration: 17
+timing h
+  0.584752 seconds (88 allocations: 313.503 MiB, 21.05% gc time)
+initial guess: 0.1085470279264086
+calculated sz: 0.10872538798807224
+percentError0.00017836006166363494
+iteration: 18
+timing h
+  0.453695 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10872538798807224
+calculated sz: 0.10888550858654032
+percentError0.00016012059846808036
+iteration: 19
+timing h
+  0.664484 seconds (88 allocations: 313.503 MiB, 32.77% gc time)
+initial guess: 0.10888550858654032
+calculated sz: 0.1090291873021912
+percentError0.00014367871565088008
+iteration: 20
+timing h
+  0.671807 seconds (88 allocations: 313.503 MiB, 31.54% gc time)
+initial guess: 0.1090291873021912
+calculated sz: 0.10915805796779705
+percentError0.00012887066560585136
+iteration: 21
+timing h
+  0.453288 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10915805796779705
+calculated sz: 0.1092736028861364
+percentError0.00011554491833934422
+iteration: 22
+timing h
+  0.373229 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1092736028861364
+calculated sz: 0.1093771647061322
+percentError0.0001035618199957955
+iteration: 23
+timing h
+  0.588627 seconds (88 allocations: 313.503 MiB, 21.00% gc time)
+initial guess: 0.1093771647061322
+calculated sz: 0.10946995782495215
+percentError9.279311881996155e-5
+iteration: 24
+timing h
+  0.454049 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10946995782495215
+calculated sz: 0.10955307922528844
+percentError8.312140033628346e-5
+iteration: 25
+timing h
+  0.662516 seconds (88 allocations: 313.503 MiB, 32.86% gc time)
+initial guess: 0.10955307922528844
+calculated sz: 0.10962751869010193
+percentError7.443946481348884e-5
+iteration: 26
+timing h
+  0.668613 seconds (88 allocations: 313.503 MiB, 31.48% gc time)
+initial guess: 0.10962751869010193
+calculated sz: 0.10969416836388164
+percentError6.664967377971454e-5
+iteration: 27
+timing h
+  0.454100 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10969416836388164
+calculated sz: 0.10975383164945322
+percentError5.966328557158174e-5
+iteration: 28
+timing h
+  0.369342 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10975383164945322
+calculated sz: 0.10980723144498668
+percentError5.33997955334542e-5
+iteration: 29
+timing h
+  0.600037 seconds (88 allocations: 313.503 MiB, 20.99% gc time)
+initial guess: 0.10980723144498668
+calculated sz: 0.10985501773729875
+percentError4.778629231207143e-5
+iteration: 30
+timing h
+  0.455184 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.10985501773729875
+calculated sz: 0.10989777457577918
+percentError4.275683848042888e-5
+iteration: 31
+timing h
+  0.665958 seconds (88 allocations: 313.503 MiB, 33.09% gc time)
+initial guess: 0.10989777457577918
+calculated sz: 0.1099360264567675
+percentError3.825188098832699e-5
+iteration: 32
+timing h
+  0.675255 seconds (88 allocations: 313.503 MiB, 31.37% gc time)
+initial guess: 0.1099360264567675
+calculated sz: 0.1099702441517414
+percentError3.4217694973900925e-5
+iteration: 33
+timing h
+  0.453159 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1099702441517414
+calculated sz: 0.11000085001481372
+percentError3.060586307231106e-5
+iteration: 34
+timing h
+  0.369235 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11000085001481372
+calculated sz: 0.11002822280569116
+percentError2.7372790877444597e-5
+iteration: 35
+timing h
+  0.581111 seconds (88 allocations: 313.503 MiB, 21.17% gc time)
+initial guess: 0.11002822280569116
+calculated sz: 0.11005270206389824
+percentError2.447925820707464e-5
+iteration: 36
+timing h
+  0.474702 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11005270206389824
+calculated sz: 0.11007459206960436
+percentError2.1890005706126647e-5
+iteration: 37
+timing h
+  0.687328 seconds (88 allocations: 313.503 MiB, 32.30% gc time)
+initial guess: 0.11007459206960436
+calculated sz: 0.11009416542474489
+percentError1.9573355140523052e-5
+iteration: 38
+timing h
+  0.690054 seconds (88 allocations: 313.503 MiB, 31.16% gc time)
+initial guess: 0.11009416542474489
+calculated sz: 0.11011166628671534
+percentError1.750086197045697e-5
+iteration: 39
+timing h
+  0.474015 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.11011166628671534
+calculated sz: 0.11012731328496894
+percentError1.5646998253598943e-5
+starting h: 1.194999999999998
+iteration: 0
+timing h
+  0.385439 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.1
+calculated sz: 0.09964806817423277
+percentError-0.00035193182576723214
+iteration: 1
+timing h
+  0.582635 seconds (88 allocations: 313.503 MiB, 21.12% gc time)
+initial guess: 0.09964806817423277
+calculated sz: 0.09932787013571209
+percentError-0.0003201980385206804
+iteration: 2
+timing h
+  0.474513 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09932787013571209
+calculated sz: 0.09903629457993966
+percentError-0.00029157555577243033
+iteration: 3
+timing h
+  0.688060 seconds (88 allocations: 313.503 MiB, 32.42% gc time)
+initial guess: 0.09903629457993966
+calculated sz: 0.09877057615969041
+percentError-0.0002657184202492502
+iteration: 4
+timing h
+  0.695049 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.09877057615969041
+calculated sz: 0.09852825041442315
+percentError-0.00024232574526726613
+iteration: 5
+timing h
+  0.474598 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09852825041442315
+calculated sz: 0.09830711561336286
+percentError-0.00022113480106028538
+iteration: 6
+timing h
+  0.377170 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09830711561336286
+calculated sz: 0.09810520028773148
+percentError-0.00020191532563137993
+iteration: 7
+timing h
+  0.604194 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.09810520028773148
+calculated sz: 0.09792073547203038
+percentError-0.00018446481570109918
+iteration: 8
+timing h
+  0.475053 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09792073547203038
+calculated sz: 0.09775213086405314
+percentError-0.00016860460797724075
+iteration: 9
+timing h
+  0.687618 seconds (88 allocations: 313.503 MiB, 32.37% gc time)
+initial guess: 0.09775213086405314
+calculated sz: 0.09759795426312612
+percentError-0.00015417660092702234
+iteration: 10
+timing h
+  0.695451 seconds (88 allocations: 313.503 MiB, 30.95% gc time)
+initial guess: 0.09759795426312612
+calculated sz: 0.09745691376447728
+percentError-0.0001410404986488395
+iteration: 11
+timing h
+  0.481084 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09745691376447728
+calculated sz: 0.09732784228138373
+percentError-0.00012907148309354577
+iteration: 12
+timing h
+  0.386059 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09732784228138373
+calculated sz: 0.09720968404257616
+percentError-0.00011815823880757803
+iteration: 13
+timing h
+  0.604681 seconds (88 allocations: 313.503 MiB, 20.86% gc time)
+initial guess: 0.09720968404257616
+calculated sz: 0.09710148277284669
+percentError-0.0001082012697294632
+iteration: 14
+timing h
+  0.470102 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09710148277284669
+calculated sz: 0.0970023713136368
+percentError-9.911145920989128e-5
+iteration: 15
+timing h
+  0.688612 seconds (88 allocations: 313.503 MiB, 32.30% gc time)
+initial guess: 0.0970023713136368
+calculated sz: 0.0969115624809601
+percentError-9.080883267670314e-5
+iteration: 16
+timing h
+  0.694630 seconds (88 allocations: 313.503 MiB, 30.92% gc time)
+initial guess: 0.0969115624809601
+calculated sz: 0.09682834098987146
+percentError-8.322149108863641e-5
+iteration: 17
+timing h
+  0.474745 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09682834098987146
+calculated sz: 0.0967520563021696
+percentError-7.628468770186358e-5
+iteration: 18
+timing h
+  0.395343 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.0967520563021696
+calculated sz: 0.09668211627556454
+percentError-6.994002660505594e-5
+iteration: 19
+timing h
+  0.580939 seconds (88 allocations: 313.503 MiB, 21.14% gc time)
+initial guess: 0.09668211627556454
+calculated sz: 0.09661798151131384
+percentError-6.413476425069786e-5
+iteration: 20
+timing h
+  0.472904 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09661798151131384
+calculated sz: 0.09655916031205102
+percentError-5.882119926282903e-5
+iteration: 21
+timing h
+  0.682824 seconds (88 allocations: 313.503 MiB, 32.31% gc time)
+initial guess: 0.09655916031205102
+calculated sz: 0.09650520417475687
+percentError-5.395613729414217e-5
+iteration: 22
+timing h
+  0.677142 seconds (88 allocations: 313.503 MiB, 31.51% gc time)
+initial guess: 0.09650520417475687
+calculated sz: 0.09645570375396877
+percentError-4.950042078810668e-5
+iteration: 23
+timing h
+  0.455149 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09645570375396877
+calculated sz: 0.09641028523964369
+percentError-4.5418514325074044e-5
+iteration: 24
+timing h
+  0.370414 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09641028523964369
+calculated sz: 0.09636860710137118
+percentError-4.167813827250788e-5
+iteration: 25
+timing h
+  0.581339 seconds (88 allocations: 313.503 MiB, 21.16% gc time)
+initial guess: 0.09636860710137118
+calculated sz: 0.09633035715739746
+percentError-3.824994397372272e-5
+iteration: 26
+timing h
+  0.469911 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09633035715739746
+calculated sz: 0.09629524993177856
+percentError-3.5107225618905e-5
+iteration: 27
+timing h
+  0.665425 seconds (88 allocations: 313.503 MiB, 32.74% gc time)
+initial guess: 0.09629524993177856
+calculated sz: 0.09626302426831942
+percentError-3.222566345913169e-5
+iteration: 28
+timing h
+  0.668943 seconds (88 allocations: 313.503 MiB, 31.42% gc time)
+initial guess: 0.09626302426831942
+calculated sz: 0.09623344117325884
+percentError-2.9583095060584097e-5
+iteration: 29
+timing h
+  0.456460 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09623344117325884
+calculated sz: 0.09620628186264671
+percentError-2.715931061213206e-5
+iteration: 30
+timing h
+  0.368634 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09620628186264671
+calculated sz: 0.09618134599282673
+percentError-2.4935869819983636e-5
+iteration: 31
+timing h
+  0.580887 seconds (88 allocations: 313.503 MiB, 21.22% gc time)
+initial guess: 0.09618134599282673
+calculated sz: 0.09615845005518643
+percentError-2.289593764029374e-5
+iteration: 32
+timing h
+  0.453602 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09615845005518643
+calculated sz: 0.09613742591859314
+percentError-2.1024136593286724e-5
+iteration: 33
+timing h
+  0.685730 seconds (88 allocations: 313.503 MiB, 32.49% gc time)
+initial guess: 0.09613742591859314
+calculated sz: 0.09611811950466002
+percentError-1.9306413933120603e-5
+iteration: 34
+timing h
+  0.672144 seconds (88 allocations: 313.503 MiB, 31.38% gc time)
+initial guess: 0.09611811950466002
+calculated sz: 0.09610038958268605
+percentError-1.772992197397738e-5
+iteration: 35
+timing h
+  0.453156 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09610038958268605
+calculated sz: 0.09608410667270895
+percentError-1.6282909977100024e-5
+iteration: 36
+timing h
+  0.369395 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09608410667270895
+calculated sz: 0.09606915204619236
+percentError-1.4954626516586189e-5
+iteration: 37
+timing h
+  0.580748 seconds (88 allocations: 313.503 MiB, 21.17% gc time)
+initial guess: 0.09606915204619236
+calculated sz: 0.09605541681502323
+percentError-1.3735231169126338e-5
+iteration: 38
+timing h
+  0.474695 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09605541681502323
+calculated sz: 0.09604280110053345
+percentError-1.2615714489780383e-5
+iteration: 39
+timing h
+  0.687900 seconds (88 allocations: 313.503 MiB, 32.40% gc time)
+initial guess: 0.09604280110053345
+calculated sz: 0.0960312132751201
+percentError-1.1587825413356123e-5
+starting h: 1.199999999999998
+iteration: 0
+timing h
+  0.675711 seconds (88 allocations: 313.503 MiB, 31.46% gc time)
+initial guess: 0.1
+calculated sz: 0.09836464070921244
+percentError-0.0016353592907875636
+iteration: 1
+timing h
+  0.474403 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09836464070921244
+calculated sz: 0.09688981470375178
+percentError-0.0014748260054606582
+iteration: 2
+timing h
+  0.390953 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09688981470375178
+calculated sz: 0.09555466132698166
+percentError-0.0013351533767701207
+iteration: 3
+timing h
+  0.604315 seconds (88 allocations: 313.503 MiB, 20.88% gc time)
+initial guess: 0.09555466132698166
+calculated sz: 0.09434181097846696
+percentError-0.0012128503485147046
+iteration: 4
+timing h
+  0.473882 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09434181097846696
+calculated sz: 0.09323667259153622
+percentError-0.001105138386930743
+iteration: 5
+timing h
+  0.686825 seconds (88 allocations: 313.503 MiB, 32.48% gc time)
+initial guess: 0.09323667259153622
+calculated sz: 0.0922268906335283
+percentError-0.0010097819580079104
+iteration: 6
+timing h
+  0.696348 seconds (88 allocations: 313.503 MiB, 31.06% gc time)
+initial guess: 0.0922268906335283
+calculated sz: 0.09130192604189982
+percentError-0.0009249645916284827
+iteration: 7
+timing h
+  0.474649 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.09130192604189982
+calculated sz: 0.0904527290707225
+percentError-0.0008491969711773156
+iteration: 8
+timing h
+  0.371625 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.0904527290707225
+calculated sz: 0.08967148118993618
+percentError-0.0007812478807863316
+iteration: 9
+timing h
+  0.603197 seconds (88 allocations: 313.503 MiB, 20.97% gc time)
+initial guess: 0.08967148118993618
+calculated sz: 0.08895138948709277
+percentError-0.0007200917028434006
+iteration: 10
+timing h
+  0.474159 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08895138948709277
+calculated sz: 0.088286521427557
+percentError-0.0006648680595357781
+iteration: 11
+timing h
+  0.688119 seconds (88 allocations: 313.503 MiB, 32.46% gc time)
+initial guess: 0.088286521427557
+calculated sz: 0.08767167095349707
+percentError-0.0006148504740599303
+iteration: 12
+timing h
+  0.693555 seconds (88 allocations: 313.503 MiB, 31.14% gc time)
+initial guess: 0.08767167095349707
+calculated sz: 0.08710224914680853
+percentError-0.0005694218066885359
+iteration: 13
+timing h
+  0.464173 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08710224914680853
+calculated sz: 0.08657419431344168
+percentError-0.0005280548333668478
+iteration: 14
+timing h
+  0.387788 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08657419431344168
+calculated sz: 0.08608389754788158
+percentError-0.0004902967655601026
+iteration: 15
+timing h
+  0.605241 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.08608389754788158
+calculated sz: 0.08562814072995159
+percentError-0.00045575681792998923
+iteration: 16
+timing h
+  0.474353 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08562814072995159
+calculated sz: 0.08520404457657876
+percentError-0.00042409615337282713
+iteration: 17
+timing h
+  0.688026 seconds (88 allocations: 313.503 MiB, 32.37% gc time)
+initial guess: 0.08520404457657876
+calculated sz: 0.08480902488010403
+percentError-0.00039501969647473545
+iteration: 18
+timing h
+  0.689955 seconds (88 allocations: 313.503 MiB, 31.06% gc time)
+initial guess: 0.08480902488010403
+calculated sz: 0.0844407554530274
+percentError-0.00036826942707662846
+iteration: 19
+timing h
+  0.466901 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.0844407554530274
+calculated sz: 0.08409713659932452
+percentError-0.00034361885370287615
+iteration: 20
+timing h
+  0.388399 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08409713659932452
+calculated sz: 0.08377626816478789
+percentError-0.00032086843453663083
+iteration: 21
+timing h
+  0.594650 seconds (88 allocations: 313.503 MiB, 20.74% gc time)
+initial guess: 0.08377626816478789
+calculated sz: 0.08347642640157488
+percentError-0.0002998417632130157
+iteration: 22
+timing h
+  0.474564 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08347642640157488
+calculated sz: 0.0831960440251433
+percentError-0.00028038237643157604
+iteration: 23
+timing h
+  0.689236 seconds (88 allocations: 313.503 MiB, 32.44% gc time)
+initial guess: 0.0831960440251433
+calculated sz: 0.08293369295598145
+percentError-0.0002623510691618508
+iteration: 24
+timing h
+  0.695803 seconds (88 allocations: 313.503 MiB, 30.91% gc time)
+initial guess: 0.08293369295598145
+calculated sz: 0.08268806932915157
+percentError-0.00024562362682988004
+iteration: 25
+timing h
+  0.474315 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08268806932915157
+calculated sz: 0.08245798042746123
+percentError-0.0002300889016903368
+iteration: 26
+timing h
+  0.386502 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08245798042746123
+calculated sz: 0.08224233325299754
+percentError-0.00021564717446369286
+iteration: 27
+timing h
+  0.604632 seconds (88 allocations: 313.503 MiB, 20.85% gc time)
+initial guess: 0.08224233325299754
+calculated sz: 0.08204012449937612
+percentError-0.00020220875362142454
+iteration: 28
+timing h
+  0.453552 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08204012449937612
+calculated sz: 0.08185043172585035
+percentError-0.00018969277352576253
+iteration: 29
+timing h
+  0.665309 seconds (88 allocations: 313.503 MiB, 33.03% gc time)
+initial guess: 0.08185043172585035
+calculated sz: 0.081672405566396
+percentError-0.0001780261594543503
+iteration: 30
+timing h
+  0.669279 seconds (88 allocations: 313.503 MiB, 31.40% gc time)
+initial guess: 0.081672405566396
+calculated sz: 0.08150526283293436
+percentError-0.00016714273346164765
+iteration: 31
+timing h
+  0.453881 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08150526283293436
+calculated sz: 0.08134828039349475
+percentError-0.00015698243943960966
+iteration: 32
+timing h
+  0.373527 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08134828039349475
+calculated sz: 0.08120078972424238
+percentError-0.00014749066925236198
+iteration: 33
+timing h
+  0.584928 seconds (88 allocations: 313.503 MiB, 21.39% gc time)
+initial guess: 0.08120078972424238
+calculated sz: 0.0810621720490251
+percentError-0.00013861767521727852
+iteration: 34
+timing h
+  0.459775 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.0810621720490251
+calculated sz: 0.08093185399269505
+percentError-0.000130318056330056
+iteration: 35
+timing h
+  0.664625 seconds (88 allocations: 313.503 MiB, 32.86% gc time)
+initial guess: 0.08093185399269505
+calculated sz: 0.08080930368495633
+percentError-0.00012255030773872244
+iteration: 36
+timing h
+  0.672799 seconds (88 allocations: 313.503 MiB, 31.67% gc time)
+initial guess: 0.08080930368495633
+calculated sz: 0.08069402726035502
+percentError-0.00011527642460130993
+iteration: 37
+timing h
+  0.453141 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08069402726035502
+calculated sz: 0.08058556570735403
+percentError-0.00010846155300098248
+iteration: 38
+timing h
+  0.385989 seconds (88 allocations: 313.503 MiB)
+initial guess: 0.08058556570735403
+calculated sz: 0.08048349202593207
+percentError-0.0001020736814219686
+iteration: 39
+timing h
+  0.605315 seconds (88 allocations: 313.503 MiB, 20.83% gc time)
+initial guess: 0.08048349202593207
+calculated sz: 0.08038740865843572
+percentError-9.60833674963496e-5
+ms: Array{Any,1}[[0.1, 0.1304990770282167, 0.16193221155459409, 0.18982928722854994, 0.21117481170538197, 0.225620120603539, 0.23457491221679388, 0.23982209282140868, 0.24279480023034056, 0.24444667133393067, 0.24535469590726952, 0.2458508581768657, 0.24612108510188488, 0.24626799752128575, 0.24634779088837863, 0.24639110665442057, 0.24641461385053254, 0.24642736907647195, 0.24643428959840818, 0.24643804425021448, 0.2464400812440259, 0.24644118634992307, 0.24644178588542776, 0.24644211114058887, 0.24644228759500886, 0.2464423833233258, 0.24644243525687204, 0.2464424634313226, 0.2464424787162432, 0.24644248700843477, 0.24644249150702216, 0.24644249394756085, 0.24644249527157402, 0.24644249598986848, 0.24644249637956353, 0.2464424965909447, 0.24644249670562493, 0.24644249676785193, 0.24644249680161093, 0.2464424968199257, 0.24644249682986902], [0.1, 0.1285157428964634, 0.15780996817367854, 0.18408824891114658, 0.20466741279668885, 0.21903172081520633, 0.22824262581247362, 0.2338250956599049, 0.2370922027988944, 0.23896499337476262, 0.24002573095229374, 0.24062244162423962, 0.240956827979269, 0.24114380810733557, 0.24124823624015576, 0.24130651983254972, 0.24133903690171155, 0.24135717472325524, 0.2413672907016662, 0.24137293230101978, 0.24137607846051254, 0.2413778329484524, 0.24137881134544928, 0.2413793569489084, 0.2413796612037475, 0.24137983087065934, 0.24137992548483603, 0.24137997824608334, 0.24138000766816473, 0.2413800240752878, 0.24138003322466617, 0.24138003832677846, 0.24138004117194142, 0.2413800427585463, 0.24138004364330917, 0.24138004413669545, 0.24138004441182145, 0.2413800445652346, 0.24138004465081037, 0.2413800446985138, 0.2413800447251263], [0.1, 0.12657797471796747, 0.15377913275896907, 0.17841006689665698, 0.19812044475195403, 0.21229291775276146, 0.22168785686194376, 0.22757701530369592, 0.23113838617651622, 0.2332451155850043, 0.23447506366219126, 0.23518760723615167, 0.23559855570591579, 0.23583495022740253, 0.2359707312624128, 0.23604865471913933, 0.2360933522356541, 0.23611898384361704, 0.23613367980244318, 0.23614210499125635, 0.23614693489215358, 0.23614970364082508, 0.2361512908027683, 0.23615220062092263, 0.23615272215831007, 0.2361530211195532, 0.2361531924929341, 0.2361532907291475, 0.2361533470409584, 0.23615337932047767, 0.2361533978239966, 0.23615340843077479, 0.23615341451085986, 0.23615341799615622, 0.236153419993998, 0.23615342113925006, 0.23615342179573282, 0.23615342217202417, 0.23615342238774178, 0.23615342251137078, 0.2361534225822482], [0.1, 0.12468475642494825, 0.14984112504602082, 0.17280631279740072, 0.19155409830366665, 0.20542125458564495, 0.2149169345620218, 0.22107201859453637, 0.22491882812062994, 0.22726795602075378, 0.22868214485923163, 0.22952615928024506, 0.2300272785933251, 0.23032389345462706, 0.23049914053472084, 0.23060256880767713, 0.23066357172383026, 0.23069953824272774, 0.23072073892290093, 0.23073323415542166, 0.23074059801309196, 0.23074493758297207, 0.23074749485159707, 0.23074900180268335, 0.2307498898127999, 0.23075041309302247, 0.23075072144680936, 0.23075090315037874, 0.23075101022266795, 0.2307510733170398, 0.23075111049655062, 0.23075113240525907, 0.23075114531535065, 0.23075115292285997, 0.2307511574057218, 0.2307511600473499, 0.23075116160396603, 0.23075116252123365, 0.23075116306175053, 0.2307511633802552, 0.2307511635679684], [0.1, 0.12283507147079636, 0.14599694689675236, 0.16728774034884633, 0.18498917932925588, 0.19843745574912133, 0.20794064118401476, 0.2143080059964867, 0.2184209332204921, 0.2210144775080401, 0.22262502908210396, 0.22361561050632436, 0.22422127594605012, 0.2245902519549507, 0.22481453737242751, 0.2249506875952273, 0.22503326856678899, 0.22508333259641827, 0.2251136743552184, 0.2251320598947072, 0.22514319934949278, 0.22514994808435765, 0.2251540365763372, 0.2251565133894943, 0.22515801382338466, 0.22515892276617716, 0.2251594733885839, 0.22515980694534832, 0.22516000900740116, 0.22516013141241437, 0.22516020556279412, 0.22516025048152458, 0.22516027769231228, 0.22516029417601846, 0.22516030416151314, 0.22516031021050548, 0.22516031387484578, 0.2251603160946193, 0.22516031743931714, 0.22516031825389868, 0.22516031874735004], [0.1, 0.12102790582413142, 0.14224720955131767, 0.16186418986571385, 0.17844672892282853, 0.19136518178874629, 0.20077460456369842, 0.20728758967727462, 0.2116351852887799, 0.21446664408436417, 0.2162809588630685, 0.2174313792203798, 0.21815597470798986, 0.21861043851270315, 0.21889472063280466, 0.21907225293675936, 0.2191830054903361, 0.21925205304702883, 0.21929508263114733, 0.21932189137383923, 0.2193385914131132, 0.21934899339321975, 0.21935547209605546, 0.21935950709664895, 0.21936202007574016, 0.21936358512404092, 0.21936455980535935, 0.21936516681421112, 0.21936554484389376, 0.21936578027061684, 0.21936592688786036, 0.21936601819695303, 0.21936607506165037, 0.21936611047534815, 0.2193661325299843, 0.21936614626495868, 0.21936615481871996, 0.21936616014574684, 0.21936616346327004, 0.2193661655293062, 0.2193661668159946], [0.1, 0.119262250633187, 0.13859216243893605, 0.15654451701510028, 0.1719476344713348, 0.18423064316363041, 0.1934395157396099, 0.2000190510045917, 0.20455649313284055, 0.20760871071377046, 0.2096273113581501, 0.2109472947870928, 0.21180404217669102, 0.2123574309087421, 0.21271375379244922, 0.21294272316572063, 0.21308966491563436, 0.21318388633385246, 0.2132442702065436, 0.21328295522958163, 0.21330773338703424, 0.2133236018119941, 0.21333376334783133, 0.21334027003203093, 0.21334443626927768, 0.21334710385231884, 0.21334881184220164, 0.21334990541681226, 0.21335060559540373, 0.21335105389412018, 0.21335134092266844, 0.21335152469576726, 0.21335164235833337, 0.21335171769292982, 0.21335176592658855, 0.21335179680864116, 0.21335181658114713, 0.2133518292406814, 0.21335183734605323, 0.21335184253559505, 0.21335184585825587], [0.1, 0.11753710458334644, 0.13503172287732867, 0.15133654598590188, 0.16551224881588578, 0.17706208293987094, 0.18596112128255243, 0.19251718678377513, 0.19718567054382746, 0.2004288631242129, 0.20264299627932786, 0.20413654222991368, 0.2051358321431724, 0.20580077460540222, 0.20624162173809601, 0.20653318760510517, 0.20672571231987483, 0.20685270375749343, 0.20693640994700666, 0.20699155920957826, 0.20702788285184193, 0.20705180233624002, 0.20706755147368336, 0.2070779201637584, 0.20708474616088937, 0.20708923973496823, 0.2070921977945294, 0.2070941450136128, 0.20709542680703155, 0.20709627056557095, 0.20709682597889378, 0.20709719158470444, 0.2070974322475127, 0.2070975906654174, 0.2070976949449924, 0.20709776358761348, 0.207097808772017, 0.2070978385148789, 0.20709785809327264, 0.20709787098086335, 0.2070978794641832], [0.1, 0.115851475971, 0.13156550607004705, 0.14624704615536202, 0.15916003380840163, 0.16988914987162199, 0.1783699523412305, 0.18480393722628988, 0.18953094611092403, 0.1929211788567833, 0.19531037398082404, 0.19697319092860063, 0.19812036687646978, 0.19890700560478858, 0.19944416558384806, 0.19980991885806917, 0.20005847501172783, 0.20022716282175929, 0.2003415430367318, 0.2004190520483451, 0.20047155373169107, 0.20050710639394645, 0.20053117707112636, 0.2005474718503369, 0.2005585017290056, 0.20056596737375149, 0.20057102034157723, 0.2005744402461034, 0.20057675483294293, 0.20057832132275608, 0.20057938149894072, 0.20058009900576712, 0.20058058459870373, 0.20058091323650634, 0.20058113565042113, 0.200581286174477, 0.20058138804521414, 0.2005814569886188, 0.20058150364766983, 0.20058153522525843, 0.20058155659612456], [0.1, 0.11420438451600452, 0.12819285489474766, 0.14128173054357301, 0.1529092425529273, 0.16274219365914602, 0.1707007728222127, 0.1769086839043815, 0.18160935066069586, 0.18508781269051477, 0.18761771167002622, 0.18943444224487124, 0.19072707147602325, 0.19164074572520348, 0.19228354348769575, 0.1927342789752296, 0.19304960542408942, 0.19326984345232584, 0.19342349257988925, 0.19353060082822074, 0.19360522424626114, 0.1936571950787745, 0.19369337998065608, 0.1937185691462277, 0.19373610163346383, 0.19374830371323729, 0.19375679545448699, 0.1937627048158642, 0.19376681698582685, 0.19376967847638257, 0.19377166964090667, 0.19377305517589155, 0.19377401928176635, 0.1937746901384981, 0.1937751569411742, 0.1937754817560123, 0.1937757077711988, 0.19377586503868016, 0.19377597446954486, 0.19377605061438513, 0.1937761035979179], [0.1, 0.1125948629333623, 0.12491286905745537, 0.13644527372709983, 0.14677665160336598, 0.15565152169376248, 0.16299175570367272, 0.16886811826170206, 0.17344779010762595, 0.17694122322146047, 0.1795621043735732, 0.18150367638549272, 0.1829284805326352, 0.18396678330696783, 0.1847195695478547, 0.18526332434929738, 0.1856550338021541, 0.18593666465039624, 0.18613886793138532, 0.1862838983439348, 0.18638784636965558, 0.18646231072636188, 0.18651563432171545, 0.18655380896010348, 0.18658113317899047, 0.18660068833972626, 0.18661468204294582, 0.1866246952595285, 0.18663185987466088, 0.18663698608704996, 0.18664065374834607, 0.18664327780919143, 0.1866451551922193, 0.18664649835240493, 0.18664745930025028, 0.18664814679558606, 0.1866486386518308, 0.18664899054074507, 0.18664924229231195, 0.18664942240250637, 0.1866495512582864], [0.1, 0.11102195828516129, 0.12172443326995391, 0.13174134647117447, 0.14077735073937772, 0.14864666020614672, 0.15528342579631188, 0.16072561374353544, 0.16508359319211843, 0.16850616558173181, 0.17115265305568783, 0.17317425825283536, 0.17470407628646356, 0.17585347185989572, 0.17671237926966027, 0.17735160957782828, 0.17782590614911697, 0.17817703141941085, 0.1784365371960098, 0.17862809235800273, 0.17876936013196573, 0.17887347168521253, 0.17895016162462354, 0.17900663170856115, 0.17904820180606734, 0.17907879728044374, 0.17910131216341169, 0.1791178788385107, 0.17913006779556537, 0.17913903531605457, 0.1791456325145054, 0.17915048576814166, 0.17915405599928874, 0.1791566823471238, 0.17915861432740474, 0.1791600355075132, 0.17916108093180072, 0.17916184994515394, 0.1791624156287442, 0.17916283174252431, 0.17916313783294405], [0.1, 0.10948473313134736, 0.11862624417991925, 0.12717266411727157, 0.13492459405774887, 0.14175566188834274, 0.14761743463675223, 0.1525300861383595, 0.15656434126096838, 0.1598211021877797, 0.16241352838917972, 0.1644538617509293, 0.16604525160748762, 0.16727770145424506, 0.16822690405592744, 0.1689548323784632, 0.16951123158373674, 0.16993544733084268, 0.17025825837091466, 0.17050354320197383, 0.17068971188797366, 0.17083089185278047, 0.17093788576974436, 0.1710189319350036, 0.17108030032362745, 0.1711267555861966, 0.1711619142778536, 0.1711885191108911, 0.1712086487240413, 0.17122387768451963, 0.17123539827607756, 0.17124411305490506, 0.17125070510671553, 0.1712556913301276, 0.17125946281985072, 0.17126231545752837, 0.171264473075868, 0.1712661049938691, 0.1712673392884046, 0.17126827283673626, 0.1712689789151951], [0.1, 0.10798226649775591, 0.11561683585341048, 0.12274104571904985, 0.12922971238779135, 0.13500449694304975, 0.14003525372344544, 0.14433439071929016, 0.14794685017247441, 0.150938661313949, 0.15338639171657267, 0.15536880321033864, 0.15696108809254533, 0.15823145018558799, 0.1592395136653718, 0.16003599547633013, 0.1606631548745033, 0.16115565453666425, 0.16154158535571195, 0.16184350197204794, 0.1620793844598134, 0.16226348682203037, 0.16240706067015453, 0.16251895806234334, 0.16260612523798365, 0.16267400199087378, 0.1627268417304036, 0.16276796619307857, 0.16279996707348368, 0.16282486498992998, 0.16284423442345902, 0.16285930167844162, 0.16287102154886235, 0.16288013723311928, 0.16288722710628858, 0.16289274120101907, 0.16289702964291006, 0.1629003648031918, 0.16290295854994832, 0.16290497567819626, 0.16290654436282073], [0.1, 0.10651365467834124, 0.11269460366890591, 0.11844748101650307, 0.12370208377845411, 0.1284165559829222, 0.1325768820864998, 0.13619336981890065, 0.13929528085514428, 0.1419248331850308, 0.14413155516929804, 0.14596759278876334, 0.14748420867634043, 0.14872944600475516, 0.1497467798014228, 0.15057452216378367, 0.15124575287880115, 0.15178858289458405, 0.152226603796296, 0.15257941984904744, 0.15286319496393735, 0.15309117389536664, 0.15327415591650412, 0.1534209117430269, 0.15353854225349012, 0.15363278202421476, 0.1537082529737902, 0.15376867430511687, 0.15381703500251145, 0.15385573475470357, 0.1538866985700638, 0.15391146966830435, 0.15393128455776847, 0.1539471335818495, 0.15395980966217748, 0.1539699474853743, 0.15397805497244937, 0.15398453852867228, 0.15398972328881644, 0.15399386934096973, 0.15399718472176468], [0.1, 0.10507801188742776, 0.10985782653516928, 0.11429220254727966, 0.11834915623137218, 0.12201228258562515, 0.12527966137854726, 0.12816171684685157, 0.13067848860864054, 0.13285674955891166, 0.13472731051294934, 0.13632272605440485, 0.13767549762366013, 0.13881677883212898, 0.13977553017787234, 0.14057804206383412, 0.1412477383528086, 0.14180517929542183, 0.1422681957633317, 0.14265210166660527, 0.14296994551546044, 0.14323277401823567, 0.14344989001400452, 0.14362909405636076, 0.14377690395568757, 0.14389874997697855, 0.14399914557803303, 0.14408183489646184, 0.14414991891811696, 0.14420596258505147, 0.1442520851706435, 0.1442900361657291, 0.14432125874955964, 0.14434694270885937, 0.14436806844635738, 0.14438544350286026, 0.144399732814975, 0.1444114837483193, 0.14442114678475088, 0.14442909260253445, 0.14443562616737146], [0.1, 0.10367447077690561, 0.10710468739043556, 0.11027476047943588, 0.11317651506985875, 0.1158089421157731, 0.1181772770032002, 0.12029185043071686, 0.12216685260181435, 0.12381912836821043, 0.12526708804477868, 0.12652978431579406, 0.12762617569605442, 0.12857457429767358, 0.1293922607599208, 0.1300952412095058, 0.13069811842347176, 0.13121405024616353, 0.13165477126893432, 0.13203065768088376, 0.13235081927238737, 0.13262320636151795, 0.13285472268651796, 0.13305133798936403, 0.1332181961227174, 0.13335971610829317, 0.13347968474449418, 0.13358134018782078, 0.13366744649559326, 0.1337403594820109, 0.13380208445884284, 0.1338543265492357, 0.13389853430884918, 0.1339359373875727, 0.133967578934376, 0.133994343399527, 0.13401698033127996, 0.13403612470374035, 0.134052314252735, 0.13406600423952225, 0.13407758000927947], [0.1, 0.10230218283213122, 0.10443329197710133, 0.10639409808019792, 0.10818798634614772, 0.1098205230577939, 0.11129900030302906, 0.11263198886780044, 0.11382892219785042, 0.11489972687691534, 0.11585450816612923, 0.11670329338510226, 0.11745583154344107, 0.11812144465291542, 0.11870892440073755, 0.11922646710116365, 0.11968163980252575, 0.12008137086923108, 0.12043195908245899, 0.12073909615805387, 0.12100789845692983, 0.12124294449401192, 0.12144831559741207, 0.1216276377107819, 0.12178412286740842, 0.12192060929838601, 0.12203959948092784, 0.12214329569796785, 0.12223363288088818, 0.12231230865423778, 0.12238081060680768, 0.12244044088526598, 0.12249233825413898, 0.12253749779350247, 0.12257678842022136, 0.12261096842289013, 0.12264069919746777, 0.12266655736360182, 0.12268904543079012, 0.12270860117188637, 0.12272560584822508], [0.1, 0.1009603186590173, 0.10184168591696965, 0.10264862608543344, 0.10338576741977762, 0.10405775862320811, 0.10466919899463223, 0.10522458168631678, 0.10572824913415686, 0.10618435946739088, 0.10659686256988614, 0.1069694844274436, 0.10730571842782599, 0.10760882236334636, 0.10788181999780465, 0.10812750618986654, 0.10834845469822493, 0.1085470279264086, 0.10872538798807224, 0.10888550858654032, 0.1090291873021912, 0.10915805796779705, 0.1092736028861364, 0.1093771647061322, 0.10946995782495215, 0.10955307922528844, 0.10962751869010193, 0.10969416836388164, 0.10975383164945322, 0.10980723144498668, 0.10985501773729875, 0.10989777457577918, 0.1099360264567675, 0.1099702441517414, 0.11000085001481372, 0.11002822280569116, 0.11005270206389824, 0.11007459206960436, 0.11009416542474489, 0.11011166628671534, 0.11012731328496894], [0.1, 0.09964806817423277, 0.09932787013571209, 0.09903629457993966, 0.09877057615969041, 0.09852825041442315, 0.09830711561336286, 0.09810520028773148, 0.09792073547203038, 0.09775213086405314, 0.09759795426312612, 0.09745691376447728, 0.09732784228138373, 0.09720968404257616, 0.09710148277284669, 0.0970023713136368, 0.0969115624809601, 0.09682834098987146, 0.0967520563021696, 0.09668211627556454, 0.09661798151131384, 0.09655916031205102, 0.09650520417475687, 0.09645570375396877, 0.09641028523964369, 0.09636860710137118, 0.09633035715739746, 0.09629524993177856, 0.09626302426831942, 0.09623344117325884, 0.09620628186264671, 0.09618134599282673, 0.09615845005518643, 0.09613742591859314, 0.09611811950466002, 0.09610038958268605, 0.09608410667270895, 0.09606915204619236, 0.09605541681502323, 0.09604280110053345, 0.0960312132751201], [0.1, 0.09836464070921244, 0.09688981470375178, 0.09555466132698166, 0.09434181097846696, 0.09323667259153622, 0.0922268906335283, 0.09130192604189982, 0.0904527290707225, 0.08967148118993618, 0.08895138948709277, 0.088286521427557, 0.08767167095349707, 0.08710224914680853, 0.08657419431344168, 0.08608389754788158, 0.08562814072995159, 0.08520404457657876, 0.08480902488010403, 0.0844407554530274, 0.08409713659932452, 0.08377626816478789, 0.08347642640157488, 0.0831960440251433, 0.08293369295598145, 0.08268806932915157, 0.08245798042746123, 0.08224233325299754, 0.08204012449937612, 0.08185043172585035, 0.081672405566396, 0.08150526283293436, 0.08134828039349475, 0.08120078972424238, 0.0810621720490251, 0.08093185399269505, 0.08080930368495633, 0.08069402726035502, 0.08058556570735403, 0.08048349202593207, 0.08038740865843572]]
+1515.443833 seconds (4.46 G allocations: 409.492 GiB, 7.71% gc time)
