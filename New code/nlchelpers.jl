@@ -278,7 +278,7 @@ function getAllWeightsSz(num, graphs, J, J2, h, width)
     base=calculateBaseWeightSz(J, J2, h, width);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         push!(weights, calculateWeightSz(i, graphs, weights, J, J2, h, width));
     end
     return weights;
@@ -931,6 +931,8 @@ end
 #map1: how many far bonds connected to this site
 #map2: how many near bonds connected
 function obtainMeanFieldMapping(graph)
+    #gives you a map of how many far bonds and near bonds each site has
+
     maps=obtainMapOfNumNearFarBonds(graph);
     map1=maps[1];
     map2=maps[2];
@@ -940,6 +942,7 @@ function obtainMeanFieldMapping(graph)
     list=Any[];
 
     for i=1:graph.numSites
+        #random experiement
         factor=graph.indicies[i]==1 ? 1 : -1;
         near[i]=(4-map1[i])*factor;
         far[i]=-(2-map2[i])*factor;
@@ -969,6 +972,7 @@ end
 
 function calculateActualField(site, map1, map2, h, J1, J2, m)
     #no more factors bc its integrated into map
+    #maps are the factors
     value=map1[site]*m*J1+map2[site]*m*J2;
     return value;
 end
@@ -1091,6 +1095,7 @@ function calculateWeightMeanFieldSz(num, graphs::Vector{graph}, weights, J, J2, 
     for i=1:length(list)
         sum+=weights[list[i]+1];
     end
+    println("this is sz for the ", num, "th graph: ", sz);
     sum+=theGraph.numSites*weights[1];
     return sz-sum;
 end
@@ -1102,7 +1107,7 @@ function getAllWeightsMeanFieldSz(num, graphs, J, J2, h, firstGuess, maxIteratio
     base=calculateBaseWeightMeanFieldSz(J, J2, h, firstGuess, maxIterations);
     push!(weights, base)
     for i=1:num
-        println("order: ", i);
+        #println("order: ", i);
         #num, graphs::Vector{graph}, weights, J, J2, h, firstGuess, maxIterations
         push!(weights, calculateWeightMeanFieldSz(i, graphs, weights, J, J2, h, firstGuess, maxIterations));
     end
@@ -1114,23 +1119,19 @@ end
 
 function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, graphs, firstGuess, maxIterations, absoluteError)
     @time begin
-        println("weights starting!!");
+        #println("weights starting!!");
         szs=Any[];
         currGuess=Any[];
         #map is a map that maps a certain mean field value to a specific set of weights so that
         #you don't need to recalculate them
         map=Dict{Float64, Vector{Float64}}();
-        @time begin
             weights=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, firstGuess, maxIterations);
-            println("weights", weights);
             map[firstGuess]=weights;
-        end
-
         for i=1:length(orders)
             push!(currGuess, firstGuess);
         end
 
-        println("weights done!!! ");
+        #println("weights done!!! ");
         for order in orders
             sum=0;
             #println("order: ", order);
@@ -1145,17 +1146,22 @@ function calculateInfiniteLatticeMeanFieldSz(orders::Vector{Int}, J, J2, h, grap
                 end
                 percentError=(sum-ms);
                 count+=1;
-                println("initial guess: ", ms);
-                println("calculated sz: ", sum);
-                println("error", error);
+                #println("initial guess: ", ms);
+                #println("calculated sz: ", sum);
+                #println("error", error);
                 ms=sum;
                 if(haskey(map, ms))
+                    #wavefunction for a particular ms, should be the same????
                     currWeights= map[ms];
                 else
                     map[ms]=getAllWeightsMeanFieldSz(orders[length(orders)], graphs, J, J2, h, ms, maxIterations);
                     currWeights=map[ms];
+                    #println("the weights: ", currWeights);
                 end
             end
+            #so this is alllll the weights! so not everything was used... makes sense why there are 4...
+            #must be something wrong with the second weight...
+            println("the final weights: ", currWeights)
             push!(szs, sum);
         end
     end

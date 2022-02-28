@@ -603,6 +603,7 @@ function constructTransverseHamiltonianNoSymmetrySxMeanField(bonds, N, J, J2, ei
             push!(cols, b+1);
             push!(values, originalH[j]/2);
             if(eigmethod=="full")
+                #originally just =
                 H[i+1,b+1]=originalH[j]/2;
             end
             #for this particular site, find ALL of its bonds

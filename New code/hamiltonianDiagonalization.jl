@@ -377,7 +377,7 @@ function calculateEigensystemSusceptibility(N, J, J2, h, h2, bonds,eigmethod, nu
     eigenvectors::Array{Any}=Any[];
     local Htemp;
     push!(theInfo, 0:2^(N)-1);
-    println("timing h");
+    #println("timing h");
     Htemp=constructSusceptibilityHamiltonian(bonds, N, J, J2, eigmethod, randomList, randomList2, sites2);
 
     n::Int=0;
@@ -564,7 +564,7 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float64},
     eigenvectors::Array{Any}=Any[];
     local Htemp;
     push!(theInfo, 0:2^(N)-1);
-    println("timing h");
+    #println("timing h");
     @time begin
         if(h1orh2=="H1")
             #H1= field is in x direction
@@ -595,7 +595,7 @@ function calculateEigensystemTransverseNoSymmetry(N, J, J2, hs::Vector{Float64},
             try
                 values, vecs, info=eigsolve(Htemp, 1, :SR; krylovdim=200, ishermitian=true, tol=10^(-16));
             catch
-                println("failed")
+                println("lanczos failed, retry")
             end
         end
         append!(eigenvalues, values[1]);

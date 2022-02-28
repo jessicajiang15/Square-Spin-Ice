@@ -2050,3 +2050,21 @@ append!(fourteen, fourteen1)
 
             display(plot(hs, (actualArray).^2, title="Plot of (Magnetization)^2 after 40 iterations at J2=0 vs. h", xaxis="h", yaxis="(Magnetization)^2"));
 end
+
+
+function ultimatetestttt()
+    graphs=readFromGraphFile();
+    for graph in graphs
+        map1=obtainMapOfNumNearFarBonds(graph)
+        println(map1)
+    end
+    #the graph to calculate weight of
+    theGraph=graphs[1];
+    list=theGraph.subgraphList;
+    maps=obtainMeanFieldMapping(theGraph);
+    temp=copy(theGraph.nearBonds);
+    bonds=append!(temp, theGraph.farBonds);
+    sz=calculateOneSelfConsistentSz(theGraph.numSites, maps[1], maps[2], h, J, J2, bonds, J, guess, theGraph.indicies);
+
+    calculateOneSelfConsistentSz(numSites, map1, map2, h, J1, J2, bonds, J, m, indicies)
+end

@@ -17,9 +17,6 @@ function main()
         #test=16, all=all, one=1, ignore if eigmethod=full
         num = "one"
         file = false
-
-
-
         bonds::Array{bond} = bond[]
         local eigenvalues
         local eigenvectors
@@ -149,6 +146,7 @@ function main()
 end
 
 println()
+#ultimatetestttt()
 #findHcFromIterations()
 #trackEDMeanFieldSzEachIteration()
 meanFieldSzInfiniteLatticeManyJ2AndOrders()

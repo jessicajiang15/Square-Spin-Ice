@@ -1308,7 +1308,6 @@ function entanglementinfinitelatticemultipleJ2andorders()
             savefig("./entanglement NLC orders with ED, J2, " *string(j)*", orders, "* string(os) *", hs: "*string(length(hs))*" hmin, "*string(hmin)*" hmax, "*string(hmax)*".png")
             #entropy=getEntanglementEntropy(eigenvectors[1], temp[3][1], listA, N);
         end
-
     end
 end
 
@@ -1736,20 +1735,21 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
         J=1
         js=[0]
         #js=generateHListUniform(0.1, 1, 5);
-        os=Int[4,5];
-        hmin=0;
-        hmax=1.6;
-        hs=generateHListUniform(hmin, hmax, 10)
+        os=Int[1,2];
+        hmin=0.1;
+        hmax=0.11;
+        hs=generateHListUniform(hmin, hmax, 2)
         graphs=readFromGraphFile();
         bonds = bondListFrustrated(N)
         firstGuess=0.1;
-        maxIterations=100;
-        absError=0.00001;
+        maxIterations=20;
+        absError=0.0001;
         orders=Int[];
         for i=1:length(os)
             push!(orders, getLastGraphNumOrder(os[i], graphs))
         end
         println("hs: ", hs);
+        println("orders: ", orders);
 
         for j in js
             list=Vector{Float64}[];
@@ -1769,7 +1769,7 @@ function meanFieldSzInfiniteLatticeManyJ2AndOrders()
             #TODO: plot it
             plot(hs, list[1], label="order "*string(os[1]))
 
-            println(ms);
+            println(list);
 
             for i=2:length(list)
                 str="order "*string(os[i]);
