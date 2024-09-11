@@ -5,6 +5,7 @@ using LsqFit
 using Images,TestImages
 using FileIO
 using JLD2
+using PlotThemes
 
 function test()
     plaquettes=generateCheckerboardNoCrossPlaquettes(4);
@@ -3025,10 +3026,17 @@ function quasiperiodic_diagonalization_transition()
     L=1000
     t=1
     d = Uniform(-1,1)
+    ls=collect(range(start=50, stop=500, step=50))
     V=collect(range(start=0.05, stop=3, step=0.05))
     parts=[]
-    xrange=1:L
 
+    gradient = cgrad([:pink, :black], length(ls))
+
+    count=1
+    p=plot(title="Participation Ratio vs. potential depth", xlabel="Potential Depth", ylabel="Participation Ratio")
+    for L in ls
+    xrange=1:L
+    parts=[]
     for v in V
         x=v*cos.(2*pi*sqrt(5)*xrange)
         pbc=true
@@ -3040,8 +3048,10 @@ function quasiperiodic_diagonalization_transition()
         lol=calculate_participation_ratio(eigtemp.vectors[:,div(L,2)])
         push!(parts, lol)
     end
-    plot(V, parts)
-    savefig("./participation ratio vs V, L="*string(L)*".png");
+    plot!(p, V, parts, label="L="*string(L), color=gradient[count])
+    count+=1
+    end
+    savefig("./participation ratio vs V.png");
 end
 
 
@@ -3312,6 +3322,49 @@ function plot_Ws_distances_distribution()
 end
 
 
+function plot_O_distances_distribution()
+    t=0.1
+    d = Uniform(-1,1)
+    maxL=50
+    all_data=[]
+    all_data_Ls=[]
+    iters=2
+    p = plot(title="Distribution of large noninteracting Os (>1) at different Ls, Disordered", xlabel="r", ylabel="Log(O)")
+
+    count=0
+    for L in range(10, maxL, step=10)
+        println("L")
+        println(L)
+        # for each L we get a distribution
+        ls=[]
+        gs=[]
+        dists=[]
+        for i=1:iters
+            x=rand(d,L)
+            #xrange=1:L
+            #x=cos.(2*pi*sqrt(2)*xrange)
+            pbc=true
+            bonds=bonds1D(L, pbc)
+            H=build_anderson_hamiltonian_1d(x, bonds, L, t)
+            eigtemp=eigen(Hermitian(H));
+            eigenvalues=[]
+            append!(eigenvalues, eigtemp.values);
+            W=vec(interacting_transport_operator(eigtemp.vectors,eigenvalues, 1))
+            distances=get_distances_matrix(eigtemp.vectors)
+            distances=vec(distances)
+            append!(gs,W)
+            append!(dists, distances)
+        end
+        println(size(dists))
+        println(size(gs))
+        scatter!(p, dists[gs.>1], log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
+    count+=1
+    #clear(p, ls, log.(gs), label=string(i), linewidth=2)
+    #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
+    end
+    println("done")
+    savefig("./distribution of Os against distance disordered, maxL="*string(maxL)*", t="*string(t)*".png");
+end
 
 
 function print_Ws_max()
@@ -3814,20 +3867,22 @@ end
 
 function plot_from_data()
     p = plot(title="Distribution of log(|W|) at different Ls, t=0.1", xlabel="Log10|W>0|", ylabel="Log10(Count)")
-    energy_distribution=load_object("W_distribution_data_maxL=40.jld2")
-    Ls=load_object("W_distribution_Ls_data_maxL=40.jld2")
+    energy_distribution=load_object("interacting_transport_distribution=20.jld2")
+    Ls=load_object("interacting_transport_distribution_Ls_data_maxL=20.jld2")
     count=1
+    println(Ls)
+    println(energy_distribution)
     for gs in energy_distribution
         L=Ls[count]
         stephist!(p, log10.(abs.(gs[abs.(gs.>0)])), label="L="*string(L), norm=true, xlims=(-10,10),yaxis = (:log10, (0.0001,Inf)))
         count+=1
     end
-    x = range(-5, 5, length=100)
-    slope=-1
-    intercept=-2
-    linear_curve = 10 .^ (slope .* x .+ intercept)
+    #x = range(-5, 5, length=100)
+    #slope=-1
+    #intercept=-2
+    #linear_curve = 10 .^ (slope .* x .+ intercept)
     #plot!(p, x, linear_curve, label="Linear Fit", xlims=(-10, 10), linewidth=5, thickness_scaling = 1)
-    savefig("./distribution of W scaled, maxL=40, t=0.1.png");
+    savefig("./distribution of transport operator newwww, maxL=20.png");
 end
 
 
@@ -6020,15 +6075,17 @@ end
 
 
 function plot_transport_norm_average_distribution()
-    t=0.1
+    t=1
     d = Uniform(-1,1)
-    maxL=100
+    maxL=50
     all_data=[]
     all_data_Ls=[]
 
-    iters=500
-    p = plot(title="Average of Operator Norm of Noninteracting Os at different Ls", xlabel="L", ylabel="log||O||")
+    iters=100
+    p = plot(title="Average of Norm of interacting Os at different Ls", xlabel="L", ylabel="log||O||")
     i_0=1
+    errors=[]
+    v=2
 
     count=0
     ls=[]
@@ -6039,7 +6096,7 @@ function plot_transport_norm_average_distribution()
         gs=[]
         push!(ls, L)
         for i=1:iters
-            x=rand(d,L)
+            x=v*rand(d,L)
 
             pbc=true
             bonds=bonds1D(L, pbc)
@@ -6048,23 +6105,23 @@ function plot_transport_norm_average_distribution()
             eigenvalues=[]
             append!(eigenvalues, eigtemp.values);
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
-            W=operator_norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
+            W=norm(interacting_transport_operator(eigtemp.vectors, eigenvalues, i_0))
             append!(gs,W)
         end
         println(gs)
         push!(all_data_Ls, L)
         push!(all_data,mean(log.(gs)))
+        push!(errors, std(log.(gs)))
+
         #stephist!(p,log.(abs.(gs[abs.(gs).>0])), label="L="*string(L), norm = true,yaxis = (:log10, (0.0000001,Inf)))
         xs=1:10
     count+=1
     #clear(p, ls, log.(gs), label=string(i), linewidth=2)
     #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
-    plot!(p, ls, (all_data))
-    savefig("./average noninteracting operator norm transport, maxL="*string(maxL)*".png");
+    plot!(p, ls, (all_data), yerr=errors)
+    savefig("./average interacting operator norm transport, maxL="*string(maxL)*".png");
 end
-
-
 
 function plot_transport_norm_vs_V_quasiperiodic()
     t=1
@@ -6074,7 +6131,7 @@ function plot_transport_norm_vs_V_quasiperiodic()
     L=50
     V=collect(range(start=0.5, stop=1, step=0.05))
 
-    p = plot(title="Operator norm distribution quasiperiodic", xlabel="log||O||", ylabel="Normalized Count")
+    p = plot(title="Norm distribution interacting operator quasiperiodic", xlabel="log||O||", ylabel="Normalized Count")
     i_0=1:L
 
     count=0
@@ -6090,7 +6147,7 @@ function plot_transport_norm_vs_V_quasiperiodic()
         eigtemp=eigen(Hermitian(H));
         #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
         for i_0=1:L-1
-            W=operator_norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
             append!(gs,W)
         end
         println(gs)
@@ -6099,44 +6156,43 @@ function plot_transport_norm_vs_V_quasiperiodic()
         stephist!(p,log.(abs.(gs[abs.(gs).>0])), label="v="*string(v), norm = true)
     count+=1
     end
-    savefig("./operatornorm distribution noninteracting vs potential, L="*string(L)*".png");
+    savefig("./norm distribution interacting vs potential, L="*string(L)*".png");
 end
 
 
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    all_data=[]
-    all_data_Ls=[]
-    ls=collect(range(start=20, stop=50, step=10))
-    v=0.01
+    ls=collect(range(start=20, stop=200, step=20))
+    v=0.1
+    println(ls)
+    gradient = cgrad([:red, :yellow, :blue], length(ls))
 
-    p = plot(title="Operator norm distribution quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    #theme(:lime)
+    p = plot(title="Frobenius norm distribution noninteracting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
 
-    count=0
-    ls=[]
+    count=1
     for L in ls
         # for each L we get a distribution
         gs=[]
         i_0=1:L
         xrange=1:L
         x=v*cos.(2*pi*sqrt(2)*xrange)
-        pbc=true
+        pbc=false
         bonds=bonds1D(L, pbc)
         H=build_anderson_hamiltonian_1d(x, bonds, L, t)
         eigtemp=eigen(Hermitian(H));
         #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
         for i_0=1:L-1
-            W=operator_norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            W=norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
             append!(gs,W)
         end
         println(gs)
-        push!(all_data_Ls, L)
-        push!(all_data,mean(log.(gs)))
-        stephist!(p,log.(abs.(gs[abs.(gs).>0])), label="L="*string(v), norm = true)
+        gs=log.(abs.(gs[abs.(gs).>0]))
+        stephist!(p,gs, label="L="*string(L), norm = true, ylims=(0,5), color=gradient[count])
     count+=1
     end
-    savefig("./operator norm distribution noninteracting vs potential, L="*string(L)*".png");
+    savefig("./new norm distribution noninteracting vs L, v="*string(v)*".png");
 end
 
 
@@ -6176,6 +6232,51 @@ function plot_transport_norm_vs_V_disorder()
     end
     savefig("./operator norm distribution vs potential disorder, L="*string(L)*".png");
 end
+
+function plot_transport_norm_vs_L_disorder()
+    t=1
+    d=Uniform(-1,1)
+    ls=collect(range(start=20, stop=80, step=10))
+    v=10
+    println(ls)
+    gradient = cgrad([:pink, :black], length(ls))
+    #theme(:lime)
+    p = plot(title="Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    count=1
+
+    iterations=50
+
+    all_data=[]
+    all_data_Ls=[]
+
+    for L in ls
+        # for each L we get a distribution
+        println("L="*string(L))
+        gs=[]
+        i_0=1:L
+        for m in 1:iterations
+        x=v*rand(d, L)
+        pbc=true
+        bonds=bonds1D(L, pbc)
+        H=build_anderson_hamiltonian_1d(x, bonds, L, t)
+        eigtemp=eigen(Hermitian(H));
+        #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
+        for i_0=1:L-1
+            W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            append!(gs,W)
+        end
+        end
+        tee=log.(abs.(gs[abs.(gs).>0]))
+        stephist!(p,tee, label="L="*string(L), norm = true, color=gradient[count])
+        push!(all_data, gs)
+        push!(all_data_Ls, L)
+    count+=1
+    end
+    save_object("interacting_transport_distribution="*string(ls[end])*".jld2", all_data)
+    save_object("interacting_transport_distribution_Ls_data_maxL="*string(ls[end])*".jld2", all_data_Ls)
+    savefig("./disorder norm distribution interacting vs L, v="*string(v)*".png");
+end
+
 
 function plot_transport_norm_distribution_quasiperiodic()
     t=0.1
