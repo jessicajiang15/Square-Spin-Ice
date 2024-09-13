@@ -3448,11 +3448,11 @@ end
 function plot_Ws_norm_distribution()
     t=0.1
     d = Uniform(-1,1)
-    maxL=50
+    maxL=80
     all_data=[]
     all_data_Ls=[]
 
-    iters=500
+    iters=1000
     p = plot(title="Distribution of Norm of Ws at different Ls", xlabel="log||W||", ylabel="Count")
 
     count=0
@@ -3484,7 +3484,7 @@ function plot_Ws_norm_distribution()
     end
     save_object("W_norm_distribution_data_maxL="*string(maxL)*".jld2", all_data)
     save_object("W_norm_distribution_Ls_data_maxL="*string(maxL)*".jld2", all_data_Ls)
-    savefig("./distribution of norm Ws new new, maxL="*string(maxL)*".png");
+    savefig("./distribution of norm Ws cluster, maxL="*string(maxL)*".png");
 end
 
 
