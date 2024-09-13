@@ -6167,36 +6167,42 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=200, step=20))
+    ls=collect(range(start=50, stop=150, step=20))
     v=0.1
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
-
+    phases=range(0, stop=1/sqrt(2), length=1000)
     #theme(:lime)
     p = plot(title="Frobenius norm distribution noninteracting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
-
+    all_data=[]
     count=1
     for L in ls
         # for each L we get a distribution
         gs=[]
         i_0=1:L
         xrange=1:L
-        x=v*cos.(2*pi*sqrt(2)*xrange)
+        for phase in phases
+        x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
         pbc=false
         bonds=bonds1D(L, pbc)
         H=build_anderson_hamiltonian_1d(x, bonds, L, t)
         eigtemp=eigen(Hermitian(H));
         #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
         for i_0=1:L-1
-            W=norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
             append!(gs,W)
         end
-        println(gs)
+        push!(all_data, gs)
+    end
+        #println(gs)
         gs=log.(abs.(gs[abs.(gs).>0]))
         stephist!(p,gs, label="L="*string(L), norm = true, ylims=(0,5), color=gradient[count])
     count+=1
     end
-    savefig("./new norm distribution noninteracting vs L, v="*string(v)*".png");
+    save_object("interacting_transport_distribution_quasiperiodic_L="*string(ls[end])*".jld2", all_data)
+    save_object("interacting_transport_distribution_quasiperiodic_Ls_L="*string(ls[end])*".jld2", ls)
+
+    savefig("./cluster quasiperiodic norm distribution interacting vs L with averaging, v="*string(v)*".png");
 end
 
 
