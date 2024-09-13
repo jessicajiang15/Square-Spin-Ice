@@ -3453,7 +3453,7 @@ function plot_Ws_norm_distribution()
     all_data_Ls=[]
 
     iters=1000
-    p = plot(title="Distribution of Norm of Ws at different Ls", xlabel="log||W||", ylabel="Count")
+    p = plot(title="Distribution of Norm of Ws at different Ls, Quasiperiodic", xlabel="log||W||", ylabel="Count")
 
     count=0
     for L in range(10, maxL, step=10)
@@ -3463,8 +3463,10 @@ function plot_Ws_norm_distribution()
         ls=[]
         gs=[]
         for i=1:iters
-            x=rand(d,L)
-            histogram(x)
+            #x=rand(d,L)
+            #histogram(x)
+            xrange=1:L
+            x=cos.(2*pi*sqrt(2)*xrange)
             savefig("histogram.png")
             pbc=true
             bonds=bonds1D(L, pbc)
@@ -3482,9 +3484,9 @@ function plot_Ws_norm_distribution()
     #clear(p, ls, log.(gs), label=string(i), linewidth=2)
     #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
-    save_object("W_norm_distribution_data_maxL="*string(maxL)*".jld2", all_data)
-    save_object("W_norm_distribution_Ls_data_maxL="*string(maxL)*".jld2", all_data_Ls)
-    savefig("./distribution of norm Ws cluster, maxL="*string(maxL)*".png");
+    save_object("W_norm_distribution_quasiperiodic_data_maxL="*string(maxL)*".jld2", all_data)
+    save_object("W_norm_distribution_quasiperiodic_Ls_data_maxL="*string(maxL)*".jld2", all_data_Ls)
+    savefig("./distribution of norm Ws cluster quasiperiodic, maxL="*string(maxL)*".png");
 end
 
 
@@ -3503,7 +3505,7 @@ function plot_quasiperiodic_norm_distribution()
         println(L)
         # for each L we get a distribution
         xrange=1:L
-        x=cos.(2*pi*sqrt(3)*xrange)
+        x=cos.(2*pi*sqrt(2)*xrange)
             histogram(x)
             savefig("histogram.png")
             pbc=true
