@@ -6237,14 +6237,14 @@ function plot_transport_norm_vs_L_disorder()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    v=10
+    v=2
     println(ls)
     gradient = cgrad([:pink, :black], length(ls))
     #theme(:lime)
     p = plot(title="Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     count=1
 
-    iterations=50
+    iterations=80
 
     all_data=[]
     all_data_Ls=[]
