@@ -6237,7 +6237,7 @@ function plot_transport_norm_vs_L_disorder()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    v=2
+    v=0.1
     println(ls)
     gradient = cgrad([:pink, :black], length(ls))
     #theme(:lime)
