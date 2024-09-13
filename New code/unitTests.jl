@@ -6168,7 +6168,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=50, stop=150, step=20))
-    v=0.1
+    v=2
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
     phases=range(0, stop=1/sqrt(2), length=1000)
@@ -6199,8 +6199,8 @@ function plot_transport_norm_vs_L_quasiperiodic()
         stephist!(p,gs, label="L="*string(L), norm = true, ylims=(0,5), color=gradient[count])
     count+=1
     end
-    save_object("interacting_transport_distribution_quasiperiodic_L="*string(ls[end])*".jld2", all_data)
-    save_object("interacting_transport_distribution_quasiperiodic_Ls_L="*string(ls[end])*".jld2", ls)
+    save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
+    save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
 
     savefig("./cluster quasiperiodic norm distribution interacting vs L with averaging, v="*string(v)*".png");
 end
