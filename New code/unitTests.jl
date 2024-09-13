@@ -6168,7 +6168,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=50, stop=150, step=20))
-    v=2
+    v=10
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
     phases=range(0, stop=1/sqrt(2), length=1000)
