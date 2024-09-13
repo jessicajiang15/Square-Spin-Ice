@@ -184,6 +184,7 @@ end
 #plot_quasiperiodic_norm_distribution()
 #quasiperiodic_diagonalization()
 plot_Ws_norm_distribution()
+plot_from_data_avglog()
 #plot_w_norm_from_data()
 #plot_Ws_norm_distribution()
 #plot_Ws_norm_distribution()

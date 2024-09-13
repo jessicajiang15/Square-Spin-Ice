@@ -3448,11 +3448,13 @@ end
 function plot_Ws_norm_distribution()
     t=0.1
     d = Uniform(-1,1)
-    maxL=80
+    maxL=120
     all_data=[]
     all_data_Ls=[]
 
-    iters=1000
+    nums=1000
+    iters = range(0, stop=1/sqrt(2), length=nums)
+
     p = plot(title="Distribution of Norm of Ws at different Ls, Quasiperiodic", xlabel="log||W||", ylabel="Count")
 
     count=0
@@ -3462,12 +3464,11 @@ function plot_Ws_norm_distribution()
         # for each L we get a distribution
         ls=[]
         gs=[]
-        for i=1:iters
+        for i in iters
             #x=rand(d,L)
             #histogram(x)
             xrange=1:L
-            x=cos.(2*pi*sqrt(2)*xrange)
-            savefig("histogram.png")
+            x=cos.(2*pi*sqrt(2)*(xrange.+i))
             pbc=true
             bonds=bonds1D(L, pbc)
             H=build_anderson_hamiltonian_1d(x, bonds, L, t)
@@ -3927,9 +3928,9 @@ function plot_from_data_maximums()
 end
 
 function plot_from_data_avglog()
-    p = plot(title="Average log(W) vs. L", xlabel="L", ylabel="Log10(Most Typical W)")
-    energy_distribution=load_object("W_distribution_data_maxL=30.jld2")
-    Ls=load_object("W_distribution_Ls_data_maxL=30.jld2")
+    p = plot(title="Average of log(W) vs. L", xlabel="L", ylabel="Log(W) Average")
+    energy_distribution=load_object("W_norm_distribution_quasiperiodic_data_maxL=120.jld2")
+    Ls=load_object("W_norm_distribution_quasiperiodic_Ls_data_maxL=120.jld2")
     count=1
     temp=[]
     for gs in energy_distribution
@@ -3937,8 +3938,9 @@ function plot_from_data_avglog()
         d=mean(log10.(abs.(gs[abs.(gs.>0)])))
         push!(temp, d)
     end
-    plot!(p, log10.(Ls), temp)
-    savefig("./avg log W, maxL=14.png");
+    println(Ls)
+    plot!(p, log.(Ls), temp)
+    savefig("./avg log W quasiperiodic, maxL=120.png");
 end
 
 function plot_from_data_maximums_F()
