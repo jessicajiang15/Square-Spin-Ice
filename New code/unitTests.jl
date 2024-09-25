@@ -6213,11 +6213,11 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
-    v=2
+    ls=collect(range(start=20, stop=50, step=10))
+    v=10
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
-    phases=range(0, stop=1/sqrt(2), length=100)
+    phases=range(0, stop=1/sqrt(2), length=50)
     #theme(:lime)
     p = plot(title="Frobenius norm distribution noninteracting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     all_data=[]
@@ -6293,15 +6293,15 @@ end
 function plot_transport_norm_vs_L_disorder()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=50, step=10))
-    v=10
+    ls=collect(range(start=20, stop=80, step=10))
+    v=2
     println(ls)
     gradient = cgrad([:pink, :black], length(ls))
     #theme(:lime)
-    p = plot(title="Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    p = plot(title="OBC Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     count=1
 
-    iterations=100
+    iterations=50
 
     all_data=[]
     all_data_Ls=[]
@@ -6313,7 +6313,7 @@ function plot_transport_norm_vs_L_disorder()
         i_0=1:L
         for m in 1:iterations
         x=v*rand(d, L)
-        pbc=true
+        pbc=false
         bonds=bonds1D(L, pbc)
         H=build_anderson_hamiltonian_1d(x, bonds, L, t)
         eigtemp=eigen(Hermitian(H));
@@ -6329,9 +6329,9 @@ function plot_transport_norm_vs_L_disorder()
         push!(all_data_Ls, L)
     count+=1
     end
-    save_object("interacting_transport_distribution="*string(ls[end])*"_v="*string(v)*".jld2", all_data)
-    save_object("interacting_transport_distribution_Ls_data_maxL="*string(ls[end])*"_v="*string(v)*".jld2", all_data_Ls)
-    savefig("./disorder norm distribution interacting vs L, v="*string(v)*".png");
+    save_object("interacting_transport_distribution_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data)
+    save_object("interacting_transport_distribution_Ls_data_maxL_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data_Ls)
+    savefig("./disorder norm distribution interacting vs L obc, v="*string(v)*".png");
 end
 
 
