@@ -3865,28 +3865,74 @@ function time_Ws()
     @time begin
         #W=construct_W_matrix_symmetry(eigtemp.vectors, eigtemp.values,bonds)
     end
-    
 end
 
 function plot_from_data()
-    p = plot(title="Distribution of log(|W|) at different Ls, t=0.1", xlabel="Log10|W>0|", ylabel="Log10(Count)")
-    energy_distribution=load_object("interacting_transport_distribution=20.jld2")
-    Ls=load_object("interacting_transport_distribution_Ls_data_maxL=20.jld2")
+    p = plot(title="Distribution of interacting norms at different Ls, quasiperiodic, v=2", xlabel="Ln|O>0|", ylabel="Count")
+    energy_distribution=load_object("interacting_transport_distribution_quasiperiodic_v=2.jld2")
+    Ls=load_object("interacting_transport_distribution_quasiperiodic_Ls_v=2.jld2")
     count=1
     println(Ls)
-    println(energy_distribution)
+    L=20
+    #println(energy_distribution)
+    println(length(energy_distribution))
+    gss=[]
+    bigcount=1
     for gs in energy_distribution
-        L=Ls[count]
-        stephist!(p, log10.(abs.(gs[abs.(gs.>0)])), label="L="*string(L), norm=true, xlims=(-10,10),yaxis = (:log10, (0.0001,Inf)))
+        if(count<=50)
+            append!(gss, gs)
+        end
+        if(count==50)
+        println(size(gss))
+        stephist!(p, log.(abs.(gss[abs.(gss.>0)])), label="L="*string(Ls[bigcount]), norm=true)
+        gss=[]
+        bigcount+=1
+        count=1
+        end
+        #println(gs)
+       # L=Ls[count]
         count+=1
     end
-    #x = range(-5, 5, length=100)
-    #slope=-1
-    #intercept=-2
-    #linear_curve = 10 .^ (slope .* x .+ intercept)
-    #plot!(p, x, linear_curve, label="Linear Fit", xlims=(-10, 10), linewidth=5, thickness_scaling = 1)
-    savefig("./distribution of transport operator newwww, maxL=20.png");
+    x = range(-5, 5, length=100)
+    slope=-0.5
+    intercept=-1.5
+    linear_curve = exp.(slope .* x .+ intercept)
+    #plot!(p, x, linear_curve, label="Power law decay exp(-1.5)x^{-0.5}", xlims=(-10, 30), ylims=(10^-8,10^1), linewidth=5, thickness_scaling = 1)
+    savefig("./lol quasiperiodic distribution of interacting transport operator, v=10 maxL=50.png");
 end
+
+function plot_from_data_2()
+    p = plot(title="Distribution of interacting norms at different Ls, quasiperiodic, v=2", xlabel="L", ylabel="Average of Log|O|")
+    energy_distribution=load_object("interacting_transport_distribution_quasiperiodic_v=2.jld2")
+    Ls=load_object("interacting_transport_distribution_quasiperiodic_Ls_v=2.jld2")
+    count=1
+    println(Ls)
+    L=20
+    #println(energy_distribution)
+    println(length(energy_distribution))
+    gss=[]
+    bigcount=1
+    temp=[]
+    for gs in energy_distribution
+        if(count<=50)
+            append!(gss, gs)
+        end
+        if(count==50)
+        println(size(gss))
+        push!(temp, mean(log.(abs.(gss[abs.(gss.>0)]))))
+        gss=[]
+        bigcount+=1
+        count=1
+        end
+        #println(gs)
+       # L=Ls[count]
+        count+=1
+    end
+    plot!(Ls, temp, title="Average norm interacting transport vs. L quasiperiodic model")
+    
+    savefig("./average quasiperiodic distribution of interacting transport operator, v=2 maxL=50.png");
+end
+
 
 
 function plot_w_norm_from_data()
@@ -6081,12 +6127,12 @@ end
 function plot_transport_norm_average_distribution()
     t=1
     d = Uniform(-1,1)
-    maxL=50
+    maxL=150
     all_data=[]
     all_data_Ls=[]
 
     iters=100
-    p = plot(title="Average of Norm of interacting Os at different Ls", xlabel="L", ylabel="log||O||")
+    p = plot(title="Average of Norm of Os at different Ls", xlabel="L", ylabel="log||O||")
     i_0=1
     errors=[]
     v=2
@@ -6109,7 +6155,7 @@ function plot_transport_norm_average_distribution()
             eigenvalues=[]
             append!(eigenvalues, eigtemp.values);
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
-            W=norm(interacting_transport_operator(eigtemp.vectors, eigenvalues, i_0))
+            W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
             append!(gs,W)
         end
         println(gs)
@@ -6124,7 +6170,7 @@ function plot_transport_norm_average_distribution()
     #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
     plot!(p, ls, (all_data), yerr=errors)
-    savefig("./average interacting operator norm transport, maxL="*string(maxL)*".png");
+    savefig("./average operator norm transport, maxL="*string(maxL)*".png");
 end
 
 function plot_transport_norm_vs_V_quasiperiodic()
@@ -6167,36 +6213,37 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=50, stop=150, step=20))
-    v=10
+    ls=collect(range(start=20, stop=80, step=10))
+    v=2
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
-    phases=range(0, stop=1/sqrt(2), length=1000)
+    phases=range(0, stop=1/sqrt(2), length=100)
     #theme(:lime)
     p = plot(title="Frobenius norm distribution noninteracting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     all_data=[]
     count=1
     for L in ls
+        println("L="*string(L))
         # for each L we get a distribution
         gs=[]
         i_0=1:L
         xrange=1:L
         for phase in phases
-        x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
-        pbc=false
-        bonds=bonds1D(L, pbc)
-        H=build_anderson_hamiltonian_1d(x, bonds, L, t)
-        eigtemp=eigen(Hermitian(H));
-        #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
-        for i_0=1:L-1
-            W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
-            append!(gs,W)
+            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            pbc=false
+            bonds=bonds1D(L, pbc)
+            H=build_anderson_hamiltonian_1d(x, bonds, L, t)
+            eigtemp=eigen(Hermitian(H));
+            #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
+            for i_0=1:L-1
+                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                append!(gs,W)
+            end
         end
         push!(all_data, gs)
-    end
         #println(gs)
         gs=log.(abs.(gs[abs.(gs).>0]))
-        stephist!(p,gs, label="L="*string(L), norm = true, ylims=(0,5), color=gradient[count])
+        stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
     count+=1
     end
     save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
@@ -6246,15 +6293,15 @@ end
 function plot_transport_norm_vs_L_disorder()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
-    v=0.1
+    ls=collect(range(start=20, stop=50, step=10))
+    v=10
     println(ls)
     gradient = cgrad([:pink, :black], length(ls))
     #theme(:lime)
     p = plot(title="Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     count=1
 
-    iterations=80
+    iterations=100
 
     all_data=[]
     all_data_Ls=[]
@@ -6282,8 +6329,8 @@ function plot_transport_norm_vs_L_disorder()
         push!(all_data_Ls, L)
     count+=1
     end
-    save_object("interacting_transport_distribution="*string(ls[end])*".jld2", all_data)
-    save_object("interacting_transport_distribution_Ls_data_maxL="*string(ls[end])*".jld2", all_data_Ls)
+    save_object("interacting_transport_distribution="*string(ls[end])*"_v="*string(v)*".jld2", all_data)
+    save_object("interacting_transport_distribution_Ls_data_maxL="*string(ls[end])*"_v="*string(v)*".jld2", all_data_Ls)
     savefig("./disorder norm distribution interacting vs L, v="*string(v)*".png");
 end
 
