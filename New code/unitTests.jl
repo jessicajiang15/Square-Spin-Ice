@@ -3868,9 +3868,9 @@ function time_Ws()
 end
 
 function plot_from_data()
-    p = plot(title="Distribution of interacting norms at different Ls, quasiperiodic, v=2", xlabel="Ln|O>0|", ylabel="Count")
-    energy_distribution=load_object("interacting_transport_distribution_quasiperiodic_v=2.jld2")
-    Ls=load_object("interacting_transport_distribution_quasiperiodic_Ls_v=2.jld2")
+    p = plot(title="Distribution of interacting norms at different Ls, disorder, v=2", xlabel="Ln|O>0|", ylabel="log Count")
+    energy_distribution=load_object("interacting_transport_distribution_cluster=80.jld2")
+    Ls=load_object("interacting_transport_distribution_Ls_data_maxL=80.jld2")
     count=1
     println(Ls)
     L=20
@@ -3879,26 +3879,14 @@ function plot_from_data()
     gss=[]
     bigcount=1
     for gs in energy_distribution
-        if(count<=50)
-            append!(gss, gs)
-        end
-        if(count==50)
-        println(size(gss))
-        stephist!(p, log.(abs.(gss[abs.(gss.>0)])), label="L="*string(Ls[bigcount]), norm=true)
-        gss=[]
-        bigcount+=1
-        count=1
-        end
-        #println(gs)
-       # L=Ls[count]
-        count+=1
+        stephist!(p, log.(abs.(gs[abs.(gs.>0)])), label="L="*string(Ls[bigcount]), norm=true, yaxis=:log)
     end
-    x = range(-5, 5, length=100)
+    x = range(0, 20, length=100)
     slope=-0.5
-    intercept=-1.5
+    intercept=2
     linear_curve = exp.(slope .* x .+ intercept)
-    #plot!(p, x, linear_curve, label="Power law decay exp(-1.5)x^{-0.5}", xlims=(-10, 30), ylims=(10^-8,10^1), linewidth=5, thickness_scaling = 1)
-    savefig("./lol quasiperiodic distribution of interacting transport operator, v=10 maxL=50.png");
+    plot!(p, x, linear_curve, ylims=(10^-8,10^1), linewidth=5, thickness_scaling = 1)
+    savefig("./disorder distribution of interacting transport operator, v=2 maxL=80.png");
 end
 
 function plot_from_data_2()
@@ -6213,15 +6201,17 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=50, step=10))
-    v=10
+    ls=collect(range(start=20, stop=80, step=10))
+    v=2
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(ls))
-    phases=range(0, stop=1/sqrt(2), length=50)
+    phases=range(0, stop=1/sqrt(2), length=100)
     #theme(:lime)
-    p = plot(title="Frobenius norm distribution noninteracting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    p = plot(title="Frobenius norm distribution interacting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
     all_data=[]
     count=1
+    temp=[]
+    errors=[]
     for L in ls
         println("L="*string(L))
         # for each L we get a distribution
@@ -6243,13 +6233,15 @@ function plot_transport_norm_vs_L_quasiperiodic()
         push!(all_data, gs)
         #println(gs)
         gs=log.(abs.(gs[abs.(gs).>0]))
-        stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
+        push!(errors, std(gs))
+        push!(temp, mean(gs))
+        stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count], yerr=errors)
     count+=1
     end
     save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
     save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
-
-    savefig("./cluster quasiperiodic norm distribution interacting vs L with averaging, v="*string(v)*".png");
+    plot(ls, temp, title="average of norm O", xlabel="L", ylabel="Mean of log||O||")
+    savefig("./average quasiperiodic norm distribution interacting vs L, v="*string(v)*".png");
 end
 
 
@@ -6293,15 +6285,15 @@ end
 function plot_transport_norm_vs_L_disorder()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
+    ls=collect(range(start=20, stop=100, step=10))
     v=2
     println(ls)
     gradient = cgrad([:pink, :black], length(ls))
     #theme(:lime)
-    p = plot(title="OBC Frobenius norm distribution disorder, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    p = plot(title="PBC Frobenius norm distribution disorder, v="*string(v), xlabel="||O||", ylabel="Normalized Count")
     count=1
 
-    iterations=50
+    iterations=500
 
     all_data=[]
     all_data_Ls=[]
@@ -6319,19 +6311,25 @@ function plot_transport_norm_vs_L_disorder()
         eigtemp=eigen(Hermitian(H));
         #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
         for i_0=1:L-1
-            W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            W=norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
             append!(gs,W)
         end
         end
-        tee=log.(abs.(gs[abs.(gs).>0]))
-        stephist!(p,tee, label="L="*string(L), norm = true, color=gradient[count])
+        #tee=log.(abs.(gs[abs.(gs).>0]))
+        stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count], yaxis=:log, xaxis=:log)
         push!(all_data, gs)
         push!(all_data_Ls, L)
     count+=1
     end
-    save_object("interacting_transport_distribution_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data)
-    save_object("interacting_transport_distribution_Ls_data_maxL_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data_Ls)
-    savefig("./disorder norm distribution interacting vs L obc, v="*string(v)*".png");
+    intercept=10^1
+    slope=-0.05
+    x = range(10^1, 10^5, length=1000)
+    curve =  (x.^(-2.2))
+    plot!(p, x, curve, label="Power law decay x^{-1.8}", ylims=(10^-6,10^1), linewidth=5, thickness_scaling = 1)
+    
+    save_object("noninteracting_transport_distribution_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data)
+    save_object("noninteracting_transport_distribution_Ls_data_maxL_obc="*string(ls[end])*"_v="*string(v)*".jld2", all_data_Ls)
+    savefig("./disorder norm distribution noninteracting vs L obc nonlog, v="*string(v)*".png");
 end
 
 
