@@ -6202,16 +6202,28 @@ function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    v=2
+    vs=collect(range(start=0.1, stop=3, step=0.5))
     println(ls)
-    gradient = cgrad([:red, :yellow, :blue], length(ls))
-    phases=range(0, stop=1/sqrt(2), length=100)
+    gradient = cgrad([:red, :yellow, :blue], length(vs))
+    println("length")
+    println(length(vs))
+    println("length")
+    println(length(gradient))
+    phases=range(0, stop=1/sqrt(2), length=200)
     #theme(:lime)
-    p = plot(title="Frobenius norm distribution interacting transport, quasiperiodic, v="*string(v), xlabel="log||O||", ylabel="Normalized Count")
+    p = plot(title="Avg frobenius norm vs. L interacting transport", xlabel="L", ylabel="Avg(Log||O||)")
     all_data=[]
     count=1
     temp=[]
-    errors=[]
+    count1=1
+
+    p=plot()
+
+    for v in vs
+        temp=[]
+        println("v="*string(v))
+        println("count1="*string(count1))
+        errors=[]
     for L in ls
         println("L="*string(L))
         # for each L we get a distribution
@@ -6219,33 +6231,32 @@ function plot_transport_norm_vs_L_quasiperiodic()
         i_0=1:L
         xrange=1:L
         for phase in phases
-            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            #x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            x=v*rand(d, L)
             pbc=false
             bonds=bonds1D(L, pbc)
             H=build_anderson_hamiltonian_1d(x, bonds, L, t)
             eigtemp=eigen(Hermitian(H));
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
-            for i_0=1:L-1
-                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+            #for i_0=1:L-1
+                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, 1))
                 append!(gs,W)
-            end
+            #end
         end
         push!(all_data, gs)
-        #println(gs)
-        gs=log.(abs.(gs[abs.(gs).>0]))
+        #gs=log.(abs.(gs[abs.(gs).>0]))
         push!(errors, std(gs))
         push!(temp, mean(gs))
-        stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count], yerr=errors)
+        #stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
     count+=1
     end
-    save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
-    save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
-    plot(ls, temp, title="average of norm O", xlabel="L", ylabel="Mean of log||O||")
-    savefig("./average quasiperiodic norm distribution interacting vs L, v="*string(v)*".png");
+    plot!(p,ls, temp, xlabel="L", ylabel="Mean of ||O||", color=gradient[count1],label="v="*string(v), yerr=errors)
+    #save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
+    #save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
+    count1+=1
 end
-
-
-
+    savefig("./average disorder norm distribution interacting vs L.png");
+end
 
 function plot_transport_norm_vs_V_disorder()
     t=1
