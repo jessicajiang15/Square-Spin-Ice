@@ -6250,7 +6250,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
         #stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
     count+=1
     end
-    plot!(p,ls, temp, xlabel="L", ylabel="Mean of ||O||", color=gradient[count1],label="v="*string(v), yerr=errors)
+    plot!(p,ls, temp, xlabel="L", ylabel="Mean of ||O||", color=gradient[count1],label="v="*string(v))
     #save_object("interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
     #save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
     count1+=1
