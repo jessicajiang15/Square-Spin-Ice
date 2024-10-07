@@ -6201,7 +6201,7 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
+    ls=collect(range(start=20, stop=100, step=10))
     vs=collect(range(start=0.1, stop=3, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
@@ -6209,7 +6209,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
     println(length(vs))
     println("length")
     println(length(gradient))
-    phases=range(0, stop=1/sqrt(2), length=200)
+    phases=range(0, stop=1/sqrt(2), length=600)
     #theme(:lime)
     p = plot(title="Avg frobenius norm vs. L interacting transport", xlabel="L", ylabel="Avg(Log||O||)")
     all_data=[]
@@ -6255,7 +6255,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
     #save_object("interacting_transport_distribution_quasiperiodic_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end
-    savefig("./average disorder norm distribution interacting vs L.png");
+    savefig("./cluster average disorder norm distribution interacting vs L.png");
 end
 
 function plot_transport_norm_vs_V_disorder()
