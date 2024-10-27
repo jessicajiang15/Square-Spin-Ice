@@ -894,7 +894,6 @@ function calculate_participation_ratio(eigenvector)
         sum1+=abs(temp)^4
         sum2+=abs(temp)^2
     end
-    print(sum2)
     return sum1/(sum2)^2
 end
 
