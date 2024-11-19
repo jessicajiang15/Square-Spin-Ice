@@ -27,15 +27,39 @@ function build_Vijkl_matrix(eigenvectors)
     for i in 1:size(eigenvectors, 1)
         identity[i, i, i] = 1.0
     end
-    V = @tensor W[a, b, c, d] := eigenvectors[i, a] * identity[i,j,k] * (v_rolled)[j, b] *conj.((eigenvectors))[l, c] * identity[l,m,k] *  conj.((v_rolled))[m, d]
+    #TODO: check this contraction
+    V = @tensor W[a, b, c, d] := eigenvectors[i, a] * identity[i,j,k] * (v_rolled)[j, b] *((eigenvectors))[l, c] * identity[l,m,k] *  ((v_rolled))[m, d]
+    
     V1 = permutedims(V, (2, 1, 3, 4))
     V2 = permutedims(V, (1, 2, 4, 3))
     V3 = permutedims(V, (2, 1, 4, 3))
-    V=V-V1-V2+V3
+    V.=V.-V1.-V2.+V3
     #println(V)
     temp=ifelse.(0.25 * abs.(V) .< 1e-12, 0, -0.25*V)
     return temp
 end
+#=
+function build_Vijkl_matrix_test(eigenvectors)
+    v_rolled=circshift(eigenvectors, (1, 0))
+    n=size(eigenvectors, 1)
+    identity = zeros(Float64, n, n, n)
+    for i in 1:size(eigenvectors, 1)
+        identity[i, i, i] = 1.0
+    end
+    #TODO: check this contraction
+    @time V = @tensor W[a, b, c, d] := eigenvectors[i, a] * identity[i,j,k] * (v_rolled)[j, b] *((eigenvectors))[l, c] * identity[l,m,k] *  ((v_rolled))[m, d]
+    @time V = @tensor W[a, b, k] := eigenvectors[i, a] * identity[i,j,k] * (v_rolled)[j, b]
+    @time V = @tensor W[a, b, c, d] := W[a, b, k]*conj.((eigenvectors))[l, c] * identity[l,m,k] *  conj.((v_rolled))[m, d]
+
+    V1 = permutedims(V, (2, 1, 3, 4))
+    V2 = permutedims(V, (1, 2, 4, 3))
+    V3 = permutedims(V, (2, 1, 4, 3))
+    @time V.=V.-V1.-V2.+V3
+    #println(V)
+    temp=ifelse.(0.25 * abs.(V) .< 1e-12, 0, -0.25*V)
+    return temp
+end
+=#
 
 function build_Vijkl_matrix_no_symmetry(eigenvectors, eigenvalues, bonds)
     temp=zeros(Float64,length(eigenvalues),length(eigenvalues),length(eigenvalues),length(eigenvalues))
@@ -74,7 +98,9 @@ function build_energy_differences_matrix(eigenvalues)
             end
         end
     end
-    return ifelse.(abs.(temp) .< 1e-12, 1.0, temp)
+    zero_indices = findall(x -> abs(x) < 1e-12, temp)
+    temp[zero_indices].=1
+    return (temp,zero_indices)
 end
 
 
@@ -96,8 +122,13 @@ end
 
 function build_W_matrix_tensor_op(eigenvalues, eigenvectors)
     V=build_Vijkl_matrix(eigenvectors)
-    energy=build_energy_differences_matrix(eigenvalues)
+    energy, indexes=build_energy_differences_matrix(eigenvalues)
+    V[indexes].=0
     return V./energy
+end
+
+function build_W_matrix_tensor_op(eigenvalues, eigenvectors, V, E)
+    return V./E
 end
 
 function delta(i,j)
@@ -171,20 +202,25 @@ end
 
 function find_norm_operator(W)
     n = size(W, 1)
-    
-    term1 = sum(W[i, j, i, j] for i in 1:n, j in 1:n)
-    
     term2 = 0.0
     for i in 1:n
         for j in 1:n
-            temp = sum(abs(W[k, i, k, j]) for k in 1:n)
+            temp=0
+            for k=1:n
+                temp+=W[k, i, k, j]
+            end
+            #temp = sum(((W[k, i, k, j])) for k in 1:n)
             term2 += abs2(temp)
         end
     end
 
-    term3 = norm(W)
+    term3 = norm(W)^2
+
+    println("terms in norm sum")
+    println(term2)
+    println(term3)
     
-    return 0.25 * term1^2 + term2 + 0.25 * term3
+    return term2 + 0.25 * term3
 end
 
 function find_f_norm_from_w(W, alpha)
@@ -403,7 +439,7 @@ function transport_operator(eigenvectors, eigenvalues, i_0)
             if(a==b)
                 result[a,b]=0
             else
-                result[a,b]=(eigenvectors[i_0, a]*eigenvectors[te, b]+eigenvectors[i_0, b]*eigenvectors[te, a])/(eigenvalues[a]-eigenvalues[b])
+                result[a,b]=(eigenvectors[i_0, a]*eigenvectors[te, b]-eigenvectors[i_0, b]*eigenvectors[te, a])/(eigenvalues[a]-eigenvalues[b])
             end
         end
     end
@@ -413,29 +449,22 @@ end
 function interacting_transport_operator(eigenvectors, eigenvalues, i_0)
     O=transport_operator(eigenvectors, eigenvalues, i_0)
     V=Array{Float64, 4}(build_Vijkl_matrix(eigenvectors))
-    E=build_energy_differences_matrix(eigenvalues)
-    #println(typeof(V))
-    #println(typeof(O))
-    #println("hello")
-    #println(V)
-    #println(O)
+    E, indexes=build_energy_differences_matrix(eigenvalues)
     result = zeros(Float64, size(V))
-    @tensor result[a,b,c,d]:=V[a,b,c,i]*O[i,d]+V[a,b,i,d]*O[i,c]-V[a,i,c,d]*O[i,b]-V[i,b,c,d]*O[i,a]
-    #println(result)
+    V[indexes].=0
+    @tensor result[a,b,c,d]:=V[a,b,c,i]*O[i,d]+V[a,b,i,d]*O[i,c]-V[a,i,c,d]*O[b,i]-V[i,b,c,d]*O[a,i]
     return result./E
 end
 
-function interacting_transport_operator_0(eigenvectors, eigenvalues, O)
-    #O=transport_operator(eigenvectors, eigenvalues, i_0)
-    V=Array{Float64, 4}(build_Vijkl_matrix(eigenvectors))
-    E=build_energy_differences_matrix(eigenvalues)
+function interacting_transport_operator(eigenvectors, eigenvalues, i_0, V, E)
+    O=transport_operator(eigenvectors, eigenvalues, i_0)
     #println(typeof(V))
     #println(typeof(O))
     #println("hello")
     #println(V)
     #println(O)
     result = zeros(Float64, size(V))
-    @tensor result[a,b,c,d]:=V[a,b,c,i]*O[i,d]+V[a,b,i,d]*O[i,c]-V[a,i,c,d]*O[i,b]-V[i,b,c,d]*O[i,a]
+    @tensor result[a,b,c,d]:=V[a,b,c,i]*O[i,d]+V[a,b,i,d]*O[i,c]-V[a,i,c,d]*O[b,i]-V[i,b,c,d]*O[a,i]
     #println(result)
     return result./E
 end
@@ -443,6 +472,39 @@ end
 #operator is in matrix form
 function operator_norm(O)
     temp=transpose(O)*O
-    values, __ =eigsolve(temp, 1, :LR; krylovdim=100, ishermitian=true);
-    return sqrt(values[1])
+    eigtemp=eigen(temp)
+    return sum(eigtemp.values[eigtemp.values.>0])
+end
+
+function construct_N_L_matrix(eigenvectors)
+    n=size(eigenvectors)[1]
+    N_L=zeros((n, n))
+    for a=1:n
+        for b=1:n
+            N_L[a, b]=eigenvectors[1, a]*eigenvectors[1, b]
+        end
+    end
+    return N_L
+end
+
+function build_second_resonance_matrix(eigenvalues)
+    n=length(eigenvalues)
+    temp=zeros(Float64,length(eigenvalues),length(eigenvalues),length(eigenvalues),length(eigenvalues),length(eigenvalues),length(eigenvalues))
+    for i=1:length(eigenvalues)
+        for j=1:i
+            te=eigenvalues[i]+eigenvalues[j]
+            for k=1:length(eigenvalues)
+                for l=1:k
+                    value=te+eigenvalues[k]-eigenvalues[l]
+                    for m=1:n
+                        for o=1:m
+                            value2=value-eigenvalues[m]-eigenvalues[o]
+                            temp[i,j,k,l,m,o]=(value2)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return ifelse.(abs.(temp) .< 1e-12, 1.0, temp)
 end
