@@ -3331,8 +3331,8 @@ function plot_Ws_distances_distribution()
     all_data=[]
     all_data_Ls=[]
     iters=1
-    p = plot(title="Distribution of large Fs (>1) at different Ls, Quasiperiodic Potential", xlabel="r", ylabel="Log(W)")
-    distances=[]
+    p = plot(title="Distribution of large Ws (>1) at different Ls, Disordered Potential", xlabel="r/L", ylabel="Log(W)")
+    diii=[]
     large_Ws=[]
     count=0
     for L in range(10, maxL, step=10)
@@ -3361,17 +3361,17 @@ function plot_Ws_distances_distribution()
         end
         println(size(dists))
         println(size(gs))
-        push!(distances, dists[gs.>1])
+        push!(diii, dists[gs.>1])
         push!(large_Ws, gs[gs.>1])
-        scatter!(p, dists[gs.>1], log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
+        scatter!(p, dists[gs.>1]./L, log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
     count+=1
     #clear(p, ls, log.(gs), label=string(i), linewidth=2)
     #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
     println("done")
-    save_object("large_Ws_distances="*string(maxL)*".jld2", distances)
-    save_object("large_Ws="*string(maxL)*".jld2", large_Ws)
-    savefig("./distribution of Ws against distance maxL="*string(maxL)*", t="*string(t)*".png");
+    save_object("large_Ws_distances_disordered="*string(maxL)*".jld2", diii)
+    save_object("large_Ws_disordered="*string(maxL)*".jld2", large_Ws)
+    savefig("./distribution of Ws against distance disordered maxL="*string(maxL)*", t="*string(t)*".png");
 end
 
 
@@ -6645,7 +6645,7 @@ function plot_transport_norm_vs_L_quasiperiodic_sampling()
         push!(all_data_2, fs)
     count+=1
     end
-    save_object("all_links_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data_1)
+    save_object("sqrt3_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data_1)
     save_object("all_orbital_corrections_v="*string(v)*".jld2", all_data_2)
     #save_object("interacting_transport_distribution_disorder_v="*string(v)*"i_0=L21.jld2", all_data_2)
     #save_object("interacting_transport_distribution_disorder_v="*string(v)*"i_0=L20.jld2", all_data_3)
