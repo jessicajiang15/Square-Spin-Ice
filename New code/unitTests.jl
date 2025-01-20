@@ -6478,12 +6478,12 @@ function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    vs=collect(range(start=0.1, stop=0.6, step=0.5))
+    vs=collect(range(start=0, stop=0, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
     phases=range(0, stop=1/sqrt(2), length=500)
     #theme(:lime)
-    p = plot(title="Avg frobenius norm O(1) vs. L, disordered", xlabel="L", ylabel="median(||O(1)||)", legend=true)
+    p = plot(title="Avg frobenius norm O(1) vs. L free", xlabel="L", ylabel="median(||O(1)||)", legend=true)
     all_data=[]
     count=1
     temp=[]
@@ -6502,7 +6502,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
         gs=[]
         i_0=div(L, 2)
         for phase in phases
-            #x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
             x=v*rand(d, L)
             pbc=false
             bonds=bonds1D(L, pbc)
@@ -6510,9 +6510,12 @@ function plot_transport_norm_vs_L_quasiperiodic()
             eigtemp=eigen(Hermitian(H));
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
             #for i_0=1:L-1
-                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                W=0.5*norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
                 append!(gs,W)
             #end
+            if(v==0)
+                break
+            end
         end
         println(typeof(gs))
         push!(all_data, gs)
@@ -6521,12 +6524,12 @@ function plot_transport_norm_vs_L_quasiperiodic()
         #stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
     count+=1
     end
-    plot!(p,(ls), (temp), title="median full forbenius norm O(1) vs. L, disordered", xlabel="L", ylabel="(median of ||O(1)||)", color=gradient[count1],label="v="*string(v))
+    plot!(p,(ls), (temp), title="median full forbenius norm O(1) vs. L, free", xlabel="L", ylabel="(median of ||O(1)||)", color=gradient[count1],label="v="*string(v))
     save_object("full_norm_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data)
     #save_object("noninteracting_transport_distribution_disorder_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end
-    savefig("./full operator norm interacting transport median vs L disordered.png");
+    savefig("./free interacting transport.png");
     #savefig("./cluster median disordered norm distribution noninteracting vs L.png");
 end
 

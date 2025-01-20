@@ -226,7 +226,7 @@ end
 function find_f_norm_from_w(W, alpha)
     sum1 = norm(W[:, :, :, alpha])
     sum2 = norm(W[:, alpha, :, alpha])
-    return 4 * (sum1 - 2* sum2)
+    return 4 * (sum1 - sum2)
 end
 
 function simple_norm_operator(W)
@@ -413,6 +413,7 @@ end
 function get_distances_matrix(eigenvectors)
     L=size(eigenvectors,2)
     distances=zeros(Float64, (L,L,L,L))
+    print("hi")
 
     for i=1:L
         for j=1:L
@@ -423,6 +424,9 @@ function get_distances_matrix(eigenvectors)
                     pos3=argmax(abs.(eigenvectors[:, k]))
                     pos4=argmax(abs.(eigenvectors[:, l]))
                     distance=max(abs(pos1-pos2),abs(pos1-pos3),abs(pos1-pos4),abs(pos2-pos3),abs(pos2-pos4),abs(pos3-pos4))
+                    if(distance>floor(L/2))
+                        distance=L-distance
+                    end
                     distances[i,j,k,l]=distance
                 end
             end
