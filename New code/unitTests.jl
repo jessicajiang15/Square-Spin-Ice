@@ -3369,7 +3369,8 @@ function plot_Ws_distances_distribution()
     #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
     println("done")
-    
+    save_object("large_Ws_distances="*string(maxL)*".jld2", distances)
+    save_object("large_Ws="*string(maxL)*".jld2", large_Ws)
     savefig("./distribution of Ws against distance maxL="*string(maxL)*", t="*string(t)*".png");
 end
 
