@@ -3324,6 +3324,56 @@ function plot_Ws_distances_distribution()
 end
 
 
+function plot_Ws_distances_distribution()
+    t=0.1
+    d = Uniform(-1,1)
+    maxL=60
+    all_data=[]
+    all_data_Ls=[]
+    iters=1
+    p = plot(title="Distribution of large Fs (>1) at different Ls, Quasiperiodic Potential", xlabel="r", ylabel="Log(W)")
+    distances=[]
+    large_Ws=[]
+    count=0
+    for L in range(10, maxL, step=10)
+        println("L")
+        println(L)
+        # for each L we get a distribution
+        ls=[]
+        gs=[]
+        dists=[]
+        for i=1:iters
+            x=rand(d,L)
+            #xrange=1:L
+            #x=cos.(2*pi*sqrt(3)*xrange)
+            pbc=true
+            bonds=bonds1D(L, pbc)
+            H=build_anderson_hamiltonian_1d(x, bonds, L, t)
+            eigtemp=eigen(Hermitian(H));
+            eigenvalues=[]
+            append!(eigenvalues, eigtemp.values);
+            W=(build_W_matrix_tensor_op(eigenvalues, eigtemp.vectors))
+            # fuck
+            distances=get_distances_matrix(eigtemp.vectors)
+            distances=vec(distances)
+            append!(gs,W)
+            append!(dists, distances)
+        end
+        println(size(dists))
+        println(size(gs))
+        push!(distances, dists[gs.>1])
+        push!(large_Ws, gs[gs.>1])
+        scatter!(p, dists[gs.>1], log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
+    count+=1
+    #clear(p, ls, log.(gs), label=string(i), linewidth=2)
+    #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
+    end
+    println("done")
+    
+    savefig("./distribution of Ws against distance maxL="*string(maxL)*", t="*string(t)*".png");
+end
+
+
 function plot_O_distances_distribution()
     t=0.1
     d = Uniform(-1,1)

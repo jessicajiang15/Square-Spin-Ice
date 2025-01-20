@@ -307,6 +307,7 @@ function calculate_g_norms(alpha, eigenvectors,eigenvalues, bonds, N)
     return sum
 end
 
+#real one
 function calculate_f_from_w(W, alpha)
     result = zeros(Float64, size(W))
 

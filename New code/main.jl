@@ -156,6 +156,7 @@ function main()
         println("TOTAL TIME")
     end
 end
+plot_Ws_distances_distribution()
 #plot_transport_norm_vs_L_quasiperiodic_sampling()
 #time_test_interacting()
 #plot_transport_norm_vs_i0()
@@ -163,7 +164,7 @@ end
 #plot_v_distribution()
 #plot_v_distribution()
 #plot_orbital_correction_norm_avg()
-plot_transport_norm_vs_L_quasiperiodic()
+#plot_transport_norm_vs_L_quasiperiodic()
 #plot_transport_norm_vs_L_quasiperiodic()
 #plot_from_data_mean()
 #plot_distribution_localization_length()
