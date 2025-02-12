@@ -3279,63 +3279,20 @@ function plot_Ws_distribution()
 end
 
 
+
+
 function plot_Ws_distances_distribution()
-    t=0.1
+    t=1
     d = Uniform(-1,1)
     maxL=60
     all_data=[]
     all_data_Ls=[]
     iters=1
-    p = plot(title="Distribution of large Ws (>1) at different Ls, Quasiperiodic Potential", xlabel="r", ylabel="Log(W)")
-
-    count=0
-    for L in range(10, maxL, step=10)
-        println("L")
-        println(L)
-        # for each L we get a distribution
-        ls=[]
-        gs=[]
-        dists=[]
-        for i=1:iters
-            x=rand(d,L)
-            #xrange=1:L
-            #x=cos.(2*pi*sqrt(3)*xrange)
-            pbc=true
-            bonds=bonds1D(L, pbc)
-            H=build_anderson_hamiltonian_1d(x, bonds, L, t)
-            eigtemp=eigen(Hermitian(H));
-            eigenvalues=[]
-            append!(eigenvalues, eigtemp.values);
-            W=vec(build_W_matrix_tensor_op(eigenvalues, eigtemp.vectors))
-            distances=get_distances_matrix(eigtemp.vectors)
-            distances=vec(distances)
-            append!(gs,W)
-            append!(dists, distances)
-        end
-        println(size(dists))
-        println(size(gs))
-        scatter!(p, dists[gs.>1], log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
-    count+=1
-    #clear(p, ls, log.(gs), label=string(i), linewidth=2)
-    #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
-    end
-    println("done")
-    savefig("./distribution of Ws against distance maxL="*string(maxL)*", t="*string(t)*".png");
-end
-
-
-function plot_Ws_distances_distribution()
-    t=0.1
-    d = Uniform(-1,1)
-    maxL=60
-    all_data=[]
-    all_data_Ls=[]
-    iters=1
+    v=2
     p = plot(title="Distribution of large Ws (>1) at different Ls, Disordered Potential", xlabel="r/L", ylabel="Log(W)")
-    diii=[]
-    large_Ws=[]
+
     count=0
-    for L in range(10, maxL, step=10)
+    for L in range(60, maxL, step=10)
         println("L")
         println(L)
         # for each L we get a distribution
@@ -3343,35 +3300,33 @@ function plot_Ws_distances_distribution()
         gs=[]
         dists=[]
         for i=1:iters
-            x=rand(d,L)
+            x=v*rand(d,L)
             #xrange=1:L
             #x=cos.(2*pi*sqrt(3)*xrange)
-            pbc=true
+            pbc=false
             bonds=bonds1D(L, pbc)
             H=build_anderson_hamiltonian_1d(x, bonds, L, t)
             eigtemp=eigen(Hermitian(H));
             eigenvalues=[]
             append!(eigenvalues, eigtemp.values);
             W=(build_W_matrix_tensor_op(eigenvalues, eigtemp.vectors))
-            # fuck
-            distances=get_distances_matrix(eigtemp.vectors)
+            distances=get_distances_matrix(eigtemp.vectors, pbc)
             distances=vec(distances)
-            append!(gs,W)
+            append!(gs,abs.(W))
             append!(dists, distances)
         end
-        println(size(dists))
-        println(size(gs))
-        push!(diii, dists[gs.>1])
-        push!(large_Ws, gs[gs.>1])
-        scatter!(p, dists[gs.>1]./L, log.(abs.(gs[gs.>1])), label="L="*string(L), norm = true)
+        n = length(gs)
+        percent=0.001
+        num=10
+        #k = ceil(Int, percent * n)  # largest 1% of elements are looked at
+        indicies = partialsortperm(gs, n-num+1:n)
+
+        save_object("large_Ws_distances_disordered="*string(L)*".jld2", dists[indicies])
+        save_object("large_Ws_disordered="*string(L)*".jld2", gs[indicies])
     count+=1
-    #clear(p, ls, log.(gs), label=string(i), linewidth=2)
-    #plot!(ls, (gs),title="Norm of W vs. L", xlabel="L", ylabel="Norm of W", label=string(i))
     end
     println("done")
-    save_object("large_Ws_distances_disordered="*string(maxL)*".jld2", diii)
-    save_object("large_Ws_disordered="*string(maxL)*".jld2", large_Ws)
-    savefig("./distribution of Ws against distance disordered maxL="*string(maxL)*", t="*string(t)*".png");
+
 end
 
 
@@ -3905,19 +3860,16 @@ function time_Ws()
     d = Uniform(-1,1)
     parts=[]
     L=170
-    x=rand(d,L)
 
-    println(Threads.nthreads())
-
-    pbc=true
-    bonds=bonds1D(L, pbc)
-    H=build_anderson_hamiltonian_1d(x, bonds, L, t)
-    eigtemp=eigen(Hermitian(H));
-    @time begin
-    W=build_W_matrix_tensor_op(eigtemp.values, eigtemp.vectors)
-    end
-    @time begin
-        #W=construct_W_matrix_symmetry(eigtemp.vectors, eigtemp.values,bonds)
+    for L=10:10:80
+        pbc=true
+        x=rand(d,L)
+        bonds=bonds1D(L, pbc)
+        H=build_anderson_hamiltonian_1d(x, bonds, L, t)
+        eigtemp=eigen(Hermitian(H));
+        @time begin
+        W=build_W_matrix_tensor_op(eigtemp.values, eigtemp.vectors)
+        end
     end
 end
 
@@ -6529,10 +6481,10 @@ function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    vs=collect(range(start=0, stop=0, step=0.5))
+    vs=collect(range(start=1.6, stop=3.1, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
-    phases=range(0, stop=1/sqrt(2), length=500)
+    phases=range(0, stop=1/sqrt(3), length=500)
     #theme(:lime)
     p = plot(title="Avg frobenius norm O(1) vs. L free", xlabel="L", ylabel="median(||O(1)||)", legend=true)
     all_data=[]
@@ -6552,8 +6504,9 @@ function plot_transport_norm_vs_L_quasiperiodic()
         # for each L we get a distribution
         gs=[]
         i_0=div(L, 2)
+        xrange=1:L
         for phase in phases
-            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            #x=v*cos.(2*pi*sqrt(3).*(xrange.+phase))
             x=v*rand(d, L)
             pbc=false
             bonds=bonds1D(L, pbc)
@@ -6561,7 +6514,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
             eigtemp=eigen(Hermitian(H));
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
             #for i_0=1:L-1
-                W=0.5*norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
                 append!(gs,W)
             #end
             if(v==0)
@@ -6576,12 +6529,10 @@ function plot_transport_norm_vs_L_quasiperiodic()
     count+=1
     end
     plot!(p,(ls), (temp), title="median full forbenius norm O(1) vs. L, free", xlabel="L", ylabel="(median of ||O(1)||)", color=gradient[count1],label="v="*string(v))
-    save_object("full_norm_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data)
+    save_object("sqrt3_interacting_transport_distribution_quasiperiodic_v="*string(v)*".jld2", all_data)
     #save_object("noninteracting_transport_distribution_disorder_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end
-    savefig("./free interacting transport.png");
-    #savefig("./cluster median disordered norm distribution noninteracting vs L.png");
 end
 
 
@@ -6589,7 +6540,7 @@ function plot_transport_norm_vs_L_quasiperiodic_sampling()
     t=1
     d=Uniform(-1,1)
     ls=collect(range(start=20, stop=80, step=10))
-    vs=collect(range(start=2.1, stop=3.1, step=0.5))
+    vs=collect(range(start=3.1, stop=3.1, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
     phases=range(0, stop=1/sqrt(2), length=500)
@@ -6601,20 +6552,18 @@ function plot_transport_norm_vs_L_quasiperiodic_sampling()
 
     p=plot()
 
-
-
     for v in vs
         temp=[]
         println("v="*string(v))
         errors=[]
-        all_data_1=[]
-        all_data_2=[]
+        agp_norms=[]
+        weight_norm=[]
 
     for L in ls
         println("L="*string(L))
         # for each L we get a distribution
-        gs=[]
-        fs=[]
+        agp_temp=[]
+        weight_temp=[]
         disorders=[]
 
         i_0=div(L, 2)
@@ -6629,27 +6578,34 @@ function plot_transport_norm_vs_L_quasiperiodic_sampling()
             E, zero_indicies=build_energy_differences_matrix(eigtemp.values)
             V[zero_indicies].=0
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
-            tempp=[]
-            temppp=[]
+            #W1=(norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0, V, E)))
+            W4=build_W_matrix_tensor_op(eigtemp.values, eigtemp.vectors, V, E)
+            distances=get_distances_matrix(eigtemp.vectors, pbc)
+            AGP_norm=find_norm_operator(W4)
+            the_norm=norm(W4 .* distances)/norm(W4)
+            """
             for i_0=1:L
-                W1=(norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0, V, E)))
-                W4=build_W_matrix_tensor_op(eigtemp.values, eigtemp.vectors, V, E)
                 F1=find_f_norm_from_w(W4, i_0)
                 push!(tempp, W1)
                 push!(temppp, F1)
             end
-            push!(gs, tempp)
-            push!(fs, temppp)
+            """
+            push!(agp_temp, AGP_norm)
+            push!(weight_temp, the_norm)
         end
-        push!(all_data_1, gs)
-        push!(all_data_2, fs)
+        push!(agp_norms, agp_temp)
+        push!(weight_norm, weight_temp)
     count+=1
+    save_object("agp_disorder_v="*string(v)*" L="*string(L)*".jld2", agp_norms)
+    save_object("agp_weight_disorder_v="*string(v)*" L="*string(L)*".jld2", weight_norm)
+
     end
-    save_object("sqrt3_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data_1)
-    save_object("all_orbital_corrections_v="*string(v)*".jld2", all_data_2)
+    #save_object("sqrt3_interacting_transport_distribution_disorder_v="*string(v)*".jld2", all_data_1)
+    #save_object("all_orbital_corrections_v="*string(v)*".jld2", all_data_2)
     #save_object("interacting_transport_distribution_disorder_v="*string(v)*"i_0=L21.jld2", all_data_2)
     #save_object("interacting_transport_distribution_disorder_v="*string(v)*"i_0=L20.jld2", all_data_3)
-    #save_object("agp_disorder_v="*string(v)*".jld2", all_data_4)
+    save_object("agp_disorder_v="*string(v)*".jld2", agp_norms)
+    save_object("agp_weight_disorder_v="*string(v)*".jld2", weight_norm)
     #save_object("noninteracting_transport_distribution_disorder_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end

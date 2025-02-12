@@ -215,12 +215,8 @@ function find_norm_operator(W)
     end
 
     term3 = norm(W)^2
-
-    println("terms in norm sum")
-    println(term2)
-    println(term3)
     
-    return term2 + 0.25 * term3
+    return sqrt(term2 + 0.25 * term3)
 end
 
 function find_f_norm_from_w(W, alpha)
@@ -411,10 +407,9 @@ function get_rs_of_eigenvectors(eigenvectors)
     return rs
 end
 
-function get_distances_matrix(eigenvectors)
+function get_distances_matrix(eigenvectors, pbc)
     L=size(eigenvectors,2)
     distances=zeros(Float64, (L,L,L,L))
-    print("hi")
 
     for i=1:L
         for j=1:L
@@ -425,7 +420,7 @@ function get_distances_matrix(eigenvectors)
                     pos3=argmax(abs.(eigenvectors[:, k]))
                     pos4=argmax(abs.(eigenvectors[:, l]))
                     distance=max(abs(pos1-pos2),abs(pos1-pos3),abs(pos1-pos4),abs(pos2-pos3),abs(pos2-pos4),abs(pos3-pos4))
-                    if(distance>floor(L/2))
+                    if(distance>floor(L/2) && pbc)
                         distance=L-distance
                     end
                     distances[i,j,k,l]=distance
@@ -512,4 +507,8 @@ function build_second_resonance_matrix(eigenvalues)
         end
     end
     return ifelse.(abs.(temp) .< 1e-12, 1.0, temp)
+end
+
+function calculate_localized_quantity(eigenstates,eigenvalues)
+    return
 end
