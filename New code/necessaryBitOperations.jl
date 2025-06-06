@@ -61,6 +61,7 @@ function getTi(i, I)
     return mod(I÷(2^(i)), 2);
 end
 
+
 #flips the bits at the digits i and j
 #credit: https://stackoverflow.com/questions/18247126/how-to-flip-a-bit-at-a-specific-position-in-an-integer-in-any-language/18247246
 function flipBits(i, j, n)

@@ -860,3 +860,12 @@ function get_energy_mps_2(a_list_1, a_list_2, bonds, J, h, h2)
     end
     return sum
 end
+
+function get_state_in_computational_basis(state, eigenvectors)
+    num_states=size(state, 1)
+    vector=zeros(ComplexF64, num_states)
+    for i=1:num_states
+        vector+=state[i]*eigenvectors[:,i]
+    end
+    return state
+end

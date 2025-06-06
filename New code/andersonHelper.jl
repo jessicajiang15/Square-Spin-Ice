@@ -225,6 +225,11 @@ function find_f_norm_from_w(W, alpha)
     return 4 * (sum1 - sum2)
 end
 
+# TODO: check
+function find_bilinear_norm(W)
+    return sqrt(0.25*(norm(W)^2+tr(W)^2))
+end
+
 function simple_norm_operator(W)
     return sum(x -> x^2, W)
 end
@@ -436,10 +441,33 @@ function transport_operator(eigenvectors, eigenvalues, i_0)
     result=zeros(Float64, length(eigenvalues), length(eigenvalues))
     Threads.@threads for a=1:length(eigenvalues)
         for b=1:length(eigenvalues)
-            if(a==b)
+            if(a==b || eigenvalues[a]==eigenvalues[b])
                 result[a,b]=0
             else
                 result[a,b]=(eigenvectors[i_0, a]*eigenvectors[te, b]-eigenvectors[i_0, b]*eigenvectors[te, a])/(eigenvalues[a]-eigenvalues[b])
+            end
+        end
+    end
+    return ifelse.(abs.(result) .< 1e-12, 0.0, result)
+end
+
+function calculate_transport_matrix_element(eigenvectors, eigenvalues, i_0, a, b)
+    sum=0
+    for i=1:i_0
+        sum+=eigenvectors[i, a]*eigenvectors[i, b]
+    end
+    return sum
+end
+
+function transport_operator_no_denominators(eigenvectors, eigenvalues, i_0)
+    te=i_0==length(eigenvalues) ? 1 : i_0+1
+    result=zeros(Float64, length(eigenvalues), length(eigenvalues))
+    Threads.@threads for a=1:length(eigenvalues)
+        for b=1:length(eigenvalues)
+            if(a==b || eigenvalues[a]==eigenvalues[b])
+                result[a,b]=0
+            else
+                result[a,b]=calculate_transport_matrix_element(eigenvectors, eigenvalues, i_0, a, b)
             end
         end
     end
@@ -470,10 +498,16 @@ function interacting_transport_operator(eigenvectors, eigenvalues, i_0, V, E)
 end
 
 #operator is in matrix form
-function operator_norm(O)
+function frobenius_norm(O)
     temp=transpose(O)*O
     eigtemp=eigen(temp)
-    return sum(eigtemp.values[eigtemp.values.>0])
+    return sqrt(sum(eigtemp.values[eigtemp.values.>0]))
+end
+
+function operator_norm(O)
+    temp=O
+    eigtemp=eigen(temp)
+    return max(sum(eigtemp.values[eigtemp.values.>0]),sum(eigtemp.values[eigtemp.values.<0]))
 end
 
 function construct_N_L_matrix(eigenvectors)

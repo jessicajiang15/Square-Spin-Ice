@@ -973,7 +973,40 @@ function calculate_Time_Evolved_Y(state, eigenvalues, eigenvectors, N, t)
     return sum+con
 end
 
+# state: list of all the complex coefficients in front of each eigenvector
+function time_evolve_state(state, eigenvalues, t)
+    state_temp = copy(state)
+    for i=1:length(state)
+        state_temp[i] = exp(-im*eigenvalues[i]*t) * state[i]
+    end
+    return state_temp
+end
 
+# use the same initial state as in the PRX paper
+function generate_initial_state(theta, N)
+    a = cos(theta / 2)
+    b = im * sin(theta / 2)
+    psi0 = [a, b]
+
+    state = psi0
+    for i=2:N        
+        state = kron(state, psi0)
+    end
+    return state
+end
+
+# get the probability of measuring the nth computational basis state, given a state vector (2^N list of coefficients in the
+# superposition of eigenvectors) and all the eigenstates
+# TASK: calculate the probability of measuring a random computational basis state n, over time, over many disorder realizations
+
+function get_probability_of_n_computational_basis(n, states, eigenstates)
+    N=size(eigenstates, 2)
+    temp=0
+    for i=1:length(states)
+        temp+=states[i]*eigenstates[n, i]
+    end
+    return abs2(temp)
+end
 
 function calculateSz(eigenvector, eigenvector2, N)
     sum=0;

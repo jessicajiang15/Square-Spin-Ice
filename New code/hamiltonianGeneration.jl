@@ -654,6 +654,7 @@ function build_anderson_hamiltonian_1d(d, bonds, N, t)
     return H
 end
 
+# build the anderson model hamiltonian in number basis 
 function build_anderson_hamiltonian_1d_interactions(d, bonds, N, t)
     H=zeros(Float64, N, N)
     for i=1:N
@@ -667,9 +668,6 @@ function build_anderson_hamiltonian_1d_interactions(d, bonds, N, t)
     end
     return H
 end
-
-
-
 
 #hx and hz must be vectors
 
@@ -733,3 +731,141 @@ function constructTransverseHamiltonianNoSymmetrySxSz(bonds, N, J, J2, eigmethod
     end
     return H;
 end
+
+# J1 (XX + YY) + J2 (ZZ) + hz Z (hz is a random field)
+function constructTransverseHamiltonianNoSymmetrySxSzSy(bonds, N, J1, J2, eigmethod, hz)
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    if(eigmethod=="full")
+        H=zeros(Float64, 2^(N), 2^(N));
+    end
+    #H::Matrix{Float64}=zeros(Int, length(list),length(list));
+    for i=0:2^(N)-1
+        #NOW loop through all the possible SITES
+        for j=1:N
+            # For the Z field
+            push!(rows, i+1);
+            push!(cols, i+1);
+            spin=getTi(j-1, i)==1 ? 1 : -1
+            push!(values, hz[j]*spin)
+            #println(values)
+
+            if(eigmethod=="full")
+                H[i+1,i+1]+=hz[j]*spin;
+            end
+            #for this particular site, find ALL of its bonds
+            for z=1:length(bonds)
+                #get the number of the thing it is bonding with!
+                if containsSite(j,bonds[z])
+                    bond1::Int=bonds[z].site1.num;
+                    bond2::Int=bonds[z].site2.num;
+                    
+                    # spin flipped at both sides (for the XX term)
+                    flipped_state::Int=flipBit(bond2-1, flipBit(bond1-1, i));
+
+                    HXX=J1/2
+                    local HYY;
+                    local HZZ;
+                    # XX produces 1 no matter what
+                    # up up: YY -1 , up down or down up: i * -i = 1, down down: 1
+
+                    # divide by 2 for double counting!
+                    if(getTi(bond1-1,i)==getTi(bond2-1,i))
+                        HYY=-J1/2;
+                        HZZ=J2/2
+                    else
+                        HYY=J1/2;
+                        HZZ=-J2/2
+                    end
+                    push!(rows, i+1);
+                    push!(cols, flipped_state+1);
+                    push!(values, HXX+HYY);
+
+                    push!(rows,i+1);
+                    push!(cols, i+1);
+                    push!(values, HZZ);
+
+                    if(eigmethod=="full")
+                        H[i+1,i+1]+= HZZ;
+                        H[i+1, flipped_state+1] += (HXX+HYY)
+                    end
+                end
+            end
+        end
+    end
+    if(eigmethod!="full")
+        H=sparse(rows, cols, values);
+    end
+    return H;
+end
+
+
+# Method to construct 1D Hamiltonian of spinless fermions with nearest neighbor interactions, hoppings, and onsite potentials h
+# N is the number of sites
+# J is the interaction energies (size N-1 if pbc=false, otherwise size N). J[j] is the interaction between j, j+1
+# t: hoppings at each link, size N-1 if pbc=false, otherwise size N. t[j] is hopping between j and j+1
+# computational basis
+# pbc= true by default
+function construct_disordered_interacting_hamiltonian_nearest_neighbor(N, J, h, t, pbc=true)
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    # Loop through all the states in the computational basis
+    for i=0:2^(N)-1
+        # Loop through all the sites
+        # Keep track of the digaonal energy terms associated with this particular state 
+        energy_of_i = 0
+        for j=1:N
+            # First we deal with interactions
+            # get the occupation at the jth position for the state i
+            next_site=0
+
+            # occupation at current site
+            occupation=getTi(j-1, i)
+
+            # occupation at the neighboring site
+            occupation_next=0
+            # get its neighbors occupation. If not PBC and last site, there's no neighbor. If PBC, it's neighbors with the first site
+            if(j<N)
+                occupation_next=getTi(j, i)
+            else
+                # if periodic boundary conditions, we get the first site
+                if(pbc)
+                    occupation_next=getTi(0, i)               
+                end
+            end
+
+            # the nearest neighbor interaction is the multiplication of the occupations and the interaction strength at link i J[i]
+            energy_of_i += J[j]*occupation*occupation_next
+
+            # We add onsite potentials
+            energy_of_i += + h[j]
+
+            # We now deal with hopping
+            next_site = 0
+            # flip the occupation at site j
+            hopping_state = flipBit(j-1, i)
+            # push the hopping energy to the off-diagonal element
+            push!(rows, i+1)
+            push!(cols, hopping_state+1)
+            push!(values, t[j])
+
+            # and the hermitian conjugate
+            push!(rows, hopping_state+1)
+            push!(cols, i+1)
+            push!(values, t[j])
+
+        end
+        push!(rows, i+1);
+        push!(cols, i+1);
+        push!(values, energy_of_i)
+    end
+
+    H=sparse(rows, cols, values);
+
+    return H;
+end
+
