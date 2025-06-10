@@ -6108,7 +6108,7 @@ function plot_transport_norm_distribution()
                     eigtemp=eigen(Hermitian(H));
                     eigenvalues=[]
                     append!(eigenvalues, eigtemp.values);
-                    W=find_bilinear_norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                    W=operator_norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
                     append!(gs,W)
                 catch
                     continue
@@ -6121,7 +6121,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("5_27_noninteracting_transport_disordered_v_frobenius_trace="*string(v)*".jld2", all_data)
+        save_object("6_9_noninteracting_transport_disordered_op_norm_v="*string(v)*".jld2", all_data)
     end
 end
 
