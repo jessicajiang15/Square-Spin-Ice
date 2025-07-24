@@ -6486,8 +6486,8 @@ end
 function plot_transport_norm_vs_L_quasiperiodic()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
-    vs=collect(range(start=0.6, stop=1.1, step=0.5))
+    ls=collect(range(start=90, stop=100, step=10))
+    vs=collect(range(start=0.6, stop=3.1, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
     phases=range(0, stop=1/sqrt(2), length=500)
@@ -6512,15 +6512,15 @@ function plot_transport_norm_vs_L_quasiperiodic()
         i_0=div(L, 2)
         xrange=1:L
         for phase in phases
-            #x=v*cos.(2*pi*sqrt(3).*(xrange.+phase))
-            x=v*rand(d, L)
+            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
+            #x=v*rand(d, L)
             pbc=false
             bonds=bonds1D(L, pbc)
             H=build_anderson_hamiltonian_1d(x, bonds, L, t)
             eigtemp=eigen(Hermitian(H));
             #W=norm(transport_operator(eigtemp.vectors, eigenvalues, i_0))
             #for i_0=1:L-1
-                W=find_norm_operator(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                W=norm(interacting_transport_operator(eigtemp.vectors, eigtemp.values, i_0))
                 append!(gs,W)
             #end
             if(v==0)
@@ -6535,7 +6535,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
     count+=1
     end
     plot!(p,(ls), (temp), title="median full forbenius norm O(1) vs. L, free", xlabel="L", ylabel="(median of ||O(1)||)", color=gradient[count1],label="v="*string(v))
-    save_object("5_26_interacting_transport_distribution_disordered_v="*string(v)*".jld2", all_data)
+    save_object("6_9_interacting_transport_distribution_disordered_90100_v="*string(v)*".jld2", all_data)
     #save_object("noninteracting_transport_distribution_disorder_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end
