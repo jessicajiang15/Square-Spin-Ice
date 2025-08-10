@@ -157,11 +157,11 @@ function main()
     end
 end
 #plot_distribution_localization_length()
-#plot_transport_norm_distribution()
+plot_transport_norm_distribution()
 #plot_transport_norm_distribution()
 #plot_transport_norm_vs_L_quasiperiodic_sampling()
 #plot_O_distances_distribution()
-plot_transport_norm_vs_L_quasiperiodic()
+#plot_transport_norm_vs_L_quasiperiodic()
 #plot_transport_norm_vs_L_quasiperiodic_sampling()
 #plot_Ws_distances_distribution()
 #plot_Ws_distances_distribution()

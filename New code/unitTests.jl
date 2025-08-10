@@ -6075,12 +6075,12 @@ function plot_transport_norm_distribution()
     all_data=[]
     all_data_Ls=[]
 
-    iters=10000 
-    phases=range(0, stop=1/sqrt(2), length=10000)
+    iters=500 
+    phases=range(0, stop=1/sqrt(2), length=500)
 
     count=0
-    vs=collect(range(start=0.1, stop=3.1, step=0.5))
-    ls=collect(range(start=20, stop=100, step=10))
+    vs=collect(range(start=0.3, stop=0.4, step=0.01))
+    ls=collect(range(start=10, stop=100, step=10))
     gradient = cgrad([:red, :yellow, :blue], length(vs))
 
     for v in vs
@@ -6095,7 +6095,9 @@ function plot_transport_norm_distribution()
             for phase in phases
                 while(true)
                 #x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
-                x=v*rand(d,L)
+                alpj=0.5
+                x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
+                #x=v*rand(d,L)
                 #append!(x, reverse(copy(x)))
                 pbc=false
                 bonds=bonds1D(L, pbc)
@@ -6121,7 +6123,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("6_9_noninteracting_transport_disordered_op_norm_v="*string(v)*".jld2", all_data)
+        save_object("8_4_noninteracting_transport_gaa_op_norm_v="*string(v)*".jld2", all_data)
     end
 end
 
@@ -6200,8 +6202,10 @@ function plot_energy_distributions()
                 bonds=bonds1D(L, pbc)
                 H=build_anderson_hamiltonian_1d(x, bonds, L, t)
                 eigtemp=eigen(Hermitian(H));
-                calculate_participation_ratio(eigtemp.vectors)
+                part=calculate_participation_ratio(eigtemp.vectors[:,div(L,2)])
+                push!(parts, part)
                 #append!(eigenvalues, eigtemp.values);
+
                 #energies=vec(build_energy_differences_matrix(eigtemp.values))
                 #append!(gs,energies)
             end
@@ -6514,6 +6518,8 @@ function plot_transport_norm_vs_L_quasiperiodic()
         for phase in phases
             x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
             #x=v*rand(d, L)
+            alpha=0.1
+            x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))/(1-alpha*cos.(2*pi*sqrt(2).*(xrange.+phase)))
             pbc=false
             bonds=bonds1D(L, pbc)
             H=build_anderson_hamiltonian_1d(x, bonds, L, t)
@@ -6534,8 +6540,7 @@ function plot_transport_norm_vs_L_quasiperiodic()
         #stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
     count+=1
     end
-    plot!(p,(ls), (temp), title="median full forbenius norm O(1) vs. L, free", xlabel="L", ylabel="(median of ||O(1)||)", color=gradient[count1],label="v="*string(v))
-    save_object("6_9_interacting_transport_distribution_disordered_90100_v="*string(v)*".jld2", all_data)
+    save_object("8_4_interacting_transport_distribution_disordered_90100_v="*string(v)*".jld2", all_data)
     #save_object("noninteracting_transport_distribution_disorder_Ls_v="*string(v)*".jld2", ls)
     count1+=1
 end

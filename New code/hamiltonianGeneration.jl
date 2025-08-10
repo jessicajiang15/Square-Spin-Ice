@@ -2,6 +2,7 @@ include("bondGeneration.jl");
 include("momentumHelpers.jl")
 include("reflectionHelper.jl")
 include("andersonHelper.jl")
+include("renormalizationGroupHelpers.jl")
 using SparseArrays
 #IMPORTANT: N IS THE TOTAL NUMBER OF SITES!!!!!!!!!!!!
 function constructTransverseHamiltonian(states, bonds, N, J, J2, eigmethod, randList)
@@ -869,3 +870,212 @@ function construct_disordered_interacting_hamiltonian_nearest_neighbor(N, J, h, 
     return H;
 end
 
+
+
+# Method to construct 1D Hamiltonian of spinless hardcore bosons with nearest neighbor interactions, hoppings, and onsite potentials h
+# N is the number of sites
+# J is the interaction energies (size N-1 if pbc=false, otherwise size N). J[j] is the interaction between j, j+1
+# t: hoppings at each link, size N-1 if pbc=false, otherwise size N. t[j] is hopping between j and j+1
+# computational basis
+# pbc= true by default
+# need to return list of largest off diagonal elements
+# build a sparse Hamiltonian
+function construct_disordered_interacting_hamiltonian_nearest_neighbor(N, J, h, t, pbc=true, method="full")
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    # get the off-diagonal terms with the largest coefficient
+    max_index = argmax(t)
+
+    if(method=="full")
+        H=zeros(Float64, 2^(N), 2^(N));
+    end
+
+    off_diags = zeros(Float64, N)
+
+    # need to find all states that correspond to a particular hopping, and also store the largest of-diagonal element
+    index_list = [[] for i=1:N]
+
+    # Loop through all the states in the computational basis
+    for i=0:2^(N)-1
+        # Loop through all the sites
+        # Keep track of the digaonal energy terms associated with this particular state 
+        energy_of_i = 0
+        for j=1:N
+            # First we deal with interactions
+            # get the occupation at the jth position for the state i
+            next_site=0
+
+            # occupation at current site
+            occupation=getTi(j-1, i)
+
+            # occupation at the neighboring site
+            occupation_next=0
+            # get its neighbors occupation. If not PBC and last site, there's no neighbor. If PBC, it's neighbors with the first site
+            if(j<N)
+                occupation_next=getTi(j, i)
+            else
+                # if periodic boundary conditions, we get the first site
+                if(pbc)
+                    occupation_next=getTi(0, i)               
+                end
+            end
+
+            # the nearest neighbor interaction is the multiplication of the occupations and the interaction strength at link i J[i]
+            energy_of_i += J[j]*occupation*occupation_next
+
+            # We add onsite potentials
+            energy_of_i += + h[j]*occupation
+
+            # We now deal with hopping
+            next_site = 0
+            if(!pbc && j==N)
+                continue
+            end
+            # flip the occupation at site j, then i
+            if(occupation + occupation_next == 1)
+                next_ind = j == N ? 0 : j
+                hopping_state = flipBit(next_ind, flipBit(j-1, i))        
+                # push the hopping energy to the off-diagonal element
+                push!(rows, i+1)
+                push!(cols, hopping_state+1)
+                push!(values, -t[j]/2)
+
+                push!(rows, hopping_state+1)
+                push!(cols, i+1)
+                push!(values, -t[j]/2)
+
+
+                if(i<hopping_state)
+                    push!(index_list[j], (i+1, hopping_state+1))
+                end
+                
+                # and the hermitian conjugate
+                if(method=="full")
+                    H[hopping_state+1, i+1]-=t[j]/2;
+                    H[i+1,hopping_state+1]-=t[j]/2;
+                end
+            end
+        end
+        push!(rows, i+1);
+        push!(cols, i+1);
+        push!(values, energy_of_i)
+        if(method=="full")
+            H[i+1, i+1]=energy_of_i;
+        end
+    end
+    
+    if(method=="sparse")
+            H=sparse(rows, cols, values);
+    end
+
+    return (H, index_list);
+end
+
+# Method to construct 1D Hamiltonian of spinless hardcore bosons with nearest neighbor interactions, hoppings, and onsite potentials h
+# N is the number of sites
+# J is the interaction energies (size N-1 if pbc=false, otherwise size N). J[j] is the interaction between j, j+1
+# t: hoppings at each link, size N-1 if pbc=false, otherwise size N. t[j] is hopping between j and j+1
+# computational basis
+# pbc= true by default
+# need to return list of largest off diagonal elements
+# build a sparse Hamiltonian
+function construct_disordered_interacting_hamiltonian_nearest_neighbor_half_filling(N, J, h, t, map_half_filling_states, pbc=true, method="full")
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    # get the off-diagonal terms with the largest coefficient
+    max_index = argmax(t)
+    all_states=collect(Base.keys(map_half_filling_states))
+    #println(all_states)
+
+    if(method=="full")
+        H=zeros(Float64, (length(all_states)), (length(all_states)));
+    end
+
+    off_diags = zeros(Float64, N)
+
+    # need to find all states that correspond to a particular hopping, and also store the largest of-diagonal element
+    index_list = [[] for i=1:N]
+
+    # Loop through all the computational basis states in the half-filling sector
+    for i in all_states
+        # Loop through all the sites
+        # Keep track of the digaonal energy terms associated with this particular state 
+        energy_of_i = 0
+        i_index=map_half_filling_states[i]
+        for j=1:N
+            # First we deal with interactions
+            # get the occupation at the jth position for the state i
+            next_site=0
+
+            # occupation at current site
+            occupation=getTi(j-1, i)
+
+            # occupation at the neighboring site
+            occupation_next=0
+            # get its neighbors occupation. If not PBC and last site, there's no neighbor. If PBC, it's neighbors with the first site
+            if(j<N)
+                occupation_next=getTi(j, i)
+            else
+                # if periodic boundary conditions, we get the first site
+                if(pbc)
+                    occupation_next=getTi(0, i)               
+                end
+            end
+
+            # the nearest neighbor interaction is the multiplication of the occupations and the interaction strength at link i J[i]
+            energy_of_i += J[j]*occupation*occupation_next
+
+            # We add onsite potentials
+            energy_of_i += + h[j]*occupation
+
+            # We now deal with hopping
+            next_site = 0
+
+            if(!pbc && j==N)
+                continue
+            end
+            # flip the occupation at site j, then i
+            if(occupation + occupation_next == 1)
+                # note that j is the next site
+                next_ind = j == N ? 0 : j
+                hopping_state = flipBit(next_ind, flipBit(j-1, i)) 
+
+                hopping_state_index=map_half_filling_states[hopping_state]
+                # push the hopping energy to the off-diagonal element
+                push!(rows, i_index)
+                push!(cols, hopping_state_index)
+                push!(values, -t[j]/2)
+
+                push!(rows, hopping_state_index)
+                push!(cols, i_index)
+                push!(values, -t[j]/2)
+
+                if(i<hopping_state)
+                    push!(index_list[j], (i_index, hopping_state_index))
+                end
+                
+                # and the hermitian conjugate
+                if(method=="full")
+                    H[hopping_state_index, i_index]-=t[j]/2;
+                    H[i_index,hopping_state_index]-=t[j]/2;
+                end
+            end
+        end
+        push!(rows, i_index);
+        push!(cols, i_index);
+        push!(values, energy_of_i)
+        if(method=="full")
+            H[i_index, i_index]=energy_of_i;
+        end
+    end
+    
+    if(method=="sparse")
+            H=sparse(rows, cols, values);
+    end
+
+    return (H, index_list);
+end
