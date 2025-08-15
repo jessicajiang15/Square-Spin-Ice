@@ -1,6 +1,8 @@
 include("entanglement helper.jl")
 include("nlchelpers.jl")
 include("metropolisHelpers.jl")
+include("renormalizationGroupHelpers.jl")
+include("quenchHelper.jl")
 using BenchmarkTools
 using LsqFit
 using Images,TestImages
