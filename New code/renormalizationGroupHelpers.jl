@@ -616,6 +616,20 @@ function find_hopping_norms_sorted_by_distance_maximum(H, L, n,pbc=true)
     return temp
 end
 
+function find_hopping_norms_sorted_by_distance(H, L, n,pbc=true)
+    # each index of temp corresponds to a max distance
+    temp=[[] for i=1:div(L,2)]
+    all_off_diagonal_indicies=find_all_up_to_order_n_off_diagonal_terms_with_hopping_pair(n, L)
+    for pivots in all_off_diagonal_indicies
+        distance = pbc ? max_hopping_distance_pbc(pivots[1], L) :  max_hopping_distance_obc(pivots[1])
+        list_off_hopping_magnitudes=[H[piv[1],piv[2]] for piv in pivots[2]]
+        #println("hello")
+        #println(list_off_hopping_magnitudes)
+        append!(temp[distance], norm((list_off_hopping_magnitudes)))
+    end
+    return temp
+end
+
 #max_hopping_distance_from_i_0_obc(A, i_0)
 function find_hopping_norms_sorted_by_distance_maximum_from_i0(H, L, n, i_0, pbc=false)
     # each index of temp corresponds to a max distance
