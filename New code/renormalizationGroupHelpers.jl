@@ -43,6 +43,7 @@ end
 # Restrictions: is \cap js = empty, |is|=|js|. i.e. they cannot 
 # assumptions: is, js are a valid set of sites and are ordered from lowest to highest index.
 # let's say is and js start from index 1
+# TESTED: AUGUST 16
 function find_possible_pivots_1(is, js, N)
     # list of all the off diagonal coordinates
     index_list=[]
@@ -547,6 +548,14 @@ function average_pbc_distance_from_i0(vecs, L, i_0)
     return ceil(Int, mean(min(abs(i - i_0), L - abs(i - i_0)) for i in vecs))
 end
 
+function range_of_string(sites, L, pbc)
+    if(length(sites)==1)
+        return 1
+    end
+    possible_combos=collect(combinations(sites, 2))
+    return pbc ? maximum([min(abs(i[1]-i[2]),L-(abs(i[1]-i[2]))) for i in possible_combos])+1 : maximum([abs(i[1]-i[2]) for i in possible_combos])+1
+end
+
 # computes the maximum hopping distance between the hopping indicies in A=([pair1],[pair2])
 # ex: (1,2,3) and (4,5,6) for L=8 should have maximum hopping distance 4 in PBC, and
 # for OBC it should have maximum hopping distance 7
@@ -677,6 +686,20 @@ function find_interaction_terms_sorted_by_distance_average_from_i0(H, L, i_0, pb
         distance=pbc ? average_pbc_distance_from_i0(sites, L, i_0) : average_obc_distance_from_i0(sites, i_0)
         interaction=get_interaction_term(sites, H)
         push!(interactions[distance+1], interaction)
+    end
+    return interactions
+end
+
+# sorted by the range of the strings
+function find_interaction_terms_sorted_by_range(H, L, pbc=false)
+    # each index of temp corresponds to a max distance
+    num = pbc ?  div(L,2)+1 : (L)
+    interactions=[[] for i=1:num]
+    all_sites=collect(combinations(1:L))
+    for sites in all_sites
+        distance=range_of_string(sites, L, pbc)
+        interaction=get_interaction_term(sites, H)
+        push!(interactions[distance], interaction)
     end
     return interactions
 end
