@@ -242,6 +242,57 @@ function find_pivot_first_n(pivots, H_int, n)
     end
 end
 
+function find_pivot_first_n_monomials(pivots, H_int, n)
+    maximums=[]
+    for piv in pivots
+       push!(maximums, maximum(abs.(projectors_to_monomials([H_int[p...] for p in piv]))))
+    end
+    if(n<length(maximums))
+        return pivots[sortperm(maximums, rev=true)][1:n]
+    else
+        return pivots[sortperm(maximums, rev=true)]
+    end
+end
+
+# in order of the binary numbers
+function get_all_hopping_in_one_block(H, max_order, L)
+    pivots=find_all_up_to_order_n_off_diagonal_terms_with_hopping_pair(max_order, L)
+    temp1=[]
+    for piv in pivots
+        temp=[]
+        for p in piv[2]
+            push!(temp, H[p...])
+        end
+        push!(temp1, (piv[1], temp))
+    end
+    return temp1
+end
+
+function get_all_hopping_in_one_block_monomial(H, max_order, L)
+    pivots=find_all_up_to_order_n_off_diagonal_terms_with_hopping_pair(max_order, L)
+    temp1=[]
+    for piv in pivots
+        temp=[]
+        for p in piv[2]
+            push!(temp, H[p...])
+        end
+        push!(temp1, (piv[1], projectors_to_monomials(temp)))
+    end
+    return temp1
+end
+
+function get_all_hopping_in_one_block(H, pivots, max_order, L)
+    temp1=[]
+    for piv in pivots
+        temp=[]
+        for p in piv[2]
+            push!(temp, H[p...])
+        end
+        push!(temp1, (piv[1], temp))
+    end
+    return temp1
+end
+
 # givens rotation matrix
 function givens_rotation_matrix(n,i,j,θ)
     G = Matrix{Float64}(I,(n,n))
