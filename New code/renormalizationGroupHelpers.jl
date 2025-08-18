@@ -242,6 +242,18 @@ function find_pivot_first_n(pivots, H_int, n)
     end
 end
 
+function find_pivot_first_n_with_maximums(pivots, H_int, n)
+    maximums=[]
+    for piv in pivots
+       push!(maximums, maximum(abs.([H_int[p...] for p in piv])))
+    end
+    if(n<length(maximums))
+        return (maximum(maximums), pivots[sortperm(maximums, rev=true)][1:n])
+    else
+        return (maximum(maximums), pivots[sortperm(maximums, rev=true)])
+    end
+end
+
 function find_pivot_first_n_monomials(pivots, H_int, n)
     maximums=[]
     for piv in pivots
