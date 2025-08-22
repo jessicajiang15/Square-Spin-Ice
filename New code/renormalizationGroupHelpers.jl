@@ -129,6 +129,24 @@ function generate_all_n_hopping_pairs(n::Int,Nsites::Int)
     return result
 end
 
+function generate_all_n_hopping_pairs_list(n::Int,Nsites::Int)
+    result = []
+    all_sites = 1:Nsites
+
+    for chosen_sites in combinations(all_sites, 2n)
+        # all ways to split chosen_sites into is and js
+        for is in combinations(chosen_sites, n)
+            js = setdiff(chosen_sites, is)
+            # sort both for consistency (optional)
+            if(sort(is)<=sort(js))
+                push!(result, [sort(is)..., sort(js)...])
+            end
+        end
+    end
+
+    return result
+end
+
 # this finds, for n particles hopping, what's the possible indexes in the matrix
 # that correspond to each block
 # for example, the block corresponding to hopping between 1, 2 will contain the states
@@ -381,6 +399,16 @@ function get_N_R_operator(L, map, i_0)
     return N
 end
 
+function get_N_L_operator(L, map, i_0)
+    the_values=collect(keys(map))
+    N=zeros(Float64, length(the_values), length(the_values))
+    for i in the_values
+        index=map[i]
+        N[index, index] = countBits(i & (2^L - 2^i_0))
+    end
+    return N
+end
+
 function get_N_R_operator_non_interacting(L, i_0)
     N=zeros(Float64, L, L)
     for i=1:L
@@ -394,6 +422,69 @@ function get_N_R_operator_eigenstate_basis(L, eigenstates, i_0)
     N_R=eigenstates'*N_R*eigenstates
     N_R=N_R-Diagonal(diag(N_R))
     return N_R
+end
+
+function get_total_N_operator_eigenstate_basis(L, eigenstates)
+    N_tot=get_total_number_operator_dense(L)
+    N_tot=eigenstates'*N_tot*eigenstates
+    return N_tot
+end
+
+function states_with_bit1_at(L::Int, i::Int)
+    @assert 1 ≤ i ≤ L
+    mask = UInt(1) << (i-1)
+    lower_max = UInt(1) << (i-1)     # bits below i
+    upper_max = UInt(1) << (L-i)     # bits above i
+    a=[mask | lower | (upper << i)
+        for lower in UInt(0):UInt(lower_max-1),
+            upper in UInt(0):UInt(upper_max-1)]
+    return Int64.(a)
+end
+
+# note that this is index 1
+function half_fill_bit1_at(L::Int, i::Int)
+    k = div(L, 2)
+    @assert 1 ≤ i ≤ L
+    @assert k ≥ 1 && k ≤ L "half-filling incompatible with fixed 1 at i"
+    maski = UInt(1) << (i-1)
+    positions = [p for p in 1:L if p != i]     # remaining positions
+    a=[maski | sum(UInt(1) << (p-1) for p in comb)
+        for comb in combinations(positions, k-1)]
+    return Int64.(a)
+end
+
+# in the entire space
+function get_n_i_operator(i, L)
+    N_i=zeros(Int64, 2^L, 2^L)
+    states=states_with_bit1_at(L::Int, i::Int)
+    for state in states
+        N_i[state+1, state+1] = 1
+    end
+    return N_i
+end
+
+# in the half-filling space
+# use one index
+function get_n_i_operator_half_filling(i, L, the_map)
+    num_states=length(collect(Base.keys(the_map)))
+    N_i=zeros(Float64, num_states, num_states)
+    possible_states=half_fill_bit1_at(L, i)
+    for state in possible_states
+        N_i[the_map[state],the_map[state]]=1
+    end
+    return N_i
+end
+
+# get an approximate LIOM by doing a very short time evolution
+function get_LIOM_from_n_i(i, H, L, t)
+    N_tot=get_n_i_operator(i, L)
+    return exp(im * H * t) * N_tot * exp(-im * H * t)
+end
+
+# for half-filling
+function get_LIOM_from_n_i(i, H, L, t,the_map)
+    N_tot=get_n_i_operator_half_filling(i, L,the_map)
+    return exp(im * H * t) * N_tot * exp(-im * H * t)
 end
 
 function get_N_R_operator_eigenstate_basis(L, the_map,eigenstates, i_0)
@@ -569,6 +660,33 @@ function find_all_ts(H, L)
     return ts
 end
 
+# don't add anything less than some tolerance value
+function find_all_ts(H, L, tol)
+    ts=[]
+    for n=1:L-1
+        temp=generate_all_n_hopping_pairs(n,L)
+        for pair in temp
+            off_diagonal_element=find_t_i_j_from_H(H, pair[1], pair[2])
+            if(off_diagonal_element > tol)
+                push!(ts,off_diagonal_element)
+            end
+        end
+    end
+    return ts
+end
+
+# maximum out of each block
+function find_all_ts_maximum(H, L, pbc=true)
+    temp=[]
+    all_off_diagonal_indicies=find_all_up_to_order_n_off_diagonal_terms_with_hopping_pair(n, L)
+    for pivots in all_off_diagonal_indicies
+        distance = pbc ? max_hopping_distance_pbc(pivots[1], L) :  max_hopping_distance_obc(pivots[1])
+        list_off_hopping_magnitudes=[H[piv[1],piv[2]] for piv in pivots[2]]
+        push!(temp, abs(maximum(abs.(list_off_hopping_magnitudes))))
+    end
+    return temp
+end
+
 function find_all_ts_with_pairs(H, L)
     ts=[]
     for n=1:L-1
@@ -679,6 +797,22 @@ function find_hopping_norms_sorted_by_distance_maximum(H, L, n,pbc=true)
     return temp
 end
 
+# same as above, but doesnt add any element less than the specified tolerance
+function find_hopping_norms_sorted_by_distance_maximum(H, L, n, tol, pbc=true)
+    # each index of temp corresponds to a max distance
+    temp=[[] for i=1:div(L,2)]
+    all_off_diagonal_indicies=find_all_up_to_order_n_off_diagonal_terms_with_hopping_pair(n, L)
+    for pivots in all_off_diagonal_indicies
+        distance = pbc ? max_hopping_distance_pbc(pivots[1], L) :  max_hopping_distance_obc(pivots[1])
+        list_off_hopping_magnitudes=[H[piv[1],piv[2]] for piv in pivots[2] if abs(H[piv[1], piv[2]]) > tol]
+        #println(list_off_hopping_magnitudes)
+        if(length(list_off_hopping_magnitudes)>0)
+            append!(temp[distance], list_off_hopping_magnitudes)
+        end
+    end
+    return temp
+end
+
 function find_hopping_norms_sorted_by_distance(H, L, n,pbc=true)
     # each index of temp corresponds to a max distance
     temp=[[] for i=1:div(L,2)]
@@ -756,7 +890,7 @@ end
 # starting from a distance of zero (so distance zero has index 1)
 function find_interaction_terms_sorted_by_distance_average_from_i0(H, L, i_0, pbc=false)
     # each index of temp corresponds to a max distance
-    num= pbc ?  abs(max(i_0, L-i_0)) : (L-i_0)+1
+    num= pbc ?  abs(max(i_0, L-i_0)) : max(i_0, (L-i_0)+1)
     interactions=[[] for i=1:num]
     all_sites=collect(combinations(1:L))
     for sites in all_sites
@@ -765,6 +899,50 @@ function find_interaction_terms_sorted_by_distance_average_from_i0(H, L, i_0, pb
         push!(interactions[distance+1], interaction)
     end
     return interactions
+end
+
+# only generate up to order 2 interactions
+# lbits are generated in order 1:L (of localization)
+# assume you are in the full sector (but can probably restrict to half-filling-sector)
+function get_l_bit_model_hamiltonian(lbits, localization_length, pbc, L)
+    H=zeros(Float64, 2^L, 2^L)
+    d=Normal(1, 1)
+    dict = Dict{Vector{Int}, Float64}()
+    for i=1:L
+        dict[[i]] = rand(d)
+        H+=dict[[i]]*lbits[i]
+    end
+    a=generate_all_n_hopping_pairs_list(1,L)
+
+    for s in a
+        site1=s[1]
+        site2=s[2]
+        distance= pbc ? min(abs(site1-site2), L-abs(site1-site2)) : abs(site1-site2)
+        dict[s] = rand(d)*exp(-distance/localization_length)
+        H+=dict[s]*lbits[site1]*lbits[site2]
+    end
+    return (H, dict)
+end
+
+function get_l_bit_model_hamiltonian_half_filling(lbits, localization_length, pbc, L, the_map)
+    all_keys=Base.keys(the_map)
+    H=zeros(Float64, length(all_keys), length(all_keys))
+    d=Normal(1, 1)
+    dict = Dict{Vector{Int}, Float64}()
+    for i=1:L
+        dict[[i]] = rand(d)
+        H+=dict[[i]]*lbits[i]
+    end
+    a=generate_all_n_hopping_pairs_list(1,L)
+
+    for s in a
+        site1=s[1]
+        site2=s[2]
+        distance= pbc ? min(abs(site1-site2), L-abs(site1-site2)) : abs(site1-site2)
+        dict[s] = rand(d)*exp(-distance/localization_length)
+        H+=dict[s]*lbits[site1]*lbits[site2]
+    end
+    return (H, dict)
 end
 
 # sorted by the range of the strings
@@ -777,6 +955,22 @@ function find_interaction_terms_sorted_by_range(H, L, pbc=false)
         distance=range_of_string(sites, L, pbc)
         interaction=get_interaction_term(sites, H)
         push!(interactions[distance], interaction)
+    end
+    return interactions
+end
+
+# remove those that are under some tolerance
+function find_interaction_terms_sorted_by_range(H, L, tol, pbc=false)
+    # each index of temp corresponds to a max distance
+    num = pbc ?  div(L,2)+1 : (L)
+    interactions=[[] for i=1:num]
+    all_sites=collect(combinations(1:L))
+    for sites in all_sites
+        distance=range_of_string(sites, L, pbc)
+        interaction=get_interaction_term(sites, H)
+        if(interaction > tol)
+            push!(interactions[distance], interaction)
+        end
     end
     return interactions
 end
