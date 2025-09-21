@@ -4,7 +4,7 @@ include("reflectionHelper.jl")
 include("andersonHelper.jl")
 include("renormalizationGroupHelpers.jl")
 using SparseArrays
-#IMPORTANT: N IS THE TOTAL NUMBER OF SITES!!!!!!!!!!!!
+
 function constructTransverseHamiltonian(states, bonds, N, J, J2, eigmethod, randList)
     #loop through ALL the possible states...
     cols::Vector{Int}=Int[];
@@ -25,7 +25,7 @@ end
 #H::Matrix{Float64}=zeros(Int, length(list),length(list));
 
 for i=1:length(list)
-    #NOW loop through all the possible SITES
+    # loop through all the possible SITES
     count=0;
     for j=1:N
         #for this particular site, find ALL of its bonds
@@ -184,7 +184,6 @@ function constructTransverseHamiltonianNoSymmetrySz(bonds, N, J, J2, eigmethod, 
     return H;
 end
 
-#TODO: update this and update the other one
 #field is in the x direction!!! USE THIS ONE
 function constructTransverseHamiltonianSzBasis(states, bonds, N, J, eigmethod, randList)
     #loop through ALL the possible states...
@@ -368,7 +367,6 @@ function constructHamiltonianHeisenbergMomentum2d(refStates, N, momentum, bonds,
             end
         end
     end
-    println("h00 ", H[1,1]);
     return H;
 
 end
@@ -1013,6 +1011,7 @@ end
 
 
 # Method to construct 1D Hamiltonian of spinless hardcore bosons with NEXT nearest neighbor interactions, hoppings, and onsite potentials h
+# This is for the half-filling sector only
 # N is the number of sites
 # J is the interaction energies (size N-1 if pbc=false, otherwise size N). J[j] is the interaction between j, j+1
 # t: hoppings at each link, size N-1 if pbc=false, otherwise size N. t[j] is hopping between j and j+1
@@ -1135,7 +1134,8 @@ function construct_disordered_interacting_hamiltonian_next_nearest_neighbor_half
 end
 
 
-# Method to construct 1D Hamiltonian of spinless hardcore bosons with nearest neighbor interactions, hoppings, and onsite potentials h
+# Method to construct 1D Hamiltonian of spinless hardcore bosons with NEXT nearest neighbor interactions, hoppings, and onsite potentials h
+# this constructs the hamiltonian in all sectors
 # N is the number of sites
 # J is the interaction energies (size N-1 if pbc=false, otherwise size N). J[j] is the interaction between j, j+1
 # t: hoppings at each link, size N-1 if pbc=false, otherwise size N. t[j] is hopping between j and j+1

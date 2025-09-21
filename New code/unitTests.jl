@@ -6077,12 +6077,12 @@ function plot_transport_norm_distribution()
     all_data=[]
     all_data_Ls=[]
 
-    iters=500 
-    phases=range(0, stop=1/sqrt(2), length=500)
+    iters=10000 
+    phases=range(0, stop=1/sqrt(2), length=10000)
 
     count=0
-    vs=collect(range(start=0.3, stop=0.4, step=0.01))
-    ls=collect(range(start=10, stop=100, step=10))
+    vs=collect(range(start=2, stop=10, step=2))
+    ls=collect(range(start=4, stop=18, step=2))
     gradient = cgrad([:red, :yellow, :blue], length(vs))
 
     for v in vs
@@ -6098,8 +6098,8 @@ function plot_transport_norm_distribution()
                 while(true)
                 #x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
                 alpj=0.5
-                x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
-                #x=v*rand(d,L)
+                #x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
+                x=v*rand(d,L)
                 #append!(x, reverse(copy(x)))
                 pbc=false
                 bonds=bonds1D(L, pbc)
@@ -6125,7 +6125,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("8_4_noninteracting_transport_gaa_op_norm_v="*string(v)*".jld2", all_data)
+        save_object("9_3_noninteracting_transport_anderson_op_norm_v="*string(v)*".jld2", all_data)
     end
 end
 
