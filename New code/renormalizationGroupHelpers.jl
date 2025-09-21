@@ -749,7 +749,6 @@ function max_hopping_distance_from_i_0_pbc(A, i_0)
     return maximum([min.(abs.((a) .- i_0), L .- abs.((a) .- i_0)) for a in indicies])
 end
 
-
 function average_hopping_distance_from_i_0_pbc(A, i_0)
     indicies=collect(Iterators.flatten(A))
     return mean([min.(abs.((a) .- i_0), L .- abs.((a) .- i_0)) for a in indicies])
@@ -813,6 +812,7 @@ function find_hopping_norms_sorted_by_distance_maximum(H, L, n, tol, pbc=true)
     return temp
 end
 
+# finds the "norm" of all the hopping magnitudes associated with a given hopping set of sites
 function find_hopping_norms_sorted_by_distance(H, L, n,pbc=true)
     # each index of temp corresponds to a max distance
     temp=[[] for i=1:div(L,2)]
@@ -827,7 +827,8 @@ function find_hopping_norms_sorted_by_distance(H, L, n,pbc=true)
     return temp
 end
 
-#max_hopping_distance_from_i_0_obc(A, i_0)
+# this is for a full Hamiltonian
+# find all of the hoppings sorted by distance from the site i_0
 function find_hopping_norms_sorted_by_distance_maximum_from_i0(H, L, n, i_0, pbc=false)
     # each index of temp corresponds to a max distance
     temp=[[] for i=1:div(L,2)]
@@ -842,7 +843,8 @@ function find_hopping_norms_sorted_by_distance_maximum_from_i0(H, L, n, i_0, pbc
     return temp
 end
 
-# same as above but in a specific sector
+# same as above but in a specific sector (e.g. half-filling)
+# sum all the terms in a given hopping sector
 function find_hopping_norms_sorted_by_distance_maximum_from_i0_sector(H, L, n, i_0, the_map, pbc=false)
     # each index of temp corresponds to a max distance
     num= pbc ? div(L,2) : abs(max(i_0, L-i_0))
@@ -853,11 +855,13 @@ function find_hopping_norms_sorted_by_distance_maximum_from_i0_sector(H, L, n, i
         list_off_hopping_magnitudes=[H[the_map[piv[1]-1],the_map[piv[2]-1]] for piv in pivots[2]]
         #println("hello")
         #println(list_off_hopping_magnitudes)
-        append!(temp[distance], abs(maximum(abs.(list_off_hopping_magnitudes))))
+        append!(temp[distance], (sum(abs.(list_off_hopping_magnitudes))))
     end
     return temp
 end
 
+# finds average distance of a cluster of terms to i_0
+# sum all terms in a given hopping sector
 function find_hopping_norms_sorted_by_distance_average_from_i0_sector(H, L, n, i_0, the_map, pbc=false)
     # each index of temp corresponds to a max distance
     num= pbc ? div(L,2) : abs(max(i_0, L-i_0))
@@ -866,7 +870,7 @@ function find_hopping_norms_sorted_by_distance_average_from_i0_sector(H, L, n, i
     for pivots in all_off_diagonal_indicies
         distance = pbc ? average_hopping_distance_from_i_0_pbc(pivots[1], i_0) :  average_hopping_distance_from_i_0_obc(pivots[1], i_0)
         list_off_hopping_magnitudes=[H[the_map[piv[1]-1],the_map[piv[2]-1]] for piv in pivots[2]]
-        append!(temp[ceil(Int, distance)], abs(maximum(abs.(list_off_hopping_magnitudes))))
+        append!(temp[ceil(Int, distance)], (sum(abs.(list_off_hopping_magnitudes))))
     end
     return temp
 end
@@ -890,16 +894,36 @@ end
 # starting from a distance of zero (so distance zero has index 1)
 function find_interaction_terms_sorted_by_distance_average_from_i0(H, L, i_0, pbc=false)
     # each index of temp corresponds to a max distance
-    num= pbc ?  abs(max(i_0, L-i_0)) : max(i_0, (L-i_0)+1)
+    num= pbc ?  abs(max(i_0, L-i_0))+1 : max(i_0, (L-i_0)+1)
     interactions=[[] for i=1:num]
     all_sites=collect(combinations(1:L))
     for sites in all_sites
         distance=pbc ? average_pbc_distance_from_i0(sites, L, i_0) : average_obc_distance_from_i0(sites, i_0)
         interaction=get_interaction_term(sites, H)
+
         push!(interactions[distance+1], interaction)
     end
     return interactions
 end
+
+# please note: there is distance zero as well here, whereas the hopping
+# function above does not have distance zero
+# returns a list where the index is the distance from i_0-1 (average distance, ceiling)
+# starting from a distance of zero (so distance zero has index 1)
+function find_interaction_terms_sorted_by_distance_maximum_from_i0(H, L, i_0, pbc=false)
+    # each index of temp corresponds to a max distance
+    num= pbc ?  abs(max(i_0, L-i_0))+1 : max(i_0, (L-i_0)+1)
+    interactions=[[] for i=1:num]
+    all_sites=collect(combinations(1:L))
+    for sites in all_sites
+        distance=pbc ? (sites, L, i_0)  : average_obc_distance_from_i0(sites, i_0)
+        interaction=get_interaction_term(sites, H)
+
+        push!(interactions[distance+1], interaction)
+    end
+    return interactions
+end
+
 
 # only generate up to order 2 interactions
 # lbits are generated in order 1:L (of localization)
@@ -960,7 +984,7 @@ function find_interaction_terms_sorted_by_range(H, L, pbc=false)
 end
 
 # remove those that are under some tolerance
-function find_interaction_terms_sorted_by_range(H, L, tol, pbc=false)
+function find_interaction_terms_sorted_by_range_tol(H, L, tol, pbc=false)
     # each index of temp corresponds to a max distance
     num = pbc ?  div(L,2)+1 : (L)
     interactions=[[] for i=1:num]
@@ -979,6 +1003,17 @@ end
 function find_all_terms_sorted_by_distance_average_from_i_0(H, L, n, i_0, pbc=false)
     all_interactions=find_interaction_terms_sorted_by_distance_average_from_i0(H, L, i_0, pbc)
     all_hoppings=find_hopping_norms_sorted_by_distance_average_from_i0(H, L, n, i_0, pbc)
+    count=1
+    for hop in all_hoppings
+        append!(all_interactions[count+1], hop)
+        count+=1
+    end
+    return all_interactions
+end
+
+function find_all_terms_sorted_by_distance_maximum_from_i_0(H, L, n, i_0, pbc=false)
+    all_interactions=find_interaction_terms_sorted_by_distance_maximum_from_i0(H, L, i_0, pbc)
+    all_hoppings=find_hopping_norms_sorted_by_distance_maximum_from_i0(H, L, n, i_0, pbc)
     count=1
     for hop in all_hoppings
         append!(all_interactions[count+1], hop)

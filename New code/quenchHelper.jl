@@ -1,5 +1,6 @@
 
 include("renormalizationGroupHelpers.jl")
+using Convex, LinearAlgebra, SCS
 # assume the eigenstates are in the computational basis for the half-filling sector
 # prepares the state with all particles on the right in the eigenstate basis
 function prepare_half_filling_state(eigenstates, map_states, L, i_0)
@@ -42,4 +43,39 @@ function measure_number_particles_left_of_i_0(state, the_map, eigenstates, L, i_
     N_R=get_N_L_operator(L,the_map, i_0)
     N_R=eigenstates'*N_R*eigenstates
     return state' * N_R * state
+end
+
+# state is written in the computational basis
+# we want to rewrite it in the eigenstate basis
+# eigenstates is a column wise list of eigenvectors written in the computational basis
+function prepare_in_eigenstate_basis(state, eigenstates)
+    return eigenstates' * state
+end
+
+function optimize_nr(M)
+    A = copy(M)
+    n = size(A, 1)
+    N_R=get_N_L_operator(L,the_map, div(L,2))
+    N_R=eigenvectors'*N_R*eigenvectors
+    
+    # Decision variables
+    d = Variable(size(A, 1)) 
+    α = Variable()          # lower eigenvalue bound
+    β = Variable()          # upper eigenvalue bound
+    t = Variable()          # spread (β - α)
+    
+    D = diagm(d)
+    
+    constraints = [
+        A + D ⪯ β*I(n),     # largest eigenvalue ≤ β
+        α*I(n) ⪯ A + D,     # smallest eigenvalue ≥ α
+        t == β - α
+    ]
+    
+    problem = minimize(t, constraints)
+    solve!(problem, SCS.Optimizer; silent=true)
+    
+    # Construct the diagonal matrix D
+    D_opt = diagm(Convex.evaluate(d))
+    return Convex.evaluate(t)
 end
