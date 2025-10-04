@@ -16,6 +16,39 @@ function prepare_half_filling_state(eigenstates, map_states, L, i_0)
     return half_filling_state
 end
 
+function prepare_neel_state(eigenstates, map_states, L)
+    # the binary number corresponding to 111...00
+    neel_state_no = 0
+    for i in 1:L
+        neel_state_no = (neel_state_no << 1) | (i % 2 == 0 ? 1 : 0)
+    end
+    
+    # the half filling state but rewritten in the eigenstate basis
+    half_filling_state=[]
+    index=map_states[neel_state_no]
+    for i=1:length(eigenstates[:, 1])
+        push!(half_filling_state,eigenstates[index,i])
+    end
+    return half_filling_state
+end
+
+
+function prepare_neel_state_full(eigenstates, L)
+    # the binary number corresponding to 111...00
+    neel_state_no = 0
+    for i in 1:L
+        neel_state_no = (neel_state_no << 1) | (i % 2 == 0 ? 1 : 0)
+    end
+    
+    # the half filling state but rewritten in the eigenstate basis
+    half_filling_state=[]
+    index=neel_state_no+1
+    for i=1:length(eigenstates[:, 1])
+        push!(half_filling_state,eigenstates[index,i])
+    end
+    return half_filling_state
+end
+
 # prepares a state 000...111
 function prepare_half_filling_state(eigenstates, map_states, L, i_0)
     # the binary number corresponding to 111...00
@@ -26,6 +59,7 @@ function prepare_half_filling_state(eigenstates, map_states, L, i_0)
     half_filling_state=[]
     index=map_states[half_filling_binary_no]
     for i=1:length(eigenstates[:, 1])
+
         push!(half_filling_state,eigenstates[index,i])
     end
     return half_filling_state
@@ -39,6 +73,7 @@ function measure_number_particles_right_of_i_0(state, the_map, eigenstates, L, i
     return state' * N_R * state
 end
 
+# assumes state is in the eigenstate basis!
 function measure_number_particles_left_of_i_0(state, the_map, eigenstates, L, i_0)
     N_R=get_N_L_operator(L,the_map, i_0)
     N_R=eigenstates'*N_R*eigenstates

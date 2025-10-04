@@ -975,7 +975,7 @@ end
 
 # state: list of all the complex coefficients in front of each eigenvector
 function time_evolve_state(state, eigenvalues, t)
-    state_temp = copy(state)
+    state_temp = zeros(ComplexF64, length(state))
     for i=1:length(state)
         state_temp[i] = exp(-im*eigenvalues[i]*t) * state[i]
     end

@@ -6666,13 +6666,12 @@ end
 function plot_orbital_correction_norm_avg()
     t=1
     d=Uniform(-1,1)
-    ls=collect(range(start=20, stop=80, step=10))
-    vs=collect(range(start=0.1, stop=3.1, step=0.5))
+    ls=collect(range(start=20, stop=20, step=10))
+    vs=collect(range(start=3.1, stop=3.1, step=0.5))
     println(ls)
     gradient = cgrad([:red, :yellow, :blue], length(vs))
-    phases=range(0, stop=1/sqrt(2), length=500)
+    phases=range(0, stop=1/sqrt(2), length=1000)
     #theme(:lime)
-    p = plot(title="Avg frobenius norm correction to F, disordered system", xlabel="L", ylabel="Avg(Log||O||)", legend=false)
     all_data=[]
     count=1
     temp=[]
@@ -6685,10 +6684,14 @@ function plot_orbital_correction_norm_avg()
         println("v="*string(v))
         errors=[]
         all_data=[]
+        localization_length_W=[]
+        energy_W=[]
     for L in ls
         println("L="*string(L))
         # for each L we get a distribution
         gs=[]
+        energy_L=[]
+        localization_length_dis=[]
         i_0=1:L
         xrange=1:L
         for phase in phases
@@ -6702,25 +6705,25 @@ function plot_orbital_correction_norm_avg()
             #for i_0=1:L-1
             W=build_W_matrix_tensor_op(eigtemp.values, eigtemp.vectors)
             for i=1:L
+                localization_length=1/calculate_participation_ratio(eigtemp.vectors[:,i])
                 F=calculate_f_from_w(W, i)
                 no=norm(F)
                 push!(gs, no)
+                push!(localization_length_dis, localization_length)
+                push!(energy_L, eigtemp.values[i])
             end
             #end
         end
         push!(all_data, gs)
-        #gs=log.(abs.(gs[abs.(gs).>0]))
-        push!(errors, std(gs))
-        push!(temp, median(log.(abs.(gs[abs.(gs.>0)]))))
-        #stephist!(p,gs, label="L="*string(L), norm = true, color=gradient[count])
+        push!(localization_length_W, localization_length_dis)
+        push!(energy_W, energy_L)
     count+=1
     end
-    plot!(p,ls, temp, title="Median frobenius norm orbital correction vs. L, disordered", xlabel="L", ylabel="Median of ||O||", color=gradient[count1],label="v="*string(v))
-    save_object("orbital_correction_disordered_v="*string(v)*".jld2", all_data)
-    save_object("orbital_correction_disordered_Ls_v="*string(v)*".jld2", ls)
+    save_object("10_3_LIOM_correction_disordered_v="*string(v)*".jld2", all_data)
+    save_object("10_3_LIOM_correction_PR_disordered_Ls_v="*string(v)*".jld2", localization_length_W)
+    save_object("10_3_LIOM_correction_energy_Ls_v="*string(v)*".jld2", energy_W)
     count1+=1
 end
-    savefig("./orbital correction median disordered vs L.png");
 end
 
 function plot_transport_norm_vs_L_disorder()

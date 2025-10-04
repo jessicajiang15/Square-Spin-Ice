@@ -1115,3 +1115,13 @@ end
             Int(x)
         end for m in UInt(0):(UInt(1)<<n)-UInt(1))
     end
+
+function generate_n_orthogonal_vectors(n)
+    d = Normal(0, 1)
+    v=rand(d, (n,n))
+    for i=1:n
+        v[:,i] = v[:,i]./norm(v[:,i])
+    end
+    Q = Matrix(qr(v).Q)
+    return Q
+end

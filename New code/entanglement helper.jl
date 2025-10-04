@@ -98,18 +98,10 @@ function constructCoefficientMatrix(eigenvector,states,listA, N)
     H::Matrix{Complex}=zeros(Complex, 2^length(listA), 2^(N-length(listA)));
     #zeros(Float64, length(list),length(list));
     for i=1:length(states)
-        #println("listA", listA)
-        #1001
-        #println("lallalalala")
         getA=getANum(states[i], listA);
         getB=getBNum(states[i], listA, N);
-
-        #println("A: "*string(getA))
-        #println("B: "*string(getB))
-
         H[getA+1,getB+1]=eigenvector[i];
     end
-    #println(H);
     return H;
 end
 
