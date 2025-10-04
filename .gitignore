@@ -4,3 +4,4 @@
 *.jpeg
 .ipynb_checkpoints/
 *.ipynb
+*.jld2 2
