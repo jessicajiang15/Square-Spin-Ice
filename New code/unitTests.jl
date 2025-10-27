@@ -6081,8 +6081,8 @@ function plot_transport_norm_distribution()
     phases=range(0, stop=1/sqrt(2), length=10000)
 
     count=0
-    vs=collect(range(start=2, stop=10, step=2))
-    ls=collect(range(start=4, stop=18, step=2))
+    vs=collect(range(start=0.1, stop=3.1, step=2))
+    ls=collect(range(start=20, stop=100, step=10))
     gradient = cgrad([:red, :yellow, :blue], length(vs))
 
     for v in vs
@@ -6098,8 +6098,8 @@ function plot_transport_norm_distribution()
                 while(true)
                 #x=v*cos.(2*pi*sqrt(2).*(xrange.+phase))
                 alpj=0.5
-                #x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
-                x=v*rand(d,L)
+                x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
+                #x=v*rand(d,L)
                 #append!(x, reverse(copy(x)))
                 pbc=false
                 bonds=bonds1D(L, pbc)
@@ -6112,7 +6112,7 @@ function plot_transport_norm_distribution()
                     eigtemp=eigen(Hermitian(H));
                     eigenvalues=[]
                     append!(eigenvalues, eigtemp.values);
-                    W=operator_norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
+                    W=norm(transport_operator(eigtemp.vectors, eigtemp.values, i_0))
                     append!(gs,W)
                 catch
                     continue
@@ -6125,7 +6125,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("9_3_noninteracting_transport_anderson_op_norm_v="*string(v)*".jld2", all_data)
+        save_object("10_19_noninteracting_transport_gaa_f_norm_v="*string(v)*".jld2", all_data)
     end
 end
 
