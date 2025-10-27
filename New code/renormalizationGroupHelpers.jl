@@ -324,11 +324,27 @@ function get_all_hopping_in_one_block(H, pivots, max_order, L)
 end
 
 # givens rotation matrix
+
+#=
 function givens_rotation_matrix(n,i,j,θ)
     G = Matrix{Float64}(I,(n,n))
     G[i,i] = G[j,j] = cos(θ)
     G[i,j] = sin(θ)
     G[j,i] = -sin(θ)
+    return G
+end
+=#
+
+# gives rotation matrix but sparse
+function givens_rotation_matrix(n, i, j, θ)
+    # Start with a sparse identity matrix
+    G = spdiagm(0 => ones(Float64, n))
+    c = cos(θ)
+    s = sin(θ)
+    G[i,i] = c
+    G[j,j] = c
+    G[i,j] = s
+    G[j,i] = -s
     return G
 end
 

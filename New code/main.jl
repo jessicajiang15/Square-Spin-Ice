@@ -156,6 +156,7 @@ function main()
         println("TOTAL TIME")
     end
 end
+plot_transport_norm_distribution()
 #plot_distribution_localization_length()
 #plot_transport_norm_distribution()
 #plot_transport_norm_distribution()
@@ -188,7 +189,7 @@ end
 #print_Ws_max()
 #plot_distribution_localization_length()
 #plot_from_data()
-plot_orbital_correction_norm_avg()
+#plot_orbital_correction_norm_avg()
 #plot_from_data_2()
 #plot_O_distances_distribution()
 #quasiperiodic_diagonalization_transition()
