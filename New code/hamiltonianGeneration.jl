@@ -1266,7 +1266,6 @@ function construct_interaction_nearest_neighbhor_half_filling(N, J, map_half_fil
     values::Vector{Float64}=Float64[];
 
     # get the off-diagonal terms with the largest coefficient
-    max_index = argmax(t)
     all_states=collect(Base.keys(map_half_filling_states))
     #println(all_states)
 
