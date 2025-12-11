@@ -955,6 +955,10 @@ function construct_disordered_interacting_hamiltonian_nearest_neighbor_half_fill
                 end
             end
 
+            #println(occupation_next)
+            #println(occupation)
+            #println("next")
+
             # the nearest neighbor interaction is the multiplication of the occupations and the interaction strength at link i J[i]
             energy_of_i += J[j]*occupation*occupation_next
 
@@ -1241,6 +1245,73 @@ function construct_disordered_interacting_hamiltonian_next_nearest_neighbor(N, J
         push!(values, energy_of_i)
         if(method=="full")
             H[i+1, i+1]=energy_of_i;
+        end
+    end
+    
+    if(method=="sparse")
+            H=sparse(rows, cols, values);
+    end
+
+    return (H, index_list);
+end
+
+# need to build interaction matrix in the fock basis
+# then diagonalize the noninteracting Hamiltonian
+# convert interaction matrix to eigenbasis (of noninteracting problem)
+# remove the off diagonal part
+
+function construct_interaction_nearest_neighbhor_half_filling(N, J, map_half_filling_states, pbc=true, method="full")
+    cols::Vector{Int}=Int[];
+    rows::Vector{Int}=Int[];
+    values::Vector{Float64}=Float64[];
+
+    # get the off-diagonal terms with the largest coefficient
+    max_index = argmax(t)
+    all_states=collect(Base.keys(map_half_filling_states))
+    #println(all_states)
+
+    if(method=="full")
+        H=zeros(Float64, (length(all_states)), (length(all_states)));
+    end
+
+    off_diags = zeros(Float64, N)
+
+    # need to find all states that correspond to a particular hopping, and also store the largest of-diagonal element
+    index_list = [[] for i=1:N]
+
+    # Loop through all the computational basis states in the half-filling sector
+    for i in all_states
+        # Loop through all the sites
+        # Keep track of the digaonal energy terms associated with this particular state 
+        energy_of_i = 0
+        i_index=map_half_filling_states[i]
+        for j=1:N
+            # First we deal with interactions
+            # get the occupation at the jth position for the state i
+            next_site=0
+
+            # occupation at current site
+            occupation=getTi(j-1, i)
+
+            # occupation at the neighboring site
+            occupation_next=0
+            # get its neighbors occupation. If not PBC and last site, there's no neighbor. If PBC, it's neighbors with the first site
+            if(j<N)
+                occupation_next=getTi(j, i)
+            else
+                # if periodic boundary conditions, we get the first site
+                if(pbc)
+                    occupation_next=getTi(0, i)               
+                end
+            end
+            # the nearest neighbor interaction is the multiplication of the occupations and the interaction strength at link i J[i]
+            energy_of_i += J[j]*occupation*occupation_next
+        end
+        push!(rows, i_index);
+        push!(cols, i_index);
+        push!(values, energy_of_i)
+        if(method=="full")
+            H[i_index, i_index]=energy_of_i;
         end
     end
     
