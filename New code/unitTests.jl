@@ -6859,3 +6859,160 @@ function testtttt()
         
     end
 end
+
+function ctc_calculation()
+    Ls=[16]
+#Ws=collect(range(start=1, stop=12, step=1))
+Ws=[10]
+disorder_realizations=1
+T=1 # random hopping strength
+JJ=0.1
+norms=[]
+norms_frobenius=[]
+dynamical_upper_bound_all_3=[]
+overlaps_edge_states=[]
+com=[]
+mass=[]
+
+dctc_new_init=[]
+
+phase=0
+alpj=0.5
+phases=range(0, stop=1/sqrt(2), length=2000)
+
+the_norms=[]
+for W in Ws
+    println("W="*string(W))
+    norms_W=[]
+    norms_frobenius_W=[]
+    DCTC_W=[]
+    overlap_of_edge_states_W=[]
+    dctc_new_init_W=[]
+    com_W=[]
+    mass_W=[]
+
+for L in Ls
+    println("L="*string(L))
+    disorder_realizations_data_L=[]
+    disorder_realizations_data_L_f=[]
+    dynamical_upper_bound_all_2=[]
+    overlap_of_edge_states_L=[]
+    dctc_new_init_L=[]
+    com_l=[]
+    mass_l=[]
+    the_map=construct_map_of_n_filling_states(L, div(L,2))
+
+    for i in phases
+        t = T*ones(Float64, L); #hopping
+
+        i_0=div(L,2)
+
+        #t = ones(L)
+        d=Uniform(-1,1)
+        h = W*rand(d, L); 
+        #h=2*v*cos.(2*pi*sqrt(2).*(xrange.+i)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
+
+        J = JJ*ones(Float64, L);
+        H_half_filling, max_index_half=construct_disordered_interacting_hamiltonian_next_nearest_neighbor_half_filling(L, J, h, t,the_map, false, "full")        
+        eigenvalues, eigenvectors=eigen(H_half_filling);
+        N_R_nodiag=get_N_R_operator_eigenstate_basis(L, the_map, eigenvectors, div(L, 2))
+
+        the_states=prepare_half_filling_state(eigenvectors, the_map, L, i_0)
+
+        N_R=get_N_L_operator(L,the_map, i_0)
+        N_R=eigenvectors'*N_R*eigenvectors
+        N_R_nodiag=N_R-Diagonal(diag(N_R))
+
+
+        N_L=get_N_R_operator(L,the_map, i_0)
+        N_L=eigenvectors'*N_L*eigenvectors
+
+            
+        values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
+        values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
+
+        overlap=dot(abs.(vecs[1]), abs.(vecs_2[1]))
+        
+        push!(disorder_realizations_data_L,(values_2[1]-values[1]))
+        push!(disorder_realizations_data_L_f,norm(N_R_nodiag))
+        #push!(overlap_of_edge_states_L, overlap)
+#=
+        # dynamical upper bound, not interested in it for this run
+
+            #
+        tempp=[]
+        for i=1:size(eigenvectors, 1)
+            the_state=zeros(Float64, (size(eigenvectors, 1)))
+            the_state[i]=1
+            the_states=eigenvectors'*the_state
+            v = abs.(the_states)           # |ψ|
+            A = abs.(N_R)                  # |N|
+            tmp = similar(v)               # workspace
+            mul!(tmp, A, v)                # tmp = A * v  (fast, BLAS / sparse matvec)
+            dynamical_upper_bound = dot(v, tmp)  - the_states'*N_R*the_states
+
+            v = abs.(the_states)           # |ψ|
+            A = abs.(N_L)                  # |N|
+            tmp = similar(v)               # workspace
+            mul!(tmp, A, v)                # tmp = A * v  (fast, BLAS / sparse matvec)
+            dynamical_upper_bound_2 = dot(v, tmp)  - the_states'*N_L*the_states
+                
+            push!(tempp, max(dynamical_upper_bound, dynamical_upper_bound_2))
+        end
+    push!(dynamical_upper_bound_all_2, tempp)
+
+    exp_n_1=[vecs_2[1]'*eigenvectors'*get_n_i_operator_half_filling(i, L, the_map)*eigenvectors*vecs_2[1] for i=1:L]
+    # n_i configuration 2
+    exp_n=[vecs[1]'*eigenvectors'*get_n_i_operator_half_filling(i, L, the_map)*eigenvectors*vecs[1] for i=1:L]
+
+    delta_n=real.(exp_n)-real.(exp_n_1)
+    total_mass_left=0
+    total_mass_right=0
+    center_of_mass_right=0
+    center_of_mass_left=0
+    for i=i_0+1:L
+        center_of_mass_right+=(i-i_0)*abs(delta_n[i])
+        total_mass_right+=abs(delta_n[i])
+    end
+    
+    for i=1:i_0
+        center_of_mass_left+=-(i_0-i)*abs(delta_n[i])
+        total_mass_left+=abs(delta_n[i])
+    end
+    center_of_mass_left=center_of_mass_left/(total_mass_left)
+    center_of_mass_right=center_of_mass_right/(total_mass_right)
+    #println(abs(center_of_mass_right-center_of_mass_left))
+    
+    push!(com_l,abs(center_of_mass_right-center_of_mass_left))
+    push!(mass_l,abs(total_mass_right))
+            =#
+    end
+    push!(norms_W,disorder_realizations_data_L)
+    push!(norms_frobenius_W,disorder_realizations_data_L_f)
+    push!(DCTC_W,dynamical_upper_bound_all_2)
+    push!(overlap_of_edge_states_W,overlap_of_edge_states_L)
+    push!(dctc_new_init_W, dctc_new_init_L)
+    push!(com_W, com_l)
+    push!(mass_W, mass_l)
+end
+    # this is the structure of this object: for a single disorder strength, for a given L (there are 6(?) of them), there are 2000 disorder realizations. within
+    # each disorder realization, there are (binomial.(L, (div.(L,2)))) states. but you can probably just average over like all the states for
+    # a given L? So you don't really need to split the data. Also, you could probably just plot the distribution over all realizations and
+    # comp basis states for a given L value.
+    #save_object("10_26_M_dctc_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", reduce(vcat, DCTC_W))
+    #save_object("10_26_M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+    #save_object("10_26_M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
+    #save_object("10_26_M_dctc_new_init_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", dctc_new_init_W)
+    #save_object("10_26_edge_states_overlap_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", overlap_of_edge_states_W)
+    #save_object("10_26_M_mass_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", mass_W)
+    #save_object("10_26_M_com_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", com_W)
+    
+    push!(norms, norms_W)
+    push!(norms_frobenius, norms_frobenius_W)
+    #push!(dynamical_upper_bound_all_3, DCTC_W)
+    #push!(overlaps_edge_states, overlap_of_edge_states_W)
+    #push!(dctc_new_init, dctc_new_init_W)
+    #push!(com, com_W)
+    #push!(mass, mass_W)
+end
+end
