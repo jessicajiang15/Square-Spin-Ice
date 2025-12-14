@@ -156,7 +156,9 @@ function main()
         println("TOTAL TIME")
     end
 end
-plot_transport_norm_distribution()
+
+ctc_calculation()
+#plot_transport_norm_distribution()
 #plot_distribution_localization_length()
 #plot_transport_norm_distribution()
 #plot_transport_norm_distribution()
