@@ -6861,9 +6861,9 @@ function testtttt()
 end
 
 function ctc_calculation()
-    Ls=[16]
+    Ls=[4]
 #Ws=collect(range(start=1, stop=12, step=1))
-Ws=[10]
+Ws=[6]
 disorder_realizations=1
 T=1 # random hopping strength
 JJ=0.1
@@ -6878,7 +6878,7 @@ dctc_new_init=[]
 
 phase=0
 alpj=0.5
-phases=range(0, stop=1/sqrt(2), length=2000)
+phases=range(0, stop=1/sqrt(2), length=500)
 
 the_norms=[]
 for W in Ws
@@ -6922,7 +6922,6 @@ for L in Ls
         N_R=get_N_L_operator(L,the_map, i_0)
         N_R=eigenvectors'*N_R*eigenvectors
         N_R_nodiag=N_R-Diagonal(diag(N_R))
-
 
         N_L=get_N_R_operator(L,the_map, i_0)
         N_L=eigenvectors'*N_L*eigenvectors
@@ -6999,8 +6998,8 @@ end
     # each disorder realization, there are (binomial.(L, (div.(L,2)))) states. but you can probably just average over like all the states for
     # a given L? So you don't really need to split the data. Also, you could probably just plot the distribution over all realizations and
     # comp basis states for a given L value.
-    #save_object("10_26_M_dctc_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", reduce(vcat, DCTC_W))
     #save_object("10_26_M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+    #save_object("10_26_M_dctc_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", reduce(vcat, DCTC_W))
     #save_object("10_26_M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
     #save_object("10_26_M_dctc_new_init_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", dctc_new_init_W)
     #save_object("10_26_edge_states_overlap_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", overlap_of_edge_states_W)
@@ -7008,6 +7007,7 @@ end
     #save_object("10_26_M_com_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", com_W)
     
     push!(norms, norms_W)
+    println(norms_W)
     push!(norms_frobenius, norms_frobenius_W)
     #push!(dynamical_upper_bound_all_3, DCTC_W)
     #push!(overlaps_edge_states, overlap_of_edge_states_W)
