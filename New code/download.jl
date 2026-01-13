@@ -15,6 +15,7 @@ Pkg.add("StaticArrays")
 Pkg.add("Distances")
 Pkg.add("LinearAlgebra")
 Pkg.add("KrylovKit")
+Pkg.add("StatsBase")
 
 
 Pkg.add([
