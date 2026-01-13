@@ -6863,6 +6863,7 @@ end
 function ctc_calculation()
 Ls=[16]
 Ws=collect(range(start=1, stop=12, step=2))
+Ws=[3]
 disorder_realizations=1
 T=1 # random hopping strength
 JJ=0.1
@@ -6877,7 +6878,7 @@ dctc_new_init=[]
 
 phase=0
 alpj=0.5
-phases=range(0, stop=1/sqrt(2), length=2000)
+phases=range(0, stop=1/sqrt(2), length=1000)
 
 the_norms=[]
 for W in Ws
