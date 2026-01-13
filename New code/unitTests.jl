@@ -6861,9 +6861,8 @@ function testtttt()
 end
 
 function ctc_calculation()
-    Ls=[4]
-#Ws=collect(range(start=1, stop=12, step=1))
-Ws=[6]
+Ls=[16]
+Ws=collect(range(start=1, stop=12, step=2))
 disorder_realizations=1
 T=1 # random hopping strength
 JJ=0.1
@@ -6878,7 +6877,7 @@ dctc_new_init=[]
 
 phase=0
 alpj=0.5
-phases=range(0, stop=1/sqrt(2), length=500)
+phases=range(0, stop=1/sqrt(2), length=2000)
 
 the_norms=[]
 for W in Ws
@@ -6998,9 +6997,9 @@ end
     # each disorder realization, there are (binomial.(L, (div.(L,2)))) states. but you can probably just average over like all the states for
     # a given L? So you don't really need to split the data. Also, you could probably just plot the distribution over all realizations and
     # comp basis states for a given L value.
-    #save_object("10_26_M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+    save_object("1_13_M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
     #save_object("10_26_M_dctc_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", reduce(vcat, DCTC_W))
-    #save_object("10_26_M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
+    save_object("1_13_M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
     #save_object("10_26_M_dctc_new_init_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", dctc_new_init_W)
     #save_object("10_26_edge_states_overlap_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", overlap_of_edge_states_W)
     #save_object("10_26_M_mass_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", mass_W)
