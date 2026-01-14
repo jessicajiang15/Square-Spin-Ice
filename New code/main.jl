@@ -157,7 +157,9 @@ function main()
     end
 end
 
-ctc_calculation()
+W = parse(Int, ARGS[1])
+println("W = $W")
+ctc_calculation_2(W)
 #plot_transport_norm_distribution()
 #plot_distribution_localization_length()
 #plot_transport_norm_distribution()
