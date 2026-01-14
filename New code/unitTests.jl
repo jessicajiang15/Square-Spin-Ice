@@ -6861,7 +6861,7 @@ function testtttt()
 end
 using Dates
 function ctc_calculation()
-Ls=[4]
+Ls=[16]
 Ws=collect(range(start=1, stop=12, step=2))
 Ws=[1]
 disorder_realizations=1
@@ -6998,7 +6998,6 @@ end
     save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
     save_object(timestamp*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
     push!(norms, norms_W)
-    println(norms_W)
     push!(norms_frobenius, norms_frobenius_W)
     #push!(dynamical_upper_bound_all_3, DCTC_W)
     #push!(overlaps_edge_states, overlap_of_edge_states_W)
