@@ -6859,11 +6859,11 @@ function testtttt()
         
     end
 end
-
+using Dates
 function ctc_calculation()
-Ls=[16]
+Ls=[4]
 Ws=collect(range(start=1, stop=12, step=2))
-Ws=[3]
+Ws=[1]
 disorder_realizations=1
 T=1 # random hopping strength
 JJ=0.1
@@ -6994,18 +6994,9 @@ for L in Ls
     push!(com_W, com_l)
     push!(mass_W, mass_l)
 end
-    # this is the structure of this object: for a single disorder strength, for a given L (there are 6(?) of them), there are 2000 disorder realizations. within
-    # each disorder realization, there are (binomial.(L, (div.(L,2)))) states. but you can probably just average over like all the states for
-    # a given L? So you don't really need to split the data. Also, you could probably just plot the distribution over all realizations and
-    # comp basis states for a given L value.
-    save_object("1_13_M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
-    #save_object("10_26_M_dctc_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", reduce(vcat, DCTC_W))
-    save_object("1_13_M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
-    #save_object("10_26_M_dctc_new_init_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", dctc_new_init_W)
-    #save_object("10_26_edge_states_overlap_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", overlap_of_edge_states_W)
-    #save_object("10_26_M_mass_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", mass_W)
-    #save_object("10_26_M_com_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", com_W)
-    
+    timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
+    save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+    save_object(timestamp*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
     push!(norms, norms_W)
     println(norms_W)
     push!(norms_frobenius, norms_frobenius_W)

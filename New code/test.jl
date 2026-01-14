@@ -1,4 +1,3 @@
-using Plots
-x = 1:10; y = rand(10); # These are the plotting data
-plot(x, y)
-display(plot(x, y))
+include("unitTests.jl")
+
+ctc_calculation()
