@@ -6878,7 +6878,7 @@ dctc_new_init=[]
 
 phase=0
 alpj=0.5
-phases=range(0, stop=1/sqrt(2), length=1000)
+phases=range(0, stop=1/sqrt(2), length=100)
 
 the_norms=[]
 for W in Ws
