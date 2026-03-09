@@ -160,6 +160,7 @@ end
 W = parse(Int, ARGS[1])
 println("W = $W")
 #ctc_calculation_2(W)
+ctc_calculation_test(10, 0.1)
 plot_transport_norm_distribution()
 #plot_distribution_localization_length()
 #plot_transport_norm_distribution()
