@@ -56,6 +56,19 @@ push!(temp2, temp1);
 
 end
 
+# bitstring1 and bitstring2 are two L-bit binary numbers. 
+# Returns the maximum "range" of the two bitstrings.
+# e.g. the bitstring pair 010101010 and 01010101101 has range 3.
+function range_bitstrings(bitstring1, bitstring2, L)
+    total = bitstring1 ⊻ bitstring2
+    if total == 0
+        return 0
+    end
+    first_one = L - leading_zeros(total << (8*sizeof(total) - L))
+    last_one = trailing_zeros(total) + 1
+    return first_one - last_one +1
+end
+
 function getTi(i, I)
     #println(2^i);
     return mod(I÷(2^(i)), 2);

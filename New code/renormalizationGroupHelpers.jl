@@ -440,6 +440,13 @@ function get_N_R_operator_eigenstate_basis(L, eigenstates, i_0)
     return N_R
 end
 
+function get_N_L_operator_eigenstate_basis(L, eigenstates, i_0)
+    N_L=get_N_L_operator(L, i_0)
+    N_L=eigenstates'*N_L*eigenstates
+    N_L=N_L-Diagonal(diag(N_L))
+    return N_L
+end
+
 function get_total_N_operator_eigenstate_basis(L, eigenstates)
     N_tot=get_total_number_operator_dense(L)
     N_tot=eigenstates'*N_tot*eigenstates
@@ -746,6 +753,9 @@ function average_pbc_distance_from_i0(vecs, L, i_0)
 end
 
 function range_of_string(sites, L, pbc)
+    if(length(sites)==0)
+        return 0
+    end
     if(length(sites)==1)
         return 1
     end

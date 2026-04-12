@@ -6078,11 +6078,11 @@ function plot_transport_norm_distribution()
     all_data_Ls=[]
 
     iters=10000 
-    phases=range(0, stop=1/sqrt(2), length=2000)
+    phases=range(0, stop=1/sqrt(2), length=10000)
 
     count=0
-    vs=collect(range(start=0, stop=0.8, step=0.2))
-    ls=collect(range(start=10, stop=100, step=10))
+    vs=collect(range(start=1, stop=12, step=1))
+    ls=collect(range(start=4, stop=16, step=2))
     gradient = cgrad([:red, :yellow, :blue], length(vs))
 
     for v in vs
@@ -6096,7 +6096,8 @@ function plot_transport_norm_distribution()
             xrange=1:L
             for phase in phases
                 while(true)
-                x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
+                x=v*rand(d, L)
+                #x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
                 alpj=0.5
                 #x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
                 #x=-v*collect(range(1,L, length=L))
@@ -6129,7 +6130,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("3_5_quasiperiodic_golden_with_new_M_v="*string(v)*".jld2", all_data)
+        save_object("3_9_anderson_small_L_M_w="*string(v)*".jld2", all_data)
     end
 end
 
