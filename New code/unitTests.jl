@@ -7158,10 +7158,11 @@ function ctc_calculation_2(W)
 
 
 function ctc_calculation_3(W, JJ)
+    # JJ=1 for comparison
     Ls=[16]
     Ws=[W]
     disorder_realizations=1
-    T=1 # random hopping strength
+    T=0.5 # hopping strength to compare with literature
     norms=[]
     norms_frobenius=[]
     dynamical_upper_bound_all_3=[]
@@ -7172,7 +7173,6 @@ function ctc_calculation_3(W, JJ)
     dctc_new_init=[]
     
     phase=0
-    alpj=0.5
     phases=range(0, stop=1/sqrt(2), length=100)
     
     the_norms=[]
@@ -7224,12 +7224,12 @@ function ctc_calculation_3(W, JJ)
             N_L=eigenvectors'*N_L*eigenvectors
     
         =#
-            #values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
-            #values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
+            values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
+            values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
     
             #overlap=dot(abs.(vecs[1]), abs.(vecs_2[1]))
             
-            #push!(disorder_realizations_data_L,(values_2[1]-values[1]))
+            push!(disorder_realizations_data_L,(values_2[1]-values[1]))
             push!(disorder_realizations_data_L_f,norm(N_R_nodiag))
             #push!(overlap_of_edge_states_L, overlap)
     #=
@@ -7294,7 +7294,7 @@ function ctc_calculation_3(W, JJ)
         push!(mass_W, mass_l)
     end
         timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
-        #save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+        save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
         save_object(timestamp*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
         push!(norms, norms_W)
         push!(norms_frobenius, norms_frobenius_W)

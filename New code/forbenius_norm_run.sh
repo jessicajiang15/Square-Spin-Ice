@@ -1,4 +1,4 @@
-for W in $(seq 1 1 12); do
+for W in $(seq 3 3 60); do
     for i in $(seq 1 20); do
         sbatch <<EOF
 #!/bin/bash
@@ -12,7 +12,7 @@ for W in $(seq 1 1 12); do
 #SBATCH --gpus-per-node=0
 #SBATCH --job-name=W${W}_run${i}
 module load julia
-srun julia test_run.jl ${W} 0.1
+srun julia test_run.jl ${W} 1
 EOF
     done
-doneOB
+done
