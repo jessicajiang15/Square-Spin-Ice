@@ -1,5 +1,5 @@
-for W in $(seq 3 3 60); do
-    for i in $(seq 1 20); do
+for W in $(seq 24 3 60); do
+    for i in $(seq 1 100); do
         sbatch <<EOF
 #!/bin/bash
 #SBATCH --account=m1266
