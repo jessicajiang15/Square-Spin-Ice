@@ -6096,8 +6096,8 @@ function plot_transport_norm_distribution()
             xrange=1:L
             for phase in phases
                 while(true)
-                x=v*rand(d, L)
-                #x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
+                #x=v*rand(d, L)
+                x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
                 alpj=0.5
                 #x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
                 #x=-v*collect(range(1,L, length=L))
@@ -6130,7 +6130,7 @@ function plot_transport_norm_distribution()
             count+=1
         end
         count+=1
-        save_object("3_9_anderson_small_L_M_w="*string(v)*".jld2", all_data)
+        save_object("5_14_quasiperiodic_small_L_M_w="*string(v)*".jld2", all_data)
     end
 end
 
@@ -7162,7 +7162,7 @@ function ctc_calculation_3(W, JJ)
     Ls=[16]
     Ws=[W]
     disorder_realizations=1
-    T=0.5 # hopping strength to compare with literature
+    T=1
     norms=[]
     norms_frobenius=[]
     dynamical_upper_bound_all_3=[]
@@ -7210,7 +7210,7 @@ function ctc_calculation_3(W, JJ)
             #h=2*v*cos.(2*pi*sqrt(2).*(xrange.+i)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
     
             J = JJ*ones(Float64, L);
-            H_half_filling, max_index_half=construct_disordered_interacting_hamiltonian_next_nearest_neighbor_half_filling(L, J, h, t,the_map, false, "full")        
+            H_half_filling, max_index_half=construct_disordered_interacting_hamiltonian_nearest_neighbor_half_filling(L, J, h, t,the_map, false, "full")        
             eigenvalues, eigenvectors=eigen(H_half_filling);
             N_R_nodiag=get_N_R_operator_eigenstate_basis(L, the_map, eigenvectors, div(L, 2))
     
@@ -7224,12 +7224,12 @@ function ctc_calculation_3(W, JJ)
             N_L=eigenvectors'*N_L*eigenvectors
     
         =#
-            #values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
-            #values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
+            values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
+            values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
     
             #overlap=dot(abs.(vecs[1]), abs.(vecs_2[1]))
             
-            #push!(disorder_realizations_data_L,(values_2[1]-values[1]))
+            push!(disorder_realizations_data_L,(values_2[1]-values[1]))
             push!(disorder_realizations_data_L_f,norm(N_R_nodiag))
             #push!(overlap_of_edge_states_L, overlap)
     #=
@@ -7294,7 +7294,7 @@ function ctc_calculation_3(W, JJ)
         push!(mass_W, mass_l)
     end
         timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
-        #save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+        save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
         save_object(timestamp*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
         push!(norms, norms_W)
         push!(norms_frobenius, norms_frobenius_W)
