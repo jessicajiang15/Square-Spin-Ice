@@ -7241,12 +7241,12 @@ function ctc_calculation_3(W, JJ)
             N_L=eigenvectors'*N_L*eigenvectors
     
         =#
-            values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
-            values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
+            #values, vecs, info=eigsolve(N_R_nodiag, 1, :SR; ishermitian=true);
+            #values_2, vecs_2, info=eigsolve(N_R_nodiag, 1, :LR; ishermitian=true);
     
             #overlap=dot(abs.(vecs[1]), abs.(vecs_2[1]))
             
-            push!(disorder_realizations_data_L,(values_2[1]-values[1]))
+            #push!(disorder_realizations_data_L,(values_2[1]-values[1]))
             push!(disorder_realizations_data_L_f,norm(N_R_nodiag))
             #push!(overlap_of_edge_states_L, overlap)
     #=
@@ -7311,8 +7311,8 @@ function ctc_calculation_3(W, JJ)
         push!(mass_W, mass_l)
     end
         timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
-        save_object("-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
-        #save_object("quasiperiodic-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
+        #save_object("-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+        save_object("-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
         push!(norms, norms_W)
         push!(norms_frobenius, norms_frobenius_W)
         #push!(dynamical_upper_bound_all_3, DCTC_W)
