@@ -6076,13 +6076,15 @@ function plot_transport_norm_distribution()
     d = Uniform(-1,1)
     all_data=[]
     all_data_Ls=[]
+    max_eigenvalues=[]
+    min_eigenvalues=[]
 
-    iters=10000 
+    iters=10000
     phases=range(0, stop=1/sqrt(2), length=10000)
 
     count=0
     vs=collect(range(start=1, stop=12, step=1))
-    ls=collect(range(start=4, stop=16, step=2))
+    ls=collect(range(start=10, stop=100, step=10))
     gradient = cgrad([:red, :yellow, :blue], length(vs))
 
     for v in vs
@@ -6093,11 +6095,13 @@ function plot_transport_norm_distribution()
         for L in ls
             i_0=div(L, 2)
             gs=[]
+            gs_1=[]
+            gs_2=[]
             xrange=1:L
             for phase in phases
                 while(true)
-                #x=v*rand(d, L)
-                x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
+                x=v*rand(d, L)
+                #x=v*cos.(2*pi*sqrt(2)*(xrange.+phase))
                 alpj=0.5
                 #x=2*v*cos.(2*pi*sqrt(2).*(xrange.+phase)) ./ (1 .- alpj .* cos.(2*pi*sqrt(2).*(xrange.+phase)))
                 #x=-v*collect(range(1,L, length=L))
@@ -6117,7 +6121,14 @@ function plot_transport_norm_distribution()
                     eigtemp_1=eigen(M)
 
                     ctc=sum(eigtemp_1.values[eigtemp_1.values.>0])-sum(eigtemp_1.values[eigtemp_1.values.<0])
+                    max_eigenvalue=sum(eigtemp_1.values[eigtemp_1.values.>0])
+                    min_eigenvalue=sum(eigtemp_1.values[eigtemp_1.values.<0])
+                    println(max_eigenvalue)
+                    println(min_eigenvalue)
+                    println(ctc)
                     #ctc=operator_norm(M)
+                    append!(gs_1, max_eigenvalue)
+                    append!(gs_2, min_eigenvalue)
                     append!(gs,ctc)
                 catch
                     continue
@@ -6127,10 +6138,16 @@ function plot_transport_norm_distribution()
                 end
             end
             push!(all_data,gs)
+            push!(max_eigenvalues, gs_1)
+            push!(min_eigenvalues, gs_2)
+
             count+=1
         end
         count+=1
-        save_object("5_14_quasiperiodic_small_L_M_w="*string(v)*".jld2", all_data)
+        save_object("6_1_anderson_M_w="*string(v)*".jld2", all_data)
+        save_object("6_1_anderson_M_w_max="*string(v)*".jld2", max_eigenvalues)
+        save_object("6_1_anderson_M_w_min="*string(v)*".jld2", min_eigenvalues)
+
     end
 end
 
@@ -7294,8 +7311,8 @@ function ctc_calculation_3(W, JJ)
         push!(mass_W, mass_l)
     end
         timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
-        save_object(timestamp*"-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
-        save_object(timestamp*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
+        save_object("-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
+        #save_object("quasiperiodic-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
         push!(norms, norms_W)
         push!(norms_frobenius, norms_frobenius_W)
         #push!(dynamical_upper_bound_all_3, DCTC_W)

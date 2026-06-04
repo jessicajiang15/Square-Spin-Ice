@@ -1,7 +1,7 @@
 include("unitTests.jl")
 
 W = parse(Int, ARGS[1])
-JJ = parse(Int, ARGS[2])
+JJ = parse(Float64, ARGS[2])
 
 println("W = $W")
 println("J = $JJ")
