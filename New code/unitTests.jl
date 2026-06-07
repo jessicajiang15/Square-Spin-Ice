@@ -7312,7 +7312,7 @@ function ctc_calculation_3(W, JJ)
     end
         timestamp = Dates.format(now(), "mm-dd_HH-MM-SS")
         #save_object("-M_operator_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_W)
-        save_object("-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
+        save_object(string(timestamp)*"-M_frobenius_norm_W="*string(W)*", J="*string(JJ)*", t="*string(T)*".jld2", norms_frobenius_W)
         push!(norms, norms_W)
         push!(norms_frobenius, norms_frobenius_W)
         #push!(dynamical_upper_bound_all_3, DCTC_W)
